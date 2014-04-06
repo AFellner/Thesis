@@ -46,6 +46,32 @@ This work presents algorithms to construct topological orders using heuristics.
 
 \section{Expected results}
 
+We will propose algorithms for compressing proofs and show their complexity.\\
+The space compression algorithms will be completely new and they will be useable for other problems using directed acyclic graphs with a unique sink.\\
+The congruence closure algorithm will be an adaption of Pascal Fontaine's algorithm \cite{TODO: Pascal's Thesis}, possibly using ideas from \cite{TODO: BarceLogic CC algorithm}. 
+Possibly our algorithm will be able to obtain shorter explanations in general than the two explanation producing algorithms proposed earlier.\\
+The question whether for a given equality there exists an explanation of $k$ equations is believed to be NP-complete \cite{TODO: BarceLogic CC algorithm}.
+However, to the best of our knowledge, this result has not yet been proven in any publication.
+We will try to fill this gap by either proving or disproving the claim.\\
+We will implement algorithms and run experiments on a broad range of proofs, produced by state of the art SAT- and SMT- Solvers.
+Therefore we will demonstrate the actual compression achieved.
+
 \section{Methodology and approach}
 
+The algorithms will be implemented into the proof compression software Skeptik \cite{TODO: Skeptik system description}.
+The experiments will be run on the Vienna Scientific Cluster.
+
 \section{State of the art}
+
+The research field of proof complexity studies lower bounds of various measures of proofs in different proof calculi \cite{TODO: modern approach to complexity?}. A typical questions of this fields intuitively is of the following kind: Given a proof calculus $\mathcal{C}$ and a problem $p \in \mathcal{P}$, where $\mathcal{P}$ is a class of problems, how big is the shortest proof of $p$ in $\mathcal{C}$.
+One classical result is the exponential length of resolution refutations in the propositional resolution calculus \cite{TODO: modern approach to complexity?}.\\
+Besides the classical length measure, space requirements of proofs have been studied \cite{TODO: JAKOB NORDSTROM paper} using pebbling games.\\
+Our approach differs from this field of study, as we do not mean to prove new lower bounds for a class of problems, but to provide concrete algorithms to reduce measures of given proofs.
+
+For the propositional resolution calculus many length compression algorithms have been proposed \cite{TODO: quote all the algorithms}.\\
+To the best of our knowledge there no algorithm to compress proofs in space, nor an algorithm to construct strategies in pebbling games, has been proposed so far.\\
+Congruence closure has been long studied and classical algorithms have been proposed by Nelson and Oppen \cite{TODO: Nelson-Oppen paper}, Downey, Sethi and Tarjan \cite{TODO: DST Paper} and Shostak Paper \cite{TODO: Shostak paper}. %Possibly say something about it's important applications
+More recently abstract congruence closure has been proposed \cite{TODO:Abstract Congruence Closure and Specializations paper}, which replaces subterms with fresh constants to simplify the congruence closure algorithm.\\
+Congruence closure algorithms producing explanations have been proposed by Pascal Fontaine \cite{TODO: Pascals Thesis} and Nieuwenhuis-Oliveras \cite{TODO: BarceLogic CC paper}, which uses the ideas of abstract congruence closure.\\
+Our approach is closer to Fontaine's algorithm, because we want to reduce the number of literals and therefore do not want to introduce new constants.
+Even though the new constants can be removed from explanations, in our setting the algorithm will be applied many times to small instances and therefore we think that the overhead of dealing with the extra constants is not worth it.
