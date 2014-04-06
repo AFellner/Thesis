@@ -1,0 +1,51 @@
+\chapter*{Abstract}
+
+\section{Problem definition}
+
+Proofs are the backbone of mathematics. 
+They allow scientists to build theorems on top of others theorems and thus discover new knowledge.
+But proofs not only serve as assurance, they can also provide insight on the nature of the underlying problem.\\
+Both these statements are also true for formal proofs, which are particularly interesting to Computer Science.\\
+A formal proof enables one system to trust the output of another and therefore systems can safely be built on top of another. 
+For example SAT-Solvers are used extensively in modern deductive systems \cite{TODO}. 
+However these solvers may contain bugs, therefore it may be dangerous to blindly trust the output of it.
+A formal proof can assure the correctness of the output.\\
+On the other hand from formal proofs, information can be extracted, which can be used to solve another problem.
+For example interpolants \cite{TODO}, which have important applications in Software Verification, or Unsat-cores \cite{TODO}, TODO: What are they good for?, can be extracted from formal proofs.\\
+
+Typically problems that are tackled by automated systems are large. 
+So large that even for algorithms with low complexity, it is highly desirable to reduce the hardness of the input, while assuring the same quality of output.\\
+This is where our work comes into play.
+We present methods to compress formal proofs, produced by SMT- or SAT- Solvers, along two different measures.\\
+
+The first technique aims at reducing the length of proofs, by removing redundancies in the congruence closure part of an SMT-proof.
+Given a set of equalities of terms, a congruence closure procedure builds classes of terms, that are proven to be equal, when assuming the following four axioms: \emph{reflexivity}, \emph{symmetry}, \emph{transitivity} and \emph{congruence} (two compound terms are equal if they have the same arity, use the same function symbols and all their arguments are equal).\\
+We found that state of the art SMT-Solvers produce needlessly large sets of equalities as proof of the congruence of two terms 
+and our goal is to find smaller such sets.
+Smaller explanations not only lead to a smaller proofs of the congruence itself, 
+but also decrease the number of inference steps in a proof using the congruence for reasoning.\\
+
+The other part of this Thesis is devoted to memory consumption of proof processing.\\
+Proof precessing could be checking the correctness, extracting information like interpolants or proof manipulating techniques like the above.\\
+Usually a proof is explicitly or implicitly represented as a directed acyclic graph.
+To process it, its nodes have to be traversed and therefore ordered.
+The procedures usually require that nodes are traversed in an order, such that all parent- (Top-Down) or that all children- (Bottom-Up) nodes are visited before the node itself.
+For example, to check the correctness of one node, the correctness of its parent nodes is essential. 
+We refer to orders for Top-Down traversals as \emph{topological orders}. Note that orders for Top-Down and Bottom-Up traversals are dual in the sense that the reverse of a Top-Down traversal order is a Bottom-Up traversal order.\\
+The key insight towards space compression is that during proof processing, not all nodes have to be kept in memory at all times.\\
+In a Top-Down traversal, a node can be dropped from as soon as its last children has been visited, because the original node will not be accessed anymore.\\
+For a given proof, there are at least exponentially many topological orders and the problem of finding an optimal order w.r.t. space is NP-complete \cite{TODO} for orders, which visit each node only once, and PSPACE-complete \cite{TODO} for orders, which visit nodes more than once.\\
+This work presents algorithms to construct topological orders using heuristics.
+
+%\begin{itemize}
+	%\item Reflexivity: For all terms $t$: $t = t$
+	%\item Symmetry: For all terms $t$ and $s$: $t = s$ \emph{iff} $s = t$
+	%\item Transitivity: For all terms $t_1,t_2,t_3$: $t_1 = t_2$ and $t_2 = t_3$ implies $t_1 = t_3$
+	%\item Congruence: For all terms $t = f(t_1\ldots t_n)$ and $s = f(t'_1 \ldots t'_n)$: For all $i$: $t_i = t'_i$ implies $t = s$
+%\end{itemize}
+
+\section{Expected results}
+
+\section{Methodology and approach}
+
+\section{State of the art}

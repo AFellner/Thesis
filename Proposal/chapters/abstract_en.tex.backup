@@ -1,0 +1,80 @@
+\chapter*{Abstract}
+
+\section{Problem definition}
+
+Gerhard Gentzen formulated proof systems for intutionistic (\textbf{LJ}) and classical first order logic (\textbf{LK}) in 1934 \cite{gentzen1969collected}, which may be referred to as the \emph{sequential calculus}.
+These systems consist of rules and axiom sets, where the rule set of each system can be divided into two particular subsets, namely the \emph{structural rules} and the \emph{logical rules}.
+Among other rules included in the \emph{structural rule set}, there exists a particular one which plays an important role for constructing derivations in these systems: the \emph{cut-rule}.
+In fact the \emph{cut-rule} was initially needed to simulate other logic calculi.
+
+
+Besides formulating above caluli, Gerhard Gentzen also introduced and proved the famous \emph{cut-elimination theorem}, which shows that 
+the \emph{cut-rule} is not a neccessity for previously mentioned systems to be \emph{complete}.
+A direct consequence of the above theorem is that each and every proof, which containing several cuts, can be rewritten to a proof not containing an instance of the \emph{cut-rule}.
+This method of \emph{cut-elimination} is frequently used for removing cuts Gentzen-style proofs.
+The \emph{Theory and Logic Group} of the \emph{Technical University of Vienna} implemented a system for automated deduction and representing generated proofs,
+as well as applying \emph{cut-elimination} to proofs, based on another method different from Gentzen's one.
+The system for the latter is called \emph{CERES} (\textbf{C}ut-\textbf{E}limination by \textbf{Res}olution) \cite{ceres}.
+
+Since there does not exist a unique derivation in \emph{sequential calculus} for a particular theory, proofs can vary in length.
+One can imagine that the understanding and reconsideration of such an automatically constructed derivation can be a complex task and even of
+higher complexity considering large derivations, such as \emph{cut-free} proofs.
+To improve readability and understanding of such generated proofs one may make good use of the \emph{cut-rule}.
+
+In a recent article \cite{hetzl2012towards} the inversion of Gentzen's \emph{cut-elimination} method is described.
+Since the naive approach for inverting the cut-elemination method is of high computational complexity, the paper itself deals with reducing the 
+overhead of the reversion of the \emph{cut-elimination}, namely the \emph{cut-introduction}.
+Although it is not suitable to directly invert the \emph{cut-elimination} method, a newly published article \cite{hetzl2014article} describes a method introducing potential quantified cuts, where the problem of dealing with mentioned complexity is getting partly solved by methods of \emph{formal language theory}.
+
+The method described in \cite{hetzl2014article} is already partly implemented in a system called \emph{GAPT} \cite{gapt} for introducing a single quantified cut.
+The proposed thesis will deal with the final implementation of above method for $n$ quantified cuts.
+
+
+\section{Expected results}
+
+The expected results of the implementation of the method described in \cite{hetzl2014article} will be the possibility to
+abbreviate a given cut-free proof by introducing $n$ quantified cuts.
+Since the method for introducing a single quantified cut is already available in \emph{GAPT}, the implementation will
+deal with the integration of previously described method into the code base.
+The main result will be to provide a function which transforms a minimal cut-free proof of length $2_n$ (where $2_0 = 1$ and $2_{n+1} = 2^{2_n}$ \cite{hetzl2014article}) into a proof with $n$ quantified cuts which is linear in length w.r.t. the amount of quantified cuts.
+The function will be available in the \emph{GAPT} architecture.
+To ensure correctness of the method, various tests will be provided to simplify further develop- and deployment.
+
+\section{Methodology and approach}
+
+To accomplish previously mentioned task, first of all the existing material for \emph{cut-introduction} \cite{hetzl2014article} \cite{hetzl2012towards} and partly of \emph{cut-elimination} \cite{baaz2011methods} have to be
+studied to reflect and fully understand published methods. Afterwards the already existing source code of the \emph{GAPT} architecture has to be considered.
+Since the \emph{GAPT} architecture had been fully rewritten in \emph{Scala}, the language, as well as given coding guidelines have to be studied such that the implementation of described method for \emph{cut-introduction}
+will be integrated properly into the already existing code base.
+Throughout the whole process the attendance in various meetings and the reconsideration of expertise of staff members of the \emph{Theory and Logic Group} will be necessary to correctly implement the algorithm.
+
+\section{State of the art}
+
+Gentzen developed a method of \emph{cut-elimination} of first-order proofs in \emph{sequential calculus}, based on the formulation of Gentzen's \emph{cut-elimination theorem} \cite{gentzen1934}.
+This method can not be directly inverted, while simultaneously bounding the complexity of the algorithm.
+Above \emph{cut-elimination} method though has its own degree of computational complexity.
+Matthias Baaz and Alexander Leitsch collected their work regarding \emph{cut-elimination} in their book \emph{Methods of Cut-Elimination} \cite{baaz2011methods}.
+The implementation of those methods are represented in the \emph{CERES} project \cite{ceres}, which is a part of the \emph{GAPT} architecture \cite{gapt}.
+This \emph{GAPT} architecture comprises also the implementation of a newly developed method for cut-introduction.
+This inversion of the cut-elemination method \cite{hetzl2012towards} \cite{hetzl2014article} is a conceivable non-trivial task and its integration into their \emph{GAPT} architecture
+has only been done for single quantified cuts, so far.
+Since quantified cuts are not the only possible type of cuts of proofs in the \emph{sequential calculus}, one may also consider the work of Bruno Paleo \cite{paleo2010atomic} who formulated a method
+for cut-introduction of atomic cuts in 2010.
+
+\section{Relation to Computational Intelligence}
+
+The \emph{sequential calculus} as well as the method of proof compression are part of mathematical logic and therefore closely related to the discipline of theoretical computer science.
+Also parts of formal language theory are used in the cut-introduction method \cite{hetzl2012towards} \cite{hetzl2014article}, which also requires respective prior knowledge to understand and implement it.
+The curriculum of the master programme \emph{Computational Intelligence} provides a well-founded base for this thesis topic, in particular following courses:
+
+\begin{itemize}
+ \item 185.A45 Logic and Computability VU
+ \item 185.318 Seminar in Logic SE
+ \item 185.A42 Formal Language Theory VU
+ \item 185.A60 Higher-order Logic VU
+ \item 104.271 Discrete Mathematics VO
+ \item 104.271 Discrete Mathematics UE
+ \item 186.814 Algorithmics VU
+ \item 185.206 Typsysteme VO
+\end{itemize}
+
