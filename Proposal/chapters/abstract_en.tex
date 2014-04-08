@@ -5,7 +5,7 @@
 Proofs are the backbone of mathematics. 
 They allow scientists to build theorems on top of other theorems and thus discover new knowledge.
 But proofs not only serve as assurance or stepping stones, they can also provide insight on the nature of the underlying problem.\\
-Both these statements are also true for formal proofs, which are particularly interesting to Computer Science.\\
+Both these statements are also true for formal proofs, which are particularly interesting to Computer Science.
 A formal proof enables one system to trust the output of another and therefore systems can safely be built on top of another. 
 For example SAT-Solvers are used extensively in modern deductive systems \cite{TODO}. 
 However these solvers may contain bugs, therefore it may be dangerous to blindly trust the output of it.
@@ -26,7 +26,7 @@ Smaller explanations not only lead to a smaller proofs of the congruence itself,
 but also decrease the number of inference steps in a proof using the congruence for reasoning.\\
 
 The other part of this Thesis is devoted to memory consumption of proof processing.\\
-Proof precessing could be checking the correctness, extracting information like interpolants or proof manipulating techniques like the above.\\
+Proof processing could be checking the correctness, extracting information like interpolants or proof manipulating techniques like the above.\\
 Usually a proof is explicitly or implicitly represented as a directed acyclic graph.
 To process it, its nodes have to be traversed and therefore ordered.
 The procedures usually require that nodes are traversed in an order, such that all parent- (Top-Down) or that all children- (Bottom-Up) nodes are visited before the node itself.
@@ -34,8 +34,8 @@ For example, to check the correctness of one node, the correctness of its parent
 We refer to orders for Top-Down traversals as \emph{topological orders}. Note that orders for Top-Down and Bottom-Up traversals are dual in the sense that the reverse of a Top-Down traversal order is a Bottom-Up traversal order.\\
 The key insight towards space compression is that during proof processing, not all nodes have to be kept in memory at all times.\\
 In a Top-Down traversal, a node can be dropped from memory as soon as its last children, w.r.t. the used order, has been visited, because the original node will not be accessed anymore.
-Such deletion information can be stored added to the proof formats to indicate when nodes can safely be removed from memory.\\
-For a given proof, there are at least exponentially many topological orders and the problem of finding an optimal order w.r.t. space is NP-complete \cite{Sethi1975} for orders, which visit each node only once, and PSPACE-complete \cite{Gilbert1980} for orders, which visit nodes more than once.\\
+Such deletion information can be added to the proof formats to indicate when nodes can safely be removed from memory.\\
+For a given proof, there are at least exponentially many topological orders and the problem of finding an optimal order w.r.t. space is NP-complete \cite{Sethi1975} for orders, that visit each node only once, and PSPACE-complete \cite{Gilbert1980} for orders, that visit nodes more than once.\\
 This work presents algorithms to construct topological orders using heuristics.
 
 %\begin{itemize}
