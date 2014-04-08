@@ -35,7 +35,7 @@ We refer to orders for Top-Down traversals as \emph{topological orders}. Note th
 The key insight towards space compression is that during proof processing, not all nodes have to be kept in memory at all times.\\
 In a Top-Down traversal, a node can be dropped from memory as soon as its last children, w.r.t. the used order, has been visited, because the original node will not be accessed anymore.
 Such deletion information can be stored added to the proof formats to indicate when nodes can safely be removed from memory.\\
-For a given proof, there are at least exponentially many topological orders and the problem of finding an optimal order w.r.t. space is NP-complete \cite{TODO} for orders, which visit each node only once, and PSPACE-complete \cite{TODO} for orders, which visit nodes more than once.\\
+For a given proof, there are at least exponentially many topological orders and the problem of finding an optimal order w.r.t. space is NP-complete \cite{Sethi1975} for orders, which visit each node only once, and PSPACE-complete \cite{Gilbert1980} for orders, which visit nodes more than once.\\
 This work presents algorithms to construct topological orders using heuristics.
 
 %\begin{itemize}
@@ -49,41 +49,41 @@ This work presents algorithms to construct topological orders using heuristics.
 
 We will propose algorithms for compressing proofs and show their complexity.\\
 The space compression algorithms will be completely new and they will be useable for other problems using directed acyclic graphs with a unique sink.\\
-The congruence closure algorithm will be an adaption of Pascal Fontaine's algorithm \cite{TODO: Pascal's Thesis}, possibly mixed with ideas from \cite{TODO: BarceLogic CC algorithm}. 
-Hopefully our algorithm will be able to obtain shorter explanations (in the number of equations) in general than the two explanation producing algorithms proposed earlier \cite{TODO: Pascal \& Barcelogic}.\\
-The question whether for a given equality there exists an explanation of $k$ equations is believed to be NP-complete \cite{TODO: BarceLogic CC algorithm}.
+The congruence closure algorithm will be an adaption of Pascal Fontaine's algorithm \cite{Fontaine2004}, possibly mixed with ideas from \cite{TODO: BarceLogic CC algorithm}. 
+Hopefully our algorithm will be able to obtain shorter explanations (in the number of equations) in general than the two explanation producing algorithms proposed earlier.\\
+The question whether for a given equality there exists an explanation of $k$ equations is believed to be NP-complete, as claimed in \cite{Nieuwenhuis2005a,Nieuwenhuis2007}.
 %However, to the best of our knowledge, this result has not yet been proven in any publication.
-However the authors of \cite{TODO: BarceLogic CC algorithm} do not know of a publication that has proven this question yet.
+However the authors do not know of a publication that has proven this question yet.
 We will try to fill this gap by either proving or disproving the claim.\\
 We will implement algorithms and run experiments on a broad range of proofs, produced by state of the art SAT- and SMT- Solvers.
 Thus we will demonstrate the actual compression achieved.
 
 \section{Methodology and approach}
 
-The algorithms will be implemented into the proof compression software Skeptik \cite{TODO: Skeptik system description} in the programming language Scala.
-The experiments will be carried out on the Vienna Scientific Cluster \cite{TODO: VSC link}.
+The algorithms will be implemented into the proof compression software Skeptik \cite{Boudou} in the programming language Scala.
+The experiments will be carried out on the Vienna Scientific Cluster.
 Theorems stating the complexity of our algorithms will have to be proven from scratch or adapted from earlier publications.
 To show the NP-completeness of the shortest explanation problem, two things have to be done. 
 First we need to find an algorithm that, given an Oracle to make correct decisions, finds an explanation with $k$ or less equations in polynomial time and second we need to reduce another NP-complete problem to the shortest explanation problem.
-The Palest Path Problem \cite{TODO: palest path paper} is one option for reduction, that has been foreseen to possibly be fruitful by the source of the claim in \cite{TODO: BarceLogic CC algorithm}.
+The Palest Path Problem \cite{Tiwari} is one option for reduction, that has been foreseen to possibly be fruitful by the source of the claim in \cite{Nieuwenhuis2005a,Nieuwenhuis2007}.
 
 \section{State of the art}
 
-The research field of proof complexity studies lower bounds of various measures of proofs in different proof calculi \cite{TODO: modern approach to complexity?}. A typical questions of this fields intuitively is of the following kind: Given a proof calculus $\mathcal{C}$ and a problem $p \in \mathcal{P}$, where $\mathcal{P}$ is a class of problems, what is the worst case lower bound of some measure $m(.)$ of proofs, of all problems $p \in \mathcal{P}$ and their proofs in $\mathcal{C}$. % among all proofs in $\mathcal{C}$ of a problem $p$ or a problem class $\mathcal{P}$.
+The research field of proof complexity studies lower bounds of various measures of proofs in different proof calculi \cite{Arora2009}. A typical questions of this fields intuitively is of the following kind: Given a proof calculus $\mathcal{C}$ and a problem $p \in \mathcal{P}$, where $\mathcal{P}$ is a class of problems, what is the worst case lower bound of some measure $m(.)$ of proofs, of all problems $p \in \mathcal{P}$ and their proofs in $\mathcal{C}$. % among all proofs in $\mathcal{C}$ of a problem $p$ or a problem class $\mathcal{P}$.
 
-One classical result is the worst case exponential length of resolution refutations in the propositional resolution calculus \cite{TODO: modern approach to complexity?}.\\
-Besides the classical length measure, space requirements of proofs have been studied \cite{TODO: JAKOB NORDSTROM paper} using pebbling games.\\
+One classical result is the worst case exponential length of resolution refutations in the propositional resolution calculus \cite{Arora2009}.\\
+Besides the classical length measure, space requirements of proofs have been studied \cite{Sethi1975,Nordstrom2013,Hopcroft1977,Esteban2001,Ben-Sasson2002} using pebbling games.\\
 Our approach differs from this field of study, as we do not mean to prove new lower bounds for a classes of problems or calculi, but to provide concrete algorithms to reduce measures of given proofs.
 
-For the propositional resolution calculus many length compression algorithms have been proposed \cite{TODO: quote all the algorithms}. 
-On the other hand, for First Order Logic Cut-Introduction has been studied \cite{TODO: Leitsch's group papers}, which is a form of proof compression. However none of the approaches tackle the congruence reasoning of proofs.\\
+For the propositional resolution calculus many length compression algorithms have been proposed \cite{Bar-Ilan2009,Boudou2013,Fontaine2011a,Cotton2010}. 
+On the other hand, for First Order Logic Cut-Introduction has been studied \cite{Hetzl2012}, which is a form of proof compression. However none of the approaches tackle the congruence reasoning of proofs.\\
 To the best of our knowledge neither an algorithm to compress proofs in space, nor one to construct strategies in pebbling games, has been proposed so far. 
-The DRUP proof format \cite{TODO: Drup format} is an extension of the well known RUP format, with the addition of deletion information.
+The DRUP proof format \cite{Heule} is an extension of the well known RUP format, with the addition of deletion information.
 The format has been introduced to help cope with huge proofs produced by solvers such as the ?GB proof documented in \cite{TODO: the big proof thing}.
 Skeptik's native proof output format has already been enriched by optional deletion information.\\
-Congruence closure has been long studied and classical algorithms are those of Nelson and Oppen \cite{TODO: Nelson-Oppen paper}, Downey, Sethi and Tarjan \cite{TODO: DST Paper} and Shostak \cite{TODO: Shostak paper}. %Possibly say something about it's important applications
-More recently abstract congruence closure has been proposed \cite{TODO:Abstract Congruence Closure and Specializations paper}, which replaces subterms with fresh constants to simplify the congruence closure algorithm.\\
-Congruence closure algorithms producing explanations have been proposed by Pascal Fontaine \cite{TODO: Pascals Thesis} and Nieuwenhuis-Oliveras \cite{TODO: BarceLogic CC paper}, which uses the ideas of abstract congruence closure.\\
+Congruence closure has been long studied and classical algorithms are those of Nelson and Oppen \cite{Nelson1980}, Downey, Sethi and Tarjan \cite{Downey1980} and Shostak \cite{Shostak1978}. %Possibly say something about it's important applications
+More recently abstract congruence closure has been proposed \cite{Bachmair2000}, which replaces subterms with fresh constants to simplify the congruence closure algorithm.\\
+Congruence closure algorithms producing explanations have been proposed by Pascal Fontaine \cite{Fontaine2004} and Nieuwenhuis-Oliveras \cite{Nieuwenhuis2005a,Nieuwenhuis2007}, which uses the ideas of abstract congruence closure.\\
 Our approach is closer to Fontaine's algorithm, because we want to reduce the number of literals and therefore do not want to introduce new constants.
 Even though the new constants can be removed from explanations, in our setting the algorithm will be applied many times to small instances and not the other way around. 
-Additionally Pascal Fontaine has shown that his method has the same worst case complexity as Nieuwenhuis-Oliveras' version. Therefore we think that the overhead of dealing with the extra constants is not worth the possible performance edge \cite{TODO: paper empirically comparing CC algorithms} that abstract congruence closure comes with when looking at single instances.
+Additionally Pascal Fontaine has shown that his method has the same worst case complexity as Nieuwenhuis-Oliveras' version. Therefore we think that the overhead of dealing with the extra constants is not worth the possible performance edge \cite{Bachmair2000} that abstract congruence closure comes with when looking at single instances.
