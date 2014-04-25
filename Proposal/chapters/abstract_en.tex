@@ -3,16 +3,18 @@
 \section{Problem definition}
 
 Proofs are the backbone of mathematics. 
-They allow scientists to build theorems on top of other theorems and thus discover new knowledge.
-Proofs not only serve as stepping stones, they can also provide insight on the nature of the underlying problem.\\
-Both statements are also true for formal proofs, which are particularly interesting to Computer Science.
-Formal proofs allow system to trust the output of another and therefore systems can safely be built on top of another. 
+They allow scientists to build theorems on top of another and thus discover new knowledge.
+Proofs not only serve as stepping stones, they can also provide insight on the nature of the underlying problem.
+
+Both statements are true for formal proofs as well.
+Formal proofs allow system to trust the output of other system and therefore they can safely be built on top of another. 
 For example SAT-Solvers are used extensively in modern deductive systems \cite{Biere2009}. 
-However solvers may contain bugs, therefore it may be dangerous to blindly trust their output.
-A formal proof can assure the correctness of the output.\\
+However, solvers may contain bugs. 
+Therefore their output can not be trusted blindly.
+A formal proof can assure the correctness of the output.
 Formal proofs not only help in combining systems, they can also be used to obtain information about the underlying problem.
 For example interpolants, which have important applications in Verification and Synthesis of programs \cite{McMill2005}, can be extracted from formal proofs \cite{Hofferek2013}.
-From hereon, we mean formal proofs when talking about proofs.
+From hereon, we mean formal proofs when speaking of proofs.
 
 Typically problems that are tackled by automated systems are large. 
 As a consequence proofs produced during the process are large.
@@ -25,8 +27,9 @@ The first measure is \emph{length}.
 The length of a proof is the number of inferences.
 For example the length of the resolution proof is the number of resolution applications.
 The congruence reasoning part of SMT-proofs has been found to be redundant often.
-Congruence reasoning derives equations of terms, that are implied by a given set of input equations, using the four axioms \emph{reflexivity}, \emph{symmetry}, \emph{transitivity} and \emph{congruence}. 
-It can be redundant in the sense, that subsets of the input may suffice to derive certain equations.
+Congruence reasoning derives equations of terms that are implied by a given set of input equations, 
+using the four axioms \emph{reflexivity}, \emph{symmetry}, \emph{transitivity} and \emph{congruence}. 
+It can be redundant in the sense that subsets of the input may suffice to derive certain equations.
 %Such subsets correspond to proofs that are shorter, use less axioms and derive a stronger conclusion.
 %Replacing subproofs corresponding to a set of equations, 
 
@@ -52,26 +55,26 @@ The goal is to construct traversal orders for proofs with small space measures.
 
 \section{State of the art}
 
-The research field of proof complexity studies lower bounds of various measures of proofs in different proof calculi \cite{Arora2009,Beame1998a,Cook1979}. A typical questions of this fields intuitively is of the following kind: Given a proof calculus $\mathcal{C}$, find a sequence of theorems $(t_1,\ldots, t_n, \ldots)$ such that $\mathrm{length}(p(t_m)) \in \Omega(2^m)$, where $p(t)$ is the shortest proof of $t$ in $\mathcal{C}$.
+The research field of proof complexity studies lower bounds of various measures of proofs in different proof calculi \cite{Arora2009,Beame1998a,Cook1979}. A typical questions of this fields intuitively is of the following kind. Given a proof calculus $\mathcal{C}$, find a sequence of theorems $(t_1,\ldots, t_n, \ldots)$ such that $\mathrm{length}(p(t_m)) \in \Omega(2^m)$, where $p(t)$ is a shortest proof of $t$ in $\mathcal{C}$.
 %
  %and a problem $p \in \mathcal{P}$, where $\mathcal{P}$ is a class of problems, what is the worst case lower bound of some measure $m(.)$ of proofs, of all problems $p \in \mathcal{P}$ and their proofs in $\mathcal{C}$. % among all proofs in $\mathcal{C}$ of a problem $p$ or a problem class $\mathcal{P}$.
 %
 One classical result is the worst case exponential length of resolution refutations in the propositional resolution calculus \cite{Arora2009}.
 Besides the classical length measure, space requirements of proofs have been studied \cite{Ben-Sasson2002,Esteban2001,Hopcroft1977,Nordstroem2013,Sethi1975} using pebbling games.
-The problem of finding optimal strategies in the variant of the pebbling game, that is most relevant to us, is NP-complete \cite{Sethi1975}.
+The problem of finding optimal strategies in the variant of the pebbling game that is most relevant to us is NP-complete \cite{Sethi1975}.
 
-Our approach differs from this field of study, as we do not mean to prove new lower bounds for a classes of problems or calculi, but to provide concrete algorithms to reduce measures of given proofs.
+Our approach differs from this field of study, as we do not mean to prove new lower bounds for a class of problems or calculi, but to provide concrete algorithms to reduce measures of given proofs.
 
 For Propositional Logic many length compression algorithms have been proposed \cite{Bar-Ilan2008,Bloem,Boudou2013,Cotton2010,Fontaine2011}. 
-On the other hand, for First Order Logic Cut-Introduction has been studied \cite{Hetzl2012}, which is a form of proof compression. However none of the approaches deal with the congruence reasoning of SMT-proofs. 
+On the other hand, for First Order Logic Cut-Introduction has been studied \cite{Hetzl2012}, which is a form of proof compression. However, none of the approaches deal with the congruence reasoning of SMT-proofs. 
 Congruence reasoning has been long studied and classical congruence closure algorithms are those of Nelson and Oppen \cite{Nelson1980}, Downey, Sethi and Tarjan \cite{Downey1980} and Shostak \cite{Shostak1978}.
 More recently abstract congruence closure has been proposed \cite{Bachmair2000}, which replaces subterms with fresh constants to simplify the algorithms and increase performance.
-Congruence closure algorithms producing explanations have been proposed by Pascal Fontaine \cite{Fontaine2004} and Nieuwenhuis-Oliveras \cite{Nieuwenhuis2007,Nieuwenhuis2005}, which uses the ideas of abstract congruence closure.
+Congruence closure algorithms producing explanations have been proposed by Pascal Fontaine \cite{Fontaine2004} and Nieuwenhuis-Oliveras \cite{Nieuwenhuis2007,Nieuwenhuis2005}.
 The problem of deciding whether from a given set of equations, there is an explanation for one particular equation of size $k$ is believed to be NP-complete \cite{Nieuwenhuis2007,Nieuwenhuis2005}.
-However this result has not been proven yet.
+However, this result has not been proven yet.
 
-Space compression of proofs is a rather new branch of proof compression and has not been studied extensively yet.
-To the best of our knowledge neither an algorithm to compress proofs in space, nor one to construct strategies in pebbling games, has been proposed so far. 
+Space compression of proofs is a young branch of proof compression and has not been studied extensively yet.
+To the best of our knowledge neither an algorithm to compress proofs in space nor one to construct strategies in pebbling games has been proposed so far. 
 The DRUP proof format \cite{Heule2013} is an extension of the well known RUP format, with the addition of deletion information. 
 Deletion information indicates when nodes can be dropped from memory.
 The format has been introduced to help cope with huge proofs produced by solvers. 
@@ -81,29 +84,29 @@ For example \cite{Konev2014} reports of a 13GB proof in the DRUP format for one 
 \section{Methodology and approach}
 
 We will propose algorithms for compressing proofs and show their complexity.
-The algorithms will be implemented into the proof compression software Skeptik \cite{Boudou} in the programming language Scala.
+The algorithms will be implemented in the proof compression software Skeptik \cite{Boudou} in the programming language Scala.
 We will evaluate the algorithms on a broad range of proofs produced by SAT- and SMT- Solvers to show the actual compression obtained.
 The experiments will be carried out on the Vienna Scientific Cluster.
-To remove redundancies in the congruence reasoning part of SMT- proofs, we will need two algorithms:
+To remove redundancies in the congruence reasoning part of SMT- proofs, we will need two algorithms.
 
-The first is a congruence closure algorithm that is able to produce explanations, such as the algorithms cited above.
+A congruence closure algorithm that is able to produce explanations in the form of proofs.
 We will not use the ideas of abstract congruence closure, because we want to reduce the number of literals and therefore do not want to introduce new constants.
-Even though the new constants can be removed from explanations, in our setting the algorithm will be applied many times to small instances and not the other way around. 
+Even though the new constants can be removed from proofs, in our setting the algorithm will be applied many times to small instances and not the other way around. 
 Therefore we think that the overhead of dealing with the extra constants is not worth the possible performance edge \cite{Bachmair2000} that abstract congruence closure can have when looking at single instances.
-To obtain short explanations, we think that shortest path algorithms like the one of Dijkstra \cite{Dijkstra1959,Cormen1989} will be useful.
-The algorithm returns a proof corresponding to the shortest explanation it finds.
+To obtain short proofs with short conclusions, we think that shortest path algorithms like the one of Dijkstra \cite{Dijkstra1959,Cormen1989} will be useful.
 
-The second is an algorithm manipulates the proof itself.
-It applies the congruence closure algorithm to the conclusions of subproofs reasoning about equality in order to find redundancies.
-There can be a trade-off between the size of the proof and the size of the explanation.
-A shorter explanation does not necessarily correspond to a shorter proof, if the proof corresponding to the longer explanation reuses some nodes many times.
-However shorter explanations lead to stronger conclusions and to less inference steps further down the proof.
-Intuitively shorter explanations should always be better, but the relationship between proof- and explanation size has to be investigated.
+The second algorithm manipulates the proof itself.
+It applies the congruence closure algorithm to the conclusions of subproofs reasoning about equality in order to find and remove redundancies.
 The algorithm also fixes proof nodes with premises that have been changed by it earlier, similar to how it is described in \cite{Boudou2013}.
+There can be a trade-off between the size of the proof and the size of its conclusion.
+A shorter conclusion does not necessarily correspond to a shorter proof, if the original proof reuses some nodes many times.
+However, shorter conclusions cause fewer inference steps further down the proof.
+Intuitively shorter conclusions should always be better, but the relationship between proof- and conclusion size has to be investigated.
 
-The algorithms to compress proofs in the space measure, construct traversal orders using heuristics.
+
+The algorithms to compress proofs in the space measure construct traversal orders using heuristics.
 Traversal orders correspond to strategies in pebbling games.
-The reason for the use heuristics is the NP-completeness of finding optimal strategies in a variant of the pebble game \cite{Sethi1975} and the implied infeasibility of constructing the optimal strategy.
+The reason for the use of heuristics is the NP-completeness of finding optimal strategies in a variant of the pebble game \cite{Sethi1975} and the implied infeasibility of constructing the optimal strategy.
 There will be two algorithms to construct traversal orders.
 One operates on proofs in a Top-Down fashion, i.e. from the axioms towards the root, which corresponds to playing the pebbling game.
 The other one operates on proofs in a Bottom-Up fashion, i.e. from the root towards the axioms, constructing orders by recursively queuing up premises.
@@ -113,7 +116,7 @@ Theorems stating the complexity of our algorithms will have to be proven from sc
 
 We want to show the NP-completeness of the shortest explanation problem.
 To this end two things have to be done.
-First we need to find an algorithm that, given an Oracle to make correct decisions, finds an explanation of $k$ or less equations in polynomial time.
+First we need to find an algorithm that, given an Oracle to make correct decisions, finds an explanation of $k$ or fewer equations in polynomial time.
 Second we need to reduce another NP-complete problem to the shortest explanation problem.
 The Palest Path Problem \cite{Tiwari} is one option for reduction, that has been foreseen to possibly be fruitful by the source of the claim in \cite{Nieuwenhuis2007,Nieuwenhuis2005}.
 
@@ -122,7 +125,7 @@ The Palest Path Problem \cite{Tiwari} is one option for reduction, that has been
 We will enrich the field of proof compression by new algorithms.
 It is hard to predict the compression achieved by the congruence reasoning algorithm.
 Good propositional proof compression techniques usually achieve between 10\% and 20\% compression.
-Such numbers would be nice to see with for our method.
+Such numbers would be nice to see for our method.
 The space measure of a proof is always relative to a traversal order, therefore orders have to be compared to each other.
 We hope to show that one method or heuristic is particularly better than the others.
 The proof of NP-completeness of the shortest explanation problem is a gap in science, which we aim to fill.
