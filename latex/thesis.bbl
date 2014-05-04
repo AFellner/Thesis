@@ -1,0 +1,25 @@
+\begin{thebibliography}{1}
+
+\bibitem{Biere2009}
+Armin Biere, Marijn Heule, Hans van Maaren, and Toby Walsh, editors.
+\newblock {\em Handbook of Satisfiability}, volume 185 of {\em Frontiers in
+  Artificial Intelligence and Applications}. IOS Press, 2009.
+
+\bibitem{Hofferek2013}
+Georg Hofferek, Ashutosh Gupta, Bettina K{\"o}nighofer, Jie-Hong~Roland Jiang,
+  and Roderick Bloem.
+\newblock Synthesizing multiple boolean functions using interpolation on a
+  single proof.
+\newblock {\em CoRR}, abs/1308.4767, 2013.
+
+\bibitem{Konev2014}
+Boris Konev and Alexei Lisitsa.
+\newblock A sat attack on the erdos discrepancy conjecture.
+\newblock {\em CoRR}, abs/1402.2184, 2014.
+
+\bibitem{McMill2005}
+Kenneth~L. McMillan.
+\newblock Applications of craig interpolants in model checking.
+\newblock In {\em TACAS}, pages 1--12, 2005.
+
+\end{thebibliography}
