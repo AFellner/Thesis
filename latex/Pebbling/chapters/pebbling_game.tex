@@ -1,0 +1,53 @@
+\section{Pebbling Game}
+\label{sec:pebbling-game}
+
+%Todo: Discuss relation to resolution space complexity further
+Pebbling games were introduced in the 1970's to model programming language expressiveness \cite{paterson1970comparative,Walker1973404} and compiler construction \cite{sethi1975complete}. 
+More recently, pebbling games have been used to investigate various questions in parallel complexity \cite{chan2013pebble} and proof complexity \cite{ben2008short,Esteban200184,nordstrom2009narrow}. They are used to obtain bounds for space and time requirements and trade-offs between the two measures \cite{van1979move,ben2009size}. 
+In this work we investigate space requirements when time is fixed.
+Fixing time is a design choice, see Section \ref{sec:pebblingchecking}.
+From hereon \textit{to pebble} means to mark a node with a pebble and \textit{to unpebble} means to remove the mark of a node.
+
+\begin{definition}[Static Pebbling Game]
+\label{def:pebbling-game}
+The \emph{Static Pebbling Game} is played by one player on a DAG $G = (V,E)$ with one distinguished node $s \in V$.
+The goal of the game is to pebble $s$, respecting the following rules:
+\begin{enumerate}
+	\item \label{rule:premises} A node $\n$ is pebbleable \emph{iff} all predecessors of $\n$ in $G$ are pebbled and $\n$ is currently not pebbled.
+	\item \label{rule:unpebbling} Pebbled nodes can be unpebbled at any time.
+	\item \label{rule:onlyonce} Once a node has been unpebbled, it can not be pebbled again later.
+\end{enumerate}
+%Only pebbled nodes can be unpebbled and only unpebbled nodes can be pebbled.
+The game is played in rounds.
+In each round the player makes a move by choosing a node $v \in V$, such that $v$ is pebbled or pebbleable.
+The action of the player is to pebble $v$ if $v$ is pebbleable and to unpebble $v$ if it is pebbled.
+Due to rule \ref{rule:premises} the action is uniquely defined.
+\qed
+\end{definition}
+
+Note that as a consequence of rule \ref{rule:premises}, pebbles can be put on nodes without predecessors at any time.
+Also note that rule \ref{rule:onlyonce} corresponds to fixing time requirements, as with this rule the number of rounds is $O(|V|)$.
+Playing the game on a proof $\varphi$ means to play the game on the underlying DAG with the distinguished node being the root of $\varphi$.
+
+\begin{definition}[Strategy]
+\label{def:strategy}
+A \emph{pebbling strategy} $\sigma$ for the Static Pebbling Game, played on a DAG $G = (V,E)$ and distinguished node $s$, is a sequence of moves $(\sigma_1,\ldots,\sigma_n)$ of the player such that $\sigma_n = s$.
+\end{definition}
+
+The following definition allows to measure how many pebbles are required to play the Static Pebbling Game on a given graph.
+
+\begin{definition}[Pebbling number]
+The \emph{pebbling number of a pebbling strategy} $(\sigma_1,\ldots,\sigma_n)$ is defined as 
+$ max_{\indexIn{i}{1}{n}}|\{ \n \in V \mid \n \text{ is pebbled in round } i\}| $.
+The \emph{pebbling number of a DAG $G$ and node $s$} is defined as the minimum pebbling number of all pebbling strategies for $G$ and $s$.
+\end{definition}
+
+Note that the definitions \ref{def:pebbling-game} and \ref{def:strategy} leave freedom when to do unpebbling moves.
+With the aim of finding strategies with low pebbling numbers, there is a canonical way when to do these moves, as will be shown later.
+
+\noindent
+The \emph{Static Pebbling Game} from definition \ref{def:pebbling-game} differs from the Black Pebbling Game discussed in \cite{hertel2007black,pippenger1982advances} in two aspects. 
+Firstly, the Black Pebbling Game does not include rule \ref{rule:onlyonce}. 
+Excluding this rule allows for pebbling strategies with lower pebbling numbers (\cite{sethi1975complete} has an example on page 1), which can have the cost of exponentially more moves \cite{van1979move}.
+Secondly, when pebbling a node in the Black Pebbling Game, one of its predecessors' pebbles can be used instead of a fresh pebble (i.e. a pebble can be moved). The trade-off when allowing to moving pebbles are discussed in \cite{van1979move}. Deciding whether the pebbling number of a graph $G$ and node $s$ is smaller than $k$ is PSPACE-complete in the absence of rule \ref{rule:onlyonce} \cite{gilbert1980pebbling} and NP-complete when rule \ref{rule:onlyonce} is included \cite{sethi1975complete}.
+

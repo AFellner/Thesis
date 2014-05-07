@@ -1,0 +1,44 @@
+\section{Propositional Resolution Calculus}
+\label{sec:Resolution}
+
+A \emph{literal} is a propositional variable or the negation of a propositional variable. The
+\emph{complement} of a literal $\ell$ is denoted $\dual{\ell}$ (i.e. for any propositional variable $p$,
+$\dual{p} = \neg p$ and $\dual{\neg p} = p$). The set of all literals is denoted $\mathcal{L}$. A
+\emph{clause} is a set of literals. $\bot$ denotes the \emph{empty clause}.
+
+
+\newcommand{\axiom}[1]{\widehat{#1}}
+\newcommand{\n}{v}
+\newcommand{\raiz}[1]{\rho(#1)}
+
+\begin{definition}[Proof] 
+\label{def:proof}
+A \emph{proof} $\varphi$ is a tuple $\langle V,E,\n,\clause \rangle$, 
+such that $\langle V,E \rangle$ is a directed acyclic graph whose edges are labeled with literals $\ell \in \mathcal{L}$, $\n \in V$, $\clause$ is a clause 
+and one of the following holds:
+
+\begin{enumerate}
+	\item $V = \{\n\}, E = \emptyset$
+	\item \label{enum:resCase} There are proofs $\varphi_L = \langle V_L, E_L, \n_L,\clause_L \rangle$ and $\varphi_R = \langle V_R, E_R, \n_R, \clause_R \rangle$ such that 
+	    \begin{align*}
+			\n & \text{ is a new node} \\
+      V &= V_L \cup V_R \cup \{\n \} \\
+      E &= E_L \cup E_R \cup
+                    \left\{\n_L \xrightarrow{\dual{\ell}} \n , \n_R \xrightarrow{\ell} \n \right\} \\
+     \Gamma &= \left( \clause_L \setminus \left\{ \dual{\ell} \right\} \right) \cup \left( \clause_R
+                    \setminus \left\{ \ell \right\} \right)
+    \end{align*}
+		$\n$ is called the \emph{root} of $\varphi$ and $\clause$ its \emph{conclusion}.\\
+		In case \ref{enum:resCase} $\varphi_L$ and $\varphi_R$ are called \emph{premises} of $\varphi$ and $\varphi$ is called a \emph{child} of both $\varphi_L$ and $\varphi_R$.
+		The transitive closure of the premise relation is the \emph{subproof} relation. A subproof which
+		has no premises is an \emph{axiom} of the respective proof.
+		$\Vertices{\varphi}$ and $\Axioms{\varphi}$ denote, respectively, the set of nodes and axioms of $\varphi$. $\Premises{\n}{\varphi}$ denotes the premises and $\Children{\n}{\varphi}$ the children of the subproof with root $\n$ in a proof $\varphi$. When a proof is represented graphically, the root is drawn at the bottom and the axioms at the top. The \emph{length} of a proof $\varphi$ is the number of nodes in $\Vertices{\varphi}$ and is denoted $\plength{\varphi}$.
+\qed
+\end{enumerate}
+
+\end{definition}
+
+\noindent
+Note that in case \ref{enum:resCase} of definition \ref{def:proof} $V_L$ and $V_R$ are not required to be disjunct. Therefore the underlying structure of proofs are DAGs as opposed to simple trees. Modern SAT- and SMT-solvers produce proofs of such kind \cite{BoutonCaminha-B.-de-OliveiraDeharbeFontaine2009veriT:-an-open-trustable-and-efficient-SMT-Solver,marques2009conflict} and the reuse of proof nodes plays a central role in proof compression \cite{fontaine2011compression}.\\
+Also note that a DAG corresponding to a proof by definition has exactly one sink, also called its root node.\\
+From hereon, if free from ambiguity, proofs and their underlying DAGs will not be distinguished. For example a node of a proof $\langle V,E,\n,\clause \rangle$ will be meant to be some $s \in V$.

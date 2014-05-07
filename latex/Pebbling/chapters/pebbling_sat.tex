@@ -1,0 +1,99 @@
+\section{Pebbling as a Satisfiability Problem}
+\label{sec:pebblingSAT}
+
+To find the pebble number of a proof, the question whether the proof can be pebbled using no more than $k$ pebbles can be encoded as a propositional satisfiability problem.
+In this chapter let $\varphi$ be a proof with nodes $\n_1,\ldots,\n_n$ and let $\n_n$ be its the root node. 
+Due to rule \ref{rule:onlyonce} of the Static Pebbling Game, the number of moves that pebble nodes is exactly $n$ and due to theorem \ref{theorem:canonical} determining the order of these moves is enough to define a strategy. 
+For every $x \in \{1,\ldots,k\}$, every $j \in \{1,\ldots,n\}$ and every $t \in \{0,\ldots,n\}$ there is a propositional variable $p_{x,j,t}$. 
+The variable $p_{x,j,t}$ being mapped to $\top$ by a valuation is interpreted as the fact that in the $t$'th round of the game node $v_j$ is marked with pebble $x$.
+Round $0$ is interpreted as the initial setting of the game before any move has been done.
+The following constraints, combined conjunctively, are satisfiable \textit{iff} there is a pebbling strategy $\sigma$ for $\varphi$ with pebbling number smaller or equal $k$. 
+In case the formula is satisfiable, a pebbling strategy can be read off from any satisfying assignment.
+
+\begin{enumerate}
+	\item The root is pebbled in the last round
+				$$\Psi_1 = \bigvee_{x = 1}^k p_{x,n,n}$$
+				
+	\item No node is pebbled initially\\
+				$$\Psi_2 = \bigwedge_{x = 1}^k \bigwedge_{j = 1}^n \left(\neg p_{x,j,0} \right)$$
+
+	\item A pebble can only be on one node in one round
+				$$\Psi_3 = \bigwedge_{x = 1}^k \bigwedge_{j = 1}^n \bigwedge_{t = 1}^n \left( p_{x,j,t} \rightarrow \bigwedge_{i = 1, i \neq j}^n \neg p_{x,i,t} \right)$$ 
+				
+	\item \label{c:pebble} For pebbling a node, its premises have to be pebbled the round before and only one node is being pebbled each round.\\
+				\begin{align*}
+					\Psi_4 = \bigwedge_{x = 1}^k \bigwedge_{j = 1}^n \bigwedge_{t = 1}^n & \Bigg( \left(\neg p_{x,j,t} \wedge p_{x,j,(t+1)} \right)\rightarrow \\
+					&\bigg( \bigwedge_{i \in \Premises{j}{\varphi}} \bigvee_{y = 1, y \neq x}^k p_{y,i,t} \bigg) \wedge 
+					\bigg( \bigwedge_{i = 1}^n \bigwedge_{y = 1, y \neq x}^k \neg \left( \neg p_{y,i,t} \wedge p_{y,i,(t+1)} \right) \bigg) \Bigg)
+				\end{align*}
+				
+\end{enumerate}
+
+The sets $\Axioms{\varphi}$ and $\Premises{j}{\varphi}$ are interpreted as sets of indices of the respective nodes.
+
+\noindent
+This encoding is polynomial, both in $n$ and $k$. However constraint \ref{c:pebble} accounts to $O(n^3*k^2)$ clauses. 
+Even small resolution proofs have more than $1000$ nodes and pebble numbers bigger than $100$, which adds up to $10^{13}$ clauses for constraint \ref{c:pebble} alone. 
+Therefore, although theoretically possible to play the pebbling game via SAT-solving, this is practically infeasible for compressing proof space.
+The following theorem proves the correctness of the encoding.
+
+\begin{theorem}[Correctness of SAT encoding of pebbling]
+
+$\Psi = \Psi_1 \wedge \Psi_2 \wedge \Psi_3 \wedge \Psi_4$ is satisfiable \emph{iff} there exists a pebbling strategy using no more than $k$ pebbles
+
+\end{theorem}
+
+\begin{proof}
+
+\emph{Suppose $\Psi$ is satisfiable} and let $\mathcal{I}$ be a satisfying variable assignment interpreted as the set of true variables.
+We will use $P(x,j,t)$ as an abbreviation for $p_{x,j,(t-1)} \notin \mathcal{I}$ and $p_{x,j,t} \in \mathcal{I}$.
+Since $\mathcal{I}$ satisfies $\Psi_3$, in $P(x,j,t)$ $x$ is uniquely defined by $j$ and $t$ and we can write $P(j,t)$ instead.
+First we will prove the following assertion.
+For every $t \in \{1,\ldots,n\}$ there exists exactly one $j \in \{1,\ldots,n\}$ such that $P(j,t)$.
+%Every node, expect the root itself, is a recursive ancestor of the proof root.
+$\Psi_1$ states that the root $v_n$ has to be pebbled in the last round and $\Psi_2$ states that no node is pebbled initially.
+So for $n$ there has to be a $t \in \{1,\ldots,n\}$ such that $P(n,t)$.
+$\mathcal{I}$ satisfies $\Psi_4$, therefore for every predecessor of $v_j$ of $v_n$ there exists $x \in \{1,\ldots,k\}$ such that $p_{x,j,(t-1)}$.
+Using the same argument for $v_j$ like for $v_n$ there has to be a $t' \in \{1,\ldots,(t-1)\}$ such that $P(j,t')$.
+Every node of the proof is a recursive ancestor of the root, therefore for every $j \in \{1,\ldots,n\}$ there exists at least one $t \in \{1,\ldots,n\}$ such that $P(n,t)$.
+For every $t \in \{1,\ldots,n\}$ $\Psi_4$ ensures that if $P(n,t)$ is true $\mathcal{I}$ then there is no $i \in \{1,\ldots,n\}, i \neq j$ such that $P(i,t)$, which proves the assertion.
+The assertion implies the existence of a bijection $\tau : \{1,\ldots,n\} \rightarrow \{v_1,\ldots,v_n\}$ such that $\tau(n) = v_n$ and $\tau(t) = j$ \emph{iff} $P(j,t)$.
+Therefore $\sigma := \{\tau(1),\ldots,\tau(n)\}$ is well defined.
+$\sigma$ is a pebbling strategy, because $\tau(n) = v_n$, rule \ref{rule:premises} is obeyed because of $\Psi_4$, rule \ref{rule:unpebbling} is obeyed, because unpebbling moves are given implicit (see Theorem \ref{theorem:canonical}) and rule \ref{rule:onlyonce} is obeyed because $\tau$ is a bijection.
+$\Psi_3$ being satisfied ensures that $\sigma$ uses no more than $k$ pebbles.
+
+\emph{Suppose there is a pebbling strategy $\sigma$ using no more than $k$ pebbles}. Let the function $\free: \{1,\ldots,n\} \rightarrow 2^{\{1,\ldots,k\}} \setminus \emptyset$ be defined recursively as follows and $\peb(t) = \min(\free(t)).$
+
+$$
+\[\free(t) = \left\{
+  \begin{array}{ll}
+    1 & : t = 1\\
+    \free(t-1) \setminus \{\peb(t-1)\} \quad \cup & : otherwise\\
+		\Big\{\peb(s) \mid \sigma_{s} \in \Premises{\sigma_{t-1}}{\varphi}, s \in \{1,\ldots,t-2\} \text{ and for all } v \in \Children{\sigma_{s}}{\varphi}&\\
+		\text{ there exists } r \in \{1,\ldots,t-1\}: \sigma_{r} = v \Big\}&
+  \end{array}
+\right.
+\]
+$$
+
+Intuitively, $\free(.)$ keeps track of the unused pebbles in each round.
+If a pebble is placed on a node, it is not free anymore.
+Pebbles are made free again by the implicit unpebbling moves, which correspond to the second set in the recursive definition of $\free(.)$.
+Since $\sigma$ uses no more than $k$ pebbles, $\free(.)$ is well defined.
+
+Let $\mathcal{I}$ be a set of variables of $\Psi$ defined as follows.
+$p_{x,j,t} \in \mathcal{I}$ \emph{iff} $t > 0$ and there exists $s \in \{1,\ldots,t\}$ such that $\peb(s) = x$, $\sigma_s = v_j$ and for all $r \in \{s+1,\ldots,t\}: x \notin \free(r)$.
+
+$\mathcal{I}$ is a satisfying assignment for $\Psi$.
+$\Psi_1$ is satisfied, because $\sigma_n = v_n$, therefore trivially $p_{\peb(n),n,n} \in \mathcal{I}$.
+Clearly $\Psi_2$ is satisfied by $\mathcal{I}$ as no variables with $t = 0$ are included in $\mathcal{I}$.
+To see that $\Psi_3$ is satisfied, suppose there exist $x,t,i,j$ such that $i \neq j$ and $\{p_{x,j,t},p_{x,i,t}\} \subseteq \mathcal{I}$.
+Then by definition of $\mathcal{I}$ there exist unique $t_1$ and $t_2$ such that $\peb(t_1) = x, \sigma_{t_1} = v_j$ and $\peb(t_2) = x, \sigma_{t_2} = v_i$.
+From $i \neq j$ follows $v_i \neq v_j$, therefore $t_1 \neq t_2$ w.l.o.g. suppose $t_1 > t_2$.
+From $\peb(t_2) = x$, $p_{x,i,t} \in \mathcal{I}$ and $t \geq t_1 > t_2$ follows $x \notin \free(t_1)$, which is a contradiction to $\peb(t_1) = x$.
+Let $P(x,j,t)$ be defined as above. Then from $P(x,j,t)$ follows $\peb(t) = x$ and $\sigma_t = v_j$.
+Rule \ref{rule:premises} of the static pebbling game ensures that there if $P(x,j,t)$ is true, then there exists a $y \{1,\ldots,k\} \setminus \{x\}$ such that $p_{y,i,t-1} \in \mathcal{I}$.
+Suppose $P(x,j,t)$ and $P(y,i,t)$ both hold for some $t$, $x \neq y$ and $i \neq j$, then $y = \peb(t) = x$ and $v_j = \sigma_t = v_i$ are both contradictions. 
+Therefore also $\Psi_4$ is satisfied by $\mathcal{I}$.
+\qed
+\end{proof}

@@ -1,0 +1,137 @@
+\section{Heuristics}
+\label{sec:heuristics}
+
+Both pebbling algorithms described in the previous section have to choose a node $h(N)$ out of a set $N$ at some point, where $h$ is a \emph{heuristic} function. For \algo{Top-Down} Pebbling, $N$ is the set of pebbleable nodes, and for \algo{Bottom-Up} Pebbling, $N$ is the set of premises of a node. Every heuristic $h$ considered here uses an auxiliary \emph{node evaluation} function $e_h$ that maps nodes to elements of a totally ordered set $S_h$. The chosen node $h(N)$ is then simply defined as $\mathit{argmax}_{\n \in N} e_h(\n)$ (i.e. $h(N)$ is a node in $N$ such that for all nodes $\n$ in N, $e_h(h(N)) \geq e_h(\n)$).
+
+\subsection{Number of Children Heuristic (``$Ch$'')}
+\label{sec:children}
+This heuristic uses the number of children of a node $\n$: $e_h(\n) = |\Children{\n}{\varphi}|$ and $S_h = \mathbb{N}$.
+The intuitive motivation for this heuristic is that nodes with many children will require many pebbles, and subproofs containing nodes with many children will tend to be more spacious. Example \ref{example:hardfirst} shows why it is a good idea to process spacious subproofs first.
+
+\begin{example}
+Figure \ref{fig:SpaciousFirst} shows a simple proof $\varphi$ with two subproofs $\varphi_1$ (left branch) and $\varphi_2$ (right branch). As shown in the leftmost diagram, assume $\pspace{\varphi_1}{<^1_T} = 4$ and $\pspace{\varphi_2}{<^2_T} = 5$.
+After pebbling one of the subproofs, the pebble on its root node has to be kept there until the root of the other subproof is also pebbled. Only then the root node can be pebbled. Therefore, $\pspace{\varphi}{\prec} = \pspace{\varphi_j}{<^j_T} + 1$ where $\prec = <^i_T ::: <^j_T$ and $i$ and $j$ are the indexes of the subproofs pebbled, respectively first and last. 
+Choosing to pebble the least spacious subproof $\varphi_1$ first results in $\pspace{\varphi}{\prec} = 6$, while pebbling the most spacious one first gives $\pspace{\varphi}{\prec} = 5$.
+This is a simplified situation. The two subproofs do not share nodes. Pebbling one of them does not influence the pebble number of the other.
+
+\begin{figure}[h]
+	\usetikzlibrary{shapes.geometric}
+	\tikzset{
+    triangle/.style={
+        draw,
+        shape border rotate=180,
+        regular polygon,
+        regular polygon sides=3,
+        node distance=\nodedistanceTwo,
+        %minimum height=4em,
+				minimum width= 1.5cm
+			}
+	}
+	\makebox[\textwidth][c]{
+	\begin{minipage}{.3\textwidth}
+		\begin{tikzpicture}[node distance=\nodedistanceTwo]
+			\node[circle, draw, anchor=mid](root) {?};
+			\addchildrenBW{root}{n1}{n2};
+			\node[triangle, above of = n1, yshift = -4mm]{4};
+			\node[triangle, above of = n2, yshift = -4mm]{5};
+			\whitenode{n1};
+			\whitenode{n2};
+			\drawchildren{root}{n1}{n2};
+		\end{tikzpicture}
+	\end{minipage}%
+		\begin{minipage}{.3\textwidth}
+		\begin{tikzpicture}[node distance=\nodedistanceTwo]
+			\node[circle, draw, anchor=mid](root) {6};
+			\addchildrenBW{root}{n1}{n2};
+			\node[triangle, above of = n1, yshift = -4mm]{ };
+			\node[triangle, above of = n2, yshift = -4mm]{5};
+			\blacknode{n1};
+			\whitenode{n2};
+			\drawchildren{root}{n1}{n2};
+		\end{tikzpicture}
+	\end{minipage}%
+		\begin{minipage}{.3\textwidth}
+		\begin{tikzpicture}[node distance=\nodedistanceTwo]
+			%\proofnodeBW{root};
+			\node[circle, draw, anchor=mid](root) {5};
+			\addchildrenBW{root}{n1}{n2};
+			\node[triangle, above of = n1, yshift = -4mm]{4};
+			\node[triangle, above of = n2, yshift = -4mm]{ };
+			\whitenode{n1};
+			\blacknode{n2};
+			\drawchildren{root}{n1}{n2};
+		\end{tikzpicture}
+	\end{minipage}%
+	}
+	\caption{Spacious subproof first}
+	\label{fig:SpaciousFirst}
+\end{figure}
+\label{example:hardfirst}
+\end{example}
+
+\subsection{Last Child Heuristic (``$Lc$'')}
+\label{sec:lastchild}
+
+As discussed in Section \ref{sec:pebblingchecking} in the proof of Theorem \ref{theorem:canonical}, the best moment to unpebble a node $\n$ is as soon as its last child w.r.t. a topological order $\prec$ is pebbled. 
+This insight can be used for a heuristic that prefers nodes that are last children of other nodes. Pebbling a node that allows another one to be unpebbled is always a good move. 
+The current number of used pebbles (after pebbling the node and unpebbling one of its premises) does not increase; 
+it might even decrease, if more than one premise can be unpebbled.
+For determining the number of premises of which a node is the last child, the proof has to be traversed once, using some topological order $\prec$.
+Before the traversal, $e_h(\n)$ is set to 0 for every node $\n$. During the traversal $e_h(\n)$ is increased by 1, if $\n$ is the last child of the currently processed node w.r.t. $\prec$. For this heuristic $S_h = \mathbb{N}$.
+To some extent, this heuristic is paradoxical: $\n$ may be the last child of a node $\n'$ according to $\prec$, but pebbling it early may result in another topological order $<^*_T$ according to which $\n$ is not the last child of $\n'$.
+Nevertheless, sometimes the proof structure ensures that some nodes are the last child of another node irrespective of the topological order. An example is shown in Figure \ref{fig:forcedLC}, where the dashed line denotes a recursive predecessor relationship and the bottommost node is the last child of the top right node in every topological order.
+
+\begin{figure}[h]
+	\centering{
+	\begin{tikzpicture}[node distance=1cm]
+		\proofnodeBW{n4};
+		\proofnodeBW[above left of = n4]{n3};
+		
+		%\proofnodeBW[above left of = n3]{n1};
+		
+		\proofnodeBW[above right of = n3]{n2};
+		%\withchildrenBW{n3}{n1}{n2};
+		%\drawchildren{n4}{n3}{n2};
+		%\node[above left of=n3] (emptynode) {};
+		%\draw[->,thick,cap=round,dashed] (n3) to (emptynode);
+		\draw[->,thick,cap=round,dashed] (n3) to (n2);
+		\draw[->,thick,cap=round] (n4) to (n2);
+		\draw[->,thick,cap=round,dashed] (n4) to (n3);
+		
+	\end{tikzpicture}
+	}
+	\caption{Bottommost node as necessary last child of right topmost node}
+	\label{fig:forcedLC}
+\end{figure}
+
+
+\subsection{Node Distance Heuristic (``$Dist(r)$'')}
+\label{sec:distance}
+
+In Example \ref{example:topdown} and Section \ref{sec:TDvsBU} it has been noted that \algo{Top-Down} Pebbling may perform badly if nodes that are far apart are selected. The Node \algo{Distance} Heuristic prefers to pebble nodes that are close to pebbled nodes. It does this by calculating spheres with a radius up to the parameter $r$ around nodes.
+A sphere $K_r^{G}(\n)$ with radius $r$ around the node $\n$ in the graph $G = (V,E)$ is the set $\{p \in V \mid \text{ there are at most } r \text{ edges between } p \text{ and } \n\}$. The direction of edges is not considered. The heuristic uses the following functions based on the spheres:
+\begin{align*}
+d(\n) &\defeq -min\{r \mid K_r^{G}(\n)\text{ contains a pebbled node}\}\\
+	s(\n) &\defeq |K_{-d(\n)}^G(\n)|\\
+	l(\n) &\defeq max_{<_N}K_{-d(\n)}^G(\n)\\
+	e_h(\n) &\defeq (d(\n),s(\n),l(\n))
+\end{align*}
+where $<_N$ denotes the total order on the initial sequence of pebbled nodes $N$, i.e. nodes in spheres that were pebbled later are preferred.
+So $S_h = \mathbb{Z} \times \mathbb{N} \times P$ together with the lexicographic order using, respectively, the natural smaller relation $<$ on $\mathbb{Z}$ and $\mathbb{N}$ and $<_N$ on $N$. The spheres $K_r(\n)$ can grow exponentially in $r$. Therefore the maximum radius has to be limited and if no pebbled node is found within in any sphere with this radius, another heuristic has to be used.
+
+
+\subsection{Decay Heuristics (``$Dc(h_u,\gamma,d,com)$'') }
+\label{sec:decay}
+\algo{Decay} Heuristics denote a family of meta heuristics. 
+The idea is to not only use the evaluation of a single node, but also to include the evaluations of its premises.
+Such a heuristic has four parameters: an underlying heuristic $h_u$ defined by an evaluation function $e_u$ together with a well ordered set $S_u$, a decay factor $\gamma \in \mathbb{R}^+ \cup \{0\}$, a recursion depth $d \in \mathbb{N}$ and a combining function $com: S_u^n \rightarrow S_u$ for $n \in \mathbb{N}$.\\
+The resulting heuristic node evaluation function $e_h$ is defined with the help of the recursive function $rec$:
+\begin{align*}
+	rec(\n,0) &\defeq e_u(\n) \\
+	rec(\n,k) &\defeq e_u(\n) + com(rec(p_1,k-1),\ldots,rec(p_n,k-1)) * \gamma\\
+	& \text{ where } \Premises{\n}{\varphi} = \{p_1,\ldots,p_n\}\\
+	% & \text{ and } k \in \{1,\ldots,d\} \\
+	%rec(\n,k) &\defeq com(h_u(\n), rec(p_1,k-1)*\gamma,\ldots,rec(p_{n-1},k-1) * \gamma)\\ %might be better - I will try this in the experiments
+	e_h(\n) &\defeq rec(\n,d) &
+\end{align*}
+
