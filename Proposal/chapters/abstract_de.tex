@@ -3,7 +3,7 @@
 Diese Arbeit befasst sich mit der Komprimierung von formalen Beweisen.
 Formale Beweise sind von gro{\ss}er Bedeutung in der modernen Informatik.
 Sie k\"onnen f\"ur den sicheren Austausch von deduktiven System verwendet werden.
-Des Weiteren k\"onnen aus ihnen Informationen, wie etwa Interpolants \cite{McMill2005}, extrahiert werden, welche zur L\"osung eines Problems beitragen \cite{Hofferek2013}.
+Des Weiteren k\"onnen aus ihnen Informationen, wie etwa Interpolanten \cite{McMill2005}, extrahiert werden, welche zur L\"osung eines Problems beitragen \cite{Hofferek2013}.
 
 Formale Beweise sind typischerweise sehr gro{\ss}, siehe etwa \cite{Konev2014} f\"ur einen 13GB Beweis eines Falles der Erd\H{o}s Discrepancy Conjecture.
 Bei solchen Beweisgr\"o{\ss}en sto{\ss}en Computersysteme an ihre Grenzen und deswegen ist es erforderlich Beweise zu komprimieren.
@@ -13,7 +13,7 @@ Die erste Methode entfernt Redundanzen im Kongruenzteil von SMT-Beweisen.
 Kongruenzbeweise schlie{\ss}en von einer Menge an Gleichungen auf neue Gleichungen mit der Vorraussetzung der vier Axiome: \emph{Reflexivit\"at}, \emph{Symmetrie}, \emph{Transitivit\"at} und \emph{Kongruenz}.
 Beweise, die von SMT-Solvern erzeugt werden, schlie{\ss}en oft auf neue Gleichungen aus einer unn\"otig gro{\ss}en Menge.
 Wir wollen kleinere Mengen finden, die f\"ur den Beweis der selben Aussage ausreichen und somit redundante Beweise durch k\"urzere ersetzen.
-Au{\ss}erdem werden wir die NP-completeness des Problems der k\"urzesten Erkl\"arung einer Gleichung beweisen.
+Au{\ss}erdem werden wir die NP-Vollst\"andigkeit des Problems der k\"urzesten Erkl\"arung einer Gleichung beweisen.
 
 Die zweite Methode untersucht die Speicherplatzanforderungen von Beweisen.
 Beim Bearbeiten von Beweisen muss nicht der gesamte Beweis zu jeder Zeit im Speicher gelagert werden.

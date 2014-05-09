@@ -7,7 +7,7 @@ They allow scientists to build theorems on top of another and thus discover new 
 Proofs not only serve as stepping stones, they can also provide insight on the nature of the underlying problem.
 
 Both statements are true for formal proofs as well.
-Formal proofs allow system to trust the output of other system and therefore they can safely be built on top of another. 
+Formal proofs allow system to trust the output of other systems and therefore they can safely be built on top of another. 
 For example SAT-Solvers are used extensively in modern deductive systems \cite{Biere2009}. 
 However, solvers may contain bugs. 
 Therefore their output can not be trusted blindly.
@@ -26,7 +26,7 @@ We present methods to compress proofs, produced by SMT- or SAT- Solvers, w.r.t. 
 The first measure is \emph{length}.
 The length of a proof is the number of inferences.
 For example the length of the resolution proof is the number of resolution applications.
-The congruence reasoning part of SMT-proofs has been found to be redundant often.
+The congruence reasoning part of SMT-proofs has often been found to be redundant.
 Congruence reasoning derives equations of terms that are implied by a given set of input equations, 
 using the four axioms \emph{reflexivity}, \emph{symmetry}, \emph{transitivity} and \emph{congruence}. 
 It can be redundant in the sense that subsets of the input may suffice to derive certain equations.
