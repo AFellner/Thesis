@@ -1,18 +1,39 @@
 \section{Heuristics}
 \label{sec:heuristics}
 
-Both pebbling algorithms described in the previous section have to choose a node $h(N)$ out of a set $N$ at some point, where $h$ is a \emph{heuristic} function. For \algo{Top-Down} Pebbling, $N$ is the set of pebbleable nodes, and for \algo{Bottom-Up} Pebbling, $N$ is the set of premises of a node. Every heuristic $h$ considered here uses an auxiliary \emph{node evaluation} function $e_h$ that maps nodes to elements of a totally ordered set $S_h$. The chosen node $h(N)$ is then simply defined as $\mathit{argmax}_{\n \in N} e_h(\n)$ (i.e. $h(N)$ is a node in $N$ such that for all nodes $\n$ in N, $e_h(h(N)) \geq e_h(\n)$).
+Heuristics are used in both pebbling algorithms to choose one node out of a set $N$. 
+For \algo{Top-Down} Pebbling, $N$ is the set of pebbleable nodes, and for \algo{Bottom-Up} Pebbling, $N$ is the set of unprocessed premises of a node. 
+The following definition clarifies what a heuristic in our setting is.
+
+\begin{definition}[Heuristic and Basic Heuristics]
+
+Let $\varphi$ be a proof with nodes $V$.
+A \emph{basic heuristic} $h$ for $\varphi$ is a set totally ordered set $S_h$ together with a \emph{node evaluation} function $e_h: V \rightarrow S_h$.
+A \emph{heuristics} for $\varphi$ is finite a sequence $(e_{h_1}, \ldots, e_{h_n})$ of basic heuristics such that the node evaluation of $e_{h_n}$ is injective.
+The \emph{choice} of the heuristic for a set $N \subseteq V$ is some $\n \in N$ such that $\n = \mathit{argmax}_{\n \in N} e_h_1(\n)$ if $\n$ is unique and the choice of the heuristic $(e_{h_2},\ldots,e_{h_n})$ for $\{\n \in N \mid \n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)\}$. This process will eventually terminate, because of the limitation to $e_{h_n}$.
+
+\end{definition}
+
+Note that to satisfy the requirement for $e_{h_n}$, some trivial node evaluation like mapping nodes to their address in memory can be used.
+In the next chapters we present basic heuristics, which are cheap to compute and are justified by relating them to the semantics of the static pebbling game.
+We will not elaborate on effects of reordering the basic heuristics of heuristics and will therefore omit the basic.
 
 \subsection{Number of Children Heuristic (``$Ch$'')}
 \label{sec:children}
-This heuristic uses the number of children of a node $\n$: $e_h(\n) = |\Children{\n}{\varphi}|$ and $S_h = \mathbb{N}$.
+The \algo{Number of Children} heuristic uses the number of children of a node $\n$ as evaluation function, i.e. $e_h(\n) = |\Children{\n}{\varphi}|$ and $S_h = \mathbb{N}$.
 The intuitive motivation for this heuristic is that nodes with many children will require many pebbles, and subproofs containing nodes with many children will tend to be more spacious. Example \ref{example:hardfirst} shows why it is a good idea to process spacious subproofs first.
 
 \begin{example}
-Figure \ref{fig:SpaciousFirst} shows a simple proof $\varphi$ with two subproofs $\varphi_1$ (left branch) and $\varphi_2$ (right branch). As shown in the leftmost diagram, assume $\pspace{\varphi_1}{<^1_T} = 4$ and $\pspace{\varphi_2}{<^2_T} = 5$.
-After pebbling one of the subproofs, the pebble on its root node has to be kept there until the root of the other subproof is also pebbled. Only then the root node can be pebbled. Therefore, $\pspace{\varphi}{\prec} = \pspace{\varphi_j}{<^j_T} + 1$ where $\prec = <^i_T ::: <^j_T$ and $i$ and $j$ are the indexes of the subproofs pebbled, respectively first and last. 
-Choosing to pebble the least spacious subproof $\varphi_1$ first results in $\pspace{\varphi}{\prec} = 6$, while pebbling the most spacious one first gives $\pspace{\varphi}{\prec} = 5$.
-This is a simplified situation. The two subproofs do not share nodes. Pebbling one of them does not influence the pebble number of the other.
+Figure \ref{fig:SpaciousFirst} shows a simple proof $\varphi$ with two subproofs $\varphi_1$ (left branch) and $\varphi_2$ (right branch). 
+As shown in the leftmost diagram, assume $\pspace{\varphi_1}{\prec_1} = 4$ and $\pspace{\varphi_2}{\prec_2} = 5$, where $\prec_1$ and $\prec_2$ represent some topological order of the respective subproofs.
+After pebbling one of the subproofs, the pebble on its root node has to be kept there until the root of the other subproof is also pebbled. 
+Only then the root node can be pebbled. 
+Therefore, $\pspace{\varphi}{\prec} = \pspace{\varphi_j}{\prec_j} + 1$ where $\prec = (root) ::: \prec_i ::: \prec_j$ and $i, j$ are the indexes of the subproofs pebbled first and second respectively. 
+Choosing to pebble the less spacious subproof $\varphi_1$ first results in $\pspace{\varphi}{\prec} = 6$, while pebbling the more spacious one first gives $\pspace{\varphi}{\prec} = 5$.
+
+Note that this example shows a simplified situation. 
+The two subproofs do not share nodes. 
+Pebbling one of them does not influence the pebbling number of the other.
 
 \begin{figure}[h]
 	\usetikzlibrary{shapes.geometric}
@@ -73,12 +94,14 @@ This is a simplified situation. The two subproofs do not share nodes. Pebbling o
 \label{sec:lastchild}
 
 As discussed in Section \ref{sec:pebblingchecking} in the proof of Theorem \ref{theorem:canonical}, the best moment to unpebble a node $\n$ is as soon as its last child w.r.t. a topological order $\prec$ is pebbled. 
-This insight can be used for a heuristic that prefers nodes that are last children of other nodes. Pebbling a node that allows another one to be unpebbled is always a good move. 
-The current number of used pebbles (after pebbling the node and unpebbling one of its premises) does not increase; 
-it might even decrease, if more than one premise can be unpebbled.
+This insight is used for the \algo{Last Child} heuristic that chooses nodes that are last children of other nodes. 
+Pebbling a node that allows another one to be unpebbled is always a good move. 
+The current number of used pebbles (after pebbling the node and unpebbling one of its premises) does not increase.
+It might even decrease, if more than one premise can be unpebbled.
 For determining the number of premises of which a node is the last child, the proof has to be traversed once, using some topological order $\prec$.
-Before the traversal, $e_h(\n)$ is set to 0 for every node $\n$. During the traversal $e_h(\n)$ is increased by 1, if $\n$ is the last child of the currently processed node w.r.t. $\prec$. For this heuristic $S_h = \mathbb{N}$.
-To some extent, this heuristic is paradoxical: $\n$ may be the last child of a node $\n'$ according to $\prec$, but pebbling it early may result in another topological order $<^*_T$ according to which $\n$ is not the last child of $\n'$.
+Before the traversal, $e_h(\n)$ is set to 0 for every node $\n$. During the traversal $e_h(\n)$ is increased by 1, if $\n$ is the last child of the currently processed node w.r.t. $\prec$. 
+For this heuristic $S_h = \mathbb{N}$.
+To some extent, this heuristic is paradoxical: $\n$ may be the last child of a node $\n'$ according to $\prec$, but pebbling it early may result in another topological order $\prec^*$ according to which $\n$ is not the last child of $\n'$.
 Nevertheless, sometimes the proof structure ensures that some nodes are the last child of another node irrespective of the topological order. An example is shown in Figure \ref{fig:forcedLC}, where the dashed line denotes a recursive predecessor relationship and the bottommost node is the last child of the top right node in every topological order.
 
 \begin{figure}[h]
@@ -108,21 +131,25 @@ Nevertheless, sometimes the proof structure ensures that some nodes are the last
 \subsection{Node Distance Heuristic (``$Dist(r)$'')}
 \label{sec:distance}
 
-In Example \ref{example:topdown} and Section \ref{sec:TDvsBU} it has been noted that \algo{Top-Down} Pebbling may perform badly if nodes that are far apart are selected. The Node \algo{Distance} Heuristic prefers to pebble nodes that are close to pebbled nodes. It does this by calculating spheres with a radius up to the parameter $r$ around nodes.
-A sphere $K_r^{G}(\n)$ with radius $r$ around the node $\n$ in the graph $G = (V,E)$ is the set $\{p \in V \mid \text{ there are at most } r \text{ edges between } p \text{ and } \n\}$. The direction of edges is not considered. The heuristic uses the following functions based on the spheres:
+In Example \ref{example:topdown} and Section \ref{sec:TDvsBU} it has been noted that \algo{Top-Down} Pebbling may perform badly if nodes that are far apart are selected by the heuristic.
+The Node \algo{Distance} heuristic prefers to pebble nodes that are close to pebbled nodes. It does this by calculating spheres with a radius up to the parameter $r$ around nodes.
+A sphere $K_r^{G}(\n)$ with radius $r$ around the node $\n$ in the graph $G = (V,E)$ is the set $\{p \in V \mid v \text{ can be reached from } p \text{ visiting at most } r \text{ edges}\}$, where edges are considered undirected. 
+The heuristic uses the following functions based on the spheres:
 \begin{align*}
-d(\n) &\defeq -min\{r \mid K_r^{G}(\n)\text{ contains a pebbled node}\}\\
+	d(\n) &\defeq \left\{\begin{array}{l}
+		-min(D) \text{ such that } D = \{r \mid K_r^{G}(\n)\text{ contains a pebbled node}\} \neq \emptyset\\
+		\infty \text{ otherwise}
+		\end{array}\\
 	s(\n) &\defeq |K_{-d(\n)}^G(\n)|\\
-	l(\n) &\defeq max_{<_N}K_{-d(\n)}^G(\n)\\
+	l(\n) &\defeq max_{\prec}K_{-d(\n)}^G(\n)\\
 	e_h(\n) &\defeq (d(\n),s(\n),l(\n))
 \end{align*}
-where $<_N$ denotes the total order on the initial sequence of pebbled nodes $N$, i.e. nodes in spheres that were pebbled later are preferred.
-So $S_h = \mathbb{Z} \times \mathbb{N} \times P$ together with the lexicographic order using, respectively, the natural smaller relation $<$ on $\mathbb{Z}$ and $\mathbb{N}$ and $<_N$ on $N$. The spheres $K_r(\n)$ can grow exponentially in $r$. Therefore the maximum radius has to be limited and if no pebbled node is found within in any sphere with this radius, another heuristic has to be used.
-
+where $\prec$ denotes the order of previously pebbled nodes.
+So $S_h = \mathbb{Z} \times \mathbb{N} \times P$ together with the lexicographic order using, respectively, the natural smaller relation $<$ on $\mathbb{Z}$ and $\mathbb{N}$ and $\prec$ on $N$. The spheres $K_r(\n)$ can grow exponentially in $r$. Therefore the maximum radius has to be kept small.
 
 \subsection{Decay Heuristics (``$Dc(h_u,\gamma,d,com)$'') }
 \label{sec:decay}
-\algo{Decay} Heuristics denote a family of meta heuristics. 
+\algo{Decay} heuristics denote a family of meta heuristics. 
 The idea is to not only use the evaluation of a single node, but also to include the evaluations of its premises.
 Such a heuristic has four parameters: an underlying heuristic $h_u$ defined by an evaluation function $e_u$ together with a well ordered set $S_u$, a decay factor $\gamma \in \mathbb{R}^+ \cup \{0\}$, a recursion depth $d \in \mathbb{N}$ and a combining function $com: S_u^n \rightarrow S_u$ for $n \in \mathbb{N}$.\\
 The resulting heuristic node evaluation function $e_h$ is defined with the help of the recursive function $rec$:

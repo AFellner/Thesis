@@ -8,7 +8,7 @@
 \usepackage{xcolor}
 \usepackage{enumitem,amsmath,amssymb}
 \usepackage{breakurl}    % used for \url and \burl
-\usepackage[linesnumbered,boxed,noline,noend]{algorithm2e}
+\usepackage[linesnumbered,boxed,noline]{algorithm2e}
 \def\defaultHypSeparation{\hskip.1in}
 
 \usepackage{tikz}
@@ -55,6 +55,7 @@
 \newcommand{\n}{v}
 \newcommand{\raiz}[1]{\rho(#1)}
 
+\newcommand{\pspace}[2]{s(#1,#2)}
 
 \title{Greedy Pebbling: \\ 
 Towards Proof Space Compression}
@@ -98,7 +99,7 @@ Towards Proof Space Compression}
 %\label{ch:resolution}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{chapters/resolution}
+%\input{chapters/resolution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Pebbling Game %%%%%%%%%%%%%%%%%%%%%%%
@@ -112,11 +113,11 @@ Towards Proof Space Compression}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Pebbling and Proof Checking %%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Pebbling and Proof Checking}
-%\label{ch:pebblingchecking}
+%\chapter{Pebbling and Proof Processing}
+%\label{ch:pebblingprocessing}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{chapters/pebbling_proof-checking}
+%\input{chapters/pebbling_proof-processing}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Pebbling as a Satisfiability Problem 
@@ -126,15 +127,6 @@ Towards Proof Space Compression}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\input{chapters/pebbling_sat}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Pebbling and Proof Checking %%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Pebbling and Proof Checking}
-%\label{ch:pebblingchecking}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\input{chapters/pebbling_proof-checking}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Greedy Pebbling Algorithms %%%%%%%%%%
@@ -152,7 +144,7 @@ Towards Proof Space Compression}
 %\label{ch:heuristics}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/pebbling_heuristics}
+\input{chapters/pebbling_heuristics}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Experiments %%%%%%%%%%%%%%%%%%%%%%%%%

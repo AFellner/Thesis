@@ -1,33 +1,35 @@
 \section{Greedy Pebbling Algorithms}
 \label{sec:algorithms}
 
-Theorem \ref{theorem:enumeration} and the remarks in the end of section \ref{sec:PebblingAsSat} indicate that obtaining an optimal topological order either by enumerating topological orders or by encoding the problem as a satisfiability problem is impractical. This section presents two greedy algorithms that aim at finding a better though not necessarily optimal topological order. They are both parameterized by the same heuristics described in Section \ref{sec:heuristics}, but differ from each other in the traversal direction in which the algorithms operate on proofs.
+Theorem \ref{theorem:enumeration} and the remarks in the end of section \ref{sec:PebblingAsSat} indicate that obtaining an optimal topological order either by enumerating topological orders or by encoding the problem as a satisfiability problem is impractical. 
+This section presents two greedy algorithms that aim at finding good though not necessarily optimal topological order. 
+They are both parameterized by some heuristic described in Section \ref{sec:heuristics}, but differ in the traversal direction in which the algorithms operate on proofs.
 
 \subsection{Top-Down Pebbling}
 
 \algo{Top-Down} Pebbling (Algorithm \ref{algo:TDpebbling}) constructs a topological order of a proof $\varphi$ by traversing it from its axioms to its root node.
 This approach closely corresponds to how a human would play the pebbling game. 
-A human would look at the nodes that are available for pebbling at a given state, choose one of them to pebble and remove pebbles if possible.
+A human would look at the nodes that are available for pebbling in the current round of the game, choose one of them to pebble and remove pebbles if possible.
 Similarly the algorithm keeps track of pebblable nodes in a set $N$, initialized as $\Axioms{\varphi}$.
 When a node $\n$ is pebbled, it is removed from $N$ and added to the sequence representing the topological order. The children of $\n$ that become pebbleable are added to $N$.
 When $N$ becomes empty, all nodes have been pebbled once and a topological order has been found.
 
 
 \begin{algorithm}[h]
-  \KwIn{a proof $\varphi$}
-  \KwOut{A sequence of nodes $S$ representing a topological order $\prec$ of $\varphi$}
+  \KwIn{proof $\varphi$}
+  \KwOut{sequence of nodes $S$ representing a topological order $\prec$ of $\varphi$}
 	
-	$S = ()$; // the empty sequence \\
-	$N = \Axioms{\varphi}$; // initialize pebbleable nodes with Axioms
+	$S = ()$; \tcp*[f]{the empty sequence} \\
+	$N = \Axioms{\varphi}$; \tcp*[f]{initialize pebbleable nodes with Axioms}
 	
   \While{$N$ is not empty}{
     choose $\n \in N$ heuristically\;
-		\For(// check whether $c$ is pebbleable after pebbling $\n$){\KwSty{each} $c \in \Children{\n}{\varphi}$}{ 
+		$S = S ::: (\n)$; \tcp*[f]{$:::$ is the concatenation of sequences}\\
+		$N = N \setminus \{\n\}$\;
+		\For(\tcp*[f]{check whether $c$ is now pebbleable}){\KwSty{each} $c \in \Children{\n}{\varphi}$}{ 
 			\If{$\forall p \in \Premises{c}{\varphi}: p \in S$}
 					{$N = N \cup \{c\}$\;}
 					}
-		$N = N \setminus \{\n\}$\;
-		$S = S ::: (\n)$; // $:::$ is the concatenation of sequences
   }
 	
 	\Return $S$\;
@@ -141,9 +143,9 @@ When $N$ becomes empty, all nodes have been pebbled once and a topological order
 \end{figure}
 
 Top-Down Pebbling often ends up finding a sub-optimal pebbling strategy regardless of the heuristic used. Consider the graph shown in Figure \ref{fig:TDP} and suppose that top-down pebbling has already pebbled the initial sequence of nodes $(1,2,3)$. 
-For a greedy heuristic that only has information about pebbled nodes, their premises and children, all nodes marked with `$4?$' are considered equally worthy to pebble next.
-Suppose the node marked with `$4$' in the middle graph is chosen to be pebbled next.
-Subsequently, pebbling `$5$' opens up the possibility to remove a pebble after the next move, which is to pebble `$6$'.
+For a greedy heuristic that only has information about pebbled nodes, their premises and children, all nodes marked with $4?$ are considered equally worthy to pebble next.
+Suppose the node marked with $4$ in the middle graph is chosen to be pebbled next.
+Subsequently, pebbling $5$ opens up the possibility to remove a pebble after the next move, which is to pebble $6$.
 After that only the middle subgraph has to be pebbled. No matter in which order this is done, the strategy will use six pebbles at some point. 
 One example sequence and the point where six pebbles are used are shown in the rightmost picture in Figure \ref{fig:TDP}.
 
@@ -155,16 +157,16 @@ One example sequence and the point where six pebbles are used are shown in the r
 \algo{Bottom-Up} Pebbling (Algorithms \ref{algo:BUpebbling} and \ref{algo:visit}) constructs a topological order of a proof $\varphi$ while traversing it from its root node to its axioms. The algorithm constructs the order by visiting nodes and their premises recursively. At every node $\n$ the order in which the premises of $\n$ are visited is decided heuristically. After visiting the premises, $n$ is added to the current sequence of nodes.
 Since axioms do not have any premises, there is no recursive call for axioms and these nodes are simply added to the sequence. The recursion is started by a call to visit the root.
 Since all proof nodes are ancestors of the root, the recursive calls will eventually visit all nodes once and a topological total order will be found.
-
+Bottom-Up Pebbling corresponds to how the apply function $\ap(.)$ was defined in Section \ref{sec:pebblingchecking} with the addition of a visit order of the premises for each node and the omission of calls to previously processed nodes.
 
 \SetKwFunction{KwVisit}{visit}
 
 \begin{algorithm}[h]
-  \KwIn{a proof $\varphi$ with root node $r$}
-  \KwOut{A sequence of nodes $S$ representing a topological order $\prec$ of $\varphi$}
+  \KwIn{proof $\varphi$ with root node $r$}
+  \KwOut{sequence of nodes $S$ representing a topological order $\prec$ of $\varphi$}
   \BlankLine
 
-	$S = ()$; // the empty sequence \\
+	$S = ()$\; \tcp*[f]{the empty sequence}\\
 	$V = \emptyset$\;
 	\Return \KwVisit{$\varphi$,$r$,$V$,$S$}\;
 
@@ -173,20 +175,20 @@ Since all proof nodes are ancestors of the root, the recursive calls will eventu
 \end{algorithm}
 
 \begin{algorithm}[h]
-  \KwIn{a proof $\varphi$}
-	\KwIn{a node $\n$}
-	\KwIn{a set of visited nodes $V$} 
+  \KwIn{proof $\varphi$}
+	\KwIn{node $\n$}
+	\KwIn{set of visited nodes $V$} 
 	\KwIn{initial sequence of nodes $S$}
-  \KwOut{a sequence of nodes}
+  \KwOut{sequence of nodes}
 	
-	$V_1 = V \cup \{\n\}$\;
-	$N = \Premises{\n}{\varphi} \setminus V$\;
-	$S_1 = S$
+	$V_1 = V \cup \{\n\}$;
+	$N = \Premises{\n}{\varphi} \setminus V$; \tcp*[f]{Only unprocessed premises are visited} \\
+	$S_1 = S$\;
 	
   \While{$N$ is not empty}{
-    choose $p \in N$ heuristically\;
+    choose $p \in N$ heuristically;
 		$N = N \setminus p$\;
-		$S_1 = S_1 ::: visit(\varphi,p,V,S)$; // $:::$ is the concatenation of sequences
+		$S_1 = S_1 ::: visit(\varphi,p,V,S)$; \tcp*[f]{$:::$ is the concatenation of sequences}
   }
 	
 	\Return $S_1 ::: (\n)$\;
@@ -197,9 +199,15 @@ Since all proof nodes are ancestors of the root, the recursive calls will eventu
 
 %\newcommand{\nodedistance2}{0.6cm}
 \begin{example}
-Figure \ref{fig:BUP} shows part of an execution of \algo{Bottom-Up} Pebbling on the same graph as presented in Figure \ref{fig:TDP}.
-Nodes chosen by the heuristic, during the Bottom-Up traversal, to be processed before the respective other premise are marked dashed. Similarly to the Top-Down Pebbling scenario, nodes have been chosen in such a way that the initial pebbling sequence is $(1,2,3)$.
-However, the choice of where to go next is predefined by the dashed nodes. Consider the dashed child of node `$3$'. Since `$3$' has been completely processed and pebbled, the other premise of its dashed child is visited next. The result is that node the middle subgraph is pebbled while only one external node is pebbled, while it have been two in the Top-Down scenario. At no point more than five pebbles will be used for pebbling the root node, which is shown in the bottom right picture of the figure. This is independently of the heuristic choices.\\
+Figure \ref{fig:BUP} shows part of an execution of \algo{Bottom-Up} Pebbling on the same proof as presented in Figure \ref{fig:TDP}.
+Nodes chosen by the heuristic, to be processed before the respective other premise, are marked dashed. 
+Suppose that similarly to the Top-Down Pebbling scenario, nodes have been chosen in such a way that the initial pebbling sequence is $(1,2,3)$.
+However, the choice of where to go next is predefined by the dashed nodes. 
+Consider the dashed child of node $3$. 
+Since $3$ has been completely processed, the other premise of its dashed child is visited next. 
+The result is that node the middle subgraph is pebbled while only one external node is pebbled, while it have been two in the Top-Down scenario. 
+At no point more than five pebbles will be used for pebbling the root node, which is shown in the bottom right picture of the figure. This is independently of the heuristic choices.
+
 Not that this example underlines the point of two observations: pebbling choices should be made local and hard subgraphs should be pebbled early.
 
 \begin{figure}[tb]
