@@ -10,7 +10,7 @@ The following definition clarifies what a heuristic in our setting is.
 Let $\varphi$ be a proof with nodes $V$.
 A \emph{basic heuristic} $h$ for $\varphi$ is a set totally ordered set $S_h$ together with a \emph{node evaluation} function $e_h: V \rightarrow S_h$.
 A \emph{heuristics} for $\varphi$ is finite a sequence $(e_{h_1}, \ldots, e_{h_n})$ of basic heuristics such that the node evaluation of $e_{h_n}$ is injective.
-The \emph{choice} of the heuristic for a set $N \subseteq V$ is some $\n \in N$ such that $\n = \mathit{argmax}_{\n \in N} e_h_1(\n)$ if $\n$ is unique and the choice of the heuristic $(e_{h_2},\ldots,e_{h_n})$ for $\{\n \in N \mid \n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)\}$. This process will eventually terminate, because of the limitation to $e_{h_n}$.
+The \emph{choice} of the heuristic for a set $N \subseteq V$ is some $\n \in N$ such that $\n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)$ if $\n$ is unique and the choice of the heuristic $(e_{h_2},\ldots,e_{h_n})$ for $\{\n \in N \mid \n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)\}$. This process will eventually terminate, because of the limitation to $e_{h_n}$.
 
 \end{definition}
 
@@ -136,7 +136,8 @@ The Node \algo{Distance} heuristic prefers to pebble nodes that are close to peb
 A sphere $K_r^{G}(\n)$ with radius $r$ around the node $\n$ in the graph $G = (V,E)$ is the set $\{p \in V \mid v \text{ can be reached from } p \text{ visiting at most } r \text{ edges}\}$, where edges are considered undirected. 
 The heuristic uses the following functions based on the spheres:
 \begin{align*}
-	d(\n) &\defeq \left\{\begin{array}{l}
+	d(\n) &\defeq \Bigg\{
+	\begin{array}{l}
 		-min(D) \text{ such that } D = \{r \mid K_r^{G}(\n)\text{ contains a pebbled node}\} \neq \emptyset\\
 		\infty \text{ otherwise}
 		\end{array}\\

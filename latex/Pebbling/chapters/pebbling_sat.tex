@@ -7,6 +7,7 @@ Due to rule \ref{rule:onlyonce} of the Static Pebbling Game, the number of moves
 For every $x \in \{1,\ldots,k\}$, every $j \in \{1,\ldots,n\}$ and every $t \in \{0,\ldots,n\}$ there is a propositional variable $p_{x,j,t}$. 
 The variable $p_{x,j,t}$ being mapped to $\top$ by a valuation is interpreted as the fact that in the $t$'th round of the game node $v_j$ is marked with pebble $x$.
 Round $0$ is interpreted as the initial setting of the game before any move has been done.
+\begin{definition}[Pebbling SAT encoding]
 The following constraints, combined conjunctively, are satisfiable \textit{iff} there is a pebbling strategy $\sigma$ for $\varphi$ with pebbling number smaller or equal $k$. 
 In case the formula is satisfiable, a pebbling strategy can be read off from any satisfying assignment.
 
@@ -31,13 +32,15 @@ In case the formula is satisfiable, a pebbling strategy can be read off from any
 
 The sets $\Axioms{\varphi}$ and $\Premises{j}{\varphi}$ are interpreted as sets of indices of the respective nodes.
 
+\end{definition}
+
 \noindent
 This encoding is polynomial, both in $n$ and $k$. However constraint \ref{c:pebble} accounts to $O(n^3*k^2)$ clauses. 
 Even small resolution proofs have more than $1000$ nodes and pebble numbers bigger than $100$, which adds up to $10^{13}$ clauses for constraint \ref{c:pebble} alone. 
 Therefore, although theoretically possible to play the pebbling game via SAT-solving, this is practically infeasible for compressing proof space.
 The following theorem proves the correctness of the encoding.
 
-\begin{theorem}[Correctness of SAT encoding of pebbling]
+\begin{theorem}[Correctness of pebbling SAT encoding]
 
 $\Psi = \Psi_1 \wedge \Psi_2 \wedge \Psi_3 \wedge \Psi_4$ is satisfiable \emph{iff} there exists a pebbling strategy using no more than $k$ pebbles
 
@@ -65,7 +68,7 @@ $\Psi_3$ being satisfied ensures that $\sigma$ uses no more than $k$ pebbles.
 \emph{Suppose there is a pebbling strategy $\sigma$ using no more than $k$ pebbles}. Let the function $\free: \{1,\ldots,n\} \rightarrow 2^{\{1,\ldots,k\}} \setminus \emptyset$ be defined recursively as follows and $\peb(t) = \min(\free(t)).$
 
 $$
-\[\free(t) = \left\{
+\free(t) = \left\{
   \begin{array}{ll}
     1 & : t = 1\\
     \free(t-1) \setminus \{\peb(t-1)\} \quad \cup & : otherwise\\
@@ -73,7 +76,6 @@ $$
 		\text{ there exists } r \in \{1,\ldots,t-1\}: \sigma_{r} = v \Big\}&
   \end{array}
 \right.
-\]
 $$
 
 Intuitively, $\free(.)$ keeps track of the unused pebbles in each round.

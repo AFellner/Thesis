@@ -1,5 +1,7 @@
 \documentclass{llncs}
 
+\usepackage{booktabs}
+
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -28,8 +30,13 @@
 \DeclareMathOperator{\peb}{peb}
 \DeclareMathOperator{\free}{free}
 \DeclareMathOperator{\ap}{ap}
+\DeclareMathOperator{\relPerfomance}{relative\_performance}
+
+\setlength{\belowbottomsep}{1ex}
 
 \newcommand{\indexIn}[3]{\ensuremath{#1 \scriptstyle \in \{#2\ldots #3\} \displaystyle}}
+
+\renewcommand{\arraystretch}{1.2}
 
 \usetikzlibrary{patterns}
 
@@ -90,7 +97,7 @@ Towards Proof Space Compression}
 %\label{ch:introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/pebbling_introduction}
+\input{chapters/pebbling_introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Resolution %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -99,7 +106,7 @@ Towards Proof Space Compression}
 %\label{ch:resolution}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/resolution}
+\input{chapters/resolution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Pebbling Game %%%%%%%%%%%%%%%%%%%%%%%
@@ -108,7 +115,7 @@ Towards Proof Space Compression}
 %\label{ch:pebbling-game}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/pebbling_game}
+\input{chapters/pebbling_game}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Pebbling and Proof Checking %%%%%%%%%
@@ -117,7 +124,7 @@ Towards Proof Space Compression}
 %\label{ch:pebblingprocessing}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/pebbling_proof-processing}
+\input{chapters/pebbling_proof-processing}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Pebbling as a Satisfiability Problem 
@@ -126,7 +133,7 @@ Towards Proof Space Compression}
 %\label{ch:pebblingSAT}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/pebbling_sat}
+\input{chapters/pebbling_sat}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Greedy Pebbling Algorithms %%%%%%%%%%
@@ -135,7 +142,7 @@ Towards Proof Space Compression}
 %\label{ch:algorithms}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/pebbling_algorithms}
+\input{chapters/pebbling_algorithms}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Heuristics %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -153,7 +160,7 @@ Towards Proof Space Compression}
 %\label{ch:experiments}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/pebbling_experiments}
+\input{chapters/pebbling_experiments}
 
 \section{Conclusions}
 
