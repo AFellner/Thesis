@@ -9,15 +9,13 @@ The following definition makes the notion of proof processing formal.
 \label{def:proof-processing}
 
 Let $\varphi$ be a proof with nodes $V$ and $T$ be an arbitrary set.
-Let $S = T \cup \{\bot\}$ where $\bot$ is a new symbol.
-We call a partial function $f: U \times S \times S \rightarrow T$ a \emph{processing function}.
-The partial \emph{apply function} $\ap: V \times T^{U\times S \times S} \rightarrow T$ is defined recursively as follows.
+We call a function $f: V \times T \times T \rightarrow T$ a \emph{processing function} if there is a function $g_f: V \rightarrow T$ such that for every $v \in V$ with $\Premises{v}{\varphi} = \emptyset$ (i.e. $v$ represents an axiom), $g_f(v) = f(v,t_1,t_2)$ for all $\{t_1,t_2\} \subseteq T$.
+The \emph{apply function} $\ap: V \times T^{V\times T \times T} \rightarrow T$ is defined recursively as follows.
 $$
-\ap(\n,f) = \Bigg\{
+\ap(\n,f) = \Big\{
 \begin{array}{ll}
-	f(\n,\ap(pr_1),\ap(pr_2)) &\text{ if } \n \text{ has premises } pr_1 \text{ and } pr_2\\
-	f(\n,\bot,\bot) &\text{ if } $\n$ \text{ is an axiom}\\
-	\text{ undefined }&\text{ otherwise}
+	f(\n,\ap(pr_1,f),\ap(pr_2,f)) &\text{ if } \n \text{ has premises } pr_1 \text{ and } pr_2\\
+	g_f(\n) &\text{ otherwise}\\
 \end{array}
 $$
 
@@ -28,29 +26,29 @@ $$
 
 \begin{example}
 
-Checking the correctness of a proof (i.e. checking for the absence of faulty resolution steps) can be checked in terms of the following processing function with $T = \{true,false\}$.
+Checking the correctness of a proof (i.e. checking for the absence of faulty resolution steps) can be checked in terms of the following processing function with $T = \{\top,\bot\}$ and $\wedge$ being the usual boolean and-operation.
 $$
 f(\n,w_1,w_2) = \left\{
 \begin{array}{ll}
-	true & \text{ if $w_1 = w_2 = \bot$} \\
+	\top & \text{ if $\n$ has no premises} \\
 	w_1 \wedge w_2 &\text{ if the conclusion of $\n$ is a resolvent}\\
 								 &\quad \text{ of the conclusions of its premises} \\
-	false & \text{ otherwise}
+	\bot & \text{ otherwise}
 \end{array}
 \right.
 $$
-Processing a proof with this processing function yields $true$ \emph{iff} the proof is a correct resolution proof.
+Processing a proof with this processing function yields $\top$ \emph{iff} the proof is a correct resolution proof.
 \qed
 \end{example}
 
 In Section \ref{sec:pebbling-game} it was pointed out that strategies with minimal pebbling numbers may require to play exponentially many rounds.
 Every round of the game corresponds to an I/O operation and, if the action of the player is to pebble a node, the processing of the node.
 The goal of proof compression is to reduce the hardness of proof processing, therefore requiring exponentially many I/O operations and processing steps is not a viable option.
-That is the reason why we chose the static pebbling game for our purpose.
-In the static pebbling game the number of rounds is essentially the number of nodes.
+That is the reason why we chose the Bounded Pebbling Game for our purpose.
+In the Bounded Pebbling Game the number of rounds is essentially the number of nodes.
 
 In order to process a node, the results of processing its premises are used and therefore have to be stored in memory.
-The requirement of having premises in memory corresponds to rule \ref{rule:premises} of the static pebbling game. 
+The requirement of having premises in memory corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game. 
 Processing a node and I/O operations are typically more expensive than extra memory consumption, therefore in our setting every node can be processed only once, which corresponds to rule \ref{rule:onlyonce}.
 A node that has been processed can be removed from memory, which corresponds to rule \ref{rule:unpebbling}.
 Note that removing a node and its results too early in combination with \ref{rule:onlyonce} makes it impossible to process the whole proof.
@@ -71,25 +69,32 @@ A pebbling strategy $\sigma = (\sigma_1,\ldots,\sigma_n)$ \emph{respects} a topo
 
 A topological order $\prec$ of a proof $\varphi$ can be represented as a sequence $(v_1,\dots,v_n)$ of proof nodes, by defining $\prec \defeq \{(v_i,v_j) \mid 1 \leq i < j \leq n\}$. 
 This sequence can be interpreted as a particular pebbling strategy for the game played on $\varphi$.
-The requirement of topological orders to order premises higher than their children corresponds to rule \ref{rule:premises} of the static pebbling game.
+The requirement of topological orders to order premises higher than their children corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game.
 The antisymmetry together with the fact that $V = \{v_1,\dots,v_n\}$ corresponds to rule \ref{rule:onlyonce}.
 The only thing missing are the unpebbling moves.
 The following theorem states that unpebbling moves are given implicit, when the goal is to find strategies with small pebbling numbers.
 
 %TODO: remove the ugly k
 \begin{definition}[Canonical Topological Pebbling Strategy]
-The \emph{canonical topological pebbling strategy} $\sigma$ for a proof $\varphi$, its root node $s$ and a topological order $\prec$ represented as a sequence $(v_1,\dots,v_n)$ is recursively:
+The \emph{canonical topological pebbling strategy} $\sigma$ for a proof $\varphi$, its root node $s$ and a topological order $\prec$ represented as a sequence $(v_1,\dots,v_n)$ is defined recursively:
 $$
-\begin{array}{ll}
-\sigma_1 = v_1 & \\
-\sigma_i = v_j\text{ such that } & \text{for all }v \in \Premises{v_j}{\varphi}:\text{ there exists }k < i, \sigma_k = v \\
-                                 & \text{or } j = min(k \mid \text{ for all }l < i: \sigma_l \neq v_k
+\begin{array}{l}
+\sigma_1 = p(v_1) \\
+\sigma_i = 
+	\left\{
+	\begin{array}{ll}
+		u(v_j) & \text{ if there exists $j$ such that for all }v \in \Children{v_j}{\varphi}: \\
+		       & \quad \text{ there exists }k < i, \sigma_k = p(v) \text{ and }\\
+					 & \quad \text{ for all } l: k < l < i, \sigma_l \neq u(v_j) \\
+		p(v_j) & \text{ otherwise where } j = min(k \mid \text{ for all }l < i: \sigma_l \neq p(v_k))
+	\end{array}
+	\right.
 \end{array}
 $$
 \qed
 \end{definition}
 
-The following theorem shows that unpebbling moves can be omitted from strategies for the static pebbling game, when the goal is to produce strategies with low pebbling numbers.
+The following theorem shows that unpebbling moves can be omitted from strategies for the Bounded Pebbling Game, when the goal is to produce strategies with low pebbling numbers.
 
 \begin{theorem}
 \label{theorem:canonical}

@@ -1,5 +1,88 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
+
+\bibitem{Ben-Sasson2002}
+Ben-Sasson, E.: Size space tradeoffs for resolution. In: STOC. pp. 457--464
+  (2002)
+
+\bibitem{Ben-Sasson2009}
+Ben-Sasson, E., Nordstr{\"o}m, J.: Short proofs may be spacious: An optimal
+  separation of space and length in resolution. Electronic Colloquium on
+  Computational Complexity (ECCC)  16, ~2 (2009)
+
+\bibitem{tracecheck}
+Biere, A.: Tracecheck resolution proof format (2006),
+  \url{http://fmv.jku.at/tracecheck/README.tracecheck}
+
+\bibitem{Biere2009}
+Biere, A., Heule, M., van Maaren, H., Walsh, T. (eds.): Handbook of
+  Satisfiability, Frontiers in Artificial Intelligence and Applications, vol.
+  185. IOS Press (2009)
+
+\bibitem{Bouton2009}
+Bouton, T., de~Oliveira, D.C.B., D{\'e}harbe, D., Fontaine, P.: verit: An open,
+  trustable and efficient smt-solver. In: CADE. pp. 151--156 (2009)
+
+\bibitem{Chan2013}
+Chan, S.M.: Pebble games and complexity  (2013)
+
+\bibitem{EmdeBoas1979}
+van Emde~Boas, P., van Leeuwen, J.: Move rules and trade-offs in the pebble
+  game. In: Theoretical Computer Science. pp. 101--112 (1979)
+
+\bibitem{Esteban2001}
+Esteban, J.L., Tor{\'a}n, J.: Space bounds for resolution. Inf. Comput.
+  171(1),  84--97 (2001)
+
+\bibitem{Fontaine2011}
+Fontaine, P., Merz, S., Paleo, B.W.: Compression of propositional resolution
+  proofs via partial regularization. In: CADE. pp. 237--251 (2011)
+
+\bibitem{Gilbert1980}
+Gilbert, J.R., Lengauer, T., Tarjan, R.E.: The pebbling problem is complete in
+  polynomial space. SIAM J. Comput.  9(3),  513--524 (1980)
+
+\bibitem{Hertel2007}
+Hertel, P., Pitassi, T.: Black-white pebbling is pspace-complete. Electronic
+  Colloquium on Computational Complexity (ECCC)  14(044) (2007)
+
+\bibitem{drup}
+Heule, M.: Drup proof format (2007), \url{www.cs.utexas.edu/\~{}marijn/drup/}
+
+\bibitem{bdrup}
+Heule, M.: Bdrup proof format (2013), \url{\\
+  www.satcompetition.org/2013/certunsat.shtml}
+
+\bibitem{Hofferek2013}
+Hofferek, G., Gupta, A., K{\"o}nighofer, B., Jiang, J.H.R., Bloem, R.:
+  Synthesizing multiple boolean functions using interpolation on a single
+  proof. CoRR  abs/1308.4767 (2013)
+
+\bibitem{Kasai1979}
+Kasai, T., Adachi, A., Iwata, S.: Classes of pebble games and complete
+  problems. SIAM J. Comput.  8(4),  574--586 (1979)
+
+\bibitem{Nordstroem2009}
+Nordstr{\"o}m, J.: Narrow proofs may be spacious: Separating space and width in
+  resolution. SIAM J. Comput.  39(1),  59--121 (2009)
+
+\bibitem{Boudou}
+Paleo, B.W., Boudou, J., Fellner, A.: Skeptik system description
+
+\bibitem{Pippenger1980}
+Pippenger, N.: Comparative schematology and pebbling with auxiliary pushdowns
+  (preliminary version). In: STOC. pp. 351--356 (1980)
+
+\bibitem{Pippenger1982}
+Pippenger, N.: Advances in pebbling. Springer (1982)
+
+\bibitem{Sethi1975}
+Sethi, R.: Complete register allocation problems. SIAM J. Comput.  4(3),
+  226--248 (1975)
+
+\bibitem{Walker1973}
+Walker, S.A., Strong, H.R.: Characterizations of flowchartable recursions. J.
+  Comput. Syst. Sci.  7(4),  404--447 (1973)
 
 \end{thebibliography}

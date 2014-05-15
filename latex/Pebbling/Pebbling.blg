@@ -1,5 +1,22 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: Pebbling.aux
 The style file: splncs.bst
-I found no \citation commands---while reading file Pebbling.aux
-Database file #1: biblio.bib
-(There was 1 error message)
+Database file #1: ../jabref_references.bib
+A bad cross reference---entry "Bouton2009"
+refers to entry "DBLP:conf/cade/2009", which doesn't exist
+A bad cross reference---entry "Fontaine2011"
+refers to entry "DBLP:conf/cade/2011", which doesn't exist
+A bad cross reference---entry "Pippenger1980"
+refers to entry "DBLP:conf/stoc/STOC12", which doesn't exist
+A bad cross reference---entry "EmdeBoas1979"
+refers to entry "DBLP:conf/tcs/1979", which doesn't exist
+A bad cross reference---entry "Ben-Sasson2002"
+refers to entry "DBLP:conf/stoc/2002", which doesn't exist
+Warning--I didn't find a database entry for "Biere2008"
+Warning--I didn't find a database entry for "DBLP:conf/stoc/2002"
+Warning--I didn't find a database entry for "DBLP:conf/cade/2009"
+Warning--I didn't find a database entry for "DBLP:conf/tcs/1979"
+Warning--I didn't find a database entry for "DBLP:conf/cade/2011"
+Warning--I didn't find a database entry for "DBLP:conf/stoc/STOC12"
+Warning--empty journal in Chan2013
+Warning--empty note in Boudou
+(There were 5 error messages)

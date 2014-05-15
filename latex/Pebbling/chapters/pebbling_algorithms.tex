@@ -1,14 +1,14 @@
 \section{Greedy Pebbling Algorithms}
 \label{sec:algorithms}
 
-Theorem \ref{theorem:enumeration} and the remarks in the end of section \ref{sec:PebblingAsSat} indicate that obtaining an optimal topological order either by enumerating topological orders or by encoding the problem as a satisfiability problem is impractical. 
+Theorem \ref{theorem:enumeration} and the remarks in the end of section \ref{sec:pebblingSAT} indicate that obtaining an optimal topological order either by enumerating topological orders or by encoding the problem as a satisfiability problem is impractical. 
 This section presents two greedy algorithms that aim at finding good though not necessarily optimal topological order. 
 They are both parameterized by some heuristic described in Section \ref{sec:heuristics}, but differ in the traversal direction in which the algorithms operate on proofs.
 
 \subsection{Top-Down Pebbling}
 
-\algo{Top-Down} Pebbling (Algorithm \ref{algo:TDpebbling}) constructs a topological order of a proof $\varphi$ by traversing it from its axioms to its root node.
-This approach closely corresponds to how a human would play the pebbling game. 
+Top-Down Pebbling (Algorithm \ref{algo:TDpebbling}) constructs a topological order of a proof $\varphi$ by traversing it from its axioms to its root node.
+This approach closely corresponds to how a human would play the Bounded Pebbling Game. 
 A human would look at the nodes that are available for pebbling in the current round of the game, choose one of them to pebble and remove pebbles if possible.
 Similarly the algorithm keeps track of pebblable nodes in a set $N$, initialized as $\Axioms{\varphi}$.
 When a node $\n$ is pebbled, it is removed from $N$ and added to the sequence representing the topological order. The children of $\n$ that become pebbleable are added to $N$.
@@ -154,7 +154,7 @@ One example sequence and the point where six pebbles are used are shown in the r
 
 \subsection{Bottom-Up Pebbling}
 
-\algo{Bottom-Up} Pebbling (Algorithms \ref{algo:BUpebbling} and \ref{algo:visit}) constructs a topological order of a proof $\varphi$ while traversing it from its root node to its axioms. The algorithm constructs the order by visiting nodes and their premises recursively. At every node $\n$ the order in which the premises of $\n$ are visited is decided heuristically. After visiting the premises, $n$ is added to the current sequence of nodes.
+Bottom-Up Pebbling (Algorithms \ref{algo:BUpebbling} and \ref{algo:visit}) constructs a topological order of a proof $\varphi$ while traversing it from its root node to its axioms. The algorithm constructs the order by visiting nodes and their premises recursively. At every node $\n$ the order in which the premises of $\n$ are visited is decided heuristically. After visiting the premises, $n$ is added to the current sequence of nodes.
 Since axioms do not have any premises, there is no recursive call for axioms and these nodes are simply added to the sequence. The recursion is started by a call to visit the root.
 Since all proof nodes are ancestors of the root, the recursive calls will eventually visit all nodes once and a topological total order will be found.
 Bottom-Up Pebbling corresponds to how the apply function $\ap(.)$ was defined in Section \ref{sec:pebblingchecking} with the addition of a visit order of the premises for each node and the omission of calls to previously processed nodes.
@@ -199,7 +199,7 @@ Bottom-Up Pebbling corresponds to how the apply function $\ap(.)$ was defined in
 
 %\newcommand{\nodedistance2}{0.6cm}
 \begin{example}
-Figure \ref{fig:BUP} shows part of an execution of \algo{Bottom-Up} Pebbling on the same proof as presented in Figure \ref{fig:TDP}.
+Figure \ref{fig:BUP} shows part of an execution of Bottom-Up Pebbling on the same proof as presented in Figure \ref{fig:TDP}.
 Nodes chosen by the heuristic, to be processed before the respective other premise, are marked dashed. 
 Suppose that similarly to the Top-Down Pebbling scenario, nodes have been chosen in such a way that the initial pebbling sequence is $(1,2,3)$.
 However, the choice of where to go next is predefined by the dashed nodes. 
@@ -352,6 +352,6 @@ Not that this example underlines the point of two observations: pebbling choices
 \subsection{Remarks about Top-Down and Bottom-Up Pebbling} %or: Which way to go?
 \label{sec:TDvsBU}
 
-In principle every topological order of a given proof can be constructed using Top-down or Bottom-up Pebbling. Both algorithms traverse the proof only once and have linear run-time in the proof length (assuming that the heuristic choice requires constant time). Example \ref{example:TDPIssue} shows a situation where \algo{Top-Down} Pebbling may pebble a node that is far away from the previously pebbled nodes. This results in a sub-optimal pebbling strategy.
-As discussed in Example \ref{example:BUP}, \algo{Bottom-Up} Pebbling is more immune to this non-locality issue, because queuing up the processing of premises enforces local pebbling. This suggests that \algo{Bottom-Up} is better than \algo{Top-Down}, which is confirmed by the experiments in Section \ref{sec:exp}.
+In principle every topological order of a given proof can be constructed using Top-down or Bottom-up Pebbling. Both algorithms traverse the proof only once and have linear run-time in the proof length (assuming that the heuristic choice requires constant time). Example \ref{example:TDPIssue} shows a situation where Top-Down Pebbling may pebble a node that is far away from the previously pebbled nodes. This results in a sub-optimal pebbling strategy.
+As discussed in Example \ref{example:BUP}, Bottom-Up Pebbling is more immune to this non-locality issue, because queuing up the processing of premises enforces local pebbling. This suggests that Bottom-Up is better than Top-Down, which is confirmed by the experiments in Section \ref{sec:experiments}.
 

@@ -3,7 +3,7 @@
 
 To find the pebble number of a proof, the question whether the proof can be pebbled using no more than $k$ pebbles can be encoded as a propositional satisfiability problem.
 In this chapter let $\varphi$ be a proof with nodes $\n_1,\ldots,\n_n$ and let $\n_n$ be its the root node. 
-Due to rule \ref{rule:onlyonce} of the Static Pebbling Game, the number of moves that pebble nodes is exactly $n$ and due to theorem \ref{theorem:canonical} determining the order of these moves is enough to define a strategy. 
+Due to rule \ref{rule:onlyonce} of the Bounded Pebbling Game, the number of moves that pebble nodes is exactly $n$ and due to theorem \ref{theorem:canonical} determining the order of these moves is enough to define a strategy. 
 For every $x \in \{1,\ldots,k\}$, every $j \in \{1,\ldots,n\}$ and every $t \in \{0,\ldots,n\}$ there is a propositional variable $p_{x,j,t}$. 
 The variable $p_{x,j,t}$ being mapped to $\top$ by a valuation is interpreted as the fact that in the $t$'th round of the game node $v_j$ is marked with pebble $x$.
 Round $0$ is interpreted as the initial setting of the game before any move has been done.
@@ -94,7 +94,7 @@ Then by definition of $\mathcal{I}$ there exist unique $t_1$ and $t_2$ such that
 From $i \neq j$ follows $v_i \neq v_j$, therefore $t_1 \neq t_2$ w.l.o.g. suppose $t_1 > t_2$.
 From $\peb(t_2) = x$, $p_{x,i,t} \in \mathcal{I}$ and $t \geq t_1 > t_2$ follows $x \notin \free(t_1)$, which is a contradiction to $\peb(t_1) = x$.
 Let $P(x,j,t)$ be defined as above. Then from $P(x,j,t)$ follows $\peb(t) = x$ and $\sigma_t = v_j$.
-Rule \ref{rule:premises} of the static pebbling game ensures that there if $P(x,j,t)$ is true, then there exists a $y \{1,\ldots,k\} \setminus \{x\}$ such that $p_{y,i,t-1} \in \mathcal{I}$.
+Rule \ref{rule:premises} of the Bounded Pebbling Game ensures that there if $P(x,j,t)$ is true, then there exists a $y \{1,\ldots,k\} \setminus \{x\}$ such that $p_{y,i,t-1} \in \mathcal{I}$.
 Suppose $P(x,j,t)$ and $P(y,i,t)$ both hold for some $t$, $x \neq y$ and $i \neq j$, then $y = \peb(t) = x$ and $v_j = \sigma_t = v_i$ are both contradictions. 
 Therefore also $\Psi_4$ is satisfied by $\mathcal{I}$.
 \qed

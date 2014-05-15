@@ -1,10 +1,116 @@
 \relax 
+\citation{Hofferek2013}
+\citation{drup}
+\citation{bdrup}
+\citation{tracecheck}
+\citation{Kasai1979,Gilbert1980}
 \@writefile{toc}{\contentsline {title}{Greedy Pebbling: \unskip \ \ignorespaces  Towards Proof Space Compression}{1}}
 \@writefile{toc}{\authcount {2}}
 \@writefile{toc}{\contentsline {author}{ Andreas Fellner \unskip {} \and Bruno Woltzenlogel Paleo \unskip {} }{1}}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Pebbling as a Satisfiability Problem}{1}}
-\newlabel{sec:pebblingSAT}{{1}{1}}
-\newlabel{c:pebble}{{4}{2}}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
+\citation{Bouton2009,Biere2009}
+\citation{Fontaine2011}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Propositional Resolution Calculus}{2}}
+\newlabel{sec:Resolution}{{2}{2}}
+\newlabel{def:proof}{{1}{2}}
+\newlabel{enum:resCase}{{2}{2}}
+\citation{Pippenger1980,Walker1973}
+\citation{Sethi1975}
+\citation{Chan2013}
+\citation{Ben-Sasson2009,Esteban2001,Nordstroem2009}
+\citation{EmdeBoas1979,Ben-Sasson2002}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Pebbling Game}{3}}
+\newlabel{sec:pebbling-game}{{3}{3}}
+\newlabel{def:pebbling-game}{{2}{3}}
+\newlabel{rule:premises}{{1}{3}}
+\newlabel{rule:unpebbling}{{2}{3}}
+\newlabel{rule:onlyonce}{{3}{3}}
+\citation{Hertel2007,Pippenger1982}
+\citation{Sethi1975}
+\citation{EmdeBoas1979}
+\citation{EmdeBoas1979}
+\citation{Gilbert1980}
+\citation{Sethi1975}
+\newlabel{def:strategy}{{3}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Pebbling and Proof Processing}{4}}
+\newlabel{sec:pebblingchecking}{{4}{4}}
+\newlabel{def:proof-processing}{{5}{4}}
+\newlabel{def:topological-order}{{6}{5}}
+\newlabel{theorem:canonical}{{1}{6}}
+\newlabel{def:space measure}{{8}{6}}
+\newlabel{theorem:enumeration}{{2}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Pebbling as a Satisfiability Problem}{7}}
+\newlabel{sec:pebblingSAT}{{5}{7}}
+\newlabel{c:pebble}{{4}{8}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Greedy Pebbling Algorithms}{9}}
+\newlabel{sec:algorithms}{{6}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Top-Down Pebbling}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Top-Down Pebbling\relax }}{10}}
+\newlabel{fig:TDP}{{1}{10}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces .}}{10}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{algo:TDpebbling}{{1}{10}}
+\newlabel{example:topdown}{{2}{10}}
+\newlabel{example:TDPIssue}{{2}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Bottom-Up Pebbling}{11}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces .}}{11}}
+\newlabel{algo:BUpebbling}{{2}{11}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces .}}{11}}
+\newlabel{algo:visit}{{3}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Bottom-Up Pebbling\relax }}{12}}
+\newlabel{fig:BUP}{{2}{12}}
+\newlabel{example:BUP}{{3}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Remarks about Top-Down and Bottom-Up Pebbling}{12}}
+\newlabel{sec:TDvsBU}{{6.3}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Heuristics}{13}}
+\newlabel{sec:heuristics}{{7}{13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Number of Children Heuristic (``$Ch$'')}{13}}
+\newlabel{sec:children}{{7.1}{13}}
+\newlabel{example:hardfirst}{{4}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Spacious subproof first\relax }}{14}}
+\newlabel{fig:SpaciousFirst}{{3}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Last Child Heuristic (``$Lc$'')}{14}}
+\newlabel{sec:lastchild}{{7.2}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Bottommost node as necessary last child of right topmost node\relax }}{14}}
+\newlabel{fig:forcedLC}{{4}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Node Distance Heuristic (``$Dist(r)$'')}{14}}
+\newlabel{sec:distance}{{7.3}{14}}
+\citation{Boudou}
+\citation{Biere2008}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Decay Heuristics (``$Dc(h_u,\gamma ,d,com)$'') }{15}}
+\newlabel{sec:decay}{{7.4}{15}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Experiments}{15}}
+\newlabel{sec:experiments}{{8}{15}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Proof benchmark sets\relax }}{16}}
+\newlabel{tab:benchmarks}{{1}{16}}
+\newlabel{eq:space}{{1}{16}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Experimental results\relax }}{17}}
+\newlabel{tab:results}{{2}{17}}
 \bibstyle{splncs}
-\bibdata{biblio}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Conclusions}{3}}
+\bibdata{../jabref_references}
+\bibcite{Ben-Sasson2002}{1}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Spaces obtained with best Bottom-Up and Top-Down heuristics\relax }}{18}}
+\newlabel{fig:BUvsTD}{{5}{18}}
+\@writefile{toc}{\contentsline {paragraph}{Acknowledgments:}{18}}
+\bibcite{Ben-Sasson2009}{2}
+\bibcite{tracecheck}{3}
+\bibcite{Biere2009}{4}
+\bibcite{Bouton2009}{5}
+\bibcite{Chan2013}{6}
+\bibcite{EmdeBoas1979}{7}
+\bibcite{Esteban2001}{8}
+\bibcite{Fontaine2011}{9}
+\bibcite{Gilbert1980}{10}
+\bibcite{Hertel2007}{11}
+\bibcite{drup}{12}
+\bibcite{bdrup}{13}
+\bibcite{Hofferek2013}{14}
+\bibcite{Kasai1979}{15}
+\bibcite{Nordstroem2009}{16}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Best space measure compared to proof length\relax }}{19}}
+\newlabel{fig:SpaceVSLength}{{6}{19}}
+\bibcite{Boudou}{17}
+\bibcite{Pippenger1980}{18}
+\bibcite{Pippenger1982}{19}
+\bibcite{Sethi1975}{20}
+\bibcite{Walker1973}{21}
