@@ -39,34 +39,27 @@ These proofs\footnote{SMT proofs: \url{www.logic.at/people/bruno/Experiments/201
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{table}[tb]
 \centering
-\setlength{\tabcolsep}{8pt}
+%\setlength{\tabcolsep}{8pt}
 \begin{tabular}{l c c}
-%\hline
 \toprule
 \textbf{Algorithm} & \textbf{Relative} & \textbf{Speed}\\ 
 Heuristic & \textbf{Performance} (\%) & (nodes/ms)\\ 
 \midrule
-\textbf{Top-Down} & & \\
-Children & -25.8 & 0.3 \\
-LastChild & -35.8 & 1.9 \\
-Distance(1) & -46.0 & 0.6 \\ 
-Distance(3) & \textbf{-49.6} & \textbf{0.1}\\ \midrule
 
 \textbf{Bottom-Up} & & \\
-Children & 40.3 & \textbf{88.6} \\ 
-LastChild & \textbf{50.9} & 84.5 \\ 
+Children & 17.52 & \textbf{88.6} \\ 
+LastChild & \textbf{26.31} & 84.5 \\ 
+Distance(1) & 9.46 & 21.2 \\ 
+Distance(3) & -0.40 & 0.5\\ 
 
-Distance(1) & 8.4 & 21.2 \\ 
-Distance(3) & -9.9 & 0.5\\ 
+\midrule
 
-Decay(LC, 0.5, 1, avg) & 35.6 & 47.7\\ 
-Decay(LC, 0.5, 7, avg) & 24.6 & 14.0 \\
-Decay(LC, 3,   1, avg) & 41.0 & 64.0\\
-Decay(LC, 3,   7, avg) & 24.2 & 15.3 \\ 
-Decay(LC, 0.5, 1, max) & 35.4 & 47.0 \\
-Decay(LC, 0.5, 7, max) & 25.0 & 15.3 \\
-Decay(LC, 3,   1, max) & 41.2 & 64.4 \\
-Decay(LC, 3,   7, max) & 25.1 & 15.3 \\
+\textbf{Top-Down} & & \\
+Children & -27.47 & 0.3 \\
+LastChild & -31.98 & 1.9 \\
+Distance(1) & -70.14 & 0.6 \\ 
+Distance(3) & \textbf{-74.33} & \textbf{0.1}\\ 
+
 \bottomrule
 %\hline
 \end{tabular}
@@ -74,11 +67,41 @@ Decay(LC, 3,   7, max) & 25.1 & 15.3 \\
 \label{tab:results}
 \end{table}
 
+\begin{table}[tb]
+\centering
+%\setlength{\tabcolsep}{8pt}
+\begin{tabular}{c c c c c}
+\toprule
+\textbf{Decay} & \textbf{Depth} &  \textbf{Combination} & \textbf{Performance} & \textbf{Speed}\\ 
+$\gamma$ &$d$ &  $com$ & \textbf{Improvement} (\%) & (nodes/ms)\\ 
+\midrule
+0.5&1& avg& 0.50 & 47.7\\ 
+0.5& 1& max & 0.40 & 47.0 \\
+0.5& 7& avg& 0.85 & 14.0 \\
+0.5& 7& max & 0.76 & 15.3 \\
+3&   1& avg & 0.48 & \textbf{64.0}\\
+3&   1& max & 0.43 & 64.4 \\
+3&   7& avg & 0.21 & 15.3 \\ 
+3&   7& max & \textbf{0.94} & 15.3 \\
+\bottomrule
+%\hline
+\end{tabular}
+\caption{Improvement of LastChild using Decay Heuristic}
+\label{tab:decay}
+\end{table}
+%Decay(LC, 0.5, 1, avg) & 35.6 & 47.7\\ 
+%Decay(LC, 0.5, 7, avg) & 24.6 & 14.0 \\
+%Decay(LC, 3,   1, avg) & 41.0 & 64.0\\
+%Decay(LC, 3,   7, avg) & 24.2 & 15.3 \\ 
+%Decay(LC, 0.5, 1, max) & 35.4 & 47.0 \\
+%Decay(LC, 0.5, 7, max) & 25.0 & 15.3 \\
+%Decay(LC, 3,   1, max) & 41.2 & 64.4 \\
+%Decay(LC, 3,   7, max) & 25.1 & 15.3 \\
 Table \ref{tab:results} summarizes the results of the experiments.
 The two presented order finding algorithms are tested in combination with the four presented heuristics.
 The Children and LastChild heuristics were tested on all four benchmark sets.
 The Distance and Decay heuristics were tested on the sets TraceCheck$_2$ and veriT$_2$.
-The relative performance is calculated according to Formula $\ref{eq:space}$, where $f$ is an algorithm with a heuristic, $P$ is the set of proofs the heuristic was tested on and $G$ are all combinations of algorithms and heuristic that were tested on $P$.
+The relative performance is calculated according to Formula $\ref{eq:space}$, where $f$ is an algorithm with a heuristic, $P$ is the set of proofs the heuristic was tested on and $G$ are all combinations of algorithms and heuristics that were tested on $P$.
 The time used to construct orders is measured in processed nodes per millisecond.
 Both columns show the best and worst result in boldface.
 
