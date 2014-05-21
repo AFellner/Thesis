@@ -1,0 +1,108 @@
+\section*{NP-completeness of shortest path decision problem}
+
+\begin{definition}[Short path decision problem]
+
+Let $E$ be a set of input equations $s_1 = t_1,\ldots,s_n = t_n$ of terms $\mathcal{T}$.
+For $k \in \mathbb{N}$ and a target equation $s = t$, the short path decision problem is the question whether there exists an $E' \subseteq E$ such that $E' \models s = t$ and $|E'| \leq k$.
+
+\end{definition}
+
+Note: $E \models s = t$ means $s$ and $t$ are in the same congruence class of the congruence closure of $E$.
+
+\begin{lemma}[NP - hardness of short path decision problem]
+
+The short path decision problem is NP - hard.
+
+\end{lemma}
+
+In the following proof tuples of terms $(u,v)$ are understood as equations $u = v$.
+
+\begin{proof}
+
+We will reduce SAT to the short path decision problem.
+Let $\Phi$ be a propositional formula in conjunctive normal form with variables $x_1,\ldots,x_m$ and clauses $c_1,\ldots,c_n$.
+We construct a set of equations $E$, a set of terms $\mathcal{T}$ and a target equation $s = t$, 
+such that $\Phi$ is satisfiable \emph{iff} there exists $E' \subseteq E$, $E' \models s = t$ and $|E'| \leq 2n + 3m$.
+
+Let $c_{n+1},\ldots,c_{n+m}$ be the tautological clauses $(x_1 \vee \bar{x_1}),\ldots,(x_m \vee \bar{x_m})$ and let $\Phi'$ be the formula with variables $x_1, \ldots,x_m$ and clauses $c_1,\ldots,c_{n+m}$.
+Since the extra clauses are trivially satisfied $\Phi \equiv \Phi'$.
+
+The set of terms $\mathcal{T}$ is constructed using the following constants and function symbols.
+For every $i= 1,\ldots,n + m + 1$, there is a constant $\hat{c}_i$ and function symbols $t_i$ and $f_i$.
+For every $j= 1,\ldots,m$, there are constants $\hat{x}_j$, $\top_j$ and $\bot_j$.
+
+The set of input equations $E$ is defined as $E_1 \cup E_2 \cup E_3 \cup E_4$, where
+$$E_1 = \{ (\hat{c}_j,\top_j), (\hat{c}_j,\bot_j) \mid 1 \leq j \leq m\}$$
+$$E_2 = \{ (\hat{c}_i, t_i(\hat{x}_j)) \mid x_j \text{ appears positively in } c_i\}$$
+$$E_3 = \{ (\hat{c}_i, f_i(\hat{x}_j)) \mid x_j \text{ appears negatively in } c_i\}$$
+$$E_4 = \{ (t_i(\top_j),\hat{c}_{i+1}),(f_i(\bot_j), \hat{c}_{i+1}) \mid 1 \leq i \leq n+m, 1 \leq j \leq m\}$$
+
+The target equation $s = t$ is given as $\hat{c}_1 = \hat{c}_{n+m+1}$.
+
+Suppose $\Phi$ is satisfiable.
+
+\emph{Claim:} Let $E' \subseteq E$ then $E' \models \hat{c}_1 = \hat{c}_{l+1}$ \emph{iff} $E' \models \hat{c}_i = \hat{c}_{i+1}$ for all $i = 1,\ldots,l$.
+We prove the claim by induction on $l$.
+All equations in $E$ with $\hat{c}_{l+1}$ on one side, have $t_1(\hat{x}_j)$ or $f_1(\hat{x}_j)$ for some $j$ on the other side.
+The only other equations with $t_1$ and $f_1$ are $(t_1(\top_j), \hat{c}_2)$ and $(f_1(\bot_j), \hat{c}_2)$ for some $j$.
+Therefore $E' \models \hat{c}_1 = \hat{c}_{l+1}$ implies either $\{(\hat{c}_1, t_1(\hat{x}_j)), (\hat{x}_j,\top_j), (t_1(\top_j),\hat{c}_2\} \subseteq E'$ or $\{(\hat{c}_1, f_1(\hat{x}_j)), (\hat{x}_j,\bot_j), (f_1(\bot_j),\hat{c}_2\} \subseteq E'$. 
+In both cases using the transitivity axiom it can be seen that $E' \models \hat{c}_1 = \hat{c}_{2}$.
+Another application of transitivity shows $E' \models \hat{c}_2 = \hat{c}_{l+1}$.
+
+The base case $l = 1$ is trivially satisfied.
+Assume the claim holds for some $l \in \mathbb{N}$.
+We show that the claim also holds for $l+1$.
+From $E' \models \hat{c}_i = \hat{c}_{i+1}$ for all $i = 1,\ldots,l+1$ follows $E' \models \hat{c}_1 = \hat{c}_{l+1}$ using the transitivity axiom $l$ times.
+Suppose $E' \models \hat{c}_1 = \hat{c}_{l+1}$. 
+
+\begin{paragraph}{Induction Base $l = 1$:}
+In this case the claim is true trivially, since sides of the equivalence are the syntactically equal.
+
+We have $E' \models \hat{c}_1 = \hat{c}_{3}$.
+All equations with $\hat{c}_1$ on one side, have $t_1(\hat{x}_j)$ or $f_1(\hat{x}_j)$ for some $j$ on the other side.
+The only other equations with $t_1$ and $f_1$ are $(t_1(\top_j), \hat{c}_2)$ and $(f_1(\bot_j), \hat{c}_2)$
+
+So $E' \models \hat{c}_1 = \hat{c}_{3}$ implies either $\{(\hat{c}_1, t_1(\hat{x}_j)), (\hat{x}_j,\top_j), (t_1(\top_j),\hat{c}_2\} \subseteq E'$ or $\{(\hat{c}_1, f_1(\hat{x}_j)), (\hat{x}_j,\bot_j), (f_1(\bot_j),\hat{c}_2\} \subseteq E'$. 
+In both cases using the transitivity axiom it can be seen that $E' \models \hat{c}_1 = \hat{c}_{2}$.
+Another application of transitivity shows $E' \models \hat{c}_2 = \hat{c}_{3}$.
+\end{paragraph}
+
+\begin{paragraph}{Induction Hypothesis:}
+for $l$, $E' \models \hat{c}_1 = \hat{c}_{l}$ then $E' \models \hat{c}_i = \hat{c}_{i+1}$ for all $i = 1,\ldots,l$
+\end{paragraph}
+
+\begin{paragraph}{Induction Step:} 
+suppose $E' \models \hat{c}_1 = \hat{c}_{l+1}$, then $l \leq n+m$.
+The only equations in $E$ using $\hat{c}_{l+1}$ are of the form $(\hat{c}_{l+1},t_{l+1}(\hat{x}_j))$ and $(\hat{c}_{l+1},t_{l+1}(\hat{x}_j))$
+\end{paragraph}
+
+
+
+\emph{Suppose $\Phi$ is satisfiable} and let $\mathcal{I}$ be a satisfying assignment.
+For every clause $c_i$ there exists one literal $l_i$ such that $\mathcal{I}$ maps $l_i$ to true.
+
+The set $E'$ is defined as $\bigcup_{i = 1}^{n}{E_i}$, where
+
+\begin{align*}
+E_i = &\{ (\alpha_i,t_i(y_j)),(y_j = \top_j),(t_i(\top_j) = \alpha_{i+1}) \mid l_i = x_j\} \cup \\
+& \{ (\alpha_i,f_i(y_j)),(y_j = \bot_j),(f_i(\bot_j) = \alpha_{i+1}) \mid l_i = \bar{x_j}\}
+\end{align*}
+
+The key point is that, because $\mathcal{I}$ is a satisfying assignment, for all $j: 1 \leq j \leq m$ \\ $\{(x_j = \top_j),(x_j = \bot_j)\} \nsubseteq E'$.
+Therefore $|E'| \leq 2n + m$ (2n from the outer two equations and m from the truth assignment equations).
+From the equations of the form $y_j = \top_j$ the equation $t_i(y_j) = t_i(\top_j)$ can be deduced.
+Therefore for every $i: 1 \leq i \leq n$ the equations $(\alpha_i,t_i(y_j)),(y_j = \top_j),(t_i(\top_j) = \alpha_{i+1})$ induce the transitivity chain $(\alpha_i,t_i(y_j)),(t_i(y_j) = t_i(\top_j)),(t_i(\top_j) = \alpha_{i+1})$, which implies $\alpha_i = \alpha_{i+1}$. Therefore, using transitivity $E' \models \alpha_1 = \alpha_{n+1}$.
+
+
+\emph{Suppose there exists $E' \subseteq E$, $E' \models \alpha_1 = \alpha_{n+1}$ and $|E'| \leq 2n + m$}, then $\mathcal{I} = \{x_j \mid (y_j = \top_j) \in E'\}$ is a satisfying assignment for $\Phi$ represented as a set of true variables.
+Let $c_i$ be an arbitrary clause of $\Phi$.
+By construction of $E$, $E' \models \alpha_1 = \alpha_{n+1}$ implies $E' \models \alpha_i = \alpha_{i+1}$, since $\alpha_1$ and $\alpha_{n+1}$ can only be connected via $\alpha_i$ and $\alpha_{i+1}$ because of the different function symbols $t_i$ and $f_i$.
+Now $E' \models \alpha_i = \alpha_{i+1}$ implies that there exists a $j: 1 \leq j \leq m$, such that $\{(\alpha_i = t_i(y_j)),(y_j = \top_j),(t_i(\top_j) = \alpha_{i+1})\} \subseteq E'$ or $\{(\alpha_i = f_i(y_j)),(y_j = \bot_j),(f_i(\bot_j) = \alpha_{i+1})\} \subseteq E'$. 
+Suppose the former case holds.
+Again by construction of $E$ and the fact that $E' \subseteq E$, $\alpha_i = t_i(y_j) \in E'$ implies that $x_j$ appears positively in $c_i$.
+Since $x_j \in \mathcal{I}$, $\mathcal{I}$ satisfies $c_i$.
+The other case can be shown analogously.
+
+The clause $c_i$ was arbitrary, therefore $\mathcal{I}$ satisfies $\Phi$.
+
+\end{proof}

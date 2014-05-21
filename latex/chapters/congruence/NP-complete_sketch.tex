@@ -1,0 +1,66 @@
+\chapter*{Congruence}
+
+$\^{c}_{n+1} \ldots \^{c}_{n+m}$
+
+\begin{definition}[Short path decision problem]
+
+Let $E$ be a set of input equations $s_1 = t_1,\ldots,s_n = t_n$.
+For $k \in \mathbb{N}$ and a target equation $s = t$, the short path decision problem is the question whether there exists an $E' \subseteq E$ such that $E' \models s = t$ and $|E'| \leq k$.
+
+\end{definition}
+
+Note: $E \models s = t$ means $s$ and $t$ are in the same congruence class of the congruence closure of $E$.
+
+\begin{lemma}[NP - hardness of short path decision problem]
+
+The short path decision problem is NP - hard.
+
+\end{lemma}
+
+\begin{proof}
+
+We will reduce 3-SAT to the short path decision problem. (Note: SAT formula in CNF would also be enough)
+Let $\Phi$ be a 3-SAT formula with variables $x_1,\ldots,x_m$ and clauses $c_1,\ldots,c_n$.
+We construct a set of equations $E$ and a target equation $s = t$, 
+such that $\Phi$ is satisfiable \emph{iff} there exists $E' \subseteq E$, $E' \models s = t$ and $|E'| \leq 2n + m$.
+
+Our construction needs the following variables and function symbols.
+For every $i: 1 \leq i \leq n + 1$, there is a variable $\alpha_i$ and function symbols $t_i$ and $f_i$.
+For every $j: 1 \leq j \leq m$, there is are variables $y_j$, $\top_j$ and $\bot_j$.
+
+The set of input equations $E$ is defined as $E_1 \cup E_2 \cup E_3 \cup E_4$, where
+$$E_1 = \{ (y_j = \top_j), (y_j = \bot_j) \mid 1 \leq j \leq m\}$$
+$$E_2 = \{ (t_i(\top_j) = \alpha_{i+1}),(f_i(\bot_j) = \alpha_{i+1}) \mid 1 \leq i \leq n, 1 \leq j \leq m\}$$
+$$E_3 = \{ (\alpha_i, t_i(y_j)) \mid x_j \text{ appears positively in } c_i\}$$
+$$E_4 = \{ (\alpha_i, f_i(y_j)) \mid x_j \text{ appears negatively in } c_i\}$$
+
+The target equation $s = t$ is given as $\alpha_1 = \alpha_{n+1}$.
+
+\emph{Suppose $\Phi$ is satisfiable} and let $\mathcal{I}$ be a satisfying assignment.
+For every clause $c_i$ there exists one literal $l_i$ such that $\mathcal{I}$ maps $l_i$ to true.
+
+The set $E'$ is defined as $\bigcup_{i = 1}^{n}{E_i}$, where
+
+\begin{align*}
+E_i = &\{ (\alpha_i,t_i(y_j)),(y_j = \top_j),(t_i(\top_j) = \alpha_{i+1}) \mid l_i = x_j\} \cup \\
+& \{ (\alpha_i,f_i(y_j)),(y_j = \bot_j),(f_i(\bot_j) = \alpha_{i+1}) \mid l_i = \bar{x_j}\}
+\end{align*}
+
+The key point is that, because $\mathcal{I}$ is a satisfying assignment, for all $j: 1 \leq j \leq m$ \\ $\{(x_j = \top_j),(x_j = \bot_j)\} \nsubseteq E'$.
+Therefore $|E'| \leq 2n + m$ (2n from the outer two equations and m from the truth assignment equations).
+From the equations of the form $y_j = \top_j$ the equation $t_i(y_j) = t_i(\top_j)$ can be deduced.
+Therefore for every $i: 1 \leq i \leq n$ the equations $(\alpha_i,t_i(y_j)),(y_j = \top_j),(t_i(\top_j) = \alpha_{i+1})$ induce the transitivity chain $(\alpha_i,t_i(y_j)),(t_i(y_j) = t_i(\top_j)),(t_i(\top_j) = \alpha_{i+1})$, which implies $\alpha_i = \alpha_{i+1}$. Therefore, using transitivity $E' \models \alpha_1 = \alpha_{n+1}$.
+
+
+\emph{Suppose there exists $E' \subseteq E$, $E' \models \alpha_1 = \alpha_{n+1}$ and $|E'| \leq 2n + m$}, then $\mathcal{I} = \{x_j \mid (y_j = \top_j) \in E'\}$ is a satisfying assignment for $\Phi$ represented as a set of true variables.
+Let $c_i$ be an arbitrary clause of $\Phi$.
+By construction of $E$, $E' \models \alpha_1 = \alpha_{n+1}$ implies $E' \models \alpha_i = \alpha_{i+1}$, since $\alpha_1$ and $\alpha_{n+1}$ can only be connected via $\alpha_i$ and $\alpha_{i+1}$ because of the different function symbols $t_i$ and $f_i$.
+Now $E' \models \alpha_i = \alpha_{i+1}$ implies that there exists a $j: 1 \leq j \leq m$, such that $\{(\alpha_i = t_i(y_j)),(y_j = \top_j),(t_i(\top_j) = \alpha_{i+1})\} \subseteq E'$ or $\{(\alpha_i = f_i(y_j)),(y_j = \bot_j),(f_i(\bot_j) = \alpha_{i+1})\} \subseteq E'$. 
+Suppose the former case holds.
+Again by construction of $E$ and the fact that $E' \subseteq E$, $\alpha_i = t_i(y_j) \in E'$ implies that $x_j$ appears positively in $c_i$.
+Since $x_j \in \mathcal{I}$, $\mathcal{I}$ satisfies $c_i$.
+The other case can be shown analogously.
+
+The clause $c_i$ was arbitrary, therefore $\mathcal{I}$ satisfies $\Phi$.
+
+\end{proof}
