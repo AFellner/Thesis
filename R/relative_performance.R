@@ -1,5 +1,3 @@
-
-
 trc1 <-read.csv("data/TRC1_space.csv", header=TRUE)
 trc2 <-read.csv("data/TRC2_space.csv", header=TRUE)
 smt1 <-read.csv("data/SMT1_space.csv", header=TRUE)
@@ -13,22 +11,22 @@ avg_smt2 = rowMeans(smt2[,c(2:length(smt2))])
 bu_names_big <- c("LastChild","Children")
 td_names_big <- c("LastChildTD","ChildrenTD")
 
-bu_names_all <- c("LastChild","Children","Distance1BU","Distance3BU","LCllavg","LClhavg","LChlavg","LChhavg","LCllmax","LClhmax","LChlmax","LChhmax")
-td_names_all <- c("LastChildTD","ChildrenTD","Distance1","Distance3")
+bu_names_small <- c("LastChild","Children","Distance1BU","Distance3BU","LCllavg","LClhavg","LChlavg","LChhavg","LCllmax","LClhmax","LChlmax","LChhmax")
+td_names_small <- c("LastChildTD","ChildrenTD","Distance1","Distance3")
 
-min_trc1_bu = do.call(pmin, as.data.frame(trc1[,bu_names_all]))
+min_trc1_bu = do.call(pmin, as.data.frame(trc1[,bu_names_small]))
 min_trc2_bu = do.call(pmin, as.data.frame(trc2[,bu_names_big]))
 min_smt1_bu = do.call(pmin, as.data.frame(smt1[,bu_names_big]))
-min_smt2_bu = do.call(pmin, as.data.frame(smt2[,bu_names_all]))
+min_smt2_bu = do.call(pmin, as.data.frame(smt2[,bu_names_small]))
 
-min_trc1_td = do.call(pmin, as.data.frame(trc1[,td_names_all]))
+min_trc1_td = do.call(pmin, as.data.frame(trc1[,td_names_small]))
 min_trc2_td = do.call(pmin, as.data.frame(trc2[,td_names_big]))
 min_smt1_td = do.call(pmin, as.data.frame(smt1[,td_names_big]))
-min_smt2_td = do.call(pmin, as.data.frame(smt2[,td_names_all]))
+min_smt2_td = do.call(pmin, as.data.frame(smt2[,td_names_small]))
 
 
 collect_all <- function(heuristic) {
-  print(c(trc1[[heuristic]],trc2[[heuristic]],smt1[[heuristic]],smt2[[heuristic]]))
+  print(c(trc1[[heuristic]],smt2[[heuristic]],trc2[[heuristic]],smt1[[heuristic]]))
 }
 collect_small <- function(heuristic) {
   print(c(trc1[[heuristic]],smt2[[heuristic]]))
@@ -36,10 +34,15 @@ collect_small <- function(heuristic) {
 
 sink("NUL")
 
-bu_min <- c(min_trc1_bu,min_trc2_bu,min_smt1_bu,min_smt2_bu)
-td_min <- c(min_trc1_td,min_trc2_td,min_smt1_td,min_smt2_td)
+bu_min <- c(min_trc1_bu,min_smt2_bu,min_trc2_bu,min_smt1_bu)
+td_min <- c(min_trc1_td,min_smt2_td,min_trc2_td,min_smt1_td)
 
-allmeans = c(avg_trc1, avg_trc2, avg_smt1, avg_smt2)
+m <- matrix(c(bu_min,td_min),ncol=2,nrow = length(bu_min))
+overall_min <- do.call(pmin, as.data.frame(m))
+
+length_big <- collect_all("Length")
+
+allmeans = c(avg_trc1, avg_smt2, avg_trc2, avg_smt1)
 smallmeans = c(avg_trc1,avg_smt2)
 
 
@@ -96,4 +99,8 @@ perfs_name <- names(trc1)[c(2:9)]
 df <- data.frame(perfs)
 row.names(df) <- perfs_name
 print(df)
-print(decay)pl
+print(decay)
+#plot(bu_min~td_min)
+t <- title(main="main title", sub="sub-title", 
+  	 xlab="x-axis label", ylab="y-axis label")
+plot(length_big,bu_min,t)
