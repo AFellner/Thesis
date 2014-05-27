@@ -1,3 +1,47 @@
-\chapter*{Resolution}
+%\chapter*{Resolution}
 
-Resolution
+\section*{Congruence Resolution}
+
+The proofs considered in this work are resolution proofs \cite{TODO: resolution} extended by the axioms of congruence.
+In this chapter we define the calculus 
+
+Let $\mathcal{C}$ be a finite set of constant symbols and let $f$ be a binary function symbol.
+The set of terms $\mathcal{T}$ is defined recursively.
+\begin{align*}
+	\mathcal{T}_0 &:= \mathcal{C} \\
+	\mathcal{T}_i &:= \mathcal{T}_{i-1} \cup \{f(t_1,t_2) \mid t_1, t_2 \in \mathcal{T}_{i-1}\} \\
+	\mathcal{T} &:= \bigcup_{n \in \mathbb{N}} \mathcal{T}_n
+\end{align*}
+Let $\mathcal{Q}_{\mathcal{T}} = \{t_1 = t_2 \mid t_1, t_2 \in \mathcal{T}$ be the set of equations for a set of terms $\mathcal{T}$
+Let $V$ be a finite set of propositional variables.
+The set of equality atoms $\mathcal{E}$ is defined as $V \cup Q_{\mathcal{T}}$
+An equality literal $\ell_\mathcal{T}$ is an equality atom $e$ or a negated equality atom $\neg e$.
+We will abbreviate write $\neg (t_1 = t_2)$ by $t_1 \neq t_2$.
+An equality clause is a set of equality literals.
+As usual a clause is interpreted as the disjunction of its literals and a set of clauses is interpreted as the conjunction its clauses.
+
+The axioms of congruence $EqAxioms$ for some set of terms $\mathcal{T}$ is defined as $R \cup S \cup T \cup C$ where
+
+\begin{align*}
+	R &= \{ t = t \mid t \in \mathcal{T}\} \\
+	S &= \{ t_1 \neq t_2, t_2 = t_1 \mid t_1, t_2 \in \mathcal{T} \} \\
+	T &= \{ t_1 \neq t_2, t_2 \neq t_3, t_1 = t_3 \mid t_1, t_2, t_3 \in \mathcal{T} \} \\
+	C &= \{ t_1 \neq t_3, t_2 \neq t_4, f(t_1,t_2) = f(t_3,t_4) \mid t_1, t_2, t_3, t_4 \in \mathcal{T} \} 
+\end{align*}
+
+Note that every congruence axiom has one positive equality literal.
+From now on we will omit the set of terms $\mathcal{T}$ if it is clear from context.
+
+Next we will define the resolution calculus extended by congruence axioms.
+Let $\ell$ be an equality literal and $C_1$, $C_2$ be equality clauses such that $\ell \in C_1$ and $\neg \ell \in C_2$.
+The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\neg \ell\}$ is the resolvent of $C_1$ and $C_2$ with pivot $\ell$.
+
+Let $F = \{C_1, \ldots, C_n\}$ be a set of clauses.
+The notion of a congruence derivation for $F$ is defined inductively.
+The sequence $\langle C_1, \ldots, C_n\rangle$ is a congruence derivation for $F$.
+If $\langle C_1, \ldots, C_m\rangle$ is a congruence derivation for $F$ then $\langle C_1, \ldots, C_{m+1} \rangle$ is a congruence derivation for $F$ if $C_{m+1} \in EqAxioms$ or $C_{m+1}$ is a resolvent of $C_i$ and $C_j$ with $1 \leq i,j \leq m$.
+A congruence derivation containing the empty clause is a congruence refutation.
+
+Let $D = \langle C_1, \ldots, C_m\rangle$ be a congruence derivation.
+The longest subsequence $\langle C_{i_1}, \ldots, C_{i_k}\rangle$ of $D$, such that $\{C_{i_1}, \ldots, C_{i_k}\} \subseteq EqAxioms$ is called the equality reasoning part of $D$.
+%The corresponding sequence of positive equality literals $\langle e_{i_1}, \ldots, e_{i_k}\rangle$ 
