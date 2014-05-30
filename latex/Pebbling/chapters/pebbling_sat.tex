@@ -2,14 +2,16 @@
 \label{sec:pebblingSAT}
 
 To find the pebble number of a proof, the question whether the proof can be pebbled using no more than $k$ pebbles can be encoded as a propositional satisfiability problem.
-In this chapter let $\varphi$ be a proof with nodes $\n_1,\ldots,\n_n$ and let $\n_n$ be its the root node. 
+In this section let $\varphi$ be a proof with nodes $\n_1,\ldots,\n_n$ and let $\n_n$ be its root node. 
 Due to rule \ref{rule:onlyonce} of the Bounded Pebbling Game, the number of moves that pebble nodes is exactly $n$ and due to theorem \ref{theorem:canonical} determining the order of these moves is enough to define a strategy. 
 For every $x \in \{1,\ldots,k\}$, every $j \in \{1,\ldots,n\}$ and every $t \in \{0,\ldots,n\}$ there is a propositional variable $p_{x,j,t}$. 
 The variable $p_{x,j,t}$ being mapped to $\top$ by a valuation is interpreted as the fact that in the $t$'th round of the game node $v_j$ is marked with pebble $x$.
 Round $0$ is interpreted as the initial setting of the game before any move has been done.
+
 \begin{definition}[Pebbling SAT encoding]
-The following constraints, combined conjunctively, are satisfiable \textit{iff} there is a pebbling strategy $\sigma$ for $\varphi$ with pebbling number smaller or equal $k$. 
-In case the formula is satisfiable, a pebbling strategy can be read off from any satisfying assignment.
+%The following constraints, combined conjunctively, are satisfiable \textit{iff} there is a pebbling strategy $\sigma$ for $\varphi$ with pebbling number smaller or equal $k$. 
+%In case the formula is satisfiable, a pebbling strategy can be read off from any satisfying assignment.
+The propositional formula obtained by conjuncting the following four constraints expresses the existence of a pebbling strategy for $\varphi$ with pebbling number smaller or equal $k$.
 
 \begin{enumerate}
 	\item The root is pebbled in the last round
@@ -30,7 +32,7 @@ In case the formula is satisfiable, a pebbling strategy can be read off from any
 				
 \end{enumerate}
 
-The sets $\Axioms{\varphi}$ and $\Premises{j}{\varphi}$ are interpreted as sets of indices of the respective nodes.
+The sets $\Axioms{\varphi}$ and $\Premises{j}{\varphi}$ are to be understood as sets of indices of the respective nodes.
 
 \end{definition}
 
@@ -48,21 +50,22 @@ $\Psi = \Psi_1 \wedge \Psi_2 \wedge \Psi_3 \wedge \Psi_4$ is satisfiable \emph{i
 
 \begin{proof}
 
-\emph{Suppose $\Psi$ is satisfiable} and let $\mathcal{I}$ be a satisfying variable assignment interpreted as the set of true variables.
+\emph{Suppose $\Psi$ is satisfiable} and let $\mathcal{I}$ be a satisfying variable assignment in form of the set of true variables.
 We will use $P(x,j,t)$ as an abbreviation for $p_{x,j,(t-1)} \notin \mathcal{I}$ and $p_{x,j,t} \in \mathcal{I}$.
 Since $\mathcal{I}$ satisfies $\Psi_3$, in $P(x,j,t)$ $x$ is uniquely defined by $j$ and $t$ and we can write $P(j,t)$ instead.
-First we will prove the following assertion.
+We will prove the following assertion.
 For every $t \in \{1,\ldots,n\}$ there exists exactly one $j \in \{1,\ldots,n\}$ such that $P(j,t)$.
+
 %Every node, expect the root itself, is a recursive ancestor of the proof root.
 $\Psi_1$ states that the root $v_n$ has to be pebbled in the last round and $\Psi_2$ states that no node is pebbled initially.
 So for $n$ there has to be a $t \in \{1,\ldots,n\}$ such that $P(n,t)$.
 $\mathcal{I}$ satisfies $\Psi_4$, therefore for every predecessor of $v_j$ of $v_n$ there exists $x \in \{1,\ldots,k\}$ such that $p_{x,j,(t-1)}$.
-Using the same argument for $v_j$ like for $v_n$ there has to be a $t' \in \{1,\ldots,(t-1)\}$ such that $P(j,t')$.
+Using the same argument for $v_j$ as for $v_n$ there has to be a $t' \in \{1,\ldots,(t-1)\}$ such that $P(j,t')$.
 Every node of the proof is a recursive ancestor of the root, therefore for every $j \in \{1,\ldots,n\}$ there exists at least one $t \in \{1,\ldots,n\}$ such that $P(n,t)$.
-For every $t \in \{1,\ldots,n\}$ $\Psi_4$ ensures that if $P(n,t)$ is true $\mathcal{I}$ then there is no $i \in \{1,\ldots,n\}, i \neq j$ such that $P(i,t)$, which proves the assertion.
+For every $t \in \{1,\ldots,n\}$, $\Psi_4$ ensures that if $P(n,t)$ then there is no $i \in \{1,\ldots,n\}, i \neq j$ such that $P(i,t)$, which proves the assertion.
 The assertion implies the existence of a bijection $\tau : \{1,\ldots,n\} \rightarrow \{v_1,\ldots,v_n\}$ such that $\tau(n) = v_n$ and $\tau(t) = j$ \emph{iff} $P(j,t)$.
 Therefore $\sigma := \{\tau(1),\ldots,\tau(n)\}$ is well defined.
-$\sigma$ is a pebbling strategy, because $\tau(n) = v_n$, rule \ref{rule:premises} is obeyed because of $\Psi_4$, rule \ref{rule:unpebbling} is obeyed, because unpebbling moves are given implicit (see Theorem \ref{theorem:canonical}) and rule \ref{rule:onlyonce} is obeyed because $\tau$ is a bijection.
+$\sigma$ is a pebbling strategy, because $\tau(n) = v_n$, rule \ref{rule:premises} is obeyed because of $\Psi_4$, rule \ref{rule:unpebbling} is obeyed, because unpebbling moves are given implicitly (see Theorem \ref{theorem:canonical}) and rule \ref{rule:onlyonce} is obeyed because $\tau$ is a bijection.
 $\Psi_3$ being satisfied ensures that $\sigma$ uses no more than $k$ pebbles.
 
 \emph{Suppose there is a pebbling strategy $\sigma$ using no more than $k$ pebbles}. Let the function $\free: \{1,\ldots,n\} \rightarrow 2^{\{1,\ldots,k\}} \setminus \emptyset$ be defined recursively as follows and $\peb(t) = \min(\free(t)).$
@@ -70,7 +73,7 @@ $\Psi_3$ being satisfied ensures that $\sigma$ uses no more than $k$ pebbles.
 $$
 \free(t) = \left\{
   \begin{array}{ll}
-    1 & : t = 1\\
+    \{1,\ldots,k\} & : t = 1\\
     \free(t-1) \setminus \{\peb(t-1)\} \quad \cup & : otherwise\\
 		\Big\{\peb(s) \mid \sigma_{s} \in \Premises{\sigma_{t-1}}{\varphi}, s \in \{1,\ldots,t-2\} \text{ and for all } v \in \Children{\sigma_{s}}{\varphi}&\\
 		\text{ there exists } r \in \{1,\ldots,t-1\}: \sigma_{r} = v \Big\}&
@@ -80,7 +83,7 @@ $$
 
 Intuitively, $\free(.)$ keeps track of the unused pebbles in each round.
 If a pebble is placed on a node, it is not free anymore.
-Pebbles are made free again by the implicit unpebbling moves, which correspond to the second set in the recursive definition of $\free(.)$.
+Pebbles are made free again by unpebbling moves, which correspond to the second set in the recursive definition of $\free(.)$.
 Since $\sigma$ uses no more than $k$ pebbles, $\free(.)$ is well defined.
 
 Let $\mathcal{I}$ be a set of variables of $\Psi$ defined as follows.

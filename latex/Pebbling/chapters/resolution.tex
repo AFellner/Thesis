@@ -16,17 +16,16 @@ and one of the following holds:
 \begin{enumerate}
 	\item $V = \{\n\}, E = \emptyset$
 	\item \label{enum:resCase} There are proofs $\varphi_L = \langle V_L, E_L, \n_L,\clause_L \rangle$ and $\varphi_R = \langle V_R, E_R, \n_R, \clause_R \rangle$ such that there exists a literal
-				$\ell$, $\dual{\ell} \in \Gamma_L$ and $\ell \in \Gamma_R$, then
-	    \begin{align*}
-			\n & \text{ is a new node} \\
-      V &= V_L \cup V_R \cup \{\n \} \\
+				$\ell$ such that $\dual{\ell} \in \Gamma_L$, $\ell \in \Gamma_R$, and let $\n \notin (V_L \cup V_R)$ then
+		\begin{align*}
+      V &= (V_L \cup V_R) \cup \{\n \} \\
       E &= E_L \cup E_R \cup
                     \left\{\n_L \xrightarrow{\dual{\ell}} \n , \n_R \xrightarrow{\ell} \n \right\} \\
      \Gamma &= \left( \clause_L \setminus \left\{ \dual{\ell} \right\} \right) \cup \left( \clause_R
                     \setminus \left\{ \ell \right\} \right)
     \end{align*}
 		$\n$ is called the \emph{root} of $\varphi$ and $\clause$ its \emph{conclusion}.
-		$\varphi_L$ and $\varphi_R$ are \emph{premises} of $\varphi$ and $\varphi$ is a \emph{child} of both $\varphi_L$ and $\varphi_R$.
+		$\varphi_L$ and $\varphi_R$ are \emph{premises} of $\varphi$ and $\varphi$ is a \emph{child} of $\varphi_L$ and $\varphi_R$.
 		$\Gamma$ is called the \emph{resolvent} of $\Gamma_L$ and $\Gamma_R$ with \emph{pivot} $\ell$.
 		A proof $\psi$ is a subproof of a proof $\varphi$, if there is a path from $\varphi$ to $\psi$ in the transitive closure of the premise relation.
 		A subproof $\psi$ of $\varphi$ which has no premises is an \emph{axiom} of $\varphi$.
@@ -38,9 +37,9 @@ and one of the following holds:
 
 \noindent
 Note that in case \ref{enum:resCase} of Definition \ref{def:proof} $V_L$ and $V_R$ are not required to be disjunct. 
-Therefore the underlying structure of proofs are DAGs as opposed to simple trees. 
-Modern SAT- and SMT-solvers, using techniques of conflict driven clause learning, produce proofs of such kind \cite{Bouton2009,Biere2009}.
+Therefore the underlying structure of a proof is a directed acyclic graph and not simply a tree. 
+Modern SAT- and SMT-solvers, using techniques of conflict driven clause learning, produce proofs with a general DAG structure \cite{Bouton2009,Biere2009}.
 The reuse of proof nodes plays a central role in proof compression \cite{Fontaine2011}.
-Also note that a DAG corresponding to a proof by definition has exactly one sink, also called its root node.\\
+Also note that a DAG corresponding to a proof has exactly one sink, which is called its root node, by definition.\\
 For example a node of a proof $\langle V,E,\n,\clause \rangle$ will be meant to be some $s \in V$.
 From hereon, if free from ambiguity, proofs and their underlying DAGs will not be distinguished. 

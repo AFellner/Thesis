@@ -9,8 +9,9 @@ The following definition makes the notion of proof processing formal.
 \label{def:proof-processing}
 
 Let $\varphi$ be a proof with nodes $V$ and $T$ be an arbitrary set.
-We call a function $f: V \times T \times T \rightarrow T$ a \emph{processing function} if there is a function $g_f: V \rightarrow T$ such that for every $v \in V$ with $\Premises{v}{\varphi} = \emptyset$ (i.e. $v$ represents an axiom), $g_f(v) = f(v,t_1,t_2)$ for all $\{t_1,t_2\} \subseteq T$.
-The \emph{apply function} $\ap: V \times T^{V\times T \times T} \rightarrow T$ is defined recursively as follows.
+A function $f: V \times T \times T \rightarrow T$ is a \emph{processing function} if there is a function $g_f: V \rightarrow T$ such that for every $v \in V$ with $\Premises{v}{\varphi} = \emptyset$ (i.e. $v$ represents an axiom), $g_f(v) = f(v,t_1,t_2)$ for all $\{t_1,t_2\} \subseteq T$.
+Let $\mathcal{F}$ be the set of processing functions.
+The \emph{apply function} $\ap: V \times \mathcal{F} \rightarrow T$ is defined recursively as follows.
 $$
 \ap(\n,f) = \Big\{
 \begin{array}{ll}
@@ -19,7 +20,7 @@ $$
 \end{array}
 $$
 
-\emph{Processing a node} $\n$ with some processing function $f$ means computing the value $\ap(\n,f)$.
+\emph{processing a node} $\n$ with some processing function $f$ means computing the value $\ap(\n,f)$.
 \emph{Processing a proof} means to process its root node.
 \qed
 \end{definition}
@@ -41,20 +42,20 @@ Processing a proof with this processing function yields $\top$ \emph{iff} the pr
 \qed
 \end{example}
 
-In Section \ref{sec:pebbling-game} it was pointed out that strategies with minimal pebbling numbers may require to play exponentially many rounds.
+In Section \ref{sec:pebbling-game} it was pointed out that strategies with minimal pebbling numbers may require to play exponentially many rounds when rule \ref{rule:onlyonce} is not used.
 Every round of the game corresponds to an I/O operation and, if the action of the player is to pebble a node, the processing of the node.
-The goal of proof compression is to reduce the hardness of proof processing, therefore requiring exponentially many I/O operations and processing steps is not a viable option.
+The goal of proof compression is to make proof processing less expensive, therefore requiring exponentially many I/O operations and processing steps is not a viable option.
 That is the reason why we chose the Bounded Pebbling Game for our purpose.
-In the Bounded Pebbling Game the number of rounds is essentially the number of nodes.
+In the Bounded Pebbling Game the number of rounds is linear in the number of nodes.
 
 In order to process a node, the results of processing its premises are used and therefore have to be stored in memory.
 The requirement of having premises in memory corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game. 
 Processing a node and I/O operations are typically more expensive than extra memory consumption, therefore in our setting every node can be processed only once, which corresponds to rule \ref{rule:onlyonce}.
 A node that has been processed can be removed from memory, which corresponds to rule \ref{rule:unpebbling}.
 Note that removing a node and its results too early in combination with \ref{rule:onlyonce} makes it impossible to process the whole proof.
-The best moment for removing a node from memory is canonical, as shown later in this chapter.
+The optimal moment to remove a node from memory is uniquely determined by the order nodes are processed, see Theorem \ref{theorem:canonical}.
 
-Definition \ref{def:proof-processing} leaves freedom in what order to process nodes.
+Definition \ref{def:proof-processing} does not specify in what order to process nodes.
 The order in which nodes are processed is essential for the memory consumption, just like the order of pebbling nodes in the pebbling game is essential for the pebbling number.
 The following definition allows us to relate pebbling strategies with orderings of nodes.
 
@@ -68,13 +69,11 @@ A pebbling strategy $\sigma = (\sigma_1,\ldots,\sigma_n)$ \emph{respects} a topo
 \end{definition}
 
 A topological order $\prec$ of a proof $\varphi$ can be represented as a sequence $(v_1,\dots,v_n)$ of proof nodes, by defining $\prec \defeq \{(v_i,v_j) \mid 1 \leq i < j \leq n\}$. 
-This sequence can be interpreted as a particular pebbling strategy for the game played on $\varphi$.
-The requirement of topological orders to order premises higher than their children corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game.
-The antisymmetry together with the fact that $V = \{v_1,\dots,v_n\}$ corresponds to rule \ref{rule:onlyonce}.
-The only thing missing are the unpebbling moves.
-The following theorem states that unpebbling moves are given implicit, when the goal is to find strategies with small pebbling numbers.
+The requirement that topological orders to order premises lower than their children corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game.
+The antisymmetry together with the fact that $V = \{v_1,\dots,v_n\}$ correspond to rule \ref{rule:onlyonce}.
+Theorem \ref{theorem:canonical} shows that the moments for unpebbling moves are predefined by the pebbling moves, when the goal is to find strategies with small pebbling numbers.
+Therefore there is a bijection between topological orders and pebbling strategies.
 
-%TODO: remove the ugly k
 \begin{definition}[Canonical Topological Pebbling Strategy]
 The \emph{canonical topological pebbling strategy} $\sigma$ for a proof $\varphi$, its root node $s$ and a topological order $\prec$ represented as a sequence $(v_1,\dots,v_n)$ is defined recursively:
 $$
@@ -83,10 +82,10 @@ $$
 \sigma_i = 
 	\left\{
 	\begin{array}{ll}
-		u(v_j) & \text{ if there exists $j$ such that for all }v \in \Children{v_j}{\varphi}: \\
-		       & \quad \text{ there exists }k < i, \sigma_k = p(v) \text{ and }\\
-					 & \quad \text{ for all } l: k < l < i, \sigma_l \neq u(v_j) \\
-		p(v_j) & \text{ otherwise where } j = min(k \mid \text{ for all }l < i: \sigma_l \neq p(v_k))
+		u(v) & \text{ if there exists } u \in \Children{v}{\varphi}: \\
+		       & \quad \text{ there exists }k < i, \sigma_k = p(u) \text{ and }\\
+					 & \quad \text{ for all } l: k < l < i, \sigma_l \neq u(v) \\
+		p(v) & \text{ otherwise where } v = min_{\pred}(u \mid \text{ for all }l < i: \sigma_l \neq p(u))
 	\end{array}
 	\right.
 \end{array}
@@ -106,8 +105,8 @@ Consider the unpebbling of an arbitrary node $v$ in the canonical pebbling strat
 \qed
 \end{proof}
 
-As a consequence of Theorem \ref{theorem:canonical} is that finding pebbling strategies with low pebbling numbers can be reduced to constructing topological orders.
-The memory required to process a proof using some topological order can be measured by the pebbling number of the pebbling strategy corresponding to the order.
+As a consequence of Theorem \ref{theorem:canonical} finding pebbling strategies with low pebbling numbers can be reduced to constructing topological orders.
+The memory required to process a proof using some topological order can be measured by the pebbling number of the canonical pebbling strategy corresponding to the order.
 
 \begin{definition}[Space]
 \label{def:space measure}
