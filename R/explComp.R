@@ -1,5 +1,5 @@
 data  <-read.csv("data/explComp/explComp3.csv", header=TRUE)
-data2 <-read.csv("data/explComp/explComp4.csv", header=TRUE)
+data2 <-read.csv("data/explComp/explComp6.csv", header=TRUE)
 
 original <- data[["original"]]
 pT <- data[["proofTree"]]
@@ -25,4 +25,4 @@ plot(	origsize,
 	xlab ="original proofs",
 	ylab ="produced proofs",
 	xlim =c(0,500),
-	ylim =c(0,5000) )
+	ylim =c(0,500) )
