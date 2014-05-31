@@ -20,7 +20,7 @@ $$
 \end{array}
 $$
 
-\emph{processing a node} $\n$ with some processing function $f$ means computing the value $\ap(\n,f)$.
+\emph{Processing a node} $\n$ with some processing function $f$ means computing the value $\ap(\n,f)$.
 \emph{Processing a proof} means to process its root node.
 \qed
 \end{definition}
@@ -64,7 +64,7 @@ The following definition allows us to relate pebbling strategies with orderings 
 A topological order of a proof $\varphi$ is a total order relation $\prec$ on $\Vertices{\varphi}$, such that 
 $\text{for all } \n \in \Vertices{\varphi} \text{, for all } p \in \Premises{\n}{\varphi}:
 p \prec v$.
-A pebbling strategy $\sigma = (\sigma_1,\ldots,\sigma_n)$ \emph{respects} a topological order $\prec$ if $j < i$ \emph{iff} $\sigma_j \prec \sigma_i$.
+A sequence of moves in the pebbling game $(\sigma_1,\ldots,\sigma_n)$ \emph{respects} a topological order $\prec$ if $j < i$ \emph{iff} $\sigma_j \prec \sigma_i$.
 \qed
 \end{definition}
 
@@ -75,6 +75,7 @@ Theorem \ref{theorem:canonical} shows that the moments for unpebbling moves are 
 Therefore there is a bijection between topological orders and pebbling strategies.
 
 \begin{definition}[Canonical Topological Pebbling Strategy]
+\label{def:canonstrat}
 The \emph{canonical topological pebbling strategy} $\sigma$ for a proof $\varphi$, its root node $s$ and a topological order $\prec$ represented as a sequence $(v_1,\dots,v_n)$ is defined recursively:
 $$
 \begin{array}{l}
@@ -82,12 +83,15 @@ $$
 \sigma_i = 
 	\left\{
 	\begin{array}{ll}
-		u(v) & \text{ if there exists } u \in \Children{v}{\varphi}: \\
-		       & \quad \text{ there exists }k < i, \sigma_k = p(u) \text{ and }\\
-					 & \quad \text{ for all } l: k < l < i, \sigma_l \neq u(v) \\
-		p(v) & \text{ otherwise where } v = min_{\pred}(u \mid \text{ for all }l < i: \sigma_l \neq p(u))
+		%u(v) & \text{ if for all } c \in \Children{v}{\varphi}: \\
+		       %& \quad \text{ there exists }k < i, \sigma_k = p(u) \text{ and }\\
+					 %& \quad \text{ for all } l: k < l < i, \sigma_l \neq u(v) \\
+		%u(v) & \text{ for all } c \in \Children{v}{\varphi} \text{ exists } k < i, \sigma_k = p(u) \text{ and for all }l: k < l < i, \sigma_l \neq u(v) \\
+		u(v) & \text{for all } c \in \Children{v}{\varphi} \text{ exists } k < i \text { such that } \sigma_k = p(u)\\
+		p(v) & \text{otherwise, where } v = min_{\prec}(w \mid \text{ for all } l < i: \sigma_l \neq p(w))
 	\end{array}
 	\right.
+	%finished(v,i) := \text{ for all} c \in \Children{v}{\varphi} \text{ exists } k < i, \sigma_k = p(u) \text{ and for all } k < l < i, \sigma_l \neq u(v) 
 \end{array}
 $$
 \qed
@@ -99,9 +103,16 @@ The following theorem shows that unpebbling moves can be omitted from strategies
 \label{theorem:canonical}
 The canonical pebbling strategy has the minimum pebbling number among all pebbling strategies that respect the topological order $\prec$.
 \end{theorem}
-\begin{proof} (Sketch)
-All the pebbling strategies respecting $\prec$ differ only w.r.t. their unpebbling moves.
-Consider the unpebbling of an arbitrary node $v$ in the canonical pebbling strategy. Unpebbling it later could only possibly increase the pebble number. To reduce the pebble number, $v$ would have to be unpebbled earlier than some preceding pebbling move. But, by definition of canonical pebbling strategy, the immediately preceding pebbling move pebbles the last child of $v$ w.r.t. $\prec$. Therefore, unpebbling $v$ earlier would make it impossible for its last child to be pebbled later without violating the rules of the game.
+\begin{proof}
+%Let $\sigma = (\sigma_1,\ldots,\sigma_n)$ be the canonical pebbling strategy for $\prec$ and let $\sigma' = (\sigma'_1,\ldots,\sigma'_n)$ be a pebbling strategy respecting $\prec$ such that $\sigma \neq \sigma'$.
+%All the pebbling strategies respecting $\prec$ differ only in the order of unpebbling moves.
+Definition \ref{def:canonstrat} prioritizes unpebbling over pebbling moves.
+Therefore the canonical topological pebbling strategy makes unpebbling moves as soon as possible.
+Consider the moment for unpebbling an arbitrary node $v$ in the canonical pebbling strategy. 
+Unpebbling it later could only possibly increase the pebble number. 
+To reduce the pebble number, $v$ would have to be unpebbled earlier than some preceding pebbling move. 
+But, by definition of canonical pebbling strategy, the immediately preceding pebbling move pebbles the last child of $v$ w.r.t. $\prec$. 
+Therefore, unpebbling $v$ earlier would make it impossible for its last child to be pebbled later without violating the rules of the game.
 \qed
 \end{proof}
 

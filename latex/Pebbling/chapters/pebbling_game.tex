@@ -41,6 +41,7 @@ Including this rules sets a bound $O(|V|)$ for the number of rounds.
 A \emph{pebbling strategy} $\sigma$ for the Bounded Pebbling Game, played on a DAG $G = (V,E)$ and distinguished node $s$, is a sequence of moves $(\sigma_1,\ldots,\sigma_n)$ of the player such that $\sigma_n = p(s)$.
 \end{definition}
 
+Rules \ref{rule:unpebbling} and \ref{rule:onlyonce} 
 The following definition allows to measure how many pebbles are required to play the Bounded Pebbling Game on a given graph.
 
 \begin{definition}[Pebbling number]
@@ -52,7 +53,6 @@ The \emph{pebbling number of a DAG $G$ and node $s$} is the minimum pebbling num
 Note that Definitions \ref{def:pebbling-game} and \ref{def:strategy} leave the player freedom when to do unpebbling moves.
 With the aim of finding strategies with low pebbling numbers, for every unpebbling move there is a canonical round to do it, as will be shown in Section \ref{sec:sec:pebblingchecking}.
 
-\noindent
 The Bounded Pebbling Game from definition \ref{def:pebbling-game} differs from the Black Pebbling Game discussed in \cite{Hertel2007,Pippenger1982} in two aspects. 
 Firstly, the Black Pebbling Game does not include rule \ref{rule:onlyonce}. 
 Excluding this rule allows for pebbling strategies with lower pebbling numbers (\cite{Sethi1975} has an example on page 1), at the expense of an exponential upper bound on the number of rounds \cite{EmdeBoas1979}.

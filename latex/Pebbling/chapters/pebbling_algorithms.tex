@@ -38,6 +38,9 @@ When $N$ becomes empty, all nodes have been pebbled once and a topological order
   \label{algo:TDpebbling}
 \end{algorithm}
 
+Unfortunately Top-Down Pebbling often ends up finding a sub-optimal pebbling strategy regardless of the heuristic used.
+The following example shows such a situation.
+
 \begin{example}
 \label{example:topdown}
 
@@ -142,37 +145,44 @@ When $N$ becomes empty, all nodes have been pebbled once and a topological order
 	\label{fig:TDP}
 \end{figure}
 
-Top-Down Pebbling often ends up finding a sub-optimal pebbling strategy regardless of the heuristic used. Consider the graph shown in Figure \ref{fig:TDP} and suppose that top-down pebbling has already pebbled the initial sequence of nodes $(1,2,3)$. 
+Consider the graph shown in Figure \ref{fig:TDP} and suppose that top-down pebbling has already pebbled the initial sequence of nodes $(1,2,3)$. 
 For a greedy heuristic that only has information about pebbled nodes, their premises and children, all nodes marked with $4?$ are considered equally worthy to pebble next.
 Suppose the node marked with $4$ in the middle graph is chosen to be pebbled next.
 Subsequently, pebbling $5$ opens up the possibility to remove a pebble after the next move, which is to pebble $6$.
-After that only the middle subgraph has to be pebbled. No matter in which order this is done, the strategy will use six pebbles at some point. 
+After that only the middle subgraph has to be pebbled. 
+No matter in which order this is done, the strategy will use six pebbles at some point. 
 One example sequence and the point where six pebbles are used are shown in the rightmost picture in Figure \ref{fig:TDP}.
+However the pebbling number of this proof is 5.
 
 \label{example:TDPIssue}
 \end{example}
 
 \subsection{Bottom-Up Pebbling}
 
-Bottom-Up Pebbling (Algorithms \ref{algo:BUpebbling} and \ref{algo:visit}) constructs a topological order of a proof $\varphi$ while traversing it from its root node to its axioms. The algorithm constructs the order by visiting nodes and their premises recursively. At every node $\n$ the order in which the premises of $\n$ are visited is decided heuristically. After visiting the premises, $n$ is added to the current sequence of nodes.
-Since axioms do not have any premises, there is no recursive call for axioms and these nodes are simply added to the sequence. The recursion is started by a call to visit the root.
+Bottom-Up Pebbling (Algorithm \ref{algo:BUpebbling}) constructs a topological order of a proof $\varphi$ while traversing it from its root node $r$ to its axioms. 
+The algorithm constructs the order by visiting nodes and their premises recursively. 
+For every node $\n$ the order in which the premises of $\n$ are visited is decided heuristically. 
+After visiting the premises, $n$ is added to the current sequence of nodes.
+Since axioms do not have any premises, there is no recursive call for axioms and these nodes are simply added to the sequence. 
+The recursion is started with the call $BUpebble(\varphi,r,\emptyset,())$.
 Since all proof nodes are ancestors of the root, the recursive calls will eventually visit all nodes once and a topological total order will be found.
-Bottom-Up Pebbling corresponds to how the apply function $\ap(.)$ was defined in Section \ref{sec:pebblingchecking} with the addition of a visit order of the premises for each node and the omission of calls to previously processed nodes.
+Bottom-Up Pebbling corresponds to the apply function $\ap(.)$ defined in Section \ref{sec:pebblingchecking} with the addition of a visit order of the premises.
+Also previously visited nodes are not visited again.
 
-\SetKwFunction{KwVisit}{visit}
+\SetKwFunction{KwVisit}{BUpebble}
 
-\begin{algorithm}[h]
-  \KwIn{proof $\varphi$ with root node $r$}
-  \KwOut{sequence of nodes $S$ representing a topological order $\prec$ of $\varphi$}
-  \BlankLine
-
-	$S = ()$\; \tcp*[f]{the empty sequence}\\
-	$V = \emptyset$\;
-	\Return \KwVisit{$\varphi$,$r$,$V$,$S$}\;
-
-  \caption[.]{\FuncSty{Bottom-Up Pebbling}}
-  \label{algo:BUpebbling}
-\end{algorithm}
+%\begin{algorithm}[h]
+  %\KwIn{proof $\varphi$ with root node $r$}
+  %\KwOut{sequence of nodes $S$ representing a topological order $\prec$ of $\varphi$}
+  %\BlankLine
+%
+	%$S = ()$\; \tcp*[f]{the empty sequence}\\
+	%$V = \emptyset$\;
+	%\Return \KwVisit{$\varphi$,$r$,$V$,$S$}\;
+%
+  %\caption[.]{Bottom-Up Pebbling}
+  %\label{algo:BUpebbling}
+%\end{algorithm}
 
 \begin{algorithm}[h]
   \KwIn{proof $\varphi$}
@@ -181,20 +191,21 @@ Bottom-Up Pebbling corresponds to how the apply function $\ap(.)$ was defined in
 	\KwIn{initial sequence of nodes $S$}
   \KwOut{sequence of nodes}
 	
-	$V_1 = V \cup \{\n\}$;
+	$V_1 = V \cup \{\n\}$; \\
 	$N = \Premises{\n}{\varphi} \setminus V$; \tcp*[f]{Only unprocessed premises are visited} \\
 	$S_1 = S$\;
 	
   \While{$N$ is not empty}{
     choose $p \in N$ heuristically;
 		$N = N \setminus p$\;
-		$S_1 = S_1 ::: visit(\varphi,p,V,S)$; \tcp*[f]{$:::$ is the concatenation of sequences}
+		$S_1 = S_1 ::: BUpebble(\varphi,p,V,S)$; \tcp*[f]{$:::$ is the concatenation of sequences}
   }
 	
 	\Return $S_1 ::: (\n)$\;
 	
-  \caption[.]{\FuncSty{visit}}
-  \label{algo:visit}
+  \caption{BUpebble}
+	\label{algo:BUpebbling}
+  
 \end{algorithm}
 
 %\newcommand{\nodedistance2}{0.6cm}
@@ -205,10 +216,8 @@ Suppose that similarly to the Top-Down Pebbling scenario, nodes have been chosen
 However, the choice of where to go next is predefined by the dashed nodes. 
 Consider the dashed child of node $3$. 
 Since $3$ has been completely processed, the other premise of its dashed child is visited next. 
-The result is that node the middle subgraph is pebbled while only one external node is pebbled, while it have been two in the Top-Down scenario. 
+The result is that the middle subgraph is pebbled while only one external node is pebbled, while it were two in the Top-Down scenario. 
 At no point more than five pebbles will be used for pebbling the root node, which is shown in the bottom right picture of the figure. This is independently of the heuristic choices.
-
-Not that this example underlines the point of two observations: pebbling choices should be made local and hard subgraphs should be pebbled early.
 
 \begin{figure}[tb]
 	\makebox[\textwidth][c]{
@@ -352,6 +361,91 @@ Not that this example underlines the point of two observations: pebbling choices
 \subsection{Remarks about Top-Down and Bottom-Up Pebbling} %or: Which way to go?
 \label{sec:TDvsBU}
 
-In principle every topological order of a given proof can be constructed using Top-down or Bottom-up Pebbling. Both algorithms traverse the proof only once and have linear run-time in the proof length (assuming that the heuristic choice requires constant time). Example \ref{example:TDPIssue} shows a situation where Top-Down Pebbling may pebble a node that is far away from the previously pebbled nodes. This results in a sub-optimal pebbling strategy.
-As discussed in Example \ref{example:BUP}, Bottom-Up Pebbling is more immune to this non-locality issue, because queuing up the processing of premises enforces local pebbling. This suggests that Bottom-Up is better than Top-Down, which is confirmed by the experiments in Section \ref{sec:experiments}.
+Every topological order of a given proof can be constructed using Top-down or Bottom-up Pebbling.
+A heuristic that orders nodes according to the desired topological order achieves this goal.
+Of course such a heuristic is not very useful in practice, as we do not know the desired topological order beforehand.
+Both algorithms traverse the proof only once and have linear run-time in the proof length (assuming that the heuristic choice requires constant time).
+Therefore both algorithms are theoretically equally good in constructing topological orders.
 
+The experiments presented in Section \ref{sec:experiments} show that in practice, Bottom-Up Pebbling performs much better.
+Example \ref{example:TDPIssue} shows two principles that result in pebbling strategies with small pebbling numbers and are likely to be violated by the Top-Down Pebbling algorithm.
+
+Firstly, pebbling strategies should make local choices.
+By local choices we mean that it should pebble nodes that are close w.r.t. undirected edges in the graph to other pebbled nodes.
+Such local choices allow to unpebble other nodes earlier and therefore keep the pebbling number low.
+Bottom-Up Pebbling makes local choices by construction, because premises are queued up and the second premise is visited as soon as possible.
+Top-Down Pebbling does not have knowledge about the recursive structure of children nodes, therefore it is hard to make local choices.
+The algorithm simply does not know which pebbleable nodes are close to other pebbled ones.
+
+Secondly, pebbling strategies should pebble subproofs with a high pebbling number early.
+Pebbling such subproofs late will result in other pebbles staying on nodes for a high number of rounds.
+This likely results in increasing the overall pebbling number, as this adds extra pebbles to the already high pebbling number of the subproof.
+The principle is more subtle than the first one, because pebbling one subproof can influence the number of pebbles used for another subproof in situations where nodes are share between subproofs.
+The principle is demonstrated in the following example.
+
+\begin{example}
+Figure \ref{fig:SpaciousFirst} shows a simple proof $\varphi$ with two subproofs $\varphi_0$ (left branch) and $\varphi_1$ (right branch). 
+As shown in the leftmost diagram, assume $\pspace{\varphi_0}{\prec_0} = 4$ and $\pspace{\varphi_1}{\prec_1} = 5$, where $\prec_0$ and $\prec_1$ represent some topological order of the respective subproofs with the corresponding pebbling numbers.
+After pebbling one of the subproofs, the pebble on its root node has to be kept there until the root of the other subproof is also pebbled. 
+Only then the root node can be pebbled. 
+Therefore, $\pspace{\varphi}{\prec} = \pspace{\varphi_j}{\prec_j} + 1$ where $\prec$ is obtained by first pebbling according to $\prec_j$, then by $\prec_{1-j}$ followed by pebbling the root.
+Choosing to pebble the less spacious subproof $\varphi_0$ first results in $\pspace{\varphi}{\prec} = 6$, while pebbling the more spacious one first gives $\pspace{\varphi}{\prec} = 5$.
+
+Note that this example shows a simplified situation. 
+The two subproofs do not share nodes. 
+Pebbling one of them does not influence the pebbling number of the other.
+
+\begin{figure}[h]
+	\usetikzlibrary{shapes.geometric}
+	\tikzset{
+    triangle/.style={
+        draw,
+        shape border rotate=180,
+        regular polygon,
+        regular polygon sides=3,
+        node distance=\nodedistanceTwo,
+        %minimum height=4em,
+				minimum width= 1.5cm
+			}
+	}
+	\makebox[\textwidth][c]{
+	\begin{minipage}{.3\textwidth}
+		\begin{tikzpicture}[node distance=\nodedistanceTwo]
+			\node[circle, draw, anchor=mid](root) {?};
+			\addchildrenBW{root}{n1}{n2};
+			\node[triangle, above of = n1, yshift = -4mm]{4};
+			\node[triangle, above of = n2, yshift = -4mm]{5};
+			\whitenode{n1};
+			\whitenode{n2};
+			\drawchildren{root}{n1}{n2};
+		\end{tikzpicture}
+	\end{minipage}%
+		\begin{minipage}{.3\textwidth}
+		\begin{tikzpicture}[node distance=\nodedistanceTwo]
+			\node[circle, draw, anchor=mid](root) {6};
+			\addchildrenBW{root}{n1}{n2};
+			\node[triangle, above of = n1, yshift = -4mm]{ };
+			\node[triangle, above of = n2, yshift = -4mm]{5};
+			\blacknode{n1};
+			\whitenode{n2};
+			\drawchildren{root}{n1}{n2};
+		\end{tikzpicture}
+	\end{minipage}%
+		\begin{minipage}{.3\textwidth}
+		\begin{tikzpicture}[node distance=\nodedistanceTwo]
+			%\proofnodeBW{root};
+			\node[circle, draw, anchor=mid](root) {5};
+			\addchildrenBW{root}{n1}{n2};
+			\node[triangle, above of = n1, yshift = -4mm]{4};
+			\node[triangle, above of = n2, yshift = -4mm]{ };
+			\whitenode{n1};
+			\blacknode{n2};
+			\drawchildren{root}{n1}{n2};
+		\end{tikzpicture}
+	\end{minipage}%
+	}
+	\caption{Spacious subproof first}
+	\label{fig:SpaciousFirst}
+\end{figure}
+\label{example:hardfirst}
+\end{example}
