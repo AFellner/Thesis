@@ -35,7 +35,7 @@ These proofs\footnote{SMT proofs: \url{www.logic.at/people/bruno/Experiments/201
 \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%% Results table &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+%%%%%%%%%%%%%%% Results table %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{table}[tb]
 \centering
@@ -70,38 +70,36 @@ Distance(3) & \textbf{-74.33} & \textbf{0.1}\\
 \begin{table}[tb]
 \centering
 %\setlength{\tabcolsep}{8pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Decay table %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{tabular}{c c c c c}
 \toprule
 \textbf{Decay} & \textbf{Depth} &  \textbf{Combination} & \textbf{Performance} & \textbf{Speed}\\ 
 $\gamma$ &$d$ &  $com$ & \textbf{Improvement} (\%) & (nodes/ms)\\ 
 \midrule
-0.5&1& avg& 0.50 & 47.7\\ 
-0.5& 1& max & 0.40 & 47.0 \\
-0.5& 7& avg& 0.85 & 14.0 \\
-0.5& 7& max & 0.76 & 15.3 \\
-3&   1& avg & 0.48 & \textbf{64.0}\\
-3&   1& max & 0.43 & 64.4 \\
-3&   7& avg & 0.21 & 15.3 \\ 
-3&   7& max & \textbf{0.94} & 15.3 \\
+0.5&1& mean & 0.50 & 47.7\\ 
+0.5& 1& maximum & 0.40 & 47.0 \\
+0.5& 7& mean& 0.85 & 14.0 \\
+0.5& 7& maximum & 0.76 & 15.3 \\
+3&   1& mean & 0.48 & 64.0\\
+3&   1& maximum & 0.43 & \textbf{64.4} \\
+3&   7& mean & 0.21 & 15.3 \\ 
+3&   7& maximum & \textbf{0.94} & 15.3 \\
 \bottomrule
 %\hline
 \end{tabular}
 \caption{Improvement of LastChild using Decay Heuristic}
 \label{tab:decay}
 \end{table}
-%Decay(LC, 0.5, 1, avg) & 35.6 & 47.7\\ 
-%Decay(LC, 0.5, 7, avg) & 24.6 & 14.0 \\
-%Decay(LC, 3,   1, avg) & 41.0 & 64.0\\
-%Decay(LC, 3,   7, avg) & 24.2 & 15.3 \\ 
-%Decay(LC, 0.5, 1, max) & 35.4 & 47.0 \\
-%Decay(LC, 0.5, 7, max) & 25.0 & 15.3 \\
-%Decay(LC, 3,   1, max) & 41.2 & 64.4 \\
-%Decay(LC, 3,   7, max) & 25.1 & 15.3 \\
+
 Table \ref{tab:results} summarizes the results of the experiments.
-The two presented order finding algorithms are tested in combination with the four presented heuristics.
+The two presented algorithms are tested in combination with the four presented heuristics.
 The Children and LastChild heuristics were tested on all four benchmark sets.
 The Distance and Decay heuristics were tested on the sets TraceCheck$_2$ and veriT$_2$.
-The relative performance is calculated according to Formula $\ref{eq:space}$, where $f$ is an algorithm with a heuristic, $P$ is the set of proofs the heuristic was tested on and $G$ are all combinations of algorithms and heuristics that were tested on $P$.
+The relative performance is calculated according to Formula \ref{eq:space}, where $f$ is an algorithm with a heuristic, $P$ is the set of proofs the heuristic was tested on and $G$ are all combinations of algorithms and heuristics that were tested on $P$.
 The time used to construct orders is measured in processed nodes per millisecond.
 Both columns show the best and worst result in boldface.
 
@@ -117,10 +115,19 @@ Both columns show the best and worst result in boldface.
 \end{align}
 
 Table \ref{tab:results} shows that the Bottom-Up algorithm constructs topological orders with much smaller space measures than the Top-Down algorithm. 
-This fact is visualized in Figure \ref{fig:BUvsTD}, where each dot represents a proof $\varphi$ and the $x$ and $y$ coordinates show the space of $\varphi$ with the topological orders found by, respectively, the best Top-Down and Bottom-Up algorithms for $\varphi$.
+This fact is visualized in Figure \ref{fig:BUvsTD}, where each point represents a proof $\varphi$.
+The $x$ and $y$ coordinates are the smallest space measure among all heuristics obtained for $\varphi$ using, respectively, the Top-Down and Bottom-Up algorithm.
+The results for Top-Down range far beyond 15000, but to display the discrepancy between the two algorithms the plot scales from 0 to 15000 on both axis.
+The biggest best space measure for Top-Down is 131 451, whereas this number is 11 520 for the Bottom-Up algorithm.
 The LastChild heuristic produces the best results and the Children heuristic also performs well.
 The Distance heuristic produces the worst results, which could be due to the fact that the radius is too small for big proofs with thousands of proof nodes.
-The Decay heuristics unfortunately do not show an improvement of the underlying heuristic.
+
+Table \ref{tab:decay} summarizes results of the Decay Heuristic with the best results highlighted in boldface.
+Decay Heuristics were tested with the Bottom-Up algorithm, using LastChild as underlying heuristic.
+For the parameters decay factor, recursion depth and combining function two values and all their combinations have been tested.
+The performance improvement is calculated using Formula \ref{eq:space} with $G$ being the singleton set of the Bottom-Up algorithm with the LastChild heuristic.
+The results show, that Decay Heuristics can improve the result, but not by a landslide.
+The improvement comes at the cost of slower speed, especially when the recursion depth is big.
 
 Some additional heuristics, not described in this work, designed specifically for Top-Down Pebbling were tested on small benchmark sets.
 These heuristics aimed at doing local pebbling without having to calculate full spheres.
@@ -128,13 +135,13 @@ For example pebbling nodes that allow other nodes to be unpebbled in the next mo
 Unfortunately, none of the additional heuristics showed promising results.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%% Top-Down vs Bottom-Up figure &&&&&&&&&&&&&&&&&
+%%%%%%%%%%%%%%% Top-Down vs Bottom-Up figure %%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.4]{Figures/TD_vs_BU-scatter_min.png}
-	\caption{Spaces obtained with best Bottom-Up and Top-Down heuristics}
+	\includegraphics[scale=0.5]{Figures/td_vs_bu.pdf}
+	\caption{Space measures of best Bottom-Up and Top-Down result}
 	\label{fig:BUvsTD}
 \end{figure}
 
@@ -147,21 +154,6 @@ Possibly for some heuristics, Top-Down algorithms could be made more efficient b
 Unsurprisingly the radius used for the Distance Heuristic has a severe impact on the speed, which decreases rapidly as the maximum radius increases. 
 With radius 5, only a few small proofs were processed in a reasonable amount of time.
 
-
-
-Figure \ref{fig:SpaceVSLength} relates for each proof the smallest space measure obtained by all algorithms tested on the respective proof and its length in number of nodes. 
-Note that the y-axis, showing the space measures, scale is lower by a factor of 100 compared to the scale of the x-axis, which displays the proof lengths. 
-On average the smallest space measure of a proof is 44,1 times smaller than its length. 
+On average the smallest space measure of a proof is 44.1 times smaller than its length. 
 This shows the impact that the usage of deletion information together with well constructed topological orders can have. 
-When these techniques are used, on average 44,1 times less memory is required for storing nodes in memory while proof processing.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%% Length vs Space figure &&&&&&&&&&&&&&&&&&&&&&&
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.4]{Figures/length_vs_space_2.png}
-	\caption{Best space measure compared to proof length}
-	\label{fig:SpaceVSLength}
-\end{figure}
+When these techniques are used, on average 44.1 times less memory is required for storing nodes in memory while proof processing.

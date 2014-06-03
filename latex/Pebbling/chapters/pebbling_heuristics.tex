@@ -3,25 +3,26 @@
 
 Heuristics are used in both pebbling algorithms to choose one node out of a set $N$. 
 For \algo{Top-Down} Pebbling, $N$ is the set of pebbleable nodes, and for \algo{Bottom-Up} Pebbling, $N$ is the set of unprocessed premises of a node. 
-The following definition clarifies what a heuristic in our setting is.
 
-\begin{definition}[Heuristic and Basic Heuristics]
+\begin{definition}[Heuristic and Full Heuristics]
 
 Let $\varphi$ be a proof with nodes $V$.
-A \emph{basic heuristic} $h$ for $\varphi$ is a set totally ordered set $S_h$ together with a \emph{node evaluation} function $e_h: V \rightarrow S_h$.
-A \emph{heuristics} for $\varphi$ is finite a sequence $(e_{h_1}, \ldots, e_{h_n})$ of basic heuristics such that the node evaluation of $e_{h_n}$ is injective.
-The \emph{choice} of the heuristic for a set $N \subseteq V$ is some $\n \in N$ such that $\n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)$ if $\n$ is unique and the choice of the heuristic $(e_{h_2},\ldots,e_{h_n})$ for $\{\n \in N \mid \n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)\}$. This process will eventually terminate, because of the limitation to $e_{h_n}$.
+A \emph{heuristic} $h$ for $\varphi$ is a totally ordered set $S_h$ together with a \emph{node evaluation} function $e_h: V \rightarrow S_h$.
+A \emph{full heuristic} for $\varphi$ is finite a sequence $(e_{h_1}, \ldots, e_{h_n})$ of heuristics such that the node evaluation $e_{h_n}$ is injective.
+The \emph{choice} of the full heuristic for a set $N \subseteq V$ is some $\n \in N$ such that $\n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)$ if $\n$ is unique and the choice of the full heuristic $(e_{h_2},\ldots,e_{h_n})$ for $\{\n \in N \mid \n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)\}$. 
+This process will eventually terminate, because of the limitation to $e_{h_n}$.
 
 \end{definition}
 
 Note that to satisfy the requirement for $e_{h_n}$, some trivial node evaluation like mapping nodes to their address in memory can be used.
-In the next chapters we present basic heuristics, which are cheap to compute and are justified by relating them to the semantics of the Bounded Pebbling Game.
-We will not elaborate on effects of reordering the basic heuristics of heuristics and will therefore omit the basic.
+In the next chapters we present heuristics, which are cheap to compute and are justified by relating them to the semantics of the Bounded Pebbling Game.
+We will not elaborate on effects of reordering the heuristics within full heuristics.
 
 \subsection{Number of Children Heuristic (``$Ch$'')}
 \label{sec:children}
 The \algo{Number of Children} heuristic uses the number of children of a node $\n$ as evaluation function, i.e. $e_h(\n) = |\Children{\n}{\varphi}|$ and $S_h = \mathbb{N}$.
-The intuitive motivation for this heuristic is that nodes with many children will require many pebbles, and subproofs containing nodes with many children will tend to be more spacious. Example \ref{example:hardfirst} shows why it is a good idea to process spacious subproofs first.
+The intuitive motivation for this heuristic is that nodes with many children will require many pebbles, and subproofs containing nodes with many children will tend to be more spacious.
+Example \ref{example:hardfirst} shows the idea behind pebbling spacious subproofs early.
 
 \subsection{Last Child Heuristic (``$Lc$'')}
 \label{sec:lastchild}
@@ -32,7 +33,8 @@ Pebbling a node that allows another one to be unpebbled is always a good move.
 The current number of used pebbles (after pebbling the node and unpebbling one of its premises) does not increase.
 It might even decrease, if more than one premise can be unpebbled.
 For determining the number of premises of which a node is the last child, the proof has to be traversed once, using some topological order $\prec$.
-Before the traversal, $e_h(\n)$ is set to 0 for every node $\n$. During the traversal $e_h(\n)$ is increased by 1, if $\n$ is the last child of the currently processed node w.r.t. $\prec$. 
+Before the traversal, $e_h(\n) = 0$ for every node $\n$. 
+During the traversal $e_h(\n)$ is incremented by 1, if $\n$ is the last child of the currently processed node w.r.t. $\prec$. 
 For this heuristic $S_h = \mathbb{N}$.
 To some extent, this heuristic is paradoxical: $\n$ may be the last child of a node $\n'$ according to $\prec$, but pebbling it early may result in another topological order $\prec^*$ according to which $\n$ is not the last child of $\n'$.
 Nevertheless, sometimes the proof structure ensures that some nodes are the last child of another node irrespective of the topological order. An example is shown in Figure \ref{fig:forcedLC}, where the dashed line denotes a recursive predecessor relationship and the bottommost node is the last child of the top right node in every topological order.
@@ -85,7 +87,7 @@ So $S_h = \mathbb{Z} \times \mathbb{N} \times P$ together with the lexicographic
 \label{sec:decay}
 \algo{Decay} heuristics denote a family of meta heuristics. 
 The idea is to not only use the evaluation of a single node, but also to include the evaluations of its premises.
-Such a heuristic has four parameters: an underlying heuristic $h_u$ defined by an evaluation function $e_u$ together with a well ordered set $S_u$, a decay factor $\gamma \in \mathbb{R}^+ \cup \{0\}$, a recursion depth $d \in \mathbb{N}$ and a combining function $com: S_u^n \rightarrow S_u$ for $n \in \mathbb{N}$.\\
+Such a heuristic has four parameters: an underlying heuristic $h_u$ defined by an evaluation function $e_u$ together with a well ordered set $S_u$, a decay factor $\gamma \in \mathbb{R}^+ \cup \{0\}$, a recursion depth $d \in \mathbb{N}$ and a combining function $com: S_u^n \rightarrow S_u$ for $n \in \mathbb{N}$.
 The resulting heuristic node evaluation function $e_h$ is defined with the help of the recursive function $rec$:
 \begin{align*}
 	rec(\n,0) &\defeq e_u(\n) \\
