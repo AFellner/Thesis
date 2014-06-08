@@ -15,6 +15,9 @@ Ben-Sasson, E., Nordstr{\"o}m, J.: Short proofs may be spacious: An optimal
 Biere, A.: Tracecheck resolution proof format (2006),
   \url{http://fmv.jku.at/tracecheck/README.tracecheck}
 
+\bibitem{Biere2008}
+Biere, A.: Picosat essentials. JSAT  4(2-4),  75--97 (2008)
+
 \bibitem{Biere2009}
 Biere, A., Heule, M., van Maaren, H., Walsh, T. (eds.): Handbook of
   Satisfiability, Frontiers in Artificial Intelligence and Applications, vol.

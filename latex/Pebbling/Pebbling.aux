@@ -36,12 +36,13 @@
 \newlabel{sec:pebblingchecking}{{4}{4}}
 \newlabel{def:proof-processing}{{5}{4}}
 \newlabel{def:topological-order}{{6}{5}}
+\newlabel{def:canonstrat}{{7}{6}}
 \newlabel{theorem:canonical}{{1}{6}}
 \newlabel{def:space measure}{{8}{6}}
-\newlabel{theorem:enumeration}{{2}{7}}
+\newlabel{theorem:enumeration}{{2}{6}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Pebbling as a Satisfiability Problem}{7}}
 \newlabel{sec:pebblingSAT}{{5}{7}}
-\newlabel{c:pebble}{{4}{8}}
+\newlabel{c:pebble}{{4}{7}}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Greedy Pebbling Algorithms}{9}}
 \newlabel{sec:algorithms}{{6}{9}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Top-Down Pebbling}{9}}
@@ -53,22 +54,20 @@
 \newlabel{example:topdown}{{2}{10}}
 \newlabel{example:TDPIssue}{{2}{11}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Bottom-Up Pebbling}{11}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces .}}{11}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces BUpebble\relax }}{11}}
 \newlabel{algo:BUpebbling}{{2}{11}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces .}}{11}}
-\newlabel{algo:visit}{{3}{11}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Bottom-Up Pebbling\relax }}{12}}
 \newlabel{fig:BUP}{{2}{12}}
 \newlabel{example:BUP}{{3}{12}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Remarks about Top-Down and Bottom-Up Pebbling}{12}}
 \newlabel{sec:TDvsBU}{{6.3}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Spacious subproof first\relax }}{13}}
+\newlabel{fig:SpaciousFirst}{{3}{13}}
+\newlabel{example:hardfirst}{{4}{13}}
 \@writefile{toc}{\contentsline {section}{\numberline {7}Heuristics}{13}}
 \newlabel{sec:heuristics}{{7}{13}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Number of Children Heuristic (``$Ch$'')}{13}}
-\newlabel{sec:children}{{7.1}{13}}
-\newlabel{example:hardfirst}{{4}{13}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Spacious subproof first\relax }}{14}}
-\newlabel{fig:SpaciousFirst}{{3}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Number of Children Heuristic (``$Ch$'')}{14}}
+\newlabel{sec:children}{{7.1}{14}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Last Child Heuristic (``$Lc$'')}{14}}
 \newlabel{sec:lastchild}{{7.2}{14}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Bottommost node as necessary last child of right topmost node\relax }}{14}}
@@ -83,34 +82,37 @@
 \newlabel{sec:experiments}{{8}{15}}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Proof benchmark sets\relax }}{16}}
 \newlabel{tab:benchmarks}{{1}{16}}
-\newlabel{eq:space}{{1}{16}}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Experimental results\relax }}{17}}
-\newlabel{tab:results}{{2}{17}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Experimental results\relax }}{16}}
+\newlabel{tab:results}{{2}{16}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Improvement of LastChild using Decay Heuristic\relax }}{17}}
+\newlabel{tab:decay}{{3}{17}}
+\newlabel{eq:space}{{1}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Space measures of best Bottom-Up and Top-Down result\relax }}{18}}
+\newlabel{fig:BUvsTD}{{5}{18}}
 \bibstyle{splncs}
 \bibdata{../jabref_references}
 \bibcite{Ben-Sasson2002}{1}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Spaces obtained with best Bottom-Up and Top-Down heuristics\relax }}{18}}
-\newlabel{fig:BUvsTD}{{5}{18}}
-\@writefile{toc}{\contentsline {paragraph}{Acknowledgments:}{18}}
 \bibcite{Ben-Sasson2009}{2}
 \bibcite{tracecheck}{3}
-\bibcite{Biere2009}{4}
-\bibcite{Bouton2009}{5}
-\bibcite{Chan2013}{6}
-\bibcite{EmdeBoas1979}{7}
-\bibcite{Esteban2001}{8}
-\bibcite{Fontaine2011}{9}
-\bibcite{Gilbert1980}{10}
-\bibcite{Hertel2007}{11}
-\bibcite{drup}{12}
-\bibcite{bdrup}{13}
-\bibcite{Hofferek2013}{14}
-\bibcite{Kasai1979}{15}
-\bibcite{Nordstroem2009}{16}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Best space measure compared to proof length\relax }}{19}}
-\newlabel{fig:SpaceVSLength}{{6}{19}}
-\bibcite{Boudou}{17}
-\bibcite{Pippenger1980}{18}
-\bibcite{Pippenger1982}{19}
-\bibcite{Sethi1975}{20}
-\bibcite{Walker1973}{21}
+\bibcite{Biere2008}{4}
+\bibcite{Biere2009}{5}
+\bibcite{Bouton2009}{6}
+\bibcite{Chan2013}{7}
+\bibcite{EmdeBoas1979}{8}
+\bibcite{Esteban2001}{9}
+\bibcite{Fontaine2011}{10}
+\bibcite{Gilbert1980}{11}
+\bibcite{Hertel2007}{12}
+\bibcite{drup}{13}
+\bibcite{bdrup}{14}
+\bibcite{Hofferek2013}{15}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{19}}
+\newlabel{sec:conclusion}{{9}{19}}
+\@writefile{toc}{\contentsline {paragraph}{Acknowledgments:}{19}}
+\bibcite{Kasai1979}{16}
+\bibcite{Nordstroem2009}{17}
+\bibcite{Boudou}{18}
+\bibcite{Pippenger1980}{19}
+\bibcite{Pippenger1982}{20}
+\bibcite{Sethi1975}{21}
+\bibcite{Walker1973}{22}

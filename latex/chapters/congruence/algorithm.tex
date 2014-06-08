@@ -1,0 +1,187 @@
+\section*{Congruence closure algorithm}
+
+%\subsection*{Data structures}
+
+%\begin{itemize}
+	%\item Representative $r: \mathcal{T} \rightarrow \mathcal{T}$
+	%\item Congruence class $[.]: \mathcal{T} \rightarrow 2^\mathcal{T}$
+	%\item Left neighbours $lN: \mathcal{T} \rightarrow 2^\mathcal{T}$
+	%\item Right neighbours $rN: \mathcal{T} \rightarrow 2^\mathcal{T}$
+	%\item Lookup table $l: \mathcal{T} \times \mathcal{T} \rightarrow \mathcal{T}$
+	%\item Congruence structure $\langle r,[.], lN, rN, l \rangle$
+%\end{itemize}
+%
+%\subsection*{Algorithms}
+%
+%\begin{algorithm}[h]
+	%\caption[.]{addNode}
+  %\KwIn{term $v$}
+	%
+	%\If{$r$ is not defined for $v$}
+		%{$r(v) \leftarrow v$ \\
+		%$[v] \leftarrow \{v\}$ \\
+		%$lN(v) \leftarrow \emptyset$ \\
+		%$rN(v) \leftarrow \emptyset$ \\
+		%\If{$v$ is of the form $f(a,b)$}{
+			%addNode(s) \\
+			%addNode(t) \\
+			%\eIf{$l$ is defined for $(r(s),r(t))$ and $l(r(s),r(t)) \neq f(a,b)$}{
+				%merge($l(r(s),r(t)),f(a,b),\emptyset$)
+			%}
+			%{
+				%$l(r(s),r(t)) \leftarrow f(a,b)$
+			%}
+			%$rN(r(a) \leftarrow lN(r(a)) \cup \{b\}$ \\
+			%$lN(r(b) \leftarrow lN(r(b)) \cup \{a\}$
+		 %}
+	%}
+	%
+  %
+  %\label{algo:addNode}
+%\end{algorithm}
+%
+%\begin{algorithm}[h]
+%\caption[.]{addEquation}
+  %\KwIn{equation $s=t$}
+	%
+	%addNode($s$) \\
+	%addNode($t$) \\
+	%merge($s, t, s=t$)
+  %
+  %\label{algo:addEquation}
+%\end{algorithm}
+%
+%\begin{algorithm}[h]
+%\caption[.]{merge}
+  %\KwIn{term $s$}
+	%\KwIn{term $t$}
+	%\KwIn{equation $s = t$}
+	%
+	%\If{$r(s) \neq r(t)$}{
+		%$c \leftarrow \{s=t\}$ \\
+		%$eq \leftarrow s=t$ \\
+		%\While{$c \neq \emptyset$}{
+			%Let $(u,v)$ be some element in $c$ \\
+			%$c \leftarrow c \cup$ union($s,t$) $\setminus (u,v)$ \\
+			%insert($u,v,eq$) \\
+			%$eq \leftarrow null$
+		%}
+	%}
+  %
+  %\label{algo:merge}
+%\end{algorithm}
+%
+%\begin{algorithm}[h]
+%\caption[.]{union}
+  %\KwIn{term $s$}
+	%\KwIn{term $t$}
+	%
+	%\eIf{$[r(s)] \geq [r(t)]$}{
+		%$(u,v) \leftarrow (s,t)$
+	%}
+	%{
+		%$(u,v) \leftarrow (t,s)$
+	%}
+	%$d \leftarrow \emptyset$ \\
+	%\For{every $x \in rN(r(v))$}{
+		%$l_v \leftarrow l(r(v),r(x))$ \\
+		%\eIf{$l$ is defined for $(r(u),r(x))$}{
+			%$l_u \leftarrow l(r(u),r(x))$ \\
+			%\eIf{$l_u \neq l_v$}{
+				%$d \leftarrow d \cup \{(l_u,l_v)\}$
+			%}
+			%{
+				%$rN(r(v)) \leftarrow rN(r(v)) \setminus \{x\}$
+			%}
+		%}
+		%{
+			%$l(r(u),r(x)) \leftarrow l_v$
+		%}
+	%}
+	%\For{every $x \in lN(r(v))$}{
+		%$l_v \leftarrow l(r(x),r(v))$ \\
+		%\eIf{$l$ is defined for $(r(x),r(x))$}{
+			%$l_u \leftarrow l(r(x),r(u))$ \\
+			%\eIf{$l_u \neq l_v$}{
+				%$d \leftarrow d \cup \{(l_u,l_v)\}$
+			%}
+			%{
+				%$lN(r(v)) \leftarrow lN(r(v)) \setminus \{x\}$
+			%}
+		%}
+		%{
+			%$l(r(x),r(u)) \leftarrow l_v$
+		%}
+	%}
+	%\For{every $x \in [r(v)]$}{
+		%$r(x) \leftarrow r(u)$
+	%}
+	%$[r(u)] \leftarrow [r(u)] \cup [r(v)]$ \\
+	%$lN(r(u)) \leftarrow lN(r(u)) \cup lN(r(v))$ \\
+	%$rN(r(u)) \leftarrow rN(r(u)) \cup rN(r(v))$ \\
+	%
+	%\Return $d$
+  %\label{algo:union}
+%\end{algorithm}
+
+\subsection*{Congruence structures}
+
+The set of extended equations $\mathcal{E} = \mathcal{T} \times \mathcal{T} \cup \{null\}$
+The set of labels $\mathcal{L}_0 = \{(e,\emptyset) \mid e \in \mathcal{T} \times \mathcal{T}$.
+$\mathcal{L}_i = \{(eq,l) \mid eq \in \mathcal{E}, l \in 2^{\mathcal{L}_{i-1}}\}$.
+$\mathcal{L} = \bigcup_{n\in \mathbb{N}} \mathcal{L}_n$
+
+\subsubsection*{Equation graph}
+
+A equation graph stores input and deduced equalities in a labeled weighted undirected graph $(V,E)$ with 
+$V \subseteq \mathcal{T}$, $E \subseteq V \times \mathcal{L} \times V \times \mathbb{N}$.
+
+\begin{algorithm}[h]
+\caption[.]{insert}
+  \KwIn{term $s$}
+	\KwIn{term $t$}
+	\KwIn{equation $eq \in \mathcal{E}$}
+	\KwIn{equation graph $g$}
+	
+	\eIf{$eq != null$}{
+		add edge $(s,(eq,\emptyset),t,1)$ to $g$
+	}
+	{
+		$f(a,b) \leftarrow s$ \\
+		$f(c,d) \leftarrow t$ \\
+		$p1 \leftarrow $ shortest path between $a$ and $c$ in $g$ \\
+		$p2 \leftarrow $ shortest path between $b$ and $d$ in $g$ \\
+		$w \leftarrow \#(p1.inputEqs \cup p2.inputEqs) $ \\
+		add edge $(s,(null,\{p1,p2\}),t,w)$ to $g$
+	}
+  
+  \label{algo:insert_dij}
+\end{algorithm}
+
+s and t are compound and there is a shortest path when their arguments if eq is null.
+
+%\begin{algorithm}[h]
+%\caption[.]{shortestPath}
+  %\KwIn{term $s$}
+	%\KwIn{term $t$}
+	%\KwIn{equation graph $(V,E)$}
+	%
+	%Let $P$ be an empty priority queue \\
+	%Add $(s,0)$ to $P$ \\
+	%\For{$u \in V \setminus \{s\}$}{
+		%Add $(u,\infty)$ to $P$
+	%}
+	%
+	%\While{$P$ is not empty}{
+	%
+	%}
+	%
+  %\label{algo:eqDij}
+%\end{algorithm}
+
+
+\subsubsection*{Proof forest}
+
+A proof forest is a set of proof trees.
+A proof tree is a tree with vertices in $\mathcal{T}$ and edge labels in $\mathcal{L}$
+

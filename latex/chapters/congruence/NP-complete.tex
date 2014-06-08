@@ -2,7 +2,7 @@
 
 In this section we will assume that every propositional logic formula is given in conjunctive normal form and tuples of terms $(u,v)$ are understood as equations $u = v$.
 
-\begin{definition}[Short path decision problem]
+\begin{definition}[Short explanation decision problem]
 
 Let $E$ be a set of input equations $s_1 = t_1,\ldots,s_n = t_n$ of terms $\mathcal{T}$.
 For $k \in \mathbb{N}$ and a target equation $s = t$, the short path decision problem is the question whether there exists an $E' \subseteq E$ such that $E' \models s = t$ and $|E'| \leq k$.
@@ -17,17 +17,17 @@ Let $\Phi$ be a propositional logic formula with clauses $C_1,\ldots,C_n$ using 
 %The set of terms $\mathcal{T}$ is constructed using the following constants and function symbols.
 %For every $i= 1,\ldots,n + 1$, there is a constant $\hat{c}_i$ and function symbols $t_i$ and $f_i$.
 %For every $j= 1,\ldots,m$, there are constants $\hat{x}_j$, $\top_j$ and $\bot_j$.
-The congruence translation $E_{\Phi}$ of $\Phi$ is defined as $E_1 \cup E_2 \cup E_3 \cup E_4$, where
+The congruence translation $E_{\Phi}$ of $\Phi$ is defined as $Assignment \cup Pos \cup Neg \cup Connect$, where
 \begin{align*}
-	&E_1 = \{ (\hat{x}_j,\top_j), (\hat{x}_j,\bot_j) \mid 1 \leq j \leq m\} \\
-	&E_2 = \{ (\hat{c}_i, t_i(\hat{x}_j)) \mid x_j \text{ appears positively in } C_i\} \\
-	&E_3 = \{ (\hat{c}_i, f_i(\hat{x}_j)) \mid x_j \text{ appears negatively in } C_i\} \\
-	&E_4 = \{ (t_i(\top_j),\hat{c}_{i+1}),(f_i(\bot_j), \hat{c}_{i+1}) \mid 1 \leq i \leq n+m, 1 \leq j \leq m\} \\
+	Assignment &= \{ (\hat{x}_j,\top_j), (\hat{x}_j,\bot_j) \mid 1 \leq j \leq m\} \\
+	Pos &= \{ (\hat{c}_i, t_i(\hat{x}_j)) \mid x_j \text{ appears positively in } C_i\} \\
+	Neg &= \{ (\hat{c}_i, f_i(\hat{x}_j)) \mid x_j \text{ appears negatively in } C_i\} \\
+	Connect &= \{ (t_i(\top_j),\hat{c}_{i+1}),(f_i(\bot_j), \hat{c}_{i+1}) \mid 1 \leq i \leq n+m, 1 \leq j \leq m\} \\
 %\end{align*}
-&\hspace{-1cm}\text{Additionally, for every $i = 1,\ldots, n$ and $j = 1,\ldots, m$ we define the following sets }\\
+&\hspace{-3cm}\text{Additionally, for every $i = 1,\ldots, n$ and $j = 1,\ldots, m$ we define the following sets }\\
 %\begin{align*}
-&T_{ij} = \{(\hat{c}_i, t_i(\hat{x}_j)), (\hat{x}_j,\top_j), (t_i(\top_j),\hat{c}_{i+1})\} \\
-&F_{ij} = \{(\hat{c}_i, f_i(\hat{x}_j)), (\hat{x}_j,\bot_j), (f_i(\bot_j),\hat{c}_{i+1})\}
+T_{ij} &= \{(\hat{c}_i, t_i(\hat{x}_j)), (\hat{x}_j,\top_j), (t_i(\top_j),\hat{c}_{i+1})\} \\
+F_{ij} &= \{(\hat{c}_i, f_i(\hat{x}_j)), (\hat{x}_j,\bot_j), (f_i(\bot_j),\hat{c}_{i+1})\}
 \end{align*}
 
 \end{definition}
@@ -55,10 +55,10 @@ Using the transitivity axiom it follows that $E \models \hat{c}_1 = \hat{c}_{n+1
 \begin{paragraph}{Induction Base $n = 1$:}
 
 Suppose that $E \models \hat{c}_1 = \hat{c}_{2}$. %, which implies $\hat{c}_2 \in [\hat{c}_1]_E$.
-Since $\hat{c}_1$ is a constant, the deduction axiom can not be applied to it.
+Since $\hat{c}_1$ is a constant, the deduction axiom can not be applied to any equation with $\hat{c}_1$ on one side.
 Therefore in order to satisfy $E \models \hat{c}_1 = t$ with $t \neq \hat{c}_1$ there has to be an equation $(\hat{c}_1, t) \in E$ for some term $t$.
 Since $E \subseteq E_{\Phi}$, the only possible such equations are of the form $(\hat{c}_1, t_1(\hat{x}_j))$ and $(\hat{c}_1, f_1(\hat{x}_j))$ for some $j$.
-The only equations in $E$ with involving terms with the function symbols $t_1$ and $f_1$ are of the form $(\hat{c}_1, t_1(\hat{x}_j)), (t_1(\top_j),\hat{c}_2)$ and $(\hat{c}_1, f_1(\hat{x}_j)), (f_1(\bot_j),\hat{c}_2)$.
+The only equations in $E$ involving terms with the function symbols $t_1$ and $f_1$ are of the form $(\hat{c}_1, t_1(\hat{x}_j)), (t_1(\top_j),\hat{c}_2)$ and $(\hat{c}_1, f_1(\hat{x}_j)), (f_1(\bot_j),\hat{c}_2)$.
 Therefore in order to satisfy $E \models \hat{c}_1 = t$ such that $t$ is neither the constant $\hat{c}_1$ nor some term $t_1(\hat{x}_j), f_1(\hat{x}_j)$, it is necessary that $E \models t_1(\hat{x}_j) = t_1(\top_j)$ and $(\hat{c}_1, t_1(\hat{x}_j)) \in E$ or $E \models f_1(\hat{x}_j) = f_1(\bot_j)$ and $(f_1(\bot_j),\hat{c}_2) \in E$ for some $j$.
 The conditions can only be satisfied with equations of $E_{\Phi}$ if $\{(\hat{c}_1, t_1(\hat{x}_j)), (\hat{x}_j,\top_j)\} \subseteq E$ or $\{(\hat{c}_1, f_1(\hat{x}_j), (\hat{x}_j,\bot_j)\} \subseteq E$ respectively.
 %Similarly $t \in [\hat{c}_1]_E$ such that $t$ is neither $\hat{c}_1$ nor a term with the function symbol $t_1$ or $f_1$, for some $j$ $(t_1(\top_j),\hat{c}_2) \in E$ and 
@@ -71,13 +71,190 @@ From a similar argumentation about the equations involving $c_2$ and $t_1(\top_j
 \begin{paragraph}{Induction Step:}
 Suppose that $E \models \hat{c}_1 = \hat{c}_{n+1}$.\\
 Similarly to the argumentation in the induction base, the only equations in $E_{\Phi}$ involving $\hat{c}_{n+1}$ are of the form $(t_n(\top_j),\hat{c}_{n+1})$ and $(f_n(\bot_j),\hat{c}_{n+1})$.
-The only way to enrich the congruence class of $\hat{c}_{n+1}$ beyond $\hat{c}_{n+1}$ and terms of the form $t_n(\top_j)$ and $f_n(\bot_j)$ 
+The only possibility to enrich the congruence class of $\hat{c}_{n+1}$ with terms other than $\hat{c}_{n+1}$ and those of the form $t_n(\top_j)$ and $f_n(\bot_j)$, 
 is that for some $j$, $(\hat{x}_j,\top_j) \in E$ or $(\hat{x}_j,\bot_j) \in E$ and subsequently also $(\hat{c}_n,t_n(\hat{x}_j)) \in E$ or $(\hat{c}_n,f_n(\hat{x}_j)) \in E$.
 Thus $T_{nj} \subseteq E$ or $F_{nj} \subseteq E$ and as a consequence $E \models \hat{c}_n = \hat{c}_{n+1}$.
-Using transitivity $E \models \hat{c}_1 = \hat{c}_{n+1}$ and $E \models \hat{c}_n = \hat{c}_{n+1}$ imply $E \models \hat{c}_1 = \hat{c}_n$ and from the induction hypothesis it follows that for every $i = 1,\ldots,n-1$ $T_{ij} \subseteq E$ or $F_{ij} \subseteq E$.
+Using transitivity $E \models \hat{c}_1 = \hat{c}_{n+1}$ and $E \models \hat{c}_n = \hat{c}_{n+1}$ imply $E \models \hat{c}_1 = \hat{c}_n$ and from the induction hypothesis it follows that  $T_{ij} \subseteq E$ or $F_{ij} \subseteq E$ for every $i = 1,\ldots,n-1$.
 \end{paragraph}
 
 \end{proof}
+
+\begin{example}
+
+\begin{center}
+\begin{figure}
+\begin{tikzpicture}[node distance=1.5cm]
+
+\node(c1){$\hat{c}_1$};
+
+\node[right =.5cm of c1] (t1x2) {$t_1(\hat{x}_2)$};
+\node[above =1cm of t1x2] (t1x1) {$t_1(\hat{x}_1)$};
+\node[below =1cm of t1x2] (f1x3) {$f_1(\hat{x}_3)$};
+
+\draw [-] (c1) to (t1x2);
+\draw [-] (c1) to (t1x1);
+\draw [-] (c1) to (f1x3);
+
+
+\node[right =.5cm of t1x1, yshift = 0.25cm] (f11) {$f_1(\bot_1)$};
+\node[above =.5cm of f11] (t11) {$t_1(\top_1)$};
+\node[below =.5cm of f11] (t12) {$t_1(\top_2)$};
+\node[below =.5cm of t12] (f12) {$f_1(\bot_2)$};
+\node[below =.5cm of f12] (t13) {$t_1(\top_3)$};
+\node[below =.5cm of t13] (f13) {$f_1(\bot_3)$};
+
+\node[right = 4.5cm of c1](c2){$\hat{c}_2$};
+
+\draw [-] (c2) to (t11);
+\draw [-] (c2) to (t12);
+\draw [-] (c2) to (t13);
+\draw [-] (c2) to (f11);
+\draw [-] (c2) to (f12);
+\draw [-] (c2) to (f13);
+
+\node[right =.25cm of c2, yshift=1cm]  (f2x2) {$f_2(\hat{x}_2)$};
+\node[below =1.5cm of f2x2] (t2x3) {$t_2(\hat{x}_3)$};
+
+\draw [-] (c2) to (f2x2);
+\draw [-] (c2) to (t2x3);
+
+\node[right =3.5cm of f11] (f21) {$f_2(\bot_1)$};
+\node[right =3.5cm of t11] (t21) {$t_2(\top_1)$};
+\node[right =3.5cm of t12] (t22) {$t_2(\top_2)$};
+\node[right =3.5cm of f12] (f22) {$f_2(\bot_2)$};
+\node[right =3.5cm of t13] (t23) {$t_2(\top_3)$};
+\node[right =3.5cm of f13] (f23) {$f_2(\bot_3)$};
+
+\node[right = 4.5cm of c2](c3){$\hat{c}_3$};
+
+\draw [-] (c3) to (t21);
+\draw [-] (c3) to (t22);
+\draw [-] (c3) to (t23);
+\draw [-] (c3) to (f21);
+\draw [-] (c3) to (f22);
+\draw [-] (c3) to (f23);
+
+\node[right =.25cm of c3, yshift=1cm] (f3x1) {$f_3(\hat{x}_1)$};
+\node[below =1.5cm of f3x1] (f3x2) {$f_3(\hat{x}_2)$};
+
+\draw [-] (c3) to (f3x1);
+\draw [-] (c3) to (f3x2);
+
+\node[right =3.5cm of f21] (f31) {$f_3(\bot_1)$};
+\node[right =3.5cm of t21] (t31) {$t_3(\top_1)$};
+\node[right =3.5cm of t22] (t32) {$t_3(\top_2)$};
+\node[right =3.5cm of f22] (f32) {$f_3(\bot_2)$};
+\node[right =3.5cm of t23] (t33) {$t_3(\top_3)$};
+\node[right =3.5cm of f23] (f33) {$f_3(\bot_3)$};
+
+\node[right = 4.5cm of c3](c4){$\hat{c}_4$};
+
+\draw [-] (c4) to (t31);
+\draw [-] (c4) to (t32);
+\draw [-] (c4) to (t33);
+\draw [-] (c4) to (f31);
+\draw [-] (c4) to (f32);
+\draw [-] (c4) to (f33);
+
+\end{tikzpicture}
+\caption{Pos, Neg and Connect for $E_{\Phi}$}
+\end{figure}
+
+\begin{center}
+\begin{figure}
+\begin{tikzpicture}[node distance=.75cm]
+
+\node (x1) {$\hat{x}_1$};
+\node [below =.5cm of x1] (x2) {$\hat{x}_2$};
+\node [below =.5cm of x2] (x3) {$\hat{x}_3$};
+
+\node [left = of x1] (t1) {$\top_1$};
+\node [right = of x1] (f1) {$\bot_1$};
+
+\draw [-] (x1) to (t1);
+\draw [-] (x1) to (f1);
+
+\node [left = of x2] (t2) {$\top_2$};
+\node [right = of x2] (f2) {$\bot_2$};
+
+\draw [-] (x2) to (t2);
+\draw [-] (x2) to (f2);
+
+\node [left = of x3] (t3) {$\top_3$};
+\node [right = of x3] (f3) {$\bot_3$};
+
+\draw [-] (x3) to (t3);
+\draw [-] (x3) to (f3);
+
+\end{tikzpicture}
+\caption{Assignment for $E_{\Phi}$}
+\end{figure}
+\end{center}
+
+Explanation $E$
+\begin{center}
+\begin{figure}
+\begin{tikzpicture}[node distance=1.5cm]
+
+\node(c1){$\hat{c}_1$};
+
+\node[right =.5cm of c1] (t1x1) {$t_1(\hat{x}_1)$};
+
+\draw [-] (c1) to (t1x1);
+
+\node[right =.5cm of t1x1] (t11) {$t_1(\top_1)$};
+
+\draw [dashed] (t1x1) to (t11);
+
+\node[right =.5cm of t11](c2){$\hat{c}_2$};
+
+\draw [-] (c2) to (t11);
+
+\node[right =.5cm of c2]  (f2x2) {$f_2(\hat{x}_2)$};
+
+\draw [-] (c2) to (f2x2);
+
+\node[right =.5cm of f2x2] (f22) {$f_2(\bot_2)$};
+
+\draw [dashed] (f2x2) to (f22);
+
+\node[right = .5cm of f22](c3){$\hat{c}_3$};
+
+\draw [-] (c3) to (f22);
+
+\node[right =.5cm of c3] (f3x2) {$f_3(\hat{x}_2)$};
+
+\draw [-] (c3) to (f3x2);
+
+\node[right =.5cm of f3x2] (f32) {$f_3(\bot_2)$};
+
+\draw [dashed] (f3x2) to (f32);
+
+\node[right =.5cm of f32](c4){$\hat{c}_4$};
+
+\draw [-] (c4) to (f32);
+
+\node [below =.5cm of f2x2] (x1) {$\hat{x}_1$};
+\node [below =.5cm of x1] (x2) {$\hat{x}_2$};
+\node [below =.5cm of x2] (x3) {$\hat{x}_3$};
+
+\node [left = of x1] (t1) {$\top_1$};
+
+\draw [-] (x1) to (t1);
+
+\node [right = of x2] (f2) {$\bot_2$};
+
+\draw [-] (x2) to (f2);
+
+\node [left = of x3] (t3) {$\top_3$};
+
+\draw [-] (x3) to (t3);
+
+\end{tikzpicture}
+\end{figure}
+\end{center}
+
+\end{example}
 
 \begin{lemma}[NP - hardness]
 
@@ -89,13 +266,13 @@ The short path decision problem is NP - hard.
 
 We will reduce SAT to the short path decision problem.
 Let $\Phi$ be a propositional formula in conjunctive normal form with variables $x_1,\ldots,x_m$ and clauses $C_1,\ldots,C_n$.
-Let $C_{n+1},\ldots,C_{n+m}$ be topological clauses $\{x_1, \neg x_1\},\ldots,\{x_m,\neg x_m\}$.
+Let $C_{n+1},\ldots,C_{n+m}$ be tautological clauses $\{x_1, \neg x_1\},\ldots,\{x_m,\neg x_m\}$.
 Clearly $\Phi$ is satisfiable if and only if $\Phi' = \{c_1,\ldots,c_{n+m}\}$ is satisfiable.
 We will show that $\Phi'$ is satisfiable if and only if there exists $E \subseteq E_{\Phi'}$ such that $E \models \hat{c}_1 = \hat{c}_{n+m+1}$ and $|E| \leq 2n + 3m$.
 
 \emph{Suppose} $\Phi'$ is satisfiable and let $\mathcal{I}$ be a satisfying assignment.\\
 For every clause $C_i$ there is a literal $\ell_i \in C_i$ such that $\mathcal{I} \models \ell_i$.
-For every $i = 1,\ldots,n+m$ we define $E_i$ to be $T_{ij}$ if $\ell_i = x_j$ and $F_{ij}$ if $\ell_i = \neg x_j$.
+For every $i = 1,\ldots,n+m$ we define $E_i$ to be $T_{ij}$ if $\ell_i = x_j$ or $F_{ij}$ if $\ell_i = \neg x_j$.
 From $\ell_i \in C_i$ it follows $E_i \subseteq E_{\Phi'}$.
 Let $E = \bigcup_i^n E_i$ then from Lemma \ref{lemma:charexpl} follows $E \models c_1 = c_{n+m+1}$.
 What remains to show is that $|E| \leq 2n + 3m$.
@@ -106,14 +283,16 @@ Therefore $E$ involves $m$ equations of set $E_1$ in the definition of $E_{\Phi'
 Overall we have $|E| = 2n + 3m$.
 
 \emph{Suppose} there exists $E \subseteq E_{\Phi'}$, $E \models \hat{c}_1 = \hat{c}_{n+m+1}$ and $|E| \leq 2n + 3m$.\\
-We will show that $\mathcal{I} = \{\hat{x}_j \mid (\hat{x}_j,\top_j) \in E\}$ is a satisfying assignment for $\Phi'$ represented as a set of true variables.
+We will show that $\mathcal{I} = \{\hat{x}_j \mid (\hat{x}_j,\top_j) \in E\}$ is a satisfying assignment for $\Phi'$.
 Let $C_i$ be an arbitrary clause of $\Phi'$.
-From $E \models \hat{c}_1 = \hat{c}_{n+m+1}$ using Lemma \ref{lemma:charexpl} follows $T_{ij} \subseteq E$ or $F_{ij} \subseteq E$.
-Assume $T_{ij} \subseteq E$ for some $j = 1,\ldots,m$.
+From $E \models \hat{c}_1 = \hat{c}_{n+m+1}$ and Lemma \ref{lemma:charexpl} follows $T_{ij} \subseteq E$ or $F_{ij} \subseteq E$ for some $j=1,\ldots,m$.
+
+\noindent Assume $T_{ij} \subseteq E$ for some $j = 1,\ldots,m$.
 $E \subseteq E_{\Phi'}$ implies that $x_j$ appears positively in $C_i$. 
-By definition of $\mathcal{I} \models x_j$. 
-Therefore $\mathcal{I} \models C_i$.
-Similarly $\mathcal{I} \models C_i$ in case $F_{ij} \subseteq E$ for some $j = 1,\ldots,m$.
-Since $i$ was arbitrary, $\mathcal{I} \models \Phi'$.
+By definition of $\mathcal{I} \models x_j$. Therefore $\mathcal{I} \models C_i$.
+
+\noindent If $T_{ij} \nsubseteq E$ for all $j = 1,\ldots,m$, then $F_{ij} \subseteq E \subseteq E_{\Phi'}$, which implies that $x_j$ appears negatively in $C_i$, $x_j \notin \mathcal{I}$. Therefore $\mathcal{I} \models C_i$.
+
+\noindent Since $i$ was arbitrary $\mathcal{I} \models \Phi'$.
 
 \end{proof}

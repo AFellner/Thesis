@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.10.23)  15 MAY 2014 13:22
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.10.23)  2 JUN 2014 17:02
 entering extended mode
 **Pebbling.tex
 (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\Pebbling.tex
@@ -684,23 +684,23 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\chapters/resolution.tex) [2]
 (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\chapters/pebbling_game.tex [3])
 (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\chapters/pebbling_proof-processing.tex [4]
-Overfull \hbox (3.79121pt too wide) in paragraph at lines 70--76
+Overfull \hbox (3.79121pt too wide) in paragraph at lines 71--76
 []\OT1/cmr/m/n/10 A topo-log-i-cal or-der $\OMS/cmsy/m/n/10 $ \OT1/cmr/m/n/10 of a proof $\OML/cmm/m/it/10 '$ \OT1/cmr/
 m/n/10 can be rep-re-sented as a se-quence $(\OML/cmm/m/it/10 v[]; [] ; v[]\OT1/cmr/m/n/10 )$
  []
 
 [5] [6]) (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\chapters/pebbling_sat.tex
-Underfull \hbox (badness 10000) in paragraph at lines 18--19
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--25
+Underfull \hbox (badness 10000) in paragraph at lines 26--27
 
  []
 
 [7]
-Overfull \hbox (14.39626pt too wide) detected at line 79
+Overfull \hbox (14.39626pt too wide) detected at line 82
 []\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 t\OT1/cmr/m/n/10 ) = []
  []
 
@@ -835,7 +835,6 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
  [10]
-[11]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1013,10 +1012,8 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-) (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\chapters/pebbling_heuristics.tex
-Underfull \vbox (badness 4060) has occurred while \output is active []
 
- [12]
+[11] [12]
 (S:\Users\Andreas\AppData\Roaming\MiKTeX\2.9\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibraryshapes.geometric.co
 de.tex
 File: tikzlibraryshapes.geometric.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
@@ -1044,81 +1041,62 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[13]
+) (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\chapters/pebbling_heuristics.tex [13]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
- [14]) (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\chapters/pebbling_experiments.tex
-
-LaTeX Warning: Citation `Biere2008' on page 15 undefined on input line 9.
-
-
+ [14])
+(S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\chapters/pebbling_experiments.tex
 Underfull \hbox (badness 10000) in paragraph at lines 12--12
  [][]\OT1/cmr/m/n/9 SMT proofs: www.logic.at/people/bruno/Experiments/2014/Pebbling/smt-
  []
 
-[15] [16] <Figures/TD_vs_BU-scatter_min.png, id=83, 569.12625pt x 569.12625pt>
-File: Figures/TD_vs_BU-scatter_min.png Graphic file (type png)
- <use Figures/TD_vs_BU-scatter_min.png>
-Package pdftex.def Info: Figures/TD_vs_BU-scatter_min.png used on input line 113.
-(pdftex.def)             Requested size: 227.64647pt x 227.64647pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [17]
-<Figures/length_vs_space_2.png, id=87, 569.12625pt x 455.45157pt>
-File: Figures/length_vs_space_2.png Graphic file (type png)
- <use Figures/length_vs_space_2.png>
-Package pdftex.def Info: Figures/length_vs_space_2.png used on input line 141.
-(pdftex.def)             Requested size: 227.64647pt x 182.1774pt.
-)
+[15] [16] [17] <Figures/td_vs_bu.pdf, id=86, 505.89pt x 505.89pt>
+File: Figures/td_vs_bu.pdf Graphic file (type pdf)
+ <use Figures/td_vs_bu.pdf>
+Package pdftex.def Info: Figures/td_vs_bu.pdf used on input line 143.
+(pdftex.def)             Requested size: 252.94437pt x 252.94437pt.
+) [18 <S:/Users/Andreas/Documents/studium/emcl/Wien/Thesis/latex/Pebbling/Figures/td_vs_bu.pdf>]
 (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\chapters/pebbling_conclusion.tex)
 (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\Pebbling.bbl
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [18 <S:/Users/Andreas/Documents/studium/emcl/Wien/Thesis/latex/Pebbling/Figures/TD_vs_BU-scatter_min.png (PNG copy)>]
 Underfull \hbox (badness 10000) in paragraph at lines 15--17
 []\OT1/cmr/m/n/9 Biere, A.: Tracecheck res-o-lu-tion proof for-mat (2006),
  []
 
-[19 <S:/Users/Andreas/Documents/studium/emcl/Wien/Thesis/latex/Pebbling/Figures/length_vs_space_2.png (PNG copy)>])
-[20] (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\Pebbling.aux) ) 
+[19]) [20] (S:\Users\Andreas\Documents\studium\emcl\Wien\Thesis\latex\Pebbling\Pebbling.aux) ) 
 Here is how much of TeX's memory you used:
- 14855 strings out of 493921
- 272146 string characters out of 3144869
- 386131 words of memory out of 3000000
- 17823 multiletter control sequences out of 15000+200000
+ 14852 strings out of 493921
+ 271969 string characters out of 3144869
+ 390425 words of memory out of 3000000
+ 17822 multiletter control sequences out of 15000+200000
  15094 words of font info for 56 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  56i,19n,75p,755b,841s stack positions out of 5000i,500n,10000p,200000b,50000s
-<S:/Program Files (x86)/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pf
-b><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmbx9.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><S:/Progr
-am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publi
-c/amsfonts/cm/cmmi5.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><S:/Program Files (x
-86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmmi9.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><S:/Program Files (x86)/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-r10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><S:/Program Files (x86)/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmr6.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><S:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publi
-c/amsfonts/cm/cmss10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><S:/Program Files 
-(x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmsy7.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><S:/Program Files (x86)/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.p
-fb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmtt9.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Pebbling.pdf (20 pages, 459544 bytes).
+<S:/Program Files (x86)/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmb
+x12.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><S:/Program Files (x86)/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmbx9.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><S:
+/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmmi5.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><S:/Program Fi
+les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmmi9.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.pfb><S:/Program Files (x86)/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmr10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><S:/Program Files (x86)/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><
+S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmss10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><S:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmsy7.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><S:/Program Files (x86)/
+MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mti9.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><S:/Program Files (x86)/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmtt9.pfb><S:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.
+pfb>
+Output written on Pebbling.pdf (20 pages, 553181 bytes).
 PDF statistics:
- 181 PDF objects out of 1000 (max. 8388607)
+ 185 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 27 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 22 words of extra memory for PDF output out of 10000 (max. 10000000)
 
