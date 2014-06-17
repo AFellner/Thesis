@@ -1,5 +1,5 @@
 \section*{NP-completeness of shortest path decision problem}
-
+\label{sec:npcomplete}
 In this section we will assume that every propositional logic formula is given in conjunctive normal form and tuples of terms $(u,v)$ are understood as equations $u = v$.
 
 \begin{definition}[Short explanation decision problem]
@@ -31,6 +31,42 @@ F_{ij} &= \{(\hat{c}_i, f_i(\hat{x}_j)), (\hat{x}_j,\bot_j), (f_i(\bot_j),\hat{c
 \end{align*}
 
 \end{definition}
+
+
+\begin{example}
+
+Let $\Phi := (x_1 \vee x_2 \vee \neg x_3) \wedge (\neg x_2 \vee x_3) \wedge (\neg x_1 \vee \neg x_2)$. Figure \ref{fig:npexamplebig} shows the graphical representation of the equations in $Pos, Neg$ and $Connect$ for the congruence translation $E_{\Phi}$ of $\Phi$.
+Figure \ref{fig:npassignment} shows the subset $Assignment$ of $E_{\Phi}$.
+
+Let $\mathcal{I} := \{x_1,x_3\}$. It is easy to see that $\mathcal{I} \models \Phi$.
+Figure \ref{fig:npexplanation} shows a graphical representation of $\mathcal{I}$.
+Note that the satisfiability of $\Phi$ does not depend on $x_2$. 
+Therefore replacing $Assignment$ with $Assignment' := Assignment \setminus \{(\hat{x}_2,\top_2)\} \cup \{(\hat{1}_2,\bot_1)\}$ in $E_{\Phi}$ leads to another explanation of $(\hat{c}_1,\hat{c}_4)$ of equal size.
+In Lemma \ref{lemma:nphardness} we exclude such ambiguous sets by introducing additional topological clauses.
+\begin{figure}[!h]
+
+\input{chapters/congruence/figures/npexamplebig}
+\caption{Pos, Neg and Connect for $E_{\Phi}$}
+\label{fig:npexamplebig}
+\end{figure}
+
+
+\begin{figure}[!h]
+
+\input{chapters/congruence/figures/npassignment}
+\caption{Assignment for $E_{\Phi}$}
+\label{fig:npassignment}
+\end{figure}
+
+\begin{figure}[!h]
+
+\input{chapters/congruence/figures/npexplanation}
+\caption{Explanation of $(\hat{c}_1,\hat{c}_4)$}
+\label{fig:npexplanation}
+\end{figure}
+
+\end{example}
+
 
 \begin{lemma}[Characterization of explanations]
 \label{lemma:charexpl}
@@ -79,186 +115,9 @@ Using transitivity $E \models \hat{c}_1 = \hat{c}_{n+1}$ and $E \models \hat{c}_
 
 \end{proof}
 
-\begin{example}
-
-\begin{center}
-\begin{figure}
-\begin{tikzpicture}[node distance=1.5cm]
-
-\node(c1){$\hat{c}_1$};
-
-\node[right =.5cm of c1] (t1x2) {$t_1(\hat{x}_2)$};
-\node[above =1cm of t1x2] (t1x1) {$t_1(\hat{x}_1)$};
-\node[below =1cm of t1x2] (f1x3) {$f_1(\hat{x}_3)$};
-
-\draw [-] (c1) to (t1x2);
-\draw [-] (c1) to (t1x1);
-\draw [-] (c1) to (f1x3);
-
-
-\node[right =.5cm of t1x1, yshift = 0.25cm] (f11) {$f_1(\bot_1)$};
-\node[above =.5cm of f11] (t11) {$t_1(\top_1)$};
-\node[below =.5cm of f11] (t12) {$t_1(\top_2)$};
-\node[below =.5cm of t12] (f12) {$f_1(\bot_2)$};
-\node[below =.5cm of f12] (t13) {$t_1(\top_3)$};
-\node[below =.5cm of t13] (f13) {$f_1(\bot_3)$};
-
-\node[right = 4.5cm of c1](c2){$\hat{c}_2$};
-
-\draw [-] (c2) to (t11);
-\draw [-] (c2) to (t12);
-\draw [-] (c2) to (t13);
-\draw [-] (c2) to (f11);
-\draw [-] (c2) to (f12);
-\draw [-] (c2) to (f13);
-
-\node[right =.25cm of c2, yshift=1cm]  (f2x2) {$f_2(\hat{x}_2)$};
-\node[below =1.5cm of f2x2] (t2x3) {$t_2(\hat{x}_3)$};
-
-\draw [-] (c2) to (f2x2);
-\draw [-] (c2) to (t2x3);
-
-\node[right =3.5cm of f11] (f21) {$f_2(\bot_1)$};
-\node[right =3.5cm of t11] (t21) {$t_2(\top_1)$};
-\node[right =3.5cm of t12] (t22) {$t_2(\top_2)$};
-\node[right =3.5cm of f12] (f22) {$f_2(\bot_2)$};
-\node[right =3.5cm of t13] (t23) {$t_2(\top_3)$};
-\node[right =3.5cm of f13] (f23) {$f_2(\bot_3)$};
-
-\node[right = 4.5cm of c2](c3){$\hat{c}_3$};
-
-\draw [-] (c3) to (t21);
-\draw [-] (c3) to (t22);
-\draw [-] (c3) to (t23);
-\draw [-] (c3) to (f21);
-\draw [-] (c3) to (f22);
-\draw [-] (c3) to (f23);
-
-\node[right =.25cm of c3, yshift=1cm] (f3x1) {$f_3(\hat{x}_1)$};
-\node[below =1.5cm of f3x1] (f3x2) {$f_3(\hat{x}_2)$};
-
-\draw [-] (c3) to (f3x1);
-\draw [-] (c3) to (f3x2);
-
-\node[right =3.5cm of f21] (f31) {$f_3(\bot_1)$};
-\node[right =3.5cm of t21] (t31) {$t_3(\top_1)$};
-\node[right =3.5cm of t22] (t32) {$t_3(\top_2)$};
-\node[right =3.5cm of f22] (f32) {$f_3(\bot_2)$};
-\node[right =3.5cm of t23] (t33) {$t_3(\top_3)$};
-\node[right =3.5cm of f23] (f33) {$f_3(\bot_3)$};
-
-\node[right = 4.5cm of c3](c4){$\hat{c}_4$};
-
-\draw [-] (c4) to (t31);
-\draw [-] (c4) to (t32);
-\draw [-] (c4) to (t33);
-\draw [-] (c4) to (f31);
-\draw [-] (c4) to (f32);
-\draw [-] (c4) to (f33);
-
-\end{tikzpicture}
-\caption{Pos, Neg and Connect for $E_{\Phi}$}
-\end{figure}
-
-\begin{center}
-\begin{figure}
-\begin{tikzpicture}[node distance=.75cm]
-
-\node (x1) {$\hat{x}_1$};
-\node [below =.5cm of x1] (x2) {$\hat{x}_2$};
-\node [below =.5cm of x2] (x3) {$\hat{x}_3$};
-
-\node [left = of x1] (t1) {$\top_1$};
-\node [right = of x1] (f1) {$\bot_1$};
-
-\draw [-] (x1) to (t1);
-\draw [-] (x1) to (f1);
-
-\node [left = of x2] (t2) {$\top_2$};
-\node [right = of x2] (f2) {$\bot_2$};
-
-\draw [-] (x2) to (t2);
-\draw [-] (x2) to (f2);
-
-\node [left = of x3] (t3) {$\top_3$};
-\node [right = of x3] (f3) {$\bot_3$};
-
-\draw [-] (x3) to (t3);
-\draw [-] (x3) to (f3);
-
-\end{tikzpicture}
-\caption{Assignment for $E_{\Phi}$}
-\end{figure}
-\end{center}
-
-Explanation $E$
-\begin{center}
-\begin{figure}
-\begin{tikzpicture}[node distance=1.5cm]
-
-\node(c1){$\hat{c}_1$};
-
-\node[right =.5cm of c1] (t1x1) {$t_1(\hat{x}_1)$};
-
-\draw [-] (c1) to (t1x1);
-
-\node[right =.5cm of t1x1] (t11) {$t_1(\top_1)$};
-
-\draw [dashed] (t1x1) to (t11);
-
-\node[right =.5cm of t11](c2){$\hat{c}_2$};
-
-\draw [-] (c2) to (t11);
-
-\node[right =.5cm of c2]  (f2x2) {$f_2(\hat{x}_2)$};
-
-\draw [-] (c2) to (f2x2);
-
-\node[right =.5cm of f2x2] (f22) {$f_2(\bot_2)$};
-
-\draw [dashed] (f2x2) to (f22);
-
-\node[right = .5cm of f22](c3){$\hat{c}_3$};
-
-\draw [-] (c3) to (f22);
-
-\node[right =.5cm of c3] (f3x2) {$f_3(\hat{x}_2)$};
-
-\draw [-] (c3) to (f3x2);
-
-\node[right =.5cm of f3x2] (f32) {$f_3(\bot_2)$};
-
-\draw [dashed] (f3x2) to (f32);
-
-\node[right =.5cm of f32](c4){$\hat{c}_4$};
-
-\draw [-] (c4) to (f32);
-
-\node [below =.5cm of f2x2] (x1) {$\hat{x}_1$};
-\node [below =.5cm of x1] (x2) {$\hat{x}_2$};
-\node [below =.5cm of x2] (x3) {$\hat{x}_3$};
-
-\node [left = of x1] (t1) {$\top_1$};
-
-\draw [-] (x1) to (t1);
-
-\node [right = of x2] (f2) {$\bot_2$};
-
-\draw [-] (x2) to (f2);
-
-\node [left = of x3] (t3) {$\top_3$};
-
-\draw [-] (x3) to (t3);
-
-\end{tikzpicture}
-\end{figure}
-\end{center}
-
-\end{example}
-
-\begin{lemma}[NP - hardness]
-
-The short path decision problem is NP - hard.
+\begin{lemma}[NP- hardness]
+\label{lemma:nphardness}
+The short path decision problem is NP- hard.
 
 \end{lemma}
 
@@ -296,3 +155,23 @@ By definition of $\mathcal{I} \models x_j$. Therefore $\mathcal{I} \models C_i$.
 \noindent Since $i$ was arbitrary $\mathcal{I} \models \Phi'$.
 
 \end{proof}
+
+\begin{lemma}[In NP]
+\label{lemma:innp}
+The short path decision problem is in NP.
+
+\end{lemma}
+\begin{proof}
+
+Explanations are subsets of the input equations, therefore they are clearly polynomial in size.
+The congruence of two terms, i.e. verifying that a subset is actually an explanation, can be decided in $O(n log(n))$ using for example the congruence closure algorithm presented in Section \ref{sec:algorithms}.
+
+\end{proof}
+
+Lemma \ref{lemma:nphardness} and \ref{lemma:innp} establish the main result of this section.
+
+\begin{theorem}[NP - completeness]
+
+The short path decision problem is NP- complete.
+
+\end{theorem}
