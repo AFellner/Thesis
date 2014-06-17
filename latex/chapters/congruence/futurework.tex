@@ -1,0 +1,13 @@
+\section*{Future Work}
+
+\cite{Bachmair2000} compares the running times of several congruence closure algorithms.
+It would be interesting to do a similar comparison including the congruence closure algorithm presented in Section \ref{sec:algorithm}.
+A comparison to the classic congruence closure algorithms of Nelson and Oppen \cite{Nelson1980}, Downey, Sethi and Tarjan \cite{Downey1980} and Shostak \cite{Shostak1978} and their abstract counterparts, as described in \cite{Bachmair2000}, would show whether our method can compete in terms of computation speed.
+Comparing our method with the explanation producing algorithms presented in \cite{Fontaine2004} and \cite{Nieuwenhuis2005,Nieuwenhuis2007} could be done not only in terms of speed, but also in terms of explanation size.
+
+In Section \ref{sec:npcomplete} it was shown that the problem of finding the shortest explanation is NP-complete.
+Therefore methods and heuristics to find short explanations could be investigated.
+The idea of using shortest path algorithms for explanation finding is a step in that direction.
+In \ref{TODO} we describe a modification of Dijkstra's algorithm \cite{TODO} to make it sensitive to previously used equations.
+Further modifications, possibly using heuristics, could lead to a short explanation algorithm.
+Furthermore translating the problem into a SAT instance could result in an algorithm to derive shortest explanations in acceptable time.
