@@ -1,0 +1,21 @@
+\begin{algorithm}[h]
+\caption[.]{insert (equation graph)}
+  \KwIn{term $s$}
+	\KwIn{term $t$}
+	\KwIn{equation $eq \in \mathcal{E}$}
+	%\KwIn{equation graph $g$}
+	
+	\eIf{$eq != null$}{
+		add edge $(s,(eq,\emptyset),t,1)$ to $g$
+	}
+	{
+		$f(a,b) \leftarrow s$ \\
+		$f(c,d) \leftarrow t$ \\
+		$p1 \leftarrow $ shortest path between $a$ and $c$ in $g$ \\
+		$p2 \leftarrow $ shortest path between $b$ and $d$ in $g$ \\
+		$w \leftarrow \#(p1.inputEqs \cup p2.inputEqs) $ \\
+		add edge $(s,(null),t,w)$ % to $g$
+	}
+  
+  \label{algo:insert_dij}
+\end{algorithm}

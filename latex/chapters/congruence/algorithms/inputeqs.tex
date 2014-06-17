@@ -1,0 +1,23 @@
+\begin{algorithm}[h]
+\caption[.]{inputEqs}
+	\KwIn{path $p$ in $g$}
+	\KwIn{congruence graph $g$}
+	\KwOut{set of input equations used in $p$}
+	
+	Let $p$ be $(u_1,l_1,v_1),\ldots,(u_n,l_n,v_n)$\\
+	$eqs \leftarrow \emptyset$
+	\For{$i \leftarrow 1 to n$}{
+		\eIf{$l_i = null$}{
+			$f(a,b) \leftarrow u_i$ \\
+			$f(c,d) \leftarrow v_i$ \\
+			$p1 \leftarrow $ explain$(a,c,g)$ \\
+			$p2 \leftarrow $ explain$(b,d,g)$ \\
+			$eqs \leftarrow eqs \cup inputEqs(p1,g) \cup inputEqs(p2,g)$
+		}{
+			$eqs \leftarrow eqs \cup \{l_i\}$
+		}
+	}
+	\Return{$eqs$}
+  
+  \label{algo:inputeqs}
+\end{algorithm}

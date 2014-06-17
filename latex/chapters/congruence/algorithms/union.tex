@@ -1,0 +1,55 @@
+\begin{algorithm}[h]
+\caption[.]{union}
+  \KwIn{term $s$}
+	\KwIn{term $t$}
+	\KwOut{a set of deduced equations}
+	
+	\eIf{$[r(s)] \geq [r(t)]$}{
+		$(u,v) \leftarrow (s,t)$
+	}
+	{
+		$(u,v) \leftarrow (t,s)$
+	}
+	$d \leftarrow \emptyset$ \\
+	\For{every $x \in rN(r(v))$}{
+		$l_v \leftarrow l(r(v),r(x))$ \\
+		\eIf{$l$ is defined for $(r(u),r(x))$}{
+			$l_u \leftarrow l(r(u),r(x))$ \\
+			\eIf{$l_u \neq l_v$}{
+				$d \leftarrow d \cup \{(l_u,l_v)\}$
+			}
+			{
+				$rN(r(v)) \leftarrow rN(r(v)) \setminus \{x\}$
+			}
+		}
+		{
+			\nllabel{changel1} $l(r(u),r(x)) \leftarrow l_v$
+		}
+	}
+	\For{every $x \in lN(r(v))$}{
+		$l_v \leftarrow l(r(x),r(v))$ \\
+		\eIf{$l$ is defined for $(r(x),r(u))$}{
+			$l_u \leftarrow l(r(x),r(u))$ \\
+			\eIf{$l_u \neq l_v$}{
+				$d \leftarrow d \cup \{(l_u,l_v)\}$
+			}
+			{
+				$lN(r(v)) \leftarrow lN(r(v)) \setminus \{x\}$
+			}
+		}
+		{
+			\nllabel{changel2} $l(r(x),r(u)) \leftarrow l_v$
+		}
+	}
+	\For{every $x \in [r(v)]$}{
+		\nllabel{changerep} $r(x) \leftarrow r(u)$
+	}
+	\nllabel{changeclass} $[r(u)] \leftarrow [r(u)] \cup [r(v)]$ \\
+	$lN(r(u)) \leftarrow lN(r(u)) \cup lN(r(v))$ \\
+	$rN(r(u)) \leftarrow rN(r(u)) \cup rN(r(v))$ \\
+	\KwInvariant{Neighbours \nllabel{invariant:neig_union}} \\
+	\KwAssert{$r(s) = r(t)$ \nllabel{assertion:union_rep}}
+	\Return $d$
+  \label{algo:union}
+\end{algorithm}
+
