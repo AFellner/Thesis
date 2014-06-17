@@ -1,0 +1,21 @@
+\section*{Resolution extended with equality}
+
+Let $\mathcal{T}$ be a set of terms.
+A relation $R \subset \mathcal{T} \times \mathcal{T}$ is a congruence relation, if has the following four properties:
+\begin{itemize}
+	\item reflexive: for all $t \in \mathcal{T}: (t,t) \in R$
+	\item symmetric: $(s,t) \in R$ implies $(t,s) \in R$
+	\item transitive: $(r,s) \in R$ and $(s,t) \in R$ implies $(r,t) \in R$
+	\item congruence: $f$ is a n-ary function symbol and for all $i = 1,\ldots,n (t_i,s_i) \in R$ implies $f(t_1,\ldots,t_n),f(s_1,\ldots,s_n) \in R$
+\end{itemize}
+
+Every congruence relation partitions its underlying termset $\mathcal{T}$ into congruence classes, s.t. two terms $(s,t)$ belong to the same class if and only if $(s,t) \in R$.
+The relations $\mathcal{T} \times \mathcal{T}$ and $\emptyset$ are trivial congruence relations.
+
+Let $E$ be a set of equations with terms in some set of terms $\mathcal{T}$.
+The set $E* \supseteq E$ is called the congruence closure of $E$, 
+if $E*$ is a congruence relation on $\mathcal{T}$ and for every congruence relation $C$, such that $C \supset E$ follows $C \supseteq E*$.
+It is easily seen that congruence relations are closed under intersection.
+Therefore $E*$ always exists.
+
+We write $E \models s = t$ if $(s,t) \in E*$.
