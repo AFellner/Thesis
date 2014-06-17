@@ -1,6 +1,6 @@
-data  <-read.csv("data/seq_noHuge_17.csv", header=TRUE)
+//data  <-read.csv("data/vsc/ac-fc-pc_new_exp1.csv", header=TRUE)
 
-data
+data  <-read.csv("data/seq_noHuge_37.csv.csv", header=TRUE)
 
 uncompressed <- data[["Uncompressed.length"]]
 congruence <- data[["FibC.length"]]
@@ -24,5 +24,3 @@ compression
 avgcomp*100
 
 summary(compression)
-
-arrayCtime - fibCtime

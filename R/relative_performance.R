@@ -104,3 +104,24 @@ print(decay)
 t <- title(main="main title", sub="sub-title", 
   	 xlab="x-axis label", ylab="y-axis label")
 plot(length_big,bu_min,t)
+
+plot(length_big,overall_min, )
+
+plot(	length_big,
+	overall_min, 
+	main = "", 
+	xlab ="Proof length",
+	ylab ="Best space measure",
+	xlim =c(0,2000000),
+	ylim =c(0,20000))
+
+plot(	bu_min,
+	td_min, 
+	main = "", 
+	xlab ="Best Bottom-Up result",
+	ylab ="Best Top-Down result",
+	xlim =c(0,15000),
+	ylim =c(0,15000),
+	pch= 3)
+
+plot(smt1)
