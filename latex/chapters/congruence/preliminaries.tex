@@ -1,0 +1,22 @@
+\section*{Preliminaries}
+
+In this section, we summarize basic notions that we will use throughout the following sections.
+
+\begin{definition}[Terms]
+
+Let $\mathcal{F}$ be a finite set of function symbols and $arity: \mathcal{F} \rightarrow \mathbb{N}$.
+A tuple $\Sigma = \langle \mathcal{F}, arity \rangle$ is called a \emph{signature}.
+A function symbol with arity zero is called a \emph{constant}, one with arity one is called a \emph{unary} function symbol and one with arity 2 is called \emph{binary}.
+For a given signature $\Sigma$, the set of \emph{terms} $\mathcal{T}^{\Sigma}$ is defined inductively.
+
+\begin{align*}
+	\mathcal{T}^{\Sigma}_0 &= \{a \in \mathcal{F} \mid arity(a) = 0\}\\
+	\mathcal{T}^{\Sigma}_{i+1} &= \{g(t_1,\ldots,t_n) \mid arity(g) = n \text{ and } t_1, \ldots, t_n \in \mathcal{T}_{i}\} \\
+	\mathcal{T}^{\Sigma} &= \bigcup_{i\in \mathbb{N}} \mathcal{T}_{i}
+\end{align*}
+
+\end{definition}
+
+We will ommit the index $\Sigma$, if it is clear from context.
+
+%In Section \ref{sec:algorithms}, we will work with s

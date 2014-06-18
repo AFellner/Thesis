@@ -3,7 +3,43 @@
 \SetKwInput{KwGlobal}{Global}
 \SetKw{KwInvariant}{Invariant}
 \SetKw{KwAssert}{Assert}
-The set of extended equations $\mathcal{E} = \mathcal{T} \times \mathcal{T} \cup \{null\}$.
+
+In this section, we will present a congruence closure algorithm that is able to produce explanations.
+The algorithm is a mix of the approaches of the algorithms presented in \cite{Fontaine2004} and \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
+The basic structure of the algorithm is inherited from \cite{Fontaine2004}, which itself inherits its structure from the algorithm of Nelson and Oppen \cite{Nelson1980}.
+The technique to store and deduce equations of non constant terms is inspired from \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
+Additionally the proof forest structure described below, is proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
+
+\subsection*{Preliminaries}
+
+Our congruence closure algorithm operates on curried terms.
+Curried terms use a single binary function symbol to represent general terms.
+More formally let $\mathcal{F}$ be a finite set of functions with a designated binary function symbol $f \in \mathcal{F}$ and let every other function symbol in $\mathcal{F}$ be a constant.
+A term w.r.t. a signature of this form is called a \emph{curried term}.
+
+It is possible to uniquely translate a general set of terms $\mathcal{T}^{\Sigma}$ with signature $\Sigma = \langle \mathcal{F},arity \rangle$ into a set of curried terms $\mathcal{T'}^{\Sigma'}$.
+$\Sigma'$ is obtained from $\Sigma$ by setting $arity$ to zero for every function symbol in $\mathcal{F}$ and introducing the designated binary function symbol $f$ to $\mathcal{F}$.
+The translation of a term $t \in \mathcal{T}^{\Sigma}$ is given in terms of the function $curry$.
+
+$$
+curry(t) = \Big\{
+\begin{array}{ll}
+	t & \text{ if } t \text{ is a constant }\\
+	f(\ldots (f(f(g,curry(t_1)),curry(t_2)))\ldots,curry(t_n)) &\text{ if } t = g(t_1,\ldots, t_n)
+\end{array}
+$$
+
+The idea of currying was introduced by M. Sch\"onfinkel \cite{Schoenfinkel1924} in 1924 and independently by Haskell B. Curry \cite{Curry1958} in 1958, who also lends his name to the concept.
+Currying is not restricted to terms.
+The general indea is to translate functions of type $A \times B \rightarrow C$ into functions of type $A \rightarrow B \rightarrow C$.
+There is a close relation between currying and lambda calculus \cite{Church1936}.
+Lambda calculus uses a single binary function $\lambda$.
+Its arguments can either be elements of some set or again lambda terms.
+For an introduction to lambda calculus and its relation to functional programming, see \cite{Barendregt1997}.
+
+%The main difference to deviates from \cite{Fontaine2004} 
+%
+%The set of extended equations $\mathcal{E} = \mathcal{T} \times \mathcal{T} \cup \{null\}$.
 
 \subsection*{Congruence structure}
 
