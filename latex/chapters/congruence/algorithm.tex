@@ -8,7 +8,7 @@ In this section, we will present a congruence closure algorithm that is able to 
 The algorithm is a mix of the approaches of the algorithms presented in \cite{Fontaine2004} and \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 The basic structure of the algorithm is inherited from \cite{Fontaine2004}, which itself inherits its structure from the algorithm of Nelson and Oppen \cite{Nelson1980}.
 The technique to store and deduce equations of non constant terms is inspired from \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
-Additionally the proof forest structure described below, is proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
+Additionally the proof forest structure described below, was proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 
 \subsection*{Preliminaries}
 
@@ -35,11 +35,25 @@ The general indea is to translate functions of type $A \times B \rightarrow C$ i
 There is a close relation between currying and lambda calculus \cite{Church1936}.
 Lambda calculus uses a single binary function $\lambda$.
 Its arguments can either be elements of some set or again lambda terms.
-For an introduction to lambda calculus and its relation to functional programming, see \cite{Barendregt1997}.
+For an introduction to lambda calculus, including currying in terms of lambda calculus and its relation to functional programming, see \cite{Barendregt1997}.
 
-%The main difference to deviates from \cite{Fontaine2004} 
-%
-%The set of extended equations $\mathcal{E} = \mathcal{T} \times \mathcal{T} \cup \{null\}$.
+The benefit of working with curried terms is an easier and cleaner congruence closure algorithm that runs in optimal time $O(n \log(n))$.
+
+Recently so called abstract congruence closure algorithms have been proposed and shown to be more efficient than traditional approaches \cite{Bachmair2000}.
+The idea of abstract congruence closure is to introduce new constants for non constant terms.
+Doing so, all of equations the algorithm has to take into account are of the form $c = d$ and $c = f(a,b)$, where $a,b,c,d$ are constants.
+This replaces tedious preprocessing steps, for example transformation to a graph of outdegree 2 \cite{Downey1980},that are necessary for other algorithms to achieve the optimal running time.
+
+Our method is does not employ the idea of abstract congruence closure.
+We found that using currying is enough to obtain an algorithm with optimal running time and no tedious preprocessing steps.
+The reason why we did not go for abstract congruence closure is, that we do not want to have the overhead of introducing and eliminating fresh constants.
+In the context of proof compression, our congruence closure algorithm will be applied to relatively small instances very often.
+We could introduce the extra constants for the whole proof before processing, but would still have to remove them from explanations every time we produce a new subproof.
+It would be interesting to investigate, whether our intuition in that regard is right, or if it pays off to deal with extra constants.
+
+Comming back to the explanation producing congruence closure algorithms that inspired ours, \cite{Nieuwenhuis2005,Nieuwenhuis2007} describes an abstract one using currying.
+\cite{Fontaine2004} uses a traditional algorithm without currying and extra constants.
+Our algorithm is a middle ground between them.
 
 \subsection*{Congruence structure}
 
