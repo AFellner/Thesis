@@ -268,3 +268,13 @@ Shorter conclusions lead to the need for less resolution steps further down the 
 The Congruence Compressor does exactly this. It is defined upon the following processing function, specified in pseudocode.
 
 \input{chapters/congruence/algorithms/compressor}
+
+The compressor (Algorithm \ref{algo:compressor}) uses the method \texttt{fixNode} to maintain a correct proof.
+The method modifies nodes with premises that have earlier been replaced by the compressor. 
+Nodes with unchanged premises are not changed.
+Let $n$ be a proof node that was derived by resolving $pr_1$ and $pr_2$ using pivot $\ell$.
+It assumed that the values $pr_1$, $pr_2$ and $\ell$ are stored together with the node and can be accessed in constant time.
+Note that the method returns $p_1$ in case non of the new premises contains the pivot.
+We might as well choose $p_2$ to maintain obtain a correct node.
+
+\input{chapters/congruence/algorithms/fixNode}

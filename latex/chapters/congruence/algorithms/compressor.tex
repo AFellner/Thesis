@@ -1,14 +1,13 @@
 \begin{algorithm}[h]
 \caption[.]{compress}
-  \KwIn{$pr:$ tuple of resolution nodes $(p_1,p_2)$ or null}
 	\KwIn{resolution node $n$}
-	%\KwGlobal{set of axioms $a$}
+  \KwIn{$pr:$ tuple of resolution nodes $(p_1,p_2)$ or null}
 	\KwOut{resolution node}
 	
 	\eIf{$pr = null$}{
 		\Return $n$
 	}{
-		$m \leftarrow fixNode(n,pr)$ \\
+		$m \leftarrow fixNode(n,(p_1,p_2))$ \\
 		$lE \leftarrow \{(a,b) \mid (a \neq b) \in m\}$ \\
 		$rE \leftarrow \{(a,b) \mid (a = b) \in m\}$ \\
 		$con \leftarrow $ empty congruence structure \\
@@ -16,13 +15,13 @@
 			$con \leftarrow con.addEquality(a,b)$
 		}
 		\For{$(a,b)$ in $rE$}{
-			$con_2 \leftarrow con.addNode(a).addNode(b)$ \\
-			$proof \leftarrow con_2.prodProof(s,t)$
+			$con \leftarrow con.addNode(a).addNode(b)$ \\
+			$proof \leftarrow con.prodProof(s,t)$ \\
 			\If{$proof \neq null$ and $\# proof.conclusion < \# m.conclusion$}{
 				$m \leftarrow proof$
 			}
 		}
 		\Return $m$
 	}
-  \label{algo:prodproof}
+  \label{algo:compressor}
 \end{algorithm}
