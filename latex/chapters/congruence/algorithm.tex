@@ -168,14 +168,36 @@ For addNode either the
 
 \begin{proposition}[Correctness]
 
-Let $\mathcal{C}$ be the congruence structure obtained by adding equations $E = e_1, \ldots, e_n$ to the empty congruence structure.
-For every $s,t \in \mathcal{T}$: $E \models s = t$ if and only if $r(s) = r(t)$.
+Let $\mathcal{C}$ be the congruence structure obtained by adding equations $E = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle $ to the empty congruence structure.
+For every $s,t \in \mathcal{T}$: $E \models s \thickapprox t$ if and only if $r(s) = r(t)$.
 
 \end{proposition}
 
 \begin{proof}
 
-by induction on n
+Suppose $E \models s \thickapprox t$.
+We show that $r(s) = r(t)$ by induction on $n$.
+
+Base case $n=1$: $E \models s \thickapprox t$ implies either $s = t$ or $\{u_1,v_1\} = \{s,t\}$.
+In the first case $r(s) = r(t)$ follows trivially. 
+The second case follows from the fact that, when $e_1$ is entered, union is called with arguments $s$ and $t$.
+After this operation, $r(s) = r(t)$.
+
+Induction hypothesis: For every sequence of equations $E_n$ with $n$ elements and every $s,t \in \mathcal{T}_{E_n}$: $E_n \models s \thickapprox t$ then $r(s) = r(t)$.
+
+Induction step: Let $E = \langle (u_1,v_1), \ldots, (u_{n+1},v_{n+1}) \rangle$ and $E_n = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle$.
+More equations model more equalities. 
+Therefore from $E_n \models s \thickapprox t$ follows $E \models s \thickapprox t$ trivially.
+In order to show the claim, we have to show that for terms $s,t \in \mathcal{T}_E$ with $E_n \nvDash s \thickapprox t$, $E \models s \thickapprox t$.
+We show the claim by induction on the structure on terms.
+The base case is such that one of the terms is a constant.
+In this case, the new equality can only be derived using transitivity.
+This means that $E_n \models s \thickapprox u_{n+1}$ and $E_n \models v_{n+1} \thickapprox t$.
+Using the equation $(u_{n+1},v_{n+1})$, $E \models s \thickapprox t$ follows directly.
+
+In case of congruence, $s$ and $t$ are terms of the form $f(a,b)$ and $f(c,d)$.
+From $E_n \nvDash s \thickapprox t$ follows $E_n \nvDash a \thickapprox c$ or $E_n \nvDash b \thickapprox d$.
+If the new equality is derived using congruence, it follows that $E \models a \thickapprox c$ and $E \models b \thickapprox d$
 
 n = 1
 

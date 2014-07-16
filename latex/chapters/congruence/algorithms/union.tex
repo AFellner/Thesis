@@ -41,10 +41,10 @@
 			\nllabel{changel2} $l(r(x),r(u)) \leftarrow l_v$
 		}
 	}
+	\nllabel{changeclass} $[r(u)] \leftarrow [r(u)] \cup [r(v)]$ \\
 	\For{every $x \in [r(v)]$}{
 		\nllabel{changerep} $r(x) \leftarrow r(u)$
 	}
-	\nllabel{changeclass} $[r(u)] \leftarrow [r(u)] \cup [r(v)]$ \\
 	$lN(r(u)) \leftarrow lN(r(u)) \cup lN(r(v))$ \\
 	$rN(r(u)) \leftarrow rN(r(u)) \cup rN(r(v))$ \\
 	\KwInvariant{Neighbours \nllabel{invariant:neig_union}} \\
