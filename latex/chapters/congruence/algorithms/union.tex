@@ -16,7 +16,7 @@
 		\eIf{$l$ is defined for $(r(x),r(u))$}{
 			$l_u \leftarrow l(r(x),r(u))$ \\
 			\eIf{$l_u \neq l_v$}{
-				$d \leftarrow d \cup \{(l_u,l_v)\}$
+				\nllabel{deduceEq1} $d \leftarrow d \cup \{(l_u,l_v)\}$
 			}
 			{
 				$lN(r(v)) \leftarrow lN(r(v)) \setminus \{x\}$
@@ -31,7 +31,7 @@
 		\eIf{$l$ is defined for $(r(u),r(x))$}{
 			$l_u \leftarrow l(r(u),r(x))$ \\
 			\eIf{$l_u \neq l_v$}{
-				$d \leftarrow d \cup \{(l_u,l_v)\}$
+				\nllabel{deduceEq2} $d \leftarrow d \cup \{(l_u,l_v)\}$
 			}
 			{
 				$rN(r(v)) \leftarrow rN(r(v)) \setminus \{x\}$

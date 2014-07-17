@@ -185,24 +185,32 @@ We show that $r(s) = r(t)$ by induction on $n$.
 
 Base case $n=1$: $E \models s \thickapprox t$ implies either $s = t$ or $\{u_1,v_1\} = \{s,t\}$.
 In the first case $r(s) = r(t)$ follows trivially. 
-The second case follows from the fact that, when $e_1$ is entered, union is called with arguments $s$ and $t$.
+The second case follows from the fact that, when $(u_1,v_1)$ is entered, union is called with arguments $s$ and $t$.
 After this operation, $r(s) = r(t)$.
 
 Induction hypothesis: For every sequence of equations $E_n$ with $n$ elements and every $s,t \in \mathcal{T}_{E_n}$: $E_n \models s \thickapprox t$ then $r(s) = r(t)$.
 
 Induction step: Let $E = \langle (u_1,v_1), \ldots, (u_{n+1},v_{n+1}) \rangle$ and $E_n = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle$.
-More equations model more equalities. 
-Therefore from $E_n \models s \thickapprox t$ follows $E \models s \thickapprox t$ trivially.
-In order to show the claim, we have to show that for terms $s,t \in \mathcal{T}_E$ with $E_n \nvDash s \thickapprox t$, $E \models s \thickapprox t$.
-We show the claim by induction on the structure on terms.
-The base case is such that one of the terms is a constant.
-In this case, the new equality can only be derived using transitivity.
-This means that $E_n \models s \thickapprox u_{n+1}$ and $E_n \models v_{n+1} \thickapprox t$.
-Using the equation $(u_{n+1},v_{n+1})$, $E \models s \thickapprox t$ follows directly.
+There are two cases: $E_n \models s\thickapprox t$ and $E_n \nvDash s\thickapprox t$.
+In the former case, the claim follows from the induction hypothesis.
+We still have to show the claim in the latter case.
+We write $E \models_n u \thickapprox v$ as an abbreviation for $E_n \nvDash u \thickapprox v$ and $E \models u \thickapprox v$.
+We show the claim by induction on the structure of the terms $s$ and $t$.
+Base case: $s$ and $t$ are constants and therefore the transitivity axiom was used to derive $E \models_n s \thickapprox t$.
+In other words, there are $l$ terms $t_1,\ldot,t_l$ such that $s = t_1$, $t = t_l$ and for all $i = 1,\ldots,l-1: E \models_n t_i \thickapprox t_{i+1}$.
+We prove by induction on $l$ that $r(t_1) = r(t_l)$.
+Base case $l = 2$. It has to be the case (up to swapping $u_{n+1}$ with $v_{n+1}$, that $E_n \models s \thickapprox u_{n+1}$ and $E_n \models t \thickapprox v_{n+1}$.
+Therefore it follows from Invariant Class, that after the call to union for $(u_{n+1},v_{n+1})$ it is the case that $r(t_1) = r(t_2)$.
+Suppose that the claim holds for some $l \in \mathbb{N}$.
+In the induction step, going from $l$ to $l+1$, the claim follows from a simple application of the transitivity axiom, since $t_1,\ldots,t_l$ and $t_2,\ldots,t_{l+1}$ are both sequences of length $l$.
 
-In case of congruence, $s$ and $t$ are terms of the form $f(a,b)$ and $f(c,d)$.
-From $E_n \nvDash s \thickapprox t$ follows $E_n \nvDash a \thickapprox c$ or $E_n \nvDash b \thickapprox d$.
-If the new equality is derived using congruence, it follows that $E \models a \thickapprox c$ and $E \models b \thickapprox d$
+For the induction step of the outer induction, suppose that $s = f(a,b)$ and $t = f(c,d)$.
+There are two cases such that $E \models_n s \thickapprox t$ can be derived.
+Using a transitivity chain, the claim can be shown just like in the base case.
+Using the congruence axiom, it has to be the case that $E \models_n a \thickapprox c$ and $E \models_n b \thickapprox d$ (in fact one of those can also be the case without the $n$ index).
+The terms $a,b,c,d$ are of lower structure than $s$ and $t$.
+Therefore it follows by induction, the Invariants Neighbour and Lookup that either line \ref{deduceEq1} or line line \ref{deduceEq2} of union are called.
+Subsequently union is called for $s$ and $t$, after which $r(s) = r(t)$ holds.
 
 n = 1
 
