@@ -154,15 +154,20 @@ For every $s \in \mathcal{T}$, every $t_r \in rN(r(s))$ and $t_l \in lN(r(s))$, 
 
 \end{invariant}
 
-\begin{proposition}[Neighbours holds]
-
-The Neighbours invariant holds in line \ref{invariant:neig_add} of addNode and line \ref{invariant:neig_union} of union.
-
-\end{proposition}
-
 \begin{proof}
 
-For addNode either the 
+We show the result for the structure $rN$.
+The result about $lN$ can be obtained similarly.
+Since $rN$ is initialized with the empty set in line \ref{initrN} of addNode, the invariant clearly holds initially.
+To show that the invariant holds, modifications it has to be shown that it eventually holds after modifications to $r$ and $rN$.
+The structure $l$ is not modified after initialization.
+The structure $r$ is modified in line \ref{changerep} of union.
+The structure $rN$ is modified in line \ref{modifyrN} of addNode and line \ref{modifyrN2} of union.
+
+Suppose the invariant holds before a call of union and that $b$ is added to $rN(r(u))$ for some term $u$ in line \ref{modifyrN2} of union.
+Lines \ref{startrN} to \ref{stoprN} make sure that $l$ is defined for $(r(u),r(b))$
+Before the union, $r(b) = r(v)$ and $b \in rN(r(v))$
+Every change of $rN$ in line \ref{modifyrN2} of union is predeceeded by a 
 
 \end{proof}
 

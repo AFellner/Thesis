@@ -6,7 +6,7 @@
 		{$r(v) \leftarrow v$ \\
 		\nllabel{initclass} $[v] \leftarrow \{v\}$ \\
 		$lN(v) \leftarrow \emptyset$ \\
-		$rN(v) \leftarrow \emptyset$ \\
+		\nllabel{initrN} $rN(v) \leftarrow \emptyset$ \\
 		\If{$v$ is of the form $f(a,b)$}{
 			addNode(a) \\
 			addNode(b) \\
@@ -16,8 +16,8 @@
 			{
 				\nllabel{initl} $l(r(a),r(b)) \leftarrow f(a,b)$
 			}
-			$rN(r(a)) \leftarrow rN(r(a)) \cup \{b\}$ \\
 			$lN(r(b)) \leftarrow lN(r(b)) \cup \{a\}$ \\
+			\nllabel{modifyrN} $rN(r(a)) \leftarrow rN(r(a)) \cup \{b\}$ \\
 			\KwAssert{Neighbours \nllabel{invariant:neig_add}} 
 		 }
 	}
