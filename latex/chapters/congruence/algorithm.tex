@@ -171,7 +171,7 @@ Every change of $rN$ in line \ref{modifyrN2} of union is predeceeded by a
 
 \end{proof}
 
-\begin{proposition}[Correctness]
+\begin{proposition}[Sound \& Completeness]
 
 Let $\mathcal{C}$ be the congruence structure obtained by adding equations $E = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle $ to the empty congruence structure.
 For every $s,t \in \mathcal{T}$: $E \models s \thickapprox t$ if and only if $r(s) = r(t)$.
@@ -180,8 +180,9 @@ For every $s,t \in \mathcal{T}$: $E \models s \thickapprox t$ if and only if $r(
 
 \begin{proof}
 
-Suppose $E \models s \thickapprox t$.
-We show that $r(s) = r(t)$ by induction on $n$.
+\begin{paragraph}[Completeness]
+
+We show that from $E \models s \thickapprox t$ follows $r(s) = r(t)$ by induction on $n$.
 
 Base case $n=1$: $E \models s \thickapprox t$ implies either $s = t$ or $\{u_1,v_1\} = \{s,t\}$.
 In the first case $r(s) = r(t)$ follows trivially. 
@@ -212,14 +213,47 @@ The terms $a,b,c,d$ are of lower structure than $s$ and $t$.
 Therefore it follows by induction, the Invariants Neighbour and Lookup that either line \ref{deduceEq1} or line line \ref{deduceEq2} of union are called.
 Subsequently union is called for $s$ and $t$, after which $r(s) = r(t)$ holds.
 
-n = 1
+\end{paragraph}
 
-nodes added, no deductions; lN,rN of compound terms empty 
+\begin{paragraph}[Soundness]
 
-n -> n+1
+For $s = t$ the claim follows trivially.
+Therefore we show soundness in case $s \neq t$.
+We show that from $r(s) = r(t)$ follows $E \models s \thickapprox t$ by induction on the number of calls $k$ to union induced by adding all equations of $E$ to the empty congruence structure for all $s$ and $t$ that are arguments of some call to union.
+The original claim then follows from invariant Class, since only union modifies the $r$ structure.
+%Notice that only union modifies $r$ after initialization.
+%Therefore the proof investigates the changes made by union and the parameters it is called when adding equations to a congruence structure.
 
-only union changes datastructs,
-only structs of subterms of input eq are changed + representative of same class
+Base case $k = 1$: $r(s) = r(t)$ implies $\{u_1,v_1\} = \{s,t\}$ and $E \models s \thickapprox t$ is trivial.
+%Lines \ref{deduceEq1} and \ref{deduceEq2} do not induce any further unions, because no compound terms, that $s$ or $t$ could be a subterm of, are yet inserted in the congruence structure.
+
+%Induction hypothesis: For every sequence of equations $E_n$ with $n$ elements and every $s,t \in \mathcal{T}_{E_n}$: $r(s) = r(t)$ after adding all $n$ equations to the empty congruence structure then $E_n \models s \thickapprox t$.
+
+For every $l < k$, if a set of equations $F$ induces $l$ calls to union, then from $r(s) = r(t)$ follows $F \models s \thickapprox t$ for all terms $s,t$ that are arguments of some call to union.
+
+Induction step: Suppose $E = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle$ induces $k$ calls to union with arguments $(h_1,g_1),\ldots,(h_k,g_k)$.
+The subsequence $E_n = \langle (u_1,v_1), \ldots, (u_{n-1},v_{n-1}) \rangle$ induced the first $l$ calls to union for some $n-1 \leq l < k$.
+In other words, adding $(u_n,v_n)$ to the congruence structure induces the calls to union with arguments $(h_{k-l},g_{k-l}),\ldots,(h_k,g_k)$.
+Union induces additional union calls in such a way that the arguments of the additional call are on parent terms of the respective original arguments.
+Clearly for the first call to union with arguments $(h_{k-l},g_{k-l})$ it is the case that $E \models h_{k-l} \thickapprox g_{k-l}$, because it is an input equation.
+The induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN} to \ref{stoprN} of union ensure that all pairs $(h_m,g_m)$ are $E$ congruent for all $m = k-l+1,\ldots,k$.
+
+%
+%We show the induction step by another induction on $k-l$, i.e. the number of unions induced by adding $(u_n,v_n)$ to the congruence structure.
+%Base case $k-l = 1$: Union is called for $(u_n,v_n)$ and the induces no further calls union.
+%After the one call to union $r(u_n) = r(v_n)$ and clearly $E \models u_n \thickapprox v_n$.
+%The fact that lines \ref{deduceEq1} and \ref{deduceEq2} of union do not induce any further calls to the method, together with the induction hypothesis and the invariants Lookup and Neighbour, imply that $E \models_n s \thickapprox t$ if and only if $s,t = \{u_n,v_n\}$.
+%
+%Induction step: Suppose adding $(u_n,v_n)$ induces $m$ calls to union with arguments $(h_{k-m},g_{k-m}),\ldots,(h_k,g_k)$.
+%The last call to union has to be added 
+%
+%Adding the equation $(u_{n+1},v_{n+1})$ to the working congruence structure induces a sequence of $l$ calls to union with parameters $(h_1,g_1),\ldots,(h_l,g_l)$
+
+%After initialization of $r$ only union modifies the structure.
+%Adding $E$ to the empty congruence structure induces a sequence of calls to union with parameters $(u_1,v_1), \ldots , (u_n,v_n)$.
+%We show by induction on $n$, that $E \models v_i \thickapprox u_i$
+
+\end{paragraph}
 
 \end{proof}
 

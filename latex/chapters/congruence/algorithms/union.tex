@@ -11,7 +11,7 @@
 		$(u,v) \leftarrow (t,s)$
 	}
 	$d \leftarrow \emptyset$ \\
-	\For{every $x \in lN(r(v))$}{
+	\nllabel{startlN}\For{every $x \in lN(r(v))$}{
 		$l_v \leftarrow l(r(x),r(v))$ \\
 		\eIf{$l$ is defined for $(r(x),r(u))$}{
 			$l_u \leftarrow l(r(x),r(u))$ \\
@@ -25,7 +25,7 @@
 		{
 			\nllabel{changel2} $l(r(x),r(u)) \leftarrow l_v$
 		}
-	}
+	\nllabel{stoplN}}
 	\nllabel{startrN}\For{every $x \in rN(r(v))$}{
 		$l_v \leftarrow l(r(v),r(x))$ \\
 		\eIf{$l$ is defined for $(r(u),r(x))$}{
