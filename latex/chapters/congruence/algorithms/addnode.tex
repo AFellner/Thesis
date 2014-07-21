@@ -1,4 +1,4 @@
-\begin{algorithm}[h]
+\begin{algorithm}[t]
 	\caption[.]{addNode}
   \KwIn{term $v$}
 	
@@ -10,7 +10,7 @@
 		\If{$v$ is of the form $f(a,b)$}{
 			addNode(a) \\
 			addNode(b) \\
-			\eIf{$l$ is defined for $(r(a),r(b))$ and $l(r(a),r(b)) \neq f(a,b)$}{
+			\nllabel{ldefined}\eIf{$l$ is defined for $(r(a),r(b))$ and $l(r(a),r(b)) \neq f(a,b)$}{
 				merge($l(r(a),r(b)),f(a,b),\emptyset$)
 			}
 			{

@@ -1,0 +1,55 @@
+\begin{thebibliography}{10}
+
+\bibitem{Bachmair2000}
+Leo Bachmair and Ashish Tiwari.
+\newblock Abstract congruence closure and specializations.
+\newblock In {\em CADE}, pages 64--78, 2000.
+
+\bibitem{Barendregt1997}
+Henk Barendregt.
+\newblock The impact of the lambda calculus in logic and computer science.
+\newblock {\em Bulletin of Symbolic Logic}, 3(02):181--215, 1997.
+
+\bibitem{Church1936}
+Alonzo Church.
+\newblock An unsolvable problem of elementary number theory.
+\newblock {\em American journal of mathematics}, pages 345--363, 1936.
+
+\bibitem{Curry1958}
+Haskell~B. Curry.
+\newblock {\em Combinatory Logic}.
+\newblock Amsterdam, North-Holland Pub. Co., 1958.
+
+\bibitem{Downey1980}
+Peter~J. Downey, Ravi Sethi, and Robert~Endre Tarjan.
+\newblock Variations on the common subexpression problem.
+\newblock {\em J. ACM}, 27(4):758--771, 1980.
+
+\bibitem{Fontaine2004}
+Pascal Fontaine.
+\newblock {\em Techniques for verification of concurrent systems with
+  invariants}.
+\newblock PhD thesis, PhD thesis, Institut Montefiore, Universit{\'e} de Liege,
+  Belgium, 2004.
+
+\bibitem{Nelson1980}
+Greg Nelson and Derek~C. Oppen.
+\newblock Fast decision procedures based on congruence closure.
+\newblock {\em J. ACM}, 27(2):356--364, 1980.
+
+\bibitem{Nieuwenhuis2005}
+Robert Nieuwenhuis and Albert Oliveras.
+\newblock Proof-producing congruence closure.
+\newblock In {\em RTA}, pages 453--468, 2005.
+
+\bibitem{Nieuwenhuis2007}
+Robert Nieuwenhuis and Albert Oliveras.
+\newblock Fast congruence closure and extensions.
+\newblock {\em Inf. Comput.}, 205(4):557--580, 2007.
+
+\bibitem{Schoenfinkel1924}
+Moses Sch{\"o}nfinkel.
+\newblock {\"U}ber die bausteine der mathematischen logik.
+\newblock {\em Mathematische Annalen}, 92(3):305--316, 1924.
+
+\end{thebibliography}

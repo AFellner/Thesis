@@ -1,4 +1,4 @@
-\begin{algorithm}[h]
+\begin{algorithm}[t]
 \caption[.]{union}
   \KwIn{term $s$}
 	\KwIn{term $t$}
@@ -13,9 +13,14 @@
 	$d \leftarrow \emptyset$ \\
 	\nllabel{startlN}\For{every $x \in lN(r(v))$}{
 		$l_v \leftarrow l(r(x),r(v))$ \\
-		\eIf{$l$ is defined for $(r(x),r(u))$}{
-			$l_u \leftarrow l(r(x),r(u))$ \\
-			\eIf{$l_u \neq l_v$}{
+		\eIf{$r(x) = r(v)$}{
+			$new_left \leftarrow r(u)$
+		}{
+			$new_left \leftarrow r(x)$
+		}
+		\eIf{$l$ is defined for $(new\_left,r(u))$}{
+			$l_u \leftarrow l(new\_left,r(u))$ \\
+			\eIf{$r(l_u) \neq r(l_v)$}{
 				\nllabel{deduceEq1} $d \leftarrow d \cup \{(l_u,l_v)\}$
 			}
 			{
@@ -23,14 +28,19 @@
 			}
 		}
 		{
-			\nllabel{changel2} $l(r(x),r(u)) \leftarrow l_v$
+			\nllabel{changel2} $l(new\_left,r(u)) \leftarrow l_v$
 		}
 	\nllabel{stoplN}}
 	\nllabel{startrN}\For{every $x \in rN(r(v))$}{
 		$l_v \leftarrow l(r(v),r(x))$ \\
-		\eIf{$l$ is defined for $(r(u),r(x))$}{
-			$l_u \leftarrow l(r(u),r(x))$ \\
-			\eIf{$l_u \neq l_v$}{
+		\eIf{$r(x) = r(v)$}{
+			$new_right \leftarrow r(u)$
+		}{
+			$new_right \leftarrow r(x)$
+		}
+		\eIf{$l$ is defined for $(r(u),new\_right)$}{
+			$l_u \leftarrow l(r(u),new\_right)$ \\
+			\eIf{$r(l_u) \neq r(l_v)$}{
 				\nllabel{deduceEq2} $d \leftarrow d \cup \{(l_u,l_v)\}$
 			}
 			{
@@ -38,7 +48,7 @@
 			}
 		}
 		{
-			\nllabel{changel1} $l(r(u),r(x)) \leftarrow l_v$
+			\nllabel{changel1} $l(r(u),new\_right) \leftarrow l_v$
 		}
 	\nllabel{stoprN}}
 	\nllabel{changeclass} $[r(u)] \leftarrow [r(u)] \cup [r(v)]$ \\
