@@ -178,7 +178,7 @@ Lines \ref{startrN} to \ref{stoprN} make sure that $l$ is defined for all these 
 
 \end{proof}
 
-A consequence of this invariant is, that for every term $t \in \mathcal{T}$ of the form $f(a,b)$, $l$ is defined for $(r(a),r(b))$.
+A consequence of this invariant is and the fact that the statement is true after inserting, that for every term $t \in \mathcal{T}$ of the form $f(a,b)$, $l$ is defined for $(r(a),r(b))$.
 
 \begin{proposition}[Sound- \& Completeness]
 
@@ -266,7 +266,8 @@ The induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN
 
 \begin{proposition}[Runtime]
 
-Runtime is $O(n \log(n))$
+Let $E$ be a set of equations and $|E| = n$.
+Computing the congruence closure with our congruence closure algorithm takes worst-case time $O(n \log(n))$.
 
 \end{proposition}
 
@@ -338,6 +339,12 @@ See how BarceLogic ppl prove stuff,
 \FloatBarrier
 
 \subsection*{Proof Production}
+
+In this section we describe how to produce proofs from explanations.
+The basic idea is to traverse the path corresponding to the explanation, creating a transitivity chain and keeping track of the equalities in the chain that were derived using the congruence axiom.
+For the congruence equalities there have to be an explanations for the arguments of the compound terms to be equal.
+These explanations are transformed into proof recursively and resolved with the transitivity chain.
+Since terms can never be equal to their subterms, the procedure will eventually terminate.
 
 \input{chapters/congruence/algorithms/prodproof}
 
