@@ -80,7 +80,10 @@ It is used to keep track which representatives have to be updated when merging t
 The structures left neighbor and right neighbor for every term keep track of other terms that appear as the second argument in a compound term of the form $f(a,b)$.
 The lookup table is used to keep track of all compound terms in the congruence structure and to merge compound terms, which arguments are congruent.
 The congruence graph stores the derived equalities in a structured way, that allows to create explanations for a given pair of terms.
-Edges are added to the graph in a lazy way and the queue keeps track of the order in which edges should be added to the graph.
+Edges are added to the graph in a lazy way, meaning that they are buffered and only actually entered into the graph when demanded.
+The queue $\mathcal{Q}$ keeps track of the order in which edges should be added to the graph.
+The function $\mathcal{M}$ stores the explanation for a buffered edge.
+The main idea about buffering is to overwrite explanations, when an edge was added due to the congruence axiom, while it is entered as an input equation later on.
 We call the unique congruence structure for $\mathcal{T} = \emptyset$ the \emph{empty congruence structure}.
 It is not by coincidence that many of the used data structures are described as functions.
 In fact our congruence closure algorithm can and is implemented in a functional way and the data structures can be implemented immutable.
@@ -134,7 +137,7 @@ Therefore the invariant remains valid after the update.
 
 \begin{invariant}[Lookup]
 
-The lookup structure $l$ is defined for a pair of terms $(s,t)$ if and only if there is a term $f(a,b) \in \mathcal{T}$ such that $r(a) = r(x)$ and $r(b) = r(y)$.
+The lookup structure $l$ is defined for a pair of terms $(s,t)$ if and only if there is a term $f(a,b) \in \mathcal{T}$ such that $r(a) = r(s)$ and $r(b) = r(t)$.
 \end{invariant}
 
 \begin{proof}
@@ -243,9 +246,10 @@ Induction hypothesis: For every $l < k$, if a set of equations $F$ induces $l$ c
 Induction step: Suppose $E = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle$ induces $k$ calls to union with arguments $(h_1,g_1),\ldots,(h_k,g_k)$.
 The subsequence $E_n = \langle (u_1,v_1), \ldots, (u_{n-1},v_{n-1}) \rangle$ induced the first $l$ calls to union for some $n-1 \leq l < k$.
 In other words, adding $(u_n,v_n)$ to the congruence structure induces the calls to union with arguments $(h_{k-l},g_{k-l}),\ldots,(h_k,g_k)$.
+The first call to union with arguments $(h_{k-l},g_{k-l})$ is either an original input equation, or a deduced equality from line \ref{addnodemerge} of \texttt{addNode}.
+In both cases $E \models h_{k-l} \thickapprox g_{k-l}$, which is trivial in the former case and an application of the induction hypothesis in the latter case.
 Union induces additional union calls in such a way that the arguments of the additional call are on parent terms of the respective original arguments.
-Clearly for the first call to union with arguments $(h_{k-l},g_{k-l})$ it is the case that $E \models h_{k-l} \thickapprox g_{k-l}$, because it is an input equation.
-The induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN} to \ref{stoprN} of union ensure that all pairs $(h_m,g_m)$ are $E$ congruent for all $m = k-l+1,\ldots,k$.
+Therefore, using induction on the structure of terms, the original induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN} to \ref{stoprN} of \texttt{union}, it can be shown that for all pairs $(h_m,g_m)$ and all $m = k-l+1,\ldots,k$ it is the case that $E \models h_m \thickapprox g_m$.
 
 %
 %We show the induction step by another induction on $k-l$, i.e. the number of unions induced by adding $(u_n,v_n)$ to the congruence structure.
@@ -266,14 +270,19 @@ The induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN
 
 \begin{proposition}[Runtime]
 
-Let $E$ be a set of equations and $|E| = n$.
+Let $E$ be a set of equations that uses $n$ terms.
 Computing the congruence closure with our congruence closure algorithm takes worst-case time $O(n \log(n))$.
 
 \end{proposition}
 
 \begin{proof}
 
-Union's two for loops
+There are three loops in the method \texttt{union}, which are nested within the loop of \texttt{merge}.
+These loops are clearly the dominating factor for runtime.
+
+Lines \nlline{reverse1} and \nlline{reverse2} of \texttt{union} make sure that everytime the representative of a term is changed, the size of its congruence class is doubled.
+The maximum size of a congruence class is $n$.
+Therefore the representative of a single term is changed maximally $\log(n)$ times overall and line \ref{changerep} of \texttt{union} is not executed more than $n \log(n)$ times.
 
 \end{proof}
 
@@ -281,9 +290,10 @@ Union's two for loops
 
 \subsection*{Congruence graph}
 
-To produce explanations, the input equations together with deduced equalities have to be stored in some data structure that supports the production of explanations.
-We support two different data structures for this purpose.
-Both structures store equations in a labeled graph.
+For our purpose, the input equations together with deduced equalities have to be stored in a data structure that supports the production of explanations.
+We support two different such data structures.
+Both structures store equations in a labeled graph, that we call a congruence graph.
+The nodes represent terms and an edge between two nodes denotes that the represented terms are congruent w.r.t. the set of input equations.
 A path in a congruence graph is a sequence of undirected, unweighted, labeled edges in the underlying graph.
 The set of labels for both types of graphs is the set of extended equations $\mathcal{E}$.
 
@@ -293,17 +303,35 @@ For terms $s, t$ such that $s \neq t$ and a congruence structure with representa
 
 \end{invariant}
 
-\begin{invariant}[Insert]
+\begin{proof}
+
+For terms $s$, $t$ with equal representatives, there is a sequence of calls to union.
+Every union is called from \texttt{merge}, which calls \texttt{lazy\_insert} right after union with the same argument.
+The medthod \texttt{lazy\_insert} eventually adds an edge between the respective terms.
+Therefore the sequence of unions corresponds to the path between $s$ and $t$.
+
+\end{proof}
+
+\begin{invariant}[Deduced edges]
 
 For every edge in a congruence structure between vertices $u,v$ with label $null$, 
-there are $a,b,c,d \in \mathcal{T}$ such that $u = f(a,b)$, $v = f(c,d)$, 
+there are $a,b,c,d \in \mathcal{T}$ such that $u = f(a,b)$, $v = f(c,d)$ and
 there are paths in the underlying graphs between $a$ and $c$ aswell as $b$ and $d$.
 
 \end{invariant}
 
+\begin{proof}
 
-The method inputEqs takes a path in the congruence structure and returns the input equations that were used to derive the equality between the first and the last node of the path.
-Therefore, after the input of a sequence equations using the addEquation method, the statement $inputEqs(explain(s,t,g),g)$ returns an explanation for $s = t$.
+Edges with label $null$ are added, when \texttt{merge} is called from \texttt{addNode}, or \texttt{union} induces an additional merge.
+In both cases there are subterms with respective equal representatives.
+The claim follows by using the invariant Paths.
+
+\end{proof}
+
+The method \texttt{explain} returns a path between its two arguments, if one exists.
+Depending on the actual type of graph used, this path can be unique or not.
+The method \texttt{inputEqs} for a path in the congruence graph returns the input equations that were used to derive the equality between the first and the last node of the path.
+Therefore the statement \texttt{inputEqs(explain(s,t,g),g)} returns an explanation for $E \models s \thickapprox t$.
 
 \input{chapters/congruence/algorithms/inputeqs}
 
@@ -318,6 +346,20 @@ Therefore, after the input of a sequence equations using the addEquation method,
 
 A equation graph stores input and deduced equalities in a labeled weighted undirected graph $(V,E)$ with 
 $V \subseteq \mathcal{T}$, $E \subseteq V \times \mathcal{E} \times V \times \mathbb{N}$.
+The weight for an edge is the number of input equalities used to derive the equality.
+This number is one for input equalities and the size of the explanation for deduced equalities.
+Edges are added to the graph, regardless whether there already exists a path between the two edges.
+Therefore there is a choice which path the explain method returns.
+To produce short explanations, the shortest path is returned.
+To find the shortest path between two nodes, Dijkstra's shortest path algorithm has been implemented.
+Dijkstra's shortest path algorithm does not have optimal asymptotic runtime, \cite{TODO} reports of an linear algorithm for the single source shortest path problem, but \cite{TODO} shows that the algorithm behaves well in practice.
+Dijkstra's algorithm works in a greedy way, always choosing the best edge locally and never backtracking previously made decisions.
+The algorithm has been slightly modified to take into account decisions that are edges for deduced equalities.
+These edges represent explanations, which are a sets of input equations.
+Previously included input equations do not increase the size of the global explanation when including them again.
+Therefore the modified Dijkstra algorithm adds an edge with weight 0 for every input equation in the explanation of a deduced equality edge.
+This is done to reduce the size of explanations.
+Example ...
 
 \input{chapters/congruence/algorithms/insert_dij}
 
@@ -329,6 +371,8 @@ $V \subseteq \mathcal{T}$, $E \subseteq V \times \mathcal{E} \times V \times \ma
 
 A proof forest is a collection of proof trees.
 A proof tree is a labeled tree with vertices in $\mathcal{T}$ and edge labels in $\mathcal{E}$.
+
+\input{chapters/congruence/algorithms/explain_pt}
 
 \input{chapters/congruence/algorithms/insert_pt}
 

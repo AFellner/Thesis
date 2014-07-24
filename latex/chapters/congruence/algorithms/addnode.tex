@@ -11,7 +11,7 @@
 			addNode(a) \\
 			addNode(b) \\
 			\nllabel{ldefined}\eIf{$l$ is defined for $(r(a),r(b))$ and $l(r(a),r(b)) \neq f(a,b)$}{
-				merge($l(r(a),r(b)),f(a,b),\emptyset$)
+				\nllabel{addnodemerge} merge($l(r(a),r(b)),f(a,b),\emptyset$)
 			}
 			{
 				\nllabel{initl} $l(r(a),r(b)) \leftarrow f(a,b)$
