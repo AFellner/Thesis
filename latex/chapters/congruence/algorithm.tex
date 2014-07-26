@@ -269,7 +269,7 @@ Therefore, using induction on the structure of terms, the original induction hyp
 \end{proof}
 
 \begin{proposition}[Runtime]
-
+\label{prop:runtime}
 Let $E$ be a set of equations that uses $n$ terms.
 Computing the congruence closure with our congruence closure algorithm takes worst-case time $O(n \log(n))$.
 
@@ -290,25 +290,43 @@ Therefore the representative of a single term is changed maximally $\log(n)$ tim
 
 \subsection*{Congruence graph}
 
-For our purpose, the input equations together with deduced equalities have to be stored in a data structure that supports the production of explanations.
+The main goal of this work is to replace redundant explanations with shorter ones.
+For this purpose the input equations and deduced equalities have to be stored in a data structure that supports the production of explanations.
 We support two different such data structures.
-Both structures store equations in a labeled graph, that we call a congruence graph.
-The nodes represent terms and an edge between two nodes denotes that the represented terms are congruent w.r.t. the set of input equations.
+Both structures store equations in labeled graphs, which we call congruence graphs.
+A node in such a graph represents a term and an edge between two nodes denotes that the represented terms are congruent w.r.t. the set of input equations.
 A path in a congruence graph is a sequence of undirected, unweighted, labeled edges in the underlying graph.
 The set of labels for both types of graphs is the set of extended equations $\mathcal{E}$.
+After the attempt to insert an edge to the graph via the \texttt{lazy\_insert} and subsequently the \texttt{insert} method there is always a path between the arguments.
 
 \begin{invariant}[Paths]
 
-For terms $s, t$ such that $s \neq t$ and a congruence structure with representative function $r$ holds if $r(s) = r(t)$ then there is a path in the congruence graph of the structure between $s$ and $t$
+For terms $s, t$ such that $s \neq t$ and a congruence structure with representative function $r$ holds $r(s) = r(t)$ if and only if there is a path in the congruence graph of the structure between $s$ and $t$
 
 \end{invariant}
 
 \begin{proof}
 
-For terms $s$, $t$ with equal representatives, there is a sequence of calls to union.
-Every union is called from \texttt{merge}, which calls \texttt{lazy\_insert} right after union with the same argument.
-The medthod \texttt{lazy\_insert} eventually adds an edge between the respective terms.
-Therefore the sequence of unions corresponds to the path between $s$ and $t$.
+We show the claim by an induction on $|[r(s)]|$.
+%We show that there is a path between $s$ and $t$ in the congruence graph induction on $|[r(s)]|$. 
+The proof relies on the invariant Class, which shows the consistency between classes and representatives.
+
+In the induction base $[r(s)] = \{s\}$, i.e. $r(s) = r(t)$ is false for every term $t$.
+We have to show that there is no edge $(s,t)$ for $t \neq s$ in the congruence graph.
+Edges are only added to the congruence graph via the \texttt{lazy\_insert} method which is only called in \texttt{merge}.
+Clearly \texttt{merge} does not call \texttt{union} for $s$ and some term $t \neq s$, since otherwise $t \in [r(s)]$.
+Therefore \texttt{merge} also does not add an edge for $s$ and some term $t \neq s$ to the congruence graph.
+
+Let the induction hypothesis be, that for every term $s$ such that $|[r(s)]| \leq n$, it is the case that $r(s) = r(t)$ if and only if there is a path between $s$ and $t$ in the congruence graph.
+
+Suppose $[r(s)]$ is an arbitrary class with cardinality $n+1$.
+Then there are two terms $u,v \in [r(s)]$ such that \texttt{union} was called for $u$ and $v$.
+Before the union $|[r(u)]|$ and $|[r(v)]|$ both were strictly smaller than $n+1$.
+In case they both belong to the same class before the union, the claim follows trivially by the induction hypothesis, since existing paths are not removed by adding new edges to the graph.
+Suppose $s \in [r(u)]$ and $t \in [r(v)]$, then by induction hypothesis there are paths $p_1$ between $s$ and $u$ and $p_2$ between $t$ and $v$.
+Right after the union of $u$ and $v$, an edge is inserted between them, so $p_1$ concatenated with $(u,v)$ and $p_2$ is a path between $s$ and $t$.
+In case one of the terms did not belong to one of the classes before the union, it does not belong to the merged class after the union.
+Also there was no path between the two terms before and since the only addition paths are between elements of $[r(u)]$ and $[r(v)]$, there is no path between the terms after the union.
 
 \end{proof}
 
@@ -331,35 +349,78 @@ The claim follows by using the invariant Paths.
 The method \texttt{explain} returns a path between its two arguments, if one exists.
 Depending on the actual type of graph used, this path can be unique or not.
 The method \texttt{inputEqs} for a path in the congruence graph returns the input equations that were used to derive the equality between the first and the last node of the path.
-Therefore the statement \texttt{inputEqs(explain(s,t,g),g)} returns an explanation for $E \models s \thickapprox t$.
+For an input equation, this is simply the equation itself.
+For a deduced equality, this is the set of input equations that were used for deduction.
+Combining these two methods, the statement \texttt{inputEqs(explain(s,t,g),g)} returns an explanation for $E \models s \thickapprox t$ if there is one.
 
 \input{chapters/congruence/algorithms/inputeqs}
 
-%Both structures use the same set of labels $\mathcal{L}$, which is defined inductively.
-%\begin{align*}
-  %\mathcal{L}_0 &= \{(e,\emptyset) \mid e \in \mathcal{T} \times \mathcal{T}\} \\
-  %\mathcal{L}_i &= \{(null,l) \mid l \in 2^{\mathcal{L}_{i-1}}\} \\
-  %\mathcal{L} &= \bigcup_{n\in \mathbb{N}} \mathcal{L}_n
-%\end{align*}
+In the following, we describe the two types of congruence graphs we support.
+They differ in the type of graph they use and how explanations are produced.
 
 \subsubsection*{Equation Graph}
 
 A equation graph stores input and deduced equalities in a labeled weighted undirected graph $(V,E)$ with 
 $V \subseteq \mathcal{T}$, $E \subseteq V \times \mathcal{E} \times V \times \mathbb{N}$.
-The weight for an edge is the number of input equalities used to derive the equality.
+The weight for an edge is the number of input equalities used to derive the equality between its two nodes.
 This number is one for input equalities and the size of the explanation for deduced equalities.
-Edges are added to the graph, regardless whether there already exists a path between the two edges.
+Edges are added to the graph, regardless whether the nodes are already connected in the graph.
 Therefore there is a choice which path the explain method returns.
-To produce short explanations, the shortest path is returned.
-To find the shortest path between two nodes, Dijkstra's shortest path algorithm has been implemented.
-Dijkstra's shortest path algorithm does not have optimal asymptotic runtime, \cite{TODO} reports of an linear algorithm for the single source shortest path problem, but \cite{TODO} shows that the algorithm behaves well in practice.
-Dijkstra's algorithm works in a greedy way, always choosing the best edge locally and never backtracking previously made decisions.
+To produce short explanations, the shortest path w.r.t. the edge weights is returned.
+
+Finding the shortest path between two nodes in a weighted graph is not trivial.
+The single source shortest path problem (SSSP) is a classical graph problem in computer science.
+The task is to find the shortest path in a graph between one designated node, the source, and all other nodes in the graph.
+To the best knowledge of the authors, there is no algorithm to find the shortest path between two nodes which has better asymptotic runtime than one to solve SSSP.
+There is a whole variety of algorithms that solve SSSP.
+Classical algorithms for SSSP are those of Dijkstra \cite{Dijkstra1959} and Bellman-Ford \cite{Ford1956,Bellman1956}.
+The algorithms work on different kinds of graphs.
+Our setting is an undirected graph with positive integer weights.
+We chose to use Dijkstra's algorithm, even though the algorithm does not have optimal asymptotic runtime.
+It's worst-case runtime is $O(n \log(n))$ \cite{Cormen1989}, if the priority queue is implemented as a Fibonacci Heap, which is the case in our implementation.
+\cite{Thorup1999} reports of an linear time algorithm for the undirected single source shortest path with positive integer weights problem.
+However, the algorithm has a big overhead and needs several precomputations.
+\cite{Cherkassky1996} is an extensive study of several shortest path algorithms which shows that Dijkstra's algorithm performs well in practice.
+
+Dijkstra's algorithm finds shortest paths to an increasing set of nodes, until every node has been discovered.
+It does so by keeping track of the the shortest paths and the distances, being the combined weights of edges on the path, of nodes to the source.
+Initially, the only discovered node is the source itself and the distance to every other node is infinite.
+The algorithm discovers new nodes by selecting the lowest weight outgoing edge of all nodes that have been discovered so far and updates shortest paths and distances while doing so.
+It is a greedy algorithm in the sense that it always locally chooses lowest weight edges and never discards previously made decisions.
+
 The algorithm has been slightly modified to take into account decisions that are edges for deduced equalities.
 These edges represent explanations, which are a sets of input equations.
 Previously included input equations do not increase the size of the global explanation when including them again.
 Therefore the modified Dijkstra algorithm adds an edge with weight 0 for every input equation in the explanation of a deduced equality edge.
 This is done to reduce the size of explanations.
-Example ...
+Since previous decisions are not discarded, it is not guaranteed that the modified algorithm returns the shortest path in the final graph, including the extra edges.
+Example \ref{ex:short_expl} demonstrates that the modified shortest path algorithm does not always produce the shortest explanation, but can produce shorter explanations than the unmodified version in some situations.
+The shortest path algorithm's inability to return shortest explanations is not surprising, since it runs in $O(n \log(n))$ and in Section \ref{sec:sec:npcomplete} it was shown that finding the shortest explanation is NP-complete.
+
+\begin{example}
+Consider the congruence graph shown in Figure \ref{fig:short_expl}, where solid edges are input equation and the dashed edge marks an application of the congruence axiom.
+The equality of $f(c_1,e)$ and $f(c_4,e)$ was deduced using the equations $(c_1,c_2),(c_2,c_3),(c_3,c_4)$, which is the shortest path in the graph between $c_1$ and $c_4$, obtained from a previous call to the shortest path algorithm.
+
+Suppose we want to compute an explanation for $a \thickapprox b$.
+Clearly the input equalities $(a,f(c_1,e))$, $(f(c_4,e),c_1)$ and the explanation for $f(c_1,e) \thickapprox f(c_4,e)$ have to be included in the explanation.
+Additionally $c_1 \thickapprox b$ has to be explained.
+For this equality the set $(c_1,d_1),(d_1,d_2),(d_2,b)$ is the shortest explanation in the original graph.
+This sub explanation adds three new equations to the explanation for $a \thickapprox b$.
+Therefore when the shortest path algorithm iterates over the edge $(f(c_1,e),f(c_4,e))$, it can add add zero weight edges $(c_1,c_2),(c_2,c_3),(c_3,c_4)$ to the graph.
+By doing so the shortest explanation for $c_1 \thickapprox b$ becomes $(c_1,c_2),(c_2,c_3),(c_3,c_4),(c_4,b)$, which only adds one extra equation to the global explanation.
+
+This method is successful in finding the shortest explanation in this example if the search begins in the node $a$.
+Should the search begin in the node $b$, the edges including $d_1$, $d_2$ are added to the shortest path before the edge $(f(c_1,e),f(c_4,e))$ is touched.
+Therefore the undesired long explanation would be returned.
+
+\begin{figure}[!h]
+\input{chapters/congruence/figures/dijkstra}
+\caption{Short explanation example}
+\label{fig:short_expl}
+\end{figure}
+
+\label{ex:short_expl}
+\end{example}
 
 \input{chapters/congruence/algorithms/insert_dij}
 
@@ -370,11 +431,23 @@ Example ...
 \subsubsection*{Proof Forest}
 
 A proof forest is a collection of proof trees.
-A proof tree is a labeled tree with vertices in $\mathcal{T}$ and edge labels in $\mathcal{E}$.
-
-\input{chapters/congruence/algorithms/explain_pt}
+A proof tree is a labeled tree with nodes in $\mathcal{T}$ and edge labels in $\mathcal{E}$.
+For every congruence class in the current status of a congruence structure, there is one proof tree.
+Inserting an edge between nodes $s$ and $t$ of different proof trees is done by making one the child of the other.
+To maintain a tree structure, all edges between the new child and the root of its tree are reversed.
+To limit the number of edge revering steps, the smaller tree is always attached to the bigger one.
+This results in $O(n \log(n))$ edge reversing steps, where $n$ is the number terms in the input equation set, which can be shown just like in the proof of Proposition \ref{prop:runtime}.
+As stated earlier, we understand a path as a sequence of undirected edges.
+In case of a proof tree, a path between $s$ and $t$ of the same tree is the combined sequence of edges between the nodes and their nearest common ancestors.
+The structure, up to small changes, was proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
+Its benefit is the quick access of explanations and good overall runtime.
+Its downside is its inflexibility when it comes to producing alternative explanations.
+In fact the explanation returned is always the first one to occur during edge insertion.
+The authors improve the structure for the special case of flattened terms, for which no term has nesting depth greater than one.
 
 \input{chapters/congruence/algorithms/insert_pt}
+
+\input{chapters/congruence/algorithms/explain_pt}
 
 See how BarceLogic ppl prove stuff,
 -) tree is still tree after inserting

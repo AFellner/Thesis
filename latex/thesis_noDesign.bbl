@@ -10,15 +10,35 @@ Henk Barendregt.
 \newblock The impact of the lambda calculus in logic and computer science.
 \newblock {\em Bulletin of Symbolic Logic}, 3(02):181--215, 1997.
 
+\bibitem{Bellman1956}
+Richard Bellman.
+\newblock On a routing problem.
+\newblock Technical report, DTIC Document, 1956.
+
+\bibitem{Cherkassky1996}
+Boris~V. Cherkassky, Andrew~V. Goldberg, and Tomasz Radzik.
+\newblock Shortest paths algorithms: Theory and experimental evaluation.
+\newblock {\em Math. Program.}, 73:129--174, 1996.
+
 \bibitem{Church1936}
 Alonzo Church.
 \newblock An unsolvable problem of elementary number theory.
 \newblock {\em American journal of mathematics}, pages 345--363, 1936.
 
+\bibitem{Cormen1989}
+Thomas~H. Cormen, Charles~E. Leiserson, and Ronald~L. Rivest.
+\newblock {\em Introduction to Algorithms}.
+\newblock The MIT Press and McGraw-Hill Book Company, 1989.
+
 \bibitem{Curry1958}
 Haskell~B. Curry.
 \newblock {\em Combinatory Logic}.
 \newblock Amsterdam, North-Holland Pub. Co., 1958.
+
+\bibitem{Dijkstra1959}
+Edsger~W Dijkstra.
+\newblock A note on two problems in connexion with graphs.
+\newblock {\em Numerische mathematik}, 1(1):269--271, 1959.
 
 \bibitem{Downey1980}
 Peter~J. Downey, Ravi Sethi, and Robert~Endre Tarjan.
@@ -31,6 +51,11 @@ Pascal Fontaine.
   invariants}.
 \newblock PhD thesis, PhD thesis, Institut Montefiore, Universit{\'e} de Liege,
   Belgium, 2004.
+
+\bibitem{Ford1956}
+Lester~Randolph Ford.
+\newblock Network flow theory.
+\newblock 1956.
 
 \bibitem{Nelson1980}
 Greg Nelson and Derek~C. Oppen.
@@ -51,5 +76,11 @@ Robert Nieuwenhuis and Albert Oliveras.
 Moses Sch{\"o}nfinkel.
 \newblock {\"U}ber die bausteine der mathematischen logik.
 \newblock {\em Mathematische Annalen}, 92(3):305--316, 1924.
+
+\bibitem{Thorup1999}
+Mikkel Thorup.
+\newblock Undirected single-source shortest paths with positive integer weights
+  in linear time.
+\newblock {\em J. ACM}, 46(3):362--394, 1999.
 
 \end{thebibliography}

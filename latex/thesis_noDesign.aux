@@ -39,11 +39,13 @@
 \newlabel{initclass}{{\M@TitleReference {2}{Congruence closure algorithms}}{iii}{Congruence closure algorithms}{AlgoLine.2.2}{}}
 \newlabel{initrN}{{\M@TitleReference {4}{Congruence closure algorithms}}{iii}{Congruence closure algorithms}{AlgoLine.2.4}{}}
 \newlabel{ldefined}{{\M@TitleReference {8}{Congruence closure algorithms}}{iii}{Congruence closure algorithms}{AlgoLine.2.8}{}}
+\newlabel{addnodemerge}{{\M@TitleReference {9}{Congruence closure algorithms}}{iii}{Congruence closure algorithms}{AlgoLine.2.9}{}}
 \newlabel{initl}{{\M@TitleReference {11}{Congruence closure algorithms}}{iii}{Congruence closure algorithms}{AlgoLine.2.11}{}}
 \newlabel{modifyrN}{{\M@TitleReference {13}{Congruence closure algorithms}}{iii}{Congruence closure algorithms}{AlgoLine.2.13}{}}
 \newlabel{algo:addNode}{{\M@TitleReference {14}{Congruence closure algorithms}}{iii}{Congruence closure algorithms}{AlgoLine.2.14}{}}
 \newlabel{invar:class}{{\M@TitleReference {0.0.1}{Congruence closure algorithms}}{iii}{Class}{theorem.0.0.1}{}}
 \@writefile{loa}{\contentsline {algocf}{\numberline {0.3}{\ignorespaces .}}{iv}{algocf.0.3}}
+\newlabel{graphinsert}{{\M@TitleReference {6}{Congruence closure algorithms}}{iv}{Congruence closure algorithms}{AlgoLine.3.6}{}}
 \newlabel{algo:merge}{{\M@TitleReference {8}{Congruence closure algorithms}}{iv}{Congruence closure algorithms}{AlgoLine.3.8}{}}
 \@writefile{loa}{\contentsline {algocf}{\numberline {0.4}{\ignorespaces .}}{iv}{algocf.0.4}}
 \newlabel{algo:lazyinsert}{{\M@TitleReference {6}{Congruence closure algorithms}}{iv}{Congruence closure algorithms}{AlgoLine.4.6}{}}
@@ -65,32 +67,48 @@
 \newlabel{changeclass}{{\M@TitleReference {36}{Congruence closure algorithms}}{viii}{Congruence closure algorithms}{AlgoLine.6.36}{}}
 \newlabel{modifyrN2}{{\M@TitleReference {38}{Congruence closure algorithms}}{viii}{Congruence closure algorithms}{AlgoLine.6.38}{}}
 \newlabel{algo:union}{{\M@TitleReference {40}{Congruence closure algorithms}}{viii}{Congruence closure algorithms}{AlgoLine.6.40}{}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {0.7}{\ignorespaces .}}{ix}{algocf.0.7}}
-\newlabel{algo:inputeqs}{{\M@TitleReference {11}{Congruence graph}}{ix}{Congruence graph}{AlgoLine.7.11}{}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {0.8}{\ignorespaces .}}{x}{algocf.0.8}}
-\newlabel{algo:insert_dij}{{\M@TitleReference {9}{Equation Graph}}{x}{Equation Graph}{AlgoLine.8.9}{}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {0.9}{\ignorespaces .}}{x}{algocf.0.9}}
-\newlabel{algo:explain_dij}{{\M@TitleReference {1}{Equation Graph}}{x}{Equation Graph}{AlgoLine.9.1}{}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {0.10}{\ignorespaces .}}{xi}{algocf.0.10}}
-\newlabel{algo:insert_pt}{{\M@TitleReference {12}{Proof Forest}}{xi}{Proof Forest}{AlgoLine.10.12}{}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {0.11}{\ignorespaces .}}{xii}{algocf.0.11}}
-\newlabel{algo:prodproof}{{\M@TitleReference {31}{Proof Production}}{xii}{Proof Production}{AlgoLine.11.31}{}}
-\@writefile{loa}{\contentsline {algocf}{\numberline {0.12}{\ignorespaces .}}{xiii}{algocf.0.12}}
-\newlabel{algo:compressor}{{\M@TitleReference {15}{Congruence Compressor}}{xiii}{Congruence Compressor}{AlgoLine.12.15}{}}
+\citation{Dijkstra1959}
+\citation{Ford1956,Bellman1956}
+\citation{Cormen1989}
+\citation{Thorup1999}
+\citation{Cherkassky1996}
+\@writefile{loa}{\contentsline {algocf}{\numberline {0.7}{\ignorespaces .}}{x}{algocf.0.7}}
+\newlabel{algo:inputeqs}{{\M@TitleReference {11}{Congruence graph}}{x}{Congruence graph}{AlgoLine.7.11}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Short explanation example}}{xi}{figure.0.1}}
+\newlabel{fig:short_expl}{{\M@TitleReference {1}{Short explanation example}}{xi}{Short explanation example}{figure.0.1}{}}
+\newlabel{ex:short_expl}{{\M@TitleReference {0.0.1}{Equation Graph}}{xi}{}{figure.0.1}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {0.8}{\ignorespaces .}}{xii}{algocf.0.8}}
+\newlabel{algo:insert_dij}{{\M@TitleReference {9}{Equation Graph}}{xii}{Equation Graph}{AlgoLine.8.9}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {0.9}{\ignorespaces .}}{xii}{algocf.0.9}}
+\newlabel{algo:explain_dij}{{\M@TitleReference {1}{Equation Graph}}{xii}{Equation Graph}{AlgoLine.9.1}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {0.10}{\ignorespaces .}}{xii}{algocf.0.10}}
+\newlabel{algo:explain_pt}{{\M@TitleReference {7}{Proof Forest}}{xii}{Proof Forest}{AlgoLine.10.7}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {0.11}{\ignorespaces .}}{xiii}{algocf.0.11}}
+\newlabel{algo:insert_pt}{{\M@TitleReference {12}{Proof Forest}}{xiii}{Proof Forest}{AlgoLine.11.12}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {0.12}{\ignorespaces .}}{xiv}{algocf.0.12}}
+\newlabel{algo:prodproof}{{\M@TitleReference {31}{Proof Production}}{xiv}{Proof Production}{AlgoLine.12.31}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {0.13}{\ignorespaces .}}{xv}{algocf.0.13}}
+\newlabel{algo:compressor}{{\M@TitleReference {15}{Congruence Compressor}}{xv}{Congruence Compressor}{AlgoLine.13.15}{}}
 \bibstyle{plain}
 \bibdata{jabref_references}
-\@writefile{loa}{\contentsline {algocf}{\numberline {0.13}{\ignorespaces .}}{xiv}{algocf.0.13}}
-\newlabel{algo:fixnode}{{\M@TitleReference {9}{Congruence Compressor}}{xiv}{Congruence Compressor}{AlgoLine.13.9}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {0.14}{\ignorespaces .}}{xvi}{algocf.0.14}}
+\newlabel{algo:fixnode}{{\M@TitleReference {9}{Congruence Compressor}}{xvi}{Congruence Compressor}{AlgoLine.14.9}{}}
 \bibcite{Bachmair2000}{1}
 \bibcite{Barendregt1997}{2}
-\bibcite{Church1936}{3}
-\bibcite{Curry1958}{4}
-\bibcite{Downey1980}{5}
-\bibcite{Fontaine2004}{6}
-\bibcite{Nelson1980}{7}
-\bibcite{Nieuwenhuis2005}{8}
-\bibcite{Nieuwenhuis2007}{9}
-\bibcite{Schoenfinkel1924}{10}
-\@writefile{toc}{\contentsline {chapter}{Bibliography}{xv}{section*.11}}
-\memsetcounter{lastsheet}{15}
-\memsetcounter{lastpage}{15}
+\bibcite{Bellman1956}{3}
+\bibcite{Cherkassky1996}{4}
+\bibcite{Church1936}{5}
+\bibcite{Cormen1989}{6}
+\bibcite{Curry1958}{7}
+\bibcite{Dijkstra1959}{8}
+\bibcite{Downey1980}{9}
+\bibcite{Fontaine2004}{10}
+\bibcite{Ford1956}{11}
+\bibcite{Nelson1980}{12}
+\bibcite{Nieuwenhuis2005}{13}
+\bibcite{Nieuwenhuis2007}{14}
+\bibcite{Schoenfinkel1924}{15}
+\@writefile{toc}{\contentsline {chapter}{Bibliography}{xvii}{section*.11}}
+\bibcite{Thorup1999}{16}
+\memsetcounter{lastsheet}{18}
+\memsetcounter{lastpage}{18}
