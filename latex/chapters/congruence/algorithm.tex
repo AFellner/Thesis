@@ -123,7 +123,7 @@ For every $s \in \mathcal{T}$ and every $t \in [r(s)]$, $r(t) = r(s)$.
 
 \label{invar:class}
 \end{invariant}
-
+{\color{blue} For all invariants I might need to be more specific as to when exactly they should old.}
 \begin{proof}
 
 Clearly the invariant is true when intializing $[s]$ in line \ref{initclass} of \textt{addNode}.
@@ -227,6 +227,10 @@ Therefore it follows from the induction hypothesis that $r(a) = r(c)$ and $r(b) 
 The Invariants Neighbour and Lookup imply that either $r(s) = r(t)$ or $(s,t)$ is added to $d$ in line \ref{deduceEq1} or line line \ref{deduceEq2} of union.
 Subsequently union is called for $s$ and $t$, after which $r(s) = r(t)$ holds.
 
+{\color{blue} The triple induction is a little bit weird and can surely still be improved.
+Also I am not 100\% sure whether I am sometimes too loose with argumentation.
+On the other hand I have the feeling that it gets really technical sometimes.}
+
 \textbf{Soundness}
 
 For $s = t$ the claim follows trivially.
@@ -283,6 +287,8 @@ These loops are clearly the dominating factor for runtime.
 Lines \nlline{reverse1} and \nlline{reverse2} of \texttt{union} make sure that everytime the representative of a term is changed, the size of its congruence class is doubled.
 The maximum size of a congruence class is $n$.
 Therefore the representative of a single term is changed maximally $\log(n)$ times overall and line \ref{changerep} of \texttt{union} is not executed more than $n \log(n)$ times.
+
+{\color{blue} I am not yet sure how to prove, and to be honest even whether it is true, that line the right neighbor, left neighbor loops of union are not executed n^2 times overall.}
 
 \end{proof}
 
@@ -447,13 +453,15 @@ Its downside is its inflexibility when it comes to producing alternative explana
 In fact the explanation returned is always the first one to occur during edge insertion.
 The authors improve the structure for the special case of flattened terms, for which no term has nesting depth greater than one.
 
+{\color{blue} Do I cite \cite{Nieuwenhuis2005,Nieuwenhuis2007} too often? Should I only cite their newer paper?}
+
 \input{chapters/congruence/algorithms/insert_pt}
 
 \input{chapters/congruence/algorithms/explain_pt}
 
 \begin{example}
 
-Add equations from example \ref{ex:short_expl} with d - terms first into structure and show why it produces longer proof.
+{\color{blue}Add equations from example \ref{ex:short_expl} with d - terms first into structure and show why equation graph produces longer proof.}
 
 \end{example}
 
@@ -476,6 +484,8 @@ The result of this procedure is a resolution proof with a root, such that the eq
 In other words, let $s \thickapprox t$ be the equality to be explained and suppose \texttt{produceProof} returns a proof with root $\rho$.
 Then for $\rho$ it is the case that $F := \{(u,v) \mid u \neq v \text{ is a literal in } \rho\} \models s \thickapprox t$ and $F$ is a subset of the input equations.
 
+{\color{blue} I am not sure yet at what point I should introduce resolving against input equations. This could be done either here or at the compressor algorithm}
+
 \input{chapters/congruence/algorithms/prodproof}
 
 
@@ -496,7 +506,7 @@ C_5 &:= \{c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, f(c_1,e) = f(c_4,e)\} \\
 C_6 &:= \{a \neq f(c_1,e), f(c_4,e) \neq c_1, c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_4 \neq b, a = b\} \\
 C_7 &:= \{a = b\} 
 \end{align*}
-
+{\color{blue} This could possibly be shown graphically more nicely}
 \end{example}
 
 \FloatBarrier
@@ -512,12 +522,16 @@ There is however a tradeoff in overall proof length when introducing new subproo
 The subproof with a shorter conclusion can still be longer, i.e. involve more resolution nodes, than one with a bigger conclusion.
 
 \begin{example}
+{\color{blue} This example is not finished, it should demonstrate the long transitivity chain produces short proof issue; possibly the example could also be made so it shows that un dagifying a proof englarges it, i.e. replacing nodes with new nodes, where the old one remains in the proof.}
+
 Consider the set of equations $\{(f(a,a),a),(a,b),(b,f(b,b))\}$ and the target equality $f(a,a) \thickapprox f(b,b)$.
 Both the instance of the transitivity axiom $\{f(a,a) \neq a, a \neq b, b \neq f(b,b), f(a,a) = f(b,b)\}$ and the clause $\{a \neq b, f(a,a) = f(b,b)\}$ or one congruence axiom resolved against the i
 
 \end{example}
 
-The Congruence Compressor does exactly this. It is defined upon the following processing function, specified in pseudocode.
+
+
+The Congruence Compressor compresses processes a proof replacing subproofs as described above. It is defined upon the following processing function, specified in pseudocode.
 Input equations are assumed to be true, i.e. an input equation $(u,v)$ is treated as an axiomatic clause $\{u = v\}$.
 In a last step of \texttt{prodProof} all input equations are resolved away.
 
@@ -532,5 +546,7 @@ Note that the method returns $p_1$ in case non of the new premises contains the 
 We might as well choose $p_2$ to maintain obtain a correct node.
 
 \input{chapters/congruence/algorithms/fixNode}
+
+{\color{blue} I need to prove that a correct proof is maintained with fixnode and the whole compressor algorithm.}
 
 \FloatBarrier
