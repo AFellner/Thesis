@@ -1,16 +1,18 @@
-//data  <-read.csv("data/vsc/ac-fc-pc_new_exp1.csv", header=TRUE)
+data  <-read.csv("data/vsc/ac-fc-pc_new_exp1.csv", header=TRUE)
 
-data  <-read.csv("data/seq_noHuge_37.csv.csv", header=TRUE)
+//data  <-read.csv("data/seq_noHuge_37.csv.csv", header=TRUE)
 
 uncompressed <- data[["Uncompressed.length"]]
-congruence <- data[["FibC.length"]]
-cnew  <- data[["CNew.length"]]
+
+//congruence <- data[["FibC.length"]]
+
+congruence <- data[["ACNew.length"]]
 
 cnewtime <- data[["CNew.time"]]
-fibCtime <- data[["FibC.time"]]
-arrayCtime <- data[["ArrayC.time"]]
+fibCtime <- data[["FCNew.time"]]
+arrayCtime <- data[["ACNew.time"]]
 
-compression <- 1 - cnew  /uncompressed
+compression <- 1 - congruence /uncompressed
 avgcomp <- mean(compression)
 maxcomp <- max(compression)
 

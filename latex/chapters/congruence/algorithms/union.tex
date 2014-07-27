@@ -14,9 +14,9 @@
 	\nllabel{startlN}\For{every $x \in lN(r(v))$}{
 		$l_v \leftarrow l(r(x),r(v))$ \\
 		\eIf{$r(x) = r(v)$}{
-			$new_left \leftarrow r(u)$
+			$new\_left \leftarrow r(u)$
 		}{
-			$new_left \leftarrow r(x)$
+			$new\_left \leftarrow r(x)$
 		}
 		\eIf{$l$ is defined for $(new\_left,r(u))$}{
 			$l_u \leftarrow l(new\_left,r(u))$ \\
@@ -34,9 +34,9 @@
 	\nllabel{startrN}\For{every $x \in rN(r(v))$}{
 		$l_v \leftarrow l(r(v),r(x))$ \\
 		\eIf{$r(x) = r(v)$}{
-			$new_right \leftarrow r(u)$
+			$new\_right \leftarrow r(u)$
 		}{
-			$new_right \leftarrow r(x)$
+			$new\_right \leftarrow r(x)$
 		}
 		\eIf{$l$ is defined for $(r(u),new\_right)$}{
 			$l_u \leftarrow l(r(u),new\_right)$ \\

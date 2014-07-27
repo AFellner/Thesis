@@ -1,5 +1,6 @@
 \begin{algorithm}[h]
 \caption[.]{compress}
+	\KwGlobal{Set of input equations $E$}
 	\KwIn{resolution node $n$}
   \KwIn{$pr:$ tuple of resolution nodes $(p_1,p_2)$ or null}
 	\KwOut{resolution node}
@@ -17,6 +18,9 @@
 		\For{$(a,b)$ in $rE$}{
 			$con \leftarrow con.addNode(a).addNode(b)$ \\
 			$proof \leftarrow con.prodProof(s,t)$ \\
+			\While{Root of $proof$ has literal $u \neq v$, s.t. $(u,v) \in E$}{
+				$proof \leftarrow $ resolve $proof$ with $\{u = v\}$
+			}
 			\If{$proof \neq null$ and $\# proof.conclusion < \# m.conclusion$}{
 				$m \leftarrow proof$
 			}
