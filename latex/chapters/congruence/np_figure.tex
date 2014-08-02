@@ -1,0 +1,167 @@
+\begin{center}
+Pos/Neg and Connect
+\begin{tikzpicture}[node distance=1.5cm]
+
+\node(c1){$\hat{c}_1$};
+
+\node[right =.5cm of c1] (t1x2) {$t_1(\hat{x}_2)$};
+\node[above =1cm of t1x2] (t1x1) {$t_1(\hat{x}_1)$};
+\node[below =1cm of t1x2] (f1x3) {$f_1(\hat{x}_3)$};
+
+\draw [-] (c1) to (t1x2);
+\draw [-] (c1) to (t1x1);
+\draw [-] (c1) to (f1x3);
+
+
+\node[right =.5cm of t1x1, yshift = 0.25cm] (f11) {$f_1(\bot_1)$};
+\node[above =.5cm of f11] (t11) {$t_1(\top_1)$};
+\node[below =.5cm of f11] (t12) {$t_1(\top_2)$};
+\node[below =.5cm of t12] (f12) {$f_1(\bot_2)$};
+\node[below =.5cm of f12] (t13) {$t_1(\top_3)$};
+\node[below =.5cm of t13] (f13) {$f_1(\bot_3)$};
+
+\node[right = 4.5cm of c1](c2){$\hat{c}_2$};
+
+\draw [-] (c2) to (t11);
+\draw [-] (c2) to (t12);
+\draw [-] (c2) to (t13);
+\draw [-] (c2) to (f11);
+\draw [-] (c2) to (f12);
+\draw [-] (c2) to (f13);
+
+\node[right =.25cm of c2, yshift=1cm]  (f2x2) {$f_2(\hat{x}_2)$};
+\node[below =1.5cm of f2x2] (t2x3) {$t_2(\hat{x}_3)$};
+
+\draw [-] (c2) to (f2x2);
+\draw [-] (c2) to (t2x3);
+
+\node[right =3.5cm of f11] (f21) {$f_2(\bot_1)$};
+\node[right =3.5cm of t11] (t21) {$t_2(\top_1)$};
+\node[right =3.5cm of t12] (t22) {$t_2(\top_2)$};
+\node[right =3.5cm of f12] (f22) {$f_2(\bot_2)$};
+\node[right =3.5cm of t13] (t23) {$t_2(\top_3)$};
+\node[right =3.5cm of f13] (f23) {$f_2(\bot_3)$};
+
+\node[right = 4.5cm of c2](c3){$\hat{c}_3$};
+
+\draw [-] (c3) to (t21);
+\draw [-] (c3) to (t22);
+\draw [-] (c3) to (t23);
+\draw [-] (c3) to (f21);
+\draw [-] (c3) to (f22);
+\draw [-] (c3) to (f23);
+
+\node[right =.25cm of c3, yshift=1cm] (f3x1) {$f_3(\hat{x}_1)$};
+\node[below =1.5cm of f3x1] (f3x2) {$f_3(\hat{x}_2)$};
+
+\draw [-] (c3) to (f3x1);
+\draw [-] (c3) to (f3x2);
+
+\node[right =3.5cm of f21] (f31) {$f_3(\bot_1)$};
+\node[right =3.5cm of t21] (t31) {$t_3(\top_1)$};
+\node[right =3.5cm of t22] (t32) {$t_3(\top_2)$};
+\node[right =3.5cm of f22] (f32) {$f_3(\bot_2)$};
+\node[right =3.5cm of t23] (t33) {$t_3(\top_3)$};
+\node[right =3.5cm of f23] (f33) {$f_3(\bot_3)$};
+
+\node[right = 4.5cm of c3](c4){$\hat{c}_4$};
+
+\draw [-] (c4) to (t31);
+\draw [-] (c4) to (t32);
+\draw [-] (c4) to (t33);
+\draw [-] (c4) to (f31);
+\draw [-] (c4) to (f32);
+\draw [-] (c4) to (f33);
+
+\end{tikzpicture}
+
+Assignment
+
+\begin{tikzpicture}[node distance=.75cm]
+
+\node (x1) {$\hat{x}_1$};
+\node [below =.5cm of x1] (x2) {$\hat{x}_2$};
+\node [below =.5cm of x2] (x3) {$\hat{x}_3$};
+
+\node [left = of x1] (t1) {$\top_1$};
+\node [right = of x1] (f1) {$\bot_1$};
+
+\draw [-] (x1) to (t1);
+\draw [-] (x1) to (f1);
+
+\node [left = of x2] (t2) {$\top_2$};
+\node [right = of x2] (f2) {$\bot_2$};
+
+\draw [-] (x2) to (t2);
+\draw [-] (x2) to (f2);
+
+\node [left = of x3] (t3) {$\top_3$};
+\node [right = of x3] (f3) {$\bot_3$};
+
+\draw [-] (x3) to (t3);
+\draw [-] (x3) to (f3);
+
+\end{tikzpicture}
+
+Explanation $E$
+
+\begin{tikzpicture}[node distance=1.5cm]
+
+\node(c1){$\hat{c}_1$};
+
+\node[right =.5cm of c1] (t1x1) {$t_1(\hat{x}_1)$};
+
+\draw [-] (c1) to (t1x1);
+
+\node[right =.5cm of t1x1] (t11) {$t_1(\top_1)$};
+
+\draw [dashed] (t1x1) to (t11);
+
+\node[right =.5cm of t11](c2){$\hat{c}_2$};
+
+\draw [-] (c2) to (t11);
+
+\node[right =.5cm of c2]  (f2x2) {$f_2(\hat{x}_2)$};
+
+\draw [-] (c2) to (f2x2);
+
+\node[right =.5cm of f2x2] (f22) {$f_2(\bot_2)$};
+
+\draw [dashed] (f2x2) to (f22);
+
+\node[right = .5cm of f22](c3){$\hat{c}_3$};
+
+\draw [-] (c3) to (f22);
+
+\node[right =.5cm of c3] (f3x2) {$f_3(\hat{x}_2)$};
+
+\draw [-] (c3) to (f3x2);
+
+\node[right =.5cm of f3x2] (f32) {$f_3(\bot_2)$};
+
+\draw [dashed] (f3x2) to (f32);
+
+\node[right =.5cm of f32](c4){$\hat{c}_4$};
+
+\draw [-] (c4) to (f32);
+
+\node [below =.5cm of f2x2] (x1) {$\hat{x}_1$};
+\node [below =.5cm of x1] (x2) {$\hat{x}_2$};
+\node [below =.5cm of x2] (x3) {$\hat{x}_3$};
+
+\node [left = of x1] (t1) {$\top_1$};
+
+\draw [-] (x1) to (t1);
+
+\node [right = of x2] (f2) {$\bot_2$};
+
+\draw [-] (x2) to (f2);
+
+\node [left = of x3] (t3) {$\top_3$};
+
+\draw [-] (x3) to (t3);
+
+\end{tikzpicture}
+
+
+\end{center}

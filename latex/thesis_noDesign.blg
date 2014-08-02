@@ -1,11 +1,5 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: thesis_noDesign.aux
 The style file: plain.bst
+I found no \citation commands---while reading file thesis_noDesign.aux
 Database file #1: jabref_references.bib
-A bad cross reference---entry "Nieuwenhuis2005"
-refers to entry "DBLP:conf/rta/2005", which doesn't exist
-A bad cross reference---entry "Bachmair2000"
-refers to entry "DBLP:conf/cade/2000", which doesn't exist
-Warning--I didn't find a database entry for "DBLP:conf/cade/2000"
-Warning--I didn't find a database entry for "DBLP:conf/rta/2005"
-Warning--empty journal in Ford1956
-(There were 2 error messages)
+(There was 1 error message)
