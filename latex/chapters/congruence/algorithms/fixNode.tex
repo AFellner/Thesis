@@ -13,8 +13,11 @@
 		\ElseIf{$n.pivot \in p_1$}{
 			\Return $p_2$
 		}
-		\Else{
+		\ElseIf{$n.pivot \in p_2$}{
 			\Return $p_1$
+		}
+		\Else{
+			\Return node with smaller clause
 		}
 	}
 

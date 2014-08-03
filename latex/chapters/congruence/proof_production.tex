@@ -12,8 +12,6 @@ The result of this procedure is a resolution proof with a root, such that the eq
 In other words, let $s \thickapprox t$ be the equality to be explained and suppose \texttt{produceProof} returns a proof with root $\rho$.
 Then for $\rho$ it is the case that $F := \{(u,v) \mid u \neq v \text{ is a literal in } \rho\} \models s \thickapprox t$ and $F$ is a subset of the input equations.
 
-{\color{blue} I am not sure yet at what point I should introduce resolving against input equations. This could be done either here or at the compressor algorithm}
-
 \input{chapters/congruence/algorithms/prodproof}
 
 
@@ -23,19 +21,25 @@ Consider again the congruence graph shown in Figure \ref{fig:short_expl} and sup
 Suppose we found the path $p_1 := \langle  a, f(c_1,e), f(c_4,e), c_1, c_2, c_3, c_4, b \rangle$ as an explanation and that the explanation for $f(c_1,e) \thickapprox f(c_4,e)$ is the path $\langle c_1, c_2, c_3, c_4 \rangle$.
 We transform $p_1$ and $p_2$ into instances of the transitivity axiom $C_1$ and $C_2$ respectively. 
 The clause $C_2$ is resolved with the instance of the congruence axiom $C_3$, which is then resolved with the instance of the reflexive axiom $C_4$ resulting in clause $C_5$.
-Finally, $C_1$ is resolved with $C_5$ to obtain the final clause $C_6$ and after resolving with all input equations, we obtain $C_7$.
+Finally, $C_1$ is resolved with $C_5$ to obtain the final clause $C_6$.
+The proof is shown in Figure \ref{fig:proofprod}.
+%
+%\begin{align*}
+%C_1 &:= \{a \neq f(c_1,e), f(c_1,e) \neq f(c_4,e), f(c_4,e) \neq c_1, c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_4 \neq b, a = b\} \\
+%C_2 &:= \{c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_1 = c_4\} \\
+%C_3 &:= \{e \neq e, c_1 \neq c_4, f(c_1,e) = f(c_4,e)\} \\
+%C_4 &:= \{e = e\} \\
+%C_5 &:= \{c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, f(c_1,e) = f(c_4,e)\} \\
+%C_6 &:= \{a \neq f(c_1,e), f(c_4,e) \neq c_1, c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_4 \neq b, a = b\} \\
+%C_7 &:= \{a = b\} 
+%\end{align*}
 
-\begin{align*}
-C_1 &:= \{a \neq f(c_1,e), f(c_1,e) \neq f(c_4,e), f(c_4,e) \neq c_1, c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_4 \neq b, a = b\} \\
-C_2 &:= \{c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_1 = c_4\} \\
-C_3 &:= \{e \neq e, c_1 \neq c_4, f(c_1,e) = f(c_4,e)\} \\
-C_4 &:= \{e = e\} \\
-C_5 &:= \{c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, f(c_1,e) = f(c_4,e)\} \\
-C_6 &:= \{a \neq f(c_1,e), f(c_4,e) \neq c_1, c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_4 \neq b, a = b\} \\
-C_7 &:= \{a = b\} 
-\end{align*}
-{\color{blue} This could possibly be shown graphically more nicely}
-\end{example}
+\begin{figure}[!h]
+\input{chapters/congruence/figures/proof_prod}
+\caption{Example proof}
+\label{fig:proofprod}
+\end{figure}
+
 
 \FloatBarrier
 
@@ -44,32 +48,44 @@ C_7 &:= \{a = b\}
 In Section \ref{TODO} processing of a proof was defined.
 The most important application of proof processing for this work is proof compression.
 We want to make use of the short explanations found by the congruence closure algorithm described above.
-To this end we replace subproofs with new proofs that have shorter conclusions.
-Shorter conclusions lead to less resolution steps further down the proof.
+To this end we replace subproofs with conclusions that contain unnecessary long explanations with new proofs that have shorter conclusions.
+Shorter conclusions lead to less resolution steps further down the proof and possibly big chunks of the proof can simply be discarded.
 There is however a tradeoff in overall proof length when introducing new subproofs.
-The subproof with a shorter conclusion can still be longer, i.e. involve more resolution nodes, than one with a bigger conclusion.
+The subproof corresponding to a short explanation can be longer in proof length, i.e. involve more resolution nodes, than one with a longer explanation.
+Example \ref{example:shortexpl} displays this issue.
+Additionally it can be the case that by introducing a new subproof, we only partially remove the old subproof.
+Some nodes of the old subproof might still be used in other parts of the proof.
+Therefore the replacement of a subproof by another, smaller one does not necessarily lead to a smaller proof.
+Nevertheless, the meta heuristic favoring smaller conclusions should still dominate such effects, especially on large proofs.
+The results in Section \ref{TODO} confirm this intuition.
 
 \begin{example}
-{\color{blue} This example is not finished, it should demonstrate the long transitivity chain produces short proof issue; possibly the example could also be made so it shows that un dagifying a proof englarges it, i.e. replacing nodes with new nodes, where the old one remains in the proof.}
-%For this example let $t_a$ be short for 
+\label{example:shortexpl}
 Consider the set of equations $E = \{(f(f(a,b),f(a,a)),a),(a,b),(b,f(f(b,a),f(b,b)))\}$ and the target equality $f(f(a,b),f(a,a)) \thickapprox f(f(b,a),f(b,b))$.
+For presentation purposes, throughout this example we will abbreviate the term $f(f(a,b),f(a,a))$ with $t_a$ and $f(f(b,a),f(b,b))$ with $t_b$.
 Using equations in $E$, one can prove the the target equality in two ways.
-Either one uses the instance of the transitivity axiom $\{f(f(a,b),f(a,a)) \neq a, a \neq b, b \neq f(f(b,a),f(b,b)), f(f(a,b),f(a,a)) = f(f(b,a),f(b,b))\}$ or a repeated applications of instances of the congruence axiom, e.g. $\{a \neq b, f(a,a) = f(b,b)\}$.
+Either one uses the instance of the transitivity axiom $\{t_a \neq a, a \neq b, b \neq t_b, t_a = t_b\}$ or a repeated applications of instances of the congruence axiom, e.g. $\{a \neq b, f(a,a) = f(b,b)\}$.
 The corresponding explanations are $E$ and $\{(a,b)\}$.
 
-The two resulting proofs are shown in Figure \ref{fig:short_expl_proof_1} and \ref{fig:short_expl_proof_2}.
-The proof with the longer explanation $E$ has 7 proof nodes, whereas the proof with the singleton explanation has proof length 9.
+The two resulting proofs are shown in Figure \ref{fig:short_expl_proof}.
+The proof with the longer explanation $E$ is only one proof node, whereas the proof with the singleton explanation has proof length 5.
+
+%\begin{figure}[!h]
+%\input{chapters/congruence/figures/shortexpl_1}
+%\caption{Long explanation, short proof}
+%\label{fig:short_expl_proof_1}
+%\end{figure}
+%
+%\begin{figure}[!h]
+%\input{chapters/congruence/figures/shortexpl_2}
+%\caption{Short explanation, long proof}
+%\label{fig:short_expl_proof_2}
+%\end{figure}
 
 \begin{figure}[!h]
-\input{chapters/congruence/figures/shortexpl_1}
-\caption{Long explanation, short proof}
-\label{fig:short_expl_proof_1}
-\end{figure}
-
-\begin{figure}[!h]
-\input{chapters/congruence/figures/shortexpl_2}
+\input{chapters/congruence/figures/shortexpl_no_input}
 \caption{Short explanation, long proof}
-\label{fig:short_expl_proof_2}
+\label{fig:short_expl_proof}
 \end{figure}
 
 \end{example}
@@ -85,13 +101,13 @@ In a last step of \texttt{prodProof} all input equations are resolved away.
 The compressor (Algorithm \ref{algo:compressor}) uses the method \texttt{fixNode} to maintain a correct proof.
 The method modifies nodes with premises that have earlier been replaced by the compressor. 
 Nodes with unchanged premises are not changed.
-Let $n$ be a proof node that was derived by resolving $pr_1$ and $pr_2$ using pivot $\ell$.
+Let $n$ be a proof node that was derived using pivot $\ell$ in the original proof and which updated premises are $pr_1$ and $pr_2$ .
+Depending on the presence of $\ell$ in $pr_1$ and $pr_2$, $n$ is either replaced by the resolvent of $pr_1$ and $pr_2$ or by one of the updated premises.
 It assumed that the values $pr_1$, $pr_2$ and $\ell$ are stored together with the node and can be accessed in constant time.
-Note that the method returns $p_1$ in case non of the new premises contains the pivot.
-We might as well choose $p_2$ to maintain obtain a correct node.
+In case both updated premises do not contain the original pivot element, replacing the node by either one of them maintains a correct proof.
+Since we are interested in short proofs, we return the one with the shorter clause.
+This method of maintaining a correct proof was proposed in \cite{Bar-Ilan2008} in the context of similar proof compression algorithms.
 
 \input{chapters/congruence/algorithms/fixNode}
-
-{\color{blue} I need to prove that a correct proof is maintained with fixnode and the whole compressor algorithm.}
 
 \FloatBarrier

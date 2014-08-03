@@ -8,7 +8,6 @@
 	$p \leftarrow explain(s,t,g)$ \\
 	$d \leftarrow \emptyset$ \\
 	$e \leftarrow \emptyset$ \\
-	$proof \leftarrow null$ \\
 	
 	\While{$p$ is not empty}{
 		$(u,l,v) \leftarrow $ first edge of $p$ \\
@@ -20,9 +19,10 @@
 			$p_1 \leftarrow produceProof(a,c,g)$ \\
 			$p_2 \leftarrow produceProof(b,d,g)$ \\
 			$con \leftarrow \{ a \neq c, b\neq d, f(a,b) = f(c,d) \}$ \\
-			$int_1 \leftarrow$ resolve $con$ with $root(p_1)$ \\
-			$int_2 \leftarrow$ resolve $int_1$ with $root(p_2)$ \\
-			$d \leftarrow d \cup int_2$
+			$res \leftarrow$ resolve $con$ with non null roots of $p_1$ and $p_2$ \\
+			%$int_1 \leftarrow$ resolve $con$ with $root(p_1)$ \\
+			%$int_2 \leftarrow$ resolve $int_1$ with $root(p_2)$ \\
+			$d \leftarrow d \cup res$
 		}
 	}
 	
@@ -31,7 +31,7 @@
 		\While{$d$ is not empty}{
 			$int \leftarrow $ some element in $d$ \\
 			$d \leftarrow d \setminus \{int\}$ \\
-			$proof \leftarrow $ resolve $t$ with $int$
+			$proof \leftarrow $ resolve $proof$ with $int$
 		}
 		\Return $proof$
 	}
