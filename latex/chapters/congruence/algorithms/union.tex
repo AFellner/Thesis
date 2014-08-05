@@ -5,10 +5,10 @@
 	\KwOut{a set of deduced equations}
 	
 	\eIf{$[r(s)] \geq [r(t)]$}{
-		\nlline{reverse1} $(u,v) \leftarrow (s,t)$
+		\nllabel{reverse1} $(u,v) \leftarrow (s,t)$
 	}
 	{
-		\nlline{reverse2} $(u,v) \leftarrow (t,s)$
+		\nllabel{reverse2} $(u,v) \leftarrow (t,s)$
 	}
 	$d \leftarrow \emptyset$ \\
 	\nllabel{startlN}\For{every $x \in lN(r(v))$}{

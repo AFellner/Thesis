@@ -23,19 +23,9 @@ We transform $p_1$ and $p_2$ into instances of the transitivity axiom $C_1$ and 
 The clause $C_2$ is resolved with the instance of the congruence axiom $C_3$, which is then resolved with the instance of the reflexive axiom $C_4$ resulting in clause $C_5$.
 Finally, $C_1$ is resolved with $C_5$ to obtain the final clause $C_6$.
 The proof is shown in Figure \ref{fig:proofprod}.
-%
-%\begin{align*}
-%C_1 &:= \{a \neq f(c_1,e), f(c_1,e) \neq f(c_4,e), f(c_4,e) \neq c_1, c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_4 \neq b, a = b\} \\
-%C_2 &:= \{c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_1 = c_4\} \\
-%C_3 &:= \{e \neq e, c_1 \neq c_4, f(c_1,e) = f(c_4,e)\} \\
-%C_4 &:= \{e = e\} \\
-%C_5 &:= \{c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, f(c_1,e) = f(c_4,e)\} \\
-%C_6 &:= \{a \neq f(c_1,e), f(c_4,e) \neq c_1, c_1 \neq c_2, c_2 \neq c_3, c_3 \neq c_4, c_4 \neq b, a = b\} \\
-%C_7 &:= \{a = b\} 
-%\end{align*}
 
 \begin{figure}[!h]
-%\input{chapters/congruence/figures/proof_prod}
+\input{chapters/congruence/figures/proof_prod}
 \caption{Example proof}
 \label{fig:proofprod}
 \end{figure}

@@ -96,12 +96,12 @@ Computing the congruence closure of some set of equations $E$ is done by adding 
 Most algorithm pseudocodes do not include a return statement.
 In fact every algorithm implicitly returns a (modified) congruence structure or simply modifies a global variable, which is the current congruence structure.
 Since this has to be done in some order, we will often assume that $E$ is given as a sequence of equations rather than a set.
-Adding an equation to a congruence structure is done with the \textt{addEquation} method.
-The method adds boths sides of the equation to the current set of terms $\mathcal{T}$ using the \textt{addNode} method and afterwards merges the classes of the two terms.
+Adding an equation to a congruence structure is done with the \texttt{addEquation} method.
+The method adds boths sides of the equation to the current set of terms $\mathcal{T}$ using the \texttt{addNode} method and afterwards merges the classes of the two terms.
 The \texttt{addNode} method enlarges the set of terms and searches for equalities that are due to the congruence axiom.
 The updates of $\mathcal{T}$ are not outlined explicitly, but are understood to happen implicitly.
 The method \texttt{merge} initializes and guides the merging of terms.
-The actual merging is done by the method \textt{union} by modifying the data structures.
+The actual merging is done by the method \texttt{union} by modifying the data structures.
 
 \input{chapters/congruence/algorithms/addequation}
 
@@ -124,7 +124,7 @@ For every $s \in \mathcal{T}$ and every $t \in [r(s)]$, $r(t) = r(s)$.
 {\color{blue} For all invariants I might need to be more specific as to when exactly they should old.}
 \begin{proof}
 
-Clearly the invariant is true when intializing $[s]$ in line \ref{initclass} of \textt{addNode}.
+Clearly the invariant is true when intializing $[s]$ in line \ref{initclass} of \texttt{addNode}.
 
 The only other point in the code that changes $[s]$ is line \ref{changeclass} of union.
 Suppose the class of $u$ is enlarged by the class of $v$ in union and suppose the invariant holds before the union for those terms.
@@ -141,7 +141,7 @@ The lookup structure $l$ is defined for a pair of terms $(s,t)$ if and only if t
 \begin{proof}
 
 Suppose $l$ is defined for some pair of terms $(s,t)$.
-The value of $l(s,t)$ was either set in lines \ref{changel1} or \ref{changel2} of union or in line \ref{initl} of \textt{addNode}.
+The value of $l(s,t)$ was either set in lines \ref{changel1} or \ref{changel2} of union or in line \ref{initl} of \texttt{addNode}.
 In the latter case, $l$ is set to $f(a,b)$ for the tuple $(r(a),r(b))$ and therefore the invariant holds at this point.
 For changes to $r(a)$ or $r(b)$ in union the one implication of the invariant remains valid in case $l$ is defined for the new representatives, or $l$ is set for an additional pair of terms in lines \ref{changel1} or \ref{changel2}.
 In case $l$ is set to $(new\_left,r(u))$ or $(r(u),new\_right)$ in union, there is an $l$-entry $l_v$ for which the invariant held before the union.
@@ -149,7 +149,7 @@ The changes in representatives of $x$ are reflected by $new\_left$ and $new\_rig
 The new entry for $l$ therefore respects the implication of the invariant.
 
 To show the other implication, let $f(a,b) \in \mathcal{T}$.
-The term $f(a,b)$ is entered via the \textt{addEquation} and subsequently via the \textt{addNode} method.
+The term $f(a,b)$ is entered via the \texttt{addEquation} and subsequently via the \texttt{addNode} method.
 For compound terms lines \nllabel{ldefined} and \nllabel{initl} assert that $l$ is defined for $(r(a),r(b))$.
 All changes to $r(a)$ or $r(b)$ must happen in union and they are reflected by matching updates to the $l$ structure.
 
@@ -282,11 +282,11 @@ Computing the congruence closure with our congruence closure algorithm takes wor
 There are three loops in the method \texttt{union}, which are nested within the loop of \texttt{merge}.
 These loops are clearly the dominating factor for runtime.
 
-Lines \nlline{reverse1} and \nlline{reverse2} of \texttt{union} make sure that everytime the representative of a term is changed, the size of its congruence class is doubled.
+Lines \ref{reverse1} and \ref{reverse2} of \texttt{union} make sure that everytime the representative of a term is changed, the size of its congruence class is doubled.
 The maximum size of a congruence class is $n$.
 Therefore the representative of a single term is changed maximally $\log(n)$ times overall and line \ref{changerep} of \texttt{union} is not executed more than $n \log(n)$ times.
 
-{\color{blue} I am not yet sure how to prove, and to be honest even whether it is true, that line the right neighbor, left neighbor loops of union are not executed n^2 times overall.}
+{\color{blue} I am not yet sure how to prove, and to be honest even whether it is true, that line the right neighbor, left neighbor loops of union are not executed $n^2$ times overall.}
 
 \end{proof}
 
