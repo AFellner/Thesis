@@ -1,6 +1,7 @@
-\section*{Preliminaries}
+\section*{Definitions}
 
-In this section, we summarize basic notions that we will use throughout the following sections.
+We summarize basic definitions notions that we will use throughout the congruence part of this work.
+We start with the usual definition of terms.
 
 \begin{definition}[Terms]
 
@@ -15,9 +16,71 @@ For a given signature $\Sigma$, the set of \emph{terms} $\mathcal{T}^{\Sigma}$ i
 	\mathcal{T}^{\Sigma} &= \bigcup_{i\in \mathbb{N}} \mathcal{T}_{i}
 \end{align*}
 
+An equation of $\mathcal{T}$ is a tuple of terms, i.e. an element of $\mathcal{T} \times \mathcal{T}$.
+
 \end{definition}
 
 We will ommit the index $\Sigma$, if it is clear from context.
+If $E$ is a set of equations then we denote by $\mathcal{T}_E$ the set of terms used in $E$, i.e. the set $\{t \mid \text{ for some } v: (t,v) \in E \text{ or } (v,t) \in E\}$.
+
+\begin{definition}[Congruence Relation]
+
+Let $\mathcal{T}$ be a set of terms.
+A relation $R \subset \mathcal{T} \times \mathcal{T}$ is a congruence relation, if has the following four properties:
+\begin{itemize}
+	\item reflexive: for all $t \in \mathcal{T}: (t,t) \in R$
+	\item symmetric: $(s,t) \in R$ implies $(t,s) \in R$
+	\item transitive: $(r,s) \in R$ and $(s,t) \in R$ implies $(r,t) \in R$
+	\item compatible: $f$ is a n-ary function symbol and for all $i = 1,\ldots,n (t_i,s_i) \in R$ implies $f(t_1,\ldots,t_n),f(s_1,\ldots,s_n) \in R$
+\end{itemize}
+
+\end{definition}
+
+Every congruence relation partitions its underlying set of terms $\mathcal{T}$ into congruence classes, such that two terms $(s,t)$ belong to the same class if and only if $(s,t) \in R$.
+The relations $\mathcal{T} \times \mathcal{T}$ and $\emptyset$ are trivial congruence relations.
+
+Let $E$ be a set of equations with terms in some set of terms $\mathcal{T}$.
+The set $E^* \supseteq E$ is called the congruence closure of $E$, 
+if $E^*$ is a congruence relation on $\mathcal{T}$ and for every congruence relation $C$, such that $C \supset E$ follows $C \supseteq E^*$.
+It is easily seen that congruence relations are closed under intersection.
+Therefore $E^*$ always exists.
+
+We write $E \models s \thickapprox t$ if $(s,t) \in E^*$.
+
+We extend the resolution calculus, presented in Section \ref{sec:resolution}, with the axioms of equality.
+Let $\mathcal{Q}_{\mathcal{T}} = \{t_1 = t_2 \mid t_1, t_2 \in \mathcal{T}$ be the set of all equalities for a set of terms $\mathcal{T}$
+Let $V$ be a finite set of propositional variables.
+The set of equality atoms $\mathcal{E}$ is defined as $V \cup Q_{\mathcal{T}}$
+An equality literal $\ell_\mathcal{T}$ is an equality atom $e$ or a negated equality atom $\neg e$.
+We will abbreviate write $\neg (t_1 = t_2)$ by $t_1 \neq t_2$.
+An equality clause is a set of equality literals.
+As usual a clause is interpreted as the disjunction of its literals and a set of clauses is interpreted as the conjunction its clauses.
+
+The axioms of congruence $EqAxioms$ for some set of terms $\mathcal{T}$ is defined as $R \cup S \cup T \cup C$ where
+
+\begin{align*}
+	R &= \{ t = t \mid t \in \mathcal{T}\} \\
+	S &= \{ t_1 \neq t_2, t_2 = t_1 \mid t_1, t_2 \in \mathcal{T} \} \\
+	T &= \{ t_1 \neq t_2, t_2 \neq t_3, t_1 = t_3 \mid t_1, t_2, t_3 \in \mathcal{T} \} \\
+	C &= \{ t_1 \neq t_3, t_2 \neq t_4, f(t_1,t_2) = f(t_3,t_4) \mid t_1, t_2, t_3, t_4 \in \mathcal{T} \} 
+\end{align*}
+
+Note that every congruence axiom has one positive equality literal.
+From now on we will omit the set of terms $\mathcal{T}$ if it is clear from context.
+
+Next we will define the resolution calculus extended by congruence axioms.
+Let $\ell$ be an equality literal and $C_1$, $C_2$ be equality clauses such that $\ell \in C_1$ and $\neg \ell \in C_2$.
+The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\neg \ell\}$ is the resolvent of $C_1$ and $C_2$ with pivot $\ell$.
+
+Let $F = \{C_1, \ldots, C_n\}$ be a set of clauses.
+The notion of a congruence derivation for $F$ is defined inductively.
+The sequence $\langle C_1, \ldots, C_n\rangle$ is a congruence derivation for $F$.
+If $\langle C_1, \ldots, C_m\rangle$ is a congruence derivation for $F$ then $\langle C_1, \ldots, C_{m+1} \rangle$ is a congruence derivation for $F$ if $C_{m+1} \in EqAxioms$ or $C_{m+1}$ is a resolvent of $C_i$ and $C_j$ with $1 \leq i,j \leq m$.
+A congruence derivation containing the empty clause is a congruence refutation.
+
+Let $D = \langle C_1, \ldots, C_m\rangle$ be a congruence derivation.
+The longest subsequence $\langle C_{i_1}, \ldots, C_{i_k}\rangle$ of $D$, such that $\{C_{i_1}, \ldots, C_{i_k}\} \subseteq EqAxioms$ is called the equality reasoning part of $D$.
+
 
 %In Section \ref{sec:algorithms}, we will work with s
 {\color{blue} Todo: introduce all used notions}
