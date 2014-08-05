@@ -2,13 +2,13 @@
 \label{sec:experiments}
 
 All the pebbling algorithms and heuristics described in the previous sections have been implemented in the hybrid functional and object-oriented programming
-language Scala (\url{www.scala-lang.org}) as part of the \skeptik library for proof compression (\url{github.com/Paradoxika/Skeptik}) \cite{Boudou}.
+language Scala (\url{www.scala-lang.org}) as part of the Skeptik library for proof compression (\url{github.com/Paradoxika/Skeptik}) \cite{Boudou}.
 
 To evaluate the algorithms and heuristics, experiments were executed\footnote{The Vienna Scientific Cluster VSC\nobreakdash-2 
 (\url{http://vsc.ac.at/}) was used.} on four disjoint sets of proof benchmarks (Table \ref{tab:benchmarks}). 
 TraceCheck$_1$ and TraceCheck$_2$ contain proofs produced by the SAT-solver \texttt{PicoSAT} \cite{Biere2008} on unsatisfiable benchmarks from the SATLIB (\url{www.satlib.org/benchm.html}) library. 
 The proofs\footnote{SAT proofs: \url{www.logic.at/people/bruno/Experiments/2014/Pebbling/tc-proofs.zip}} are in the TraceCheck proof format, which is one of the three formats accepted at the \emph{Certified Unsat} track of the SAT-Competition.
-veriT$_1$ and veriT$_2$ contain proofs produced by the SMT-solver {\veriT} (\url{www.verit-solver.org}) on unsatisfiable problems from the SMT-Lib (\url{www.smtlib.org}). 
+veriT$_1$ and veriT$_2$ contain proofs produced by the SMT-solver VeriT (\url{www.verit-solver.org}) on unsatisfiable problems from the SMT-Lib (\url{www.smtlib.org}). 
 These proofs\footnote{SMT proofs: \url{www.logic.at/people/bruno/Experiments/2014/Pebbling/smt-proofs.zip}} are in a proof format that resembles SMT-Lib's problem format and they were translated into pure resolution proofs by considering every non-resolution inference as an axiom.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -140,7 +140,7 @@ Unfortunately, none of the additional heuristics showed promising results.
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.5]{Figures/td_vs_bu.pdf}
+	\includegraphics[scale=0.5]{chapters/pebbling/figures/td_vs_bu_2.pdf}
 	\caption{Space measures of best Bottom-Up and Top-Down result}
 	\label{fig:BUvsTD}
 \end{figure}

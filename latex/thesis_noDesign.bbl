@@ -1,3 +1,221 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
+
+\bibitem{Bachmair2000}
+Leo Bachmair and Ashish Tiwari.
+\newblock Abstract congruence closure and specializations.
+\newblock In {\em CADE}, pages 64--78, 2000.
+
+\bibitem{Bar-Ilan2008}
+Omer Bar-Ilan, Oded Fuhrmann, Shlomo Hoory, Ohad Shacham, and Ofer Strichman.
+\newblock Linear-time reductions of resolution proofs.
+\newblock In {\em Haifa Verification Conference}, pages 114--128, 2008.
+
+\bibitem{Barendregt1997}
+Henk Barendregt.
+\newblock The impact of the lambda calculus in logic and computer science.
+\newblock {\em Bulletin of Symbolic Logic}, 3(02):181--215, 1997.
+
+\bibitem{Bellman1956}
+Richard Bellman.
+\newblock On a routing problem.
+\newblock Technical report, DTIC Document, 1956.
+
+\bibitem{Ben-Sasson2002}
+Eli Ben-Sasson.
+\newblock Size space tradeoffs for resolution.
+\newblock In {\em STOC}, pages 457--464, 2002.
+
+\bibitem{Ben-Sasson2009}
+Eli Ben-Sasson and Jakob Nordstr{\"o}m.
+\newblock Short proofs may be spacious: An optimal separation of space and
+  length in resolution.
+\newblock {\em Electronic Colloquium on Computational Complexity (ECCC)}, 16:2,
+  2009.
+
+\bibitem{tracecheck}
+Armin Biere.
+\newblock Tracecheck resolution proof format, 2006.
+
+\bibitem{Biere2008}
+Armin Biere.
+\newblock Picosat essentials.
+\newblock {\em JSAT}, 4(2-4):75--97, 2008.
+
+\bibitem{Biere2009}
+Armin Biere, Marijn Heule, Hans van Maaren, and Toby Walsh, editors.
+\newblock {\em Handbook of Satisfiability}, volume 185 of {\em Frontiers in
+  Artificial Intelligence and Applications}. IOS Press, 2009.
+
+\bibitem{Bouton2009}
+Thomas Bouton, Diego Caminha~B. de~Oliveira, David D{\'e}harbe, and Pascal
+  Fontaine.
+\newblock verit: An open, trustable and efficient smt-solver.
+\newblock In {\em CADE}, pages 151--156, 2009.
+
+\bibitem{Chan2013}
+Siu~Man Chan.
+\newblock Pebble games and complexity.
+\newblock 2013.
+
+\bibitem{Cherkassky1996}
+Boris~V. Cherkassky, Andrew~V. Goldberg, and Tomasz Radzik.
+\newblock Shortest paths algorithms: Theory and experimental evaluation.
+\newblock {\em Math. Program.}, 73:129--174, 1996.
+
+\bibitem{Church1936}
+Alonzo Church.
+\newblock An unsolvable problem of elementary number theory.
+\newblock {\em American journal of mathematics}, pages 345--363, 1936.
+
+\bibitem{Cormen1989}
+Thomas~H. Cormen, Charles~E. Leiserson, and Ronald~L. Rivest.
+\newblock {\em Introduction to Algorithms}.
+\newblock The MIT Press and McGraw-Hill Book Company, 1989.
+
+\bibitem{Curry1958}
+Haskell~B. Curry.
+\newblock {\em Combinatory Logic}.
+\newblock Amsterdam, North-Holland Pub. Co., 1958.
+
+\bibitem{Dijkstra1959}
+Edsger~W Dijkstra.
+\newblock A note on two problems in connexion with graphs.
+\newblock {\em Numerische mathematik}, 1(1):269--271, 1959.
+
+\bibitem{Downey1980}
+Peter~J. Downey, Ravi Sethi, and Robert~Endre Tarjan.
+\newblock Variations on the common subexpression problem.
+\newblock {\em J. ACM}, 27(4):758--771, 1980.
+
+\bibitem{Esteban2001}
+Juan~Luis Esteban and Jacobo Tor{\'a}n.
+\newblock Space bounds for resolution.
+\newblock {\em Inf. Comput.}, 171(1):84--97, 2001.
+
+\bibitem{Fontaine2004}
+Pascal Fontaine.
+\newblock {\em Techniques for verification of concurrent systems with
+  invariants}.
+\newblock PhD thesis, PhD thesis, Institut Montefiore, Universit{\'e} de Liege,
+  Belgium, 2004.
+
+\bibitem{Fontaine2011}
+Pascal Fontaine, Stephan Merz, and Bruno~Woltzenlogel Paleo.
+\newblock Compression of propositional resolution proofs via partial
+  regularization.
+\newblock In {\em CADE}, pages 237--251, 2011.
+
+\bibitem{Ford1956}
+Lester~Randolph Ford.
+\newblock Network flow theory.
+\newblock 1956.
+
+\bibitem{Gilbert1980}
+John~R. Gilbert, Thomas Lengauer, and Robert~Endre Tarjan.
+\newblock The pebbling problem is complete in polynomial space.
+\newblock {\em SIAM J. Comput.}, 9(3):513--524, 1980.
+
+\bibitem{Hertel2007}
+Philipp Hertel and Toniann Pitassi.
+\newblock Black-white pebbling is pspace-complete.
+\newblock {\em Electronic Colloquium on Computational Complexity (ECCC)},
+  14(044), 2007.
+
+\bibitem{drup}
+Marijn Heule.
+\newblock Drup proof format, 2007.
+
+\bibitem{bdrup}
+Marijn Heule.
+\newblock Bdrup proof format, 2013.
+
+\bibitem{Hofferek2013}
+Georg Hofferek, Ashutosh Gupta, Bettina K{\"o}nighofer, Jie-Hong~Roland Jiang,
+  and Roderick Bloem.
+\newblock Synthesizing multiple boolean functions using interpolation on a
+  single proof.
+\newblock {\em CoRR}, abs/1308.4767, 2013.
+
+\bibitem{Kasai1979}
+Takumi Kasai, Akeo Adachi, and Shigeki Iwata.
+\newblock Classes of pebble games and complete problems.
+\newblock {\em SIAM J. Comput.}, 8(4):574--586, 1979.
+
+\bibitem{Konev2014}
+Boris Konev and Alexei Lisitsa.
+\newblock A sat attack on the erdos discrepancy conjecture.
+\newblock {\em CoRR}, abs/1402.2184, 2014.
+
+\bibitem{McMill2005}
+Kenneth~L. McMillan.
+\newblock Applications of craig interpolants in model checking.
+\newblock In {\em TACAS}, pages 1--12, 2005.
+
+\bibitem{Nelson1980}
+Greg Nelson and Derek~C. Oppen.
+\newblock Fast decision procedures based on congruence closure.
+\newblock {\em J. ACM}, 27(2):356--364, 1980.
+
+\bibitem{Nieuwenhuis2005}
+Robert Nieuwenhuis and Albert Oliveras.
+\newblock Proof-producing congruence closure.
+\newblock In {\em RTA}, pages 453--468, 2005.
+
+\bibitem{Nieuwenhuis2007}
+Robert Nieuwenhuis and Albert Oliveras.
+\newblock Fast congruence closure and extensions.
+\newblock {\em Inf. Comput.}, 205(4):557--580, 2007.
+
+\bibitem{Nordstroem2009}
+Jakob Nordstr{\"o}m.
+\newblock Narrow proofs may be spacious: Separating space and width in
+  resolution.
+\newblock {\em SIAM J. Comput.}, 39(1):59--121, 2009.
+
+\bibitem{Boudou}
+Bruno~Woltzenlogel Paleo, Joseph Boudou, and Andreas Fellner.
+\newblock Skeptik system description.
+
+\bibitem{Pippenger1980}
+Nicholas Pippenger.
+\newblock Comparative schematology and pebbling with auxiliary pushdowns
+  (preliminary version).
+\newblock In {\em STOC}, pages 351--356, 1980.
+
+\bibitem{Pippenger1982}
+Nicholas Pippenger.
+\newblock {\em Advances in pebbling}.
+\newblock Springer, 1982.
+
+\bibitem{Schoenfinkel1924}
+Moses Sch{\"o}nfinkel.
+\newblock {\"U}ber die bausteine der mathematischen logik.
+\newblock {\em Mathematische Annalen}, 92(3):305--316, 1924.
+
+\bibitem{Sethi1975}
+Ravi Sethi.
+\newblock Complete register allocation problems.
+\newblock {\em SIAM J. Comput.}, 4(3):226--248, 1975.
+
+\bibitem{Shostak1978}
+Robert~E. Shostak.
+\newblock An algorithm for reasoning about equality.
+\newblock {\em Commun. ACM}, 21(7):583--585, 1978.
+
+\bibitem{Thorup1999}
+Mikkel Thorup.
+\newblock Undirected single-source shortest paths with positive integer weights
+  in linear time.
+\newblock {\em J. ACM}, 46(3):362--394, 1999.
+
+\bibitem{EmdeBoas1979}
+Peter van Emde~Boas and Jan van Leeuwen.
+\newblock Move rules and trade-offs in the pebble game.
+\newblock In {\em Theoretical Computer Science}, pages 101--112, 1979.
+
+\bibitem{Walker1973}
+S.~A. Walker and H.~Raymond Strong.
+\newblock Characterizations of flowchartable recursions.
+\newblock {\em J. Comput. Syst. Sci.}, 7(4):404--447, 1973.
 
 \end{thebibliography}

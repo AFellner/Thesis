@@ -35,11 +35,12 @@ The proof is shown in Figure \ref{fig:proofprod}.
 %\end{align*}
 
 \begin{figure}[!h]
-\input{chapters/congruence/figures/proof_prod}
+%\input{chapters/congruence/figures/proof_prod}
 \caption{Example proof}
 \label{fig:proofprod}
 \end{figure}
 
+\end{example}
 
 \FloatBarrier
 
@@ -83,18 +84,44 @@ The proof with the longer explanation $E$ is only one proof node, whereas the pr
 %\end{figure}
 
 \begin{figure}[!h]
-\input{chapters/congruence/figures/shortexpl_no_input}
+%\input{chapters/congruence/figures/shortexpl_no_inpsut}
 \caption{Short explanation, long proof}
 \label{fig:short_expl_proof}
 \end{figure}
 
 \end{example}
 
+The Congruence Compressor compresses processes a proof replacing subproofs as described above. 
+It is defined upon the processing function specified in pseudocode in Algorithm \ref{algo:compressor}.
+The idea of the processing function is simple.
+Axioms are not changed by the function.
+For all other nodes the \texttt{fixNode} is called method, to maintain a correct proof.
+Then in line \ref{criteria} it is decided whether the explanation finding congruence closure algorithm should be used to find a replacement for the current node.
+One trivial criteria could be true for every node.
+Testing every node will result in a slow algorithm, but the best possible compression.
+Some nodes do not need to be checked, since they contain optimal explanations by definition or there is no hope of finding an explanation at all.
+The following definition classifies nodes to define a more sophisticated decision criteria.
 
+\begin{definition}[Types of nodes]
 
-The Congruence Compressor compresses processes a proof replacing subproofs as described above. It is defined upon the following processing function, specified in pseudocode.
-Input equations are assumed to be true, i.e. an input equation $(u,v)$ is treated as an axiomatic clause $\{u = v\}$.
-In a last step of \texttt{prodProof} all input equations are resolved away.
+An axiom is a \emph{theory lemma} if it is an instance of one of the congruence axioms.
+Otherwise it is called \emph{input derived}.
+The classification of internal nodes is defined recursively.
+An internal node is input derived, if one of its premises is input derived.
+Otherwise it is a theory lemma.
+We call a node a \emph{low theory lemma} if it is a theory lemma and has a child that is input derived.
+
+\end{definition}
+
+We suspect that most redundancies in proofs are to be found in low theory lemmas, since they reflect the explanations found by the proof producing solver.
+Therefore an alternative criteria is to only find replacements for low theory lemmas.
+The question whether a node is a low theory lemma is not trivial to answer while traversing the proof in a top to bottom fashion.
+Therefore a preliminary traversal is necessary to determine the classification of nodes.
+Experiments have shown that using this criteria speeds up the algorithm a lot, while losing only very little compression.
+
+Add all equations of the antecedent to an empty congruence structure and check whether these equations induce a proof for one of the equations in the succedent that has a shorter conclusion than the original subproof.
+If there is such a proof, we replace the old subproof by the new one.
+Futher criteria for deciding whether to replace or not could be size of the subproof or a global metric that tries to predict the global compression achieved by replacement.
 
 \input{chapters/congruence/algorithms/compressor}
 

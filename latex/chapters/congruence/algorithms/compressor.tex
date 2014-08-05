@@ -9,20 +9,19 @@
 		\Return $n$
 	}{
 		$m \leftarrow fixNode(n,(p_1,p_2))$ \\
-		$lE \leftarrow \{(a,b) \mid (a \neq b) \in m\}$ \\
-		$rE \leftarrow \{(a,b) \mid (a = b) \in m\}$ \\
-		$con \leftarrow $ empty congruence structure \\
-		\For{$(a,b)$ in $lE$}{
-			$con \leftarrow con.addEquality(a,b)$
-		}
-		\For{$(a,b)$ in $rE$}{
-			$con \leftarrow con.addNode(a).addNode(b)$ \\
-			$proof \leftarrow con.prodProof(s,t)$ \\
-			\While{Root of $proof$ has literal $u \neq v$, s.t. $(u,v) \in E$}{
-				$proof \leftarrow $ resolve $proof$ with $\{u = v\}$
+		\nllabel{criteria}\If{$m$ fulfills criteria}{
+			$lE \leftarrow \{(a,b) \mid (a \neq b) \in m\}$ \\
+			$rE \leftarrow \{(a,b) \mid (a = b) \in m\}$ \\
+			$con \leftarrow $ empty congruence structure \\
+			\For{$(a,b)$ in $lE$}{
+				$con \leftarrow con.addEquality(a,b)$
 			}
-			\If{$proof \neq null$ and $\# proof.conclusion < \# m.conclusion$}{
-				$m \leftarrow proof$
+			\For{$(a,b)$ in $rE$}{
+				$con \leftarrow con.addNode(a).addNode(b)$ \\
+				$proof \leftarrow con.prodProof(s,t)$ \\
+				\If{$proof \neq null$ and $| proof.conclusion | < | m.conclusion |$}{
+					$m \leftarrow proof$
+				}
 			}
 		}
 		\Return $m$

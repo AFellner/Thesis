@@ -1,5 +1,38 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: thesis_noDesign.aux
 The style file: plain.bst
-I found no \citation commands---while reading file thesis_noDesign.aux
 Database file #1: jabref_references.bib
-(There was 1 error message)
+A bad cross reference---entry "McMill2005"
+refers to entry "DBLP:conf/tacas/2005", which doesn't exist
+A bad cross reference---entry "Bouton2009"
+refers to entry "DBLP:conf/cade/2009", which doesn't exist
+A bad cross reference---entry "Fontaine2011"
+refers to entry "DBLP:conf/cade/2011", which doesn't exist
+A bad cross reference---entry "Pippenger1980"
+refers to entry "DBLP:conf/stoc/STOC12", which doesn't exist
+A bad cross reference---entry "EmdeBoas1979"
+refers to entry "DBLP:conf/tcs/1979", which doesn't exist
+A bad cross reference---entry "Ben-Sasson2002"
+refers to entry "DBLP:conf/stoc/2002", which doesn't exist
+A bad cross reference---entry "Nieuwenhuis2005"
+refers to entry "DBLP:conf/rta/2005", which doesn't exist
+A bad cross reference---entry "Bachmair2000"
+refers to entry "DBLP:conf/cade/2000", which doesn't exist
+A bad cross reference---entry "Bar-Ilan2008"
+refers to entry "DBLP:conf/hvc/2008", which doesn't exist
+Warning--I didn't find a database entry for "TODO:resolution"
+Warning--I didn't find a database entry for "TODO"
+Warning--I didn't find a database entry for "hetzl2012towards"
+Warning--I didn't find a database entry for "hetzl2014article"
+Warning--I didn't find a database entry for "DBLP:conf/cade/2000"
+Warning--I didn't find a database entry for "DBLP:conf/hvc/2008"
+Warning--I didn't find a database entry for "DBLP:conf/stoc/2002"
+Warning--I didn't find a database entry for "DBLP:conf/cade/2009"
+Warning--I didn't find a database entry for "DBLP:conf/tcs/1979"
+Warning--I didn't find a database entry for "DBLP:conf/cade/2011"
+Warning--I didn't find a database entry for "DBLP:conf/tacas/2005"
+Warning--I didn't find a database entry for "DBLP:conf/rta/2005"
+Warning--I didn't find a database entry for "DBLP:conf/stoc/STOC12"
+Warning--empty journal in Chan2013
+Warning--empty journal in Ford1956
+Warning--empty note in Boudou
+(There were 9 error messages)
