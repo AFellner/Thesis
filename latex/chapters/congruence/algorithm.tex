@@ -11,6 +11,7 @@ The technique to store and deduce equations of non constant terms is inspired fr
 Additionally the proof forest structure described below was proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 
 \subsection*{Preliminaries}
+\ref{subsec:algorithms_preliminaries}
 
 Our congruence closure algorithm operates on curried terms.
 Curried terms use a single binary function symbol to represent general terms.
@@ -451,15 +452,39 @@ Its downside is its inflexibility when it comes to producing alternative explana
 In fact the explanation returned is always the first one to occur during edge insertion.
 The authors improve the structure for the special case of flattened terms, for which no term has nesting depth greater than one.
 
-{\color{blue} Do I cite \cite{Nieuwenhuis2005,Nieuwenhuis2007} too often? Should I only cite their newer paper?}
-
 \input{chapters/congruence/algorithms/insert_pt}
 
 \input{chapters/congruence/algorithms/explain_pt}
 
 \begin{example}
 
-{\color{blue}Add equations from example \ref{ex:short_expl} with d - terms first into structure and show why equation graph produces longer proof.}
+Consider again the set of equations presented in Figure \ref{fig:short_expl} and Example \ref{ex:short_expl} and suppose that the equations $(c_1,d_1),(d_1,d_2),(d_2,b)$ are inserted into the congruence structure before any other equation.
+After adding these three equations, the proof forest contains of a single proof tree and is displayed in Figure \ref{fig:proof_forest_1}, where the labels are omitted.
+Suppose that next following equations are inserted: $(a,f(c_1,e)),(f(c_4,e),c_1),(c_1,c_2),(c_2,c_3)$.
+The resulting proof forest contains two proof trees and is shown in Figure \ref{fig:proof_forest_2}.
+Finally the equation $(c_3,c_4)$ is added and the equality $f(c_1,e) \thickapprox f(c_4,e)$ is deduced.
+At this point, the explanation for $c_1 \thickapprox c_4$ in the proof forest is the path $\langle c_1,c_2,c_3,c_4 \rangle$, which is the combined path from $c_1$ and $c_4$ to their nearest common ancestor, which is $c_2$.
+The resulting proof forest is shown in Figure \ref{fig:proof_forest_3}, where the explanation for the edge $(f(c_1,e),f(c_4,e))$ is highlighted in a dotted rectangle.
+The explanation for $a \thickapprox b$ in this graph is the path $\langle b,d_2,d_1,c_1,f(c_4,e),f(c_1,e),a\rangle$ and since the edge $(f(c_1,e),f(c_4,e))$ uses all other equations as explanation, the final explanation includes all eight equations.
+In example \ref{ex:short_expl} we have shown that this is not necessary.
+
+\begin{figure}[!h]
+\input{chapters/congruence/figures/proof_forest_1}
+\caption{Proof Forest including first three equations}
+\label{fig:proof_forest_1}
+\end{figure}
+
+\begin{figure}[!h]
+\input{chapters/congruence/figures/proof_forest_2}
+\caption{Proof Forest before deducing}
+\label{fig:proof_forest_2}
+\end{figure}
+
+\begin{figure}[!h]
+\input{chapters/congruence/figures/proof_forest_3}
+\caption{Final Proof Forest}
+\label{fig:proof_forest_3}
+\end{figure}
 
 \end{example}
 

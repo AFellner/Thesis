@@ -26,7 +26,7 @@ If $E$ is a set of equations then we denote by $\mathcal{T}_E$ the set of terms 
 \begin{definition}[Congruence Relation]
 
 Let $\mathcal{T}$ be a set of terms.
-A relation $R \subset \mathcal{T} \times \mathcal{T}$ is a congruence relation, if has the following four properties:
+A relation $R \subseteq \mathcal{T} \times \mathcal{T}$ is a congruence relation, if has the following four properties:
 \begin{itemize}
 	\item reflexive: for all $t \in \mathcal{T}: (t,t) \in R$
 	\item symmetric: $(s,t) \in R$ implies $(t,s) \in R$
@@ -36,51 +36,95 @@ A relation $R \subset \mathcal{T} \times \mathcal{T}$ is a congruence relation, 
 
 \end{definition}
 
-Every congruence relation partitions its underlying set of terms $\mathcal{T}$ into congruence classes, such that two terms $(s,t)$ belong to the same class if and only if $(s,t) \in R$.
-The relations $\mathcal{T} \times \mathcal{T}$ and $\emptyset$ are trivial congruence relations.
+Clearly every congruence relation is also an equivalence relation (which is a reflexive, transitive and symmetric relation).
+Therefore every congruence relation partitions its underlying set of terms $\mathcal{T}$ into congruence classes, such that two terms $(s,t)$ belong to the same class if and only if $(s,t) \in R$.
+The relations $\emptyset$ and $\mathcal{T} \times \mathcal{T}$ are trivial congruence relations.
+In this work we are interested in congruence relations induced by sets of equations.
+In other words, we compute the partitioning of the terms such that two terms in the same partition are proven to be equal by the input set of equations.
+To this end we define the notion of congruence closure of a set of equation.
 
-Let $E$ be a set of equations with terms in some set of terms $\mathcal{T}$.
-The set $E^* \supseteq E$ is called the congruence closure of $E$, 
-if $E^*$ is a congruence relation on $\mathcal{T}$ and for every congruence relation $C$, such that $C \supset E$ follows $C \supseteq E^*$.
+\begin{definition}[Congruence Closure]
+
+Let $E$ be a set of equations.
+The set $E^* \supseteq E$ is called the \emph{congruence closure} of $E$, 
+if $E^*$ is a congruence relation on $\mathcal{T}_E$ and for every congruence relation $C$, such that $C \supset E$ follows $C \supseteq E^*$.
 It is easily seen that congruence relations are closed under intersection.
 Therefore $E^*$ always exists.
 
-We write $E \models s \thickapprox t$ if $(s,t) \in E^*$.
+We write $E \models s \thickapprox t$ if $(s,t) \in E^*$ and say that $E$ is an \emph{explanation} for $s \thickapprox t$.
 
+\end{definition}
+
+The idea of using congruence closure in proof compression is to replace big, w.r.t. cardinality, explanations by smaller ones.
+
+The main theme of this work is resolution proof compression.
+Therefore we need to express equality reasoning in terms of resolution proofs.
 We extend the resolution calculus, presented in Section \ref{sec:resolution}, with the axioms of equality.
-Let $\mathcal{Q}_{\mathcal{T}} = \{t_1 = t_2 \mid t_1, t_2 \in \mathcal{T}$ be the set of all equalities for a set of terms $\mathcal{T}$
-Let $V$ be a finite set of propositional variables.
-The set of equality atoms $\mathcal{E}$ is defined as $V \cup Q_{\mathcal{T}}$
-An equality literal $\ell_\mathcal{T}$ is an equality atom $e$ or a negated equality atom $\neg e$.
-We will abbreviate write $\neg (t_1 = t_2)$ by $t_1 \neq t_2$.
-An equality clause is a set of equality literals.
-As usual a clause is interpreted as the disjunction of its literals and a set of clauses is interpreted as the conjunction its clauses.
+First we extend the notions of atoms, literals and clauses
 
-The axioms of congruence $EqAxioms$ for some set of terms $\mathcal{T}$ is defined as $R \cup S \cup T \cup C$ where
+\begin{definition}[Equality atom, literal and clause]
 
-\begin{align*}
-	R &= \{ t = t \mid t \in \mathcal{T}\} \\
-	S &= \{ t_1 \neq t_2, t_2 = t_1 \mid t_1, t_2 \in \mathcal{T} \} \\
-	T &= \{ t_1 \neq t_2, t_2 \neq t_3, t_1 = t_3 \mid t_1, t_2, t_3 \in \mathcal{T} \} \\
-	C &= \{ t_1 \neq t_3, t_2 \neq t_4, f(t_1,t_2) = f(t_3,t_4) \mid t_1, t_2, t_3, t_4 \in \mathcal{T} \} 
-\end{align*}
+Let $\mathcal{T}$ be a set of terms and let $V$ be a finite set of propositional variables.
+The set of \emph{equality atoms} $\mathcal{E}$ is defined as $V \cup \mathcal{T} \times \mathcal{T}$.
+An \emph{equality literal} is an equality atom $e$ or a negated equality atom $\neg e$.
+An \emph{equality clause} is a set of equality literals.
 
-Note that every congruence axiom has one positive equality literal.
-From now on we will omit the set of terms $\mathcal{T}$ if it is clear from context.
+\end{definition}
+
+In the context of equality atoms, we write equations $(s,t) \in \mathcal{T} \times \mathcal{T}$ as $s = t$ and $s \neq t$ for its negated version.
+As usual, a clause is interpreted as the disjunction of its literals and a set of clauses is interpreted as the conjunction its clauses.\\
+
+From hereon, we restrict our attention to sets of terms that, on top of constants, have at most one function symbol $f$, which is binary.
+We justify this restriction in Section \ref{subsec:algorithms_preliminaries}.
+The axioms defining congruence relations have to be reflected in our extended resolution proofs.
+We achieve this by defining axiom schemas, that can be instantiated with concrete terms.
+
+\begin{definition}[Axioms of Equality]
+
+In the following axioms schemas, the variables $x_1,\ldots,x_n$ are placeholders for terms.
+By simultaneously replacing all variables with terms, one obtains an equality clause, which we call an \emph{instance} of the respective axiom of equality.
+
+\begin{itemize}
+	\item reflexive: $\{x = x\}$
+	\item symmetric: $\{x_1 \neq x_2, x_2 = x_1\}$
+	\item transitive: $\{x_1 \neq x_2, x_2 \neq x_3, \ldots, x_{n-1} \neq x_n, x_1 = x_n\}$
+	\item compatible: $\{x_1 \neq x_3, x_2 \neq x_4, f(x_1,x_2) = f(x_3,x_4)\}$
+\end{itemize}
+
+\end{definition}
 
 Next we will define the resolution calculus extended by congruence axioms.
+
+\begin{definition}[Resolution with Equality]
+
 Let $\ell$ be an equality literal and $C_1$, $C_2$ be equality clauses such that $\ell \in C_1$ and $\neg \ell \in C_2$.
-The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\neg \ell\}$ is the resolvent of $C_1$ and $C_2$ with pivot $\ell$.
+The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\neg \ell\}$ is the \emph{resolvent} of $C_1$ and $C_2$ with \emph{pivot} $\ell$.
 
 Let $F = \{C_1, \ldots, C_n\}$ be a set of clauses.
-The notion of a congruence derivation for $F$ is defined inductively.
-The sequence $\langle C_1, \ldots, C_n\rangle$ is a congruence derivation for $F$.
-If $\langle C_1, \ldots, C_m\rangle$ is a congruence derivation for $F$ then $\langle C_1, \ldots, C_{m+1} \rangle$ is a congruence derivation for $F$ if $C_{m+1} \in EqAxioms$ or $C_{m+1}$ is a resolvent of $C_i$ and $C_j$ with $1 \leq i,j \leq m$.
-A congruence derivation containing the empty clause is a congruence refutation.
+The notion of a \emph{congruence derivation} for $F$ is defined inductively.
+\begin{itemize}
+	\item $\langle C_1, \ldots, C_n\rangle$ is a congruence derivation for $F$.
+	\item If $\langle C_1, \ldots, C_m\rangle$ is a congruence derivation for $F$ then $\langle C_1, \ldots, C_{m+1} \rangle$ is a congruence derivation for $F$ if $C_{m+1}$ is an instance of an axiom of equality or $C_{m+1}$ is a resolvent of $C_i$ and $C_j$ with $1 \leq i,j \leq m$.
+\end{itemize}
+A \emph{congruence refutation} is a congruence derivation containing the empty clause.
 
 Let $D = \langle C_1, \ldots, C_m\rangle$ be a congruence derivation.
-The longest subsequence $\langle C_{i_1}, \ldots, C_{i_k}\rangle$ of $D$, such that $\{C_{i_1}, \ldots, C_{i_k}\} \subseteq EqAxioms$ is called the equality reasoning part of $D$.
+The longest subsequence $\langle C_{i_1}, \ldots, C_{i_k}\rangle$ of $D$, such that $C_{i_1}, \ldots, C_{i_k}$ all are instances of axioms of equality, is called the equality reasoning part of $D$.
 
+\end{definition}
 
-%In Section \ref{sec:algorithms}, we will work with s
-{\color{blue} Todo: introduce all used notions}
+Just like resolution derivations, congruence derivations can be visualized as directed acyclic graphs.
+
+\begin{proposition}[Sound- & Completeness]
+
+Let $E$ be a set of equations and $s,t \in \mathcal{T}_E$, then $E \models s \thickapprox t$ if and only if there is a congruence refutation for $E \cup \{ s \neq t\}$
+
+\end{proposition}
+
+\begin{proof}
+
+The existence of a congruence refutation in case $E \models s \thickapprox t$ is proven in terms of a proof producing algorithm, presented in Section \ref{sec:sec:proofproduction}.
+This algorithm produces a congruence derivation with last clause $\{u_1 \neq v_1,\ldots,u_n \neq v_n, s = t\}$ such that $\{(u_i,v_i) \mid i = 1,\ldots,n\} \subseteq E$.
+Clearly this proof can be extended to a congruence derivation for $E \cup \{ s \neq t\}$.
+
+\end{proof}
