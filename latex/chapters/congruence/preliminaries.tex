@@ -3,7 +3,7 @@
 We summarize basic definitions notions that we will use throughout the congruence part of this work.
 We start with the usual definition of terms.
 
-\begin{definition}[Terms]
+\begin{definition}[Terms and Subterms]
 
 Let $\mathcal{F}$ be a finite set of function symbols and $arity: \mathcal{F} \rightarrow \mathbb{N}$.
 A tuple $\Sigma = \langle \mathcal{F}, arity \rangle$ is called a \emph{signature}.
@@ -16,12 +16,21 @@ For a given signature $\Sigma$, the set of \emph{terms} $\mathcal{T}^{\Sigma}$ i
 	\mathcal{T}^{\Sigma} &= \bigcup_{i\in \mathbb{N}} \mathcal{T}_{i}
 \end{align*}
 
-An equation of $\mathcal{T}$ is a tuple of terms, i.e. an element of $\mathcal{T} \times \mathcal{T}$.
+\noindent Let $f(t_1,\ldots,t_n) \in \mathcal{T}^{\Sigma}$, then $t_1,\ldots,t_n$ are \emph{direct subterms} of $f(t_1,\ldots,t_n)$.
+The \emph{subterm} relation is the reflexive, transitive closure of the direct subterm relation.
 
 \end{definition}
 
-We will ommit the index $\Sigma$, if it is clear from context.
-If $E$ is a set of equations then we denote by $\mathcal{T}_E$ the set of terms used in $E$, i.e. the set $\{t \mid \text{ for some } v: (t,v) \in E \text{ or } (v,t) \in E\}$.
+We will omit the index $\Sigma$, if it is clear from context.
+
+\begin{definition}[Equation]
+
+Let $\mathcal{T}^{\Sigma}$ be a set of terms.
+An \emph{equation} of $\mathcal{T}^{\Sigma}$ is a tuple of terms, i.e. an element of $\mathcal{T}^{\Sigma} \times \mathcal{T}^{\Sigma}$.
+
+\end{definition}
+
+For a set of equations $E$ we denote by $\mathcal{T}_E$ the set of terms used in $E$, i.e. the set $\{t \mid t \text{ is subterm of some } u \text{ such that for some } v: (u,v) \in E \text{ or } (v,u) \in E\}$.
 
 \begin{definition}[Congruence Relation]
 
@@ -51,7 +60,7 @@ if $E^*$ is a congruence relation on $\mathcal{T}_E$ and for every congruence re
 It is easily seen that congruence relations are closed under intersection.
 Therefore $E^*$ always exists.
 
-We write $E \models s \thickapprox t$ if $(s,t) \in E^*$ and say that $E$ is an \emph{explanation} for $s \thickapprox t$.
+\noindent We write $E \models s \thickapprox t$ if $(s,t) \in E^*$ and say that $E$ is an \emph{explanation} for $s \thickapprox t$.
 
 \end{definition}
 
@@ -100,7 +109,7 @@ Next we will define the resolution calculus extended by congruence axioms.
 Let $\ell$ be an equality literal and $C_1$, $C_2$ be equality clauses such that $\ell \in C_1$ and $\neg \ell \in C_2$.
 The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\neg \ell\}$ is the \emph{resolvent} of $C_1$ and $C_2$ with \emph{pivot} $\ell$.
 
-Let $F = \{C_1, \ldots, C_n\}$ be a set of clauses.
+\noindent Let $F = \{C_1, \ldots, C_n\}$ be a set of clauses.
 The notion of a \emph{congruence derivation} for $F$ is defined inductively.
 \begin{itemize}
 	\item $\langle C_1, \ldots, C_n\rangle$ is a congruence derivation for $F$.
@@ -108,14 +117,14 @@ The notion of a \emph{congruence derivation} for $F$ is defined inductively.
 \end{itemize}
 A \emph{congruence refutation} is a congruence derivation containing the empty clause.
 
-Let $D = \langle C_1, \ldots, C_m\rangle$ be a congruence derivation.
+\noindent Let $D = \langle C_1, \ldots, C_m\rangle$ be a congruence derivation.
 The longest subsequence $\langle C_{i_1}, \ldots, C_{i_k}\rangle$ of $D$, such that $C_{i_1}, \ldots, C_{i_k}$ all are instances of axioms of equality, is called the equality reasoning part of $D$.
 
 \end{definition}
 
 Just like resolution derivations, congruence derivations can be visualized as directed acyclic graphs.
 
-\begin{proposition}[Sound- & Completeness]
+\begin{proposition}[Sound- \& Completeness]
 
 Let $E$ be a set of equations and $s,t \in \mathcal{T}_E$, then $E \models s \thickapprox t$ if and only if there is a congruence refutation for $E \cup \{ s \neq t\}$
 
@@ -126,5 +135,7 @@ Let $E$ be a set of equations and $s,t \in \mathcal{T}_E$, then $E \models s \th
 The existence of a congruence refutation in case $E \models s \thickapprox t$ is proven in terms of a proof producing algorithm, presented in Section \ref{sec:sec:proofproduction}.
 This algorithm produces a congruence derivation with last clause $\{u_1 \neq v_1,\ldots,u_n \neq v_n, s = t\}$ such that $\{(u_i,v_i) \mid i = 1,\ldots,n\} \subseteq E$.
 Clearly this proof can be extended to a congruence derivation for $E \cup \{ s \neq t\}$.
+
+{\color{blue} Other implication is still open}
 
 \end{proof}

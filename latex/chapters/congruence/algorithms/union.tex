@@ -5,13 +5,13 @@
 	\KwOut{a set of deduced equations}
 	
 	\eIf{$[r(s)] \geq [r(t)]$}{
-		\nllabel{reverse1} $(u,v) \leftarrow (s,t)$
+		$(u,v) \leftarrow (s,t)$ \label{reverse1} 
 	}
 	{
-		\nllabel{reverse2} $(u,v) \leftarrow (t,s)$
+		$(u,v) \leftarrow (t,s)$ \label{reverse2} 
 	}
 	$d \leftarrow \emptyset$ \\
-	\nllabel{startlN}\For{every $x \in lN(r(v))$}{
+	\For{every $x \in lN(r(v))$ \label{startlN}}{
 		$l_v \leftarrow l(r(x),r(v))$ \\
 		\eIf{$r(x) = r(v)$}{
 			$new\_left \leftarrow r(u)$
@@ -21,17 +21,17 @@
 		\eIf{$l$ is defined for $(new\_left,r(u))$}{
 			$l_u \leftarrow l(new\_left,r(u))$ \\
 			\eIf{$r(l_u) \neq r(l_v)$}{
-				\nllabel{deduceEq1} $d \leftarrow d \cup \{(l_u,l_v)\}$
+				$d \leftarrow d \cup \{(l_u,l_v)\}$ \label{deduceEq1} 
 			}
 			{
 				$lN(r(v)) \leftarrow lN(r(v)) \setminus \{x\}$
 			}
 		}
 		{
-			\nllabel{changel2} $l(new\_left,r(u)) \leftarrow l_v$
+			$l(new\_left,r(u)) \leftarrow l_v$ \label{changel2} 
 		}
-	\nllabel{stoplN}}
-	\nllabel{startrN}\For{every $x \in rN(r(v))$}{
+	\label{stoplN}}
+	\For{every $x \in rN(r(v))$ \label{startrN}}{
 		$l_v \leftarrow l(r(v),r(x))$ \\
 		\eIf{$r(x) = r(v)$}{
 			$new\_right \leftarrow r(u)$
@@ -41,23 +41,22 @@
 		\eIf{$l$ is defined for $(r(u),new\_right)$}{
 			$l_u \leftarrow l(r(u),new\_right)$ \\
 			\eIf{$r(l_u) \neq r(l_v)$}{
-				\nllabel{deduceEq2} $d \leftarrow d \cup \{(l_u,l_v)\}$
+				$d \leftarrow d \cup \{(l_u,l_v)\}$ \label{deduceEq2} 
 			}
 			{
 				$rN(r(v)) \leftarrow rN(r(v)) \setminus \{x\}$
 			}
 		}
 		{
-			\nllabel{changel1} $l(r(u),new\_right) \leftarrow l_v$
+			$l(r(u),new\_right) \leftarrow l_v$ \label{changel1}
 		}
-	\nllabel{stoprN}}
-	\nllabel{changeclass} $[r(u)] \leftarrow [r(u)] \cup [r(v)]$ \\
+	\label{stoprN}}
+	$[r(u)] \leftarrow [r(u)] \cup [r(v)]$ \label{changeclass} \\
 	\For{every $x \in [r(v)]$}{
-		\nllabel{changerep} $r(x) \leftarrow r(u)$
+		$r(x) \leftarrow r(u)$ \label{changerep} 
 	}
-	\nllabel{changeclass} $[r(u)] \leftarrow [r(u)] \cup [r(v)]$ \\
 	$lN(r(u)) \leftarrow lN(r(u)) \cup lN(r(v))$ \\
-	\nllabel{modifyrN2} $rN(r(u)) \leftarrow rN(r(u)) \cup rN(r(v))$ \\
+	$rN(r(u)) \leftarrow rN(r(u)) \cup rN(r(v))$ \label{modifyrN2} \\
 	%\KwInvariant{Neighbours \nllabel{invariant:neig_union}} \\
 	%\KwAssert{$r(s) = r(t)$ \nllabel{assertion:union_rep}}
 	\Return $d$

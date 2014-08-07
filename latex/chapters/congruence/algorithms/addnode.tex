@@ -4,20 +4,20 @@
 	
 	\If{$r$ is not defined for $v$}
 		{$r(v) \leftarrow v$ \\
-		\nllabel{initclass} $[v] \leftarrow \{v\}$ \\
+		$[v] \leftarrow \{v\}$ \label{initclass} \\
 		$lN(v) \leftarrow \emptyset$ \\
-		\nllabel{initrN} $rN(v) \leftarrow \emptyset$ \\
+		$rN(v) \leftarrow \emptyset$ \label{initrN} \\
 		\If{$v$ is of the form $f(a,b)$}{
 			addNode(a) \\
 			addNode(b) \\
-			\nllabel{ldefined}\eIf{$l$ is defined for $(r(a),r(b))$ and $l(r(a),r(b)) \neq f(a,b)$}{
-				\nllabel{addnodemerge} merge($l(r(a),r(b)),f(a,b),\emptyset$)
+			\eIf{$l$ is defined for $(r(a),r(b))$ and $l(r(a),r(b)) \neq f(a,b)$ \label{ldefined}}{
+				merge($l(r(a),r(b)),f(a,b),\emptyset$) \label{addnodemerge} 
 			}
 			{
-				\nllabel{initl} $l(r(a),r(b)) \leftarrow f(a,b)$
+				$l(r(a),r(b)) \leftarrow f(a,b)$ \label{initl} 
 			}
 			$lN(r(b)) \leftarrow lN(r(b)) \cup \{a\}$ \\
-			\nllabel{modifyrN} $rN(r(a)) \leftarrow rN(r(a)) \cup \{b\}$ \\
+			$rN(r(a)) \leftarrow rN(r(a)) \cup \{b\}$ \label{modifyrN}\\
 			%\KwAssert{Neighbours \nllabel{invariant:neig_add}} 
 		 }
 	}

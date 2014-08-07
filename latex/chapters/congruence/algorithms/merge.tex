@@ -10,7 +10,7 @@
 		\While{$c \neq \emptyset$}{
 			Let $(u,v)$ be some element in $c$ \\
 			$c \leftarrow c \setminus \{(u,v)\} \cup union(u,v)$ \\
-			\nllabel{graphinsert} lazy\_insert$(u,v,eq)$ \\
+			lazy\_insert$(u,v,eq)$ \label{graphinsert} \\
 			$eq \leftarrow null$
 		}
 	}

@@ -9,7 +9,7 @@
 		\Return $n$
 	}{
 		$m \leftarrow fixNode(n,(p_1,p_2))$ \\
-		\nllabel{criteria}\If{$m$ fulfills criteria}{
+		\If{$m$ fulfills criteria \label{criteria}}{
 			$lE \leftarrow \{(a,b) \mid (a \neq b) \in m\}$ \\
 			$rE \leftarrow \{(a,b) \mid (a = b) \in m\}$ \\
 			$con \leftarrow $ empty congruence structure \\
