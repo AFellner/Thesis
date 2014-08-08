@@ -4,7 +4,7 @@
 In this section, we present a congruence closure algorithm that is able to produce explanations.
 The algorithm is a mix of the approaches of the algorithms presented in \cite{Fontaine2004} and \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 The basic structure of the algorithm is inherited from \cite{Fontaine2004}, which itself inherits its structure from the algorithm of Nelson and Oppen \cite{Nelson1980}.
-The technique to store and deduce equations of non constant terms is inspired from \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
+The technique to store and deduce equalities of non constant terms is inspired from \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 Additionally the proof forest structure described below was proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 
 \subsection*{Preliminaries}
@@ -40,7 +40,7 @@ Cleaner algorithms are not only easier to implement, but should also improve the
 
 Recently so called abstract congruence closure algorithms have been proposed and shown to be more efficient than traditional approaches \cite{Bachmair2000}.
 The idea of abstract congruence closure is to introduce new constants for non constant terms.
-Doing so, all of equations the algorithm has to take into account are of the form $c = d$ and $c = f(a,b)$, where $a,b,c,d$ are constants.
+Doing so, all equations the algorithm has to take into account are of the form $(c,d)$ and $(c, f(a,b))$, where $a,b,c,d$ are constants.
 This replaces tedious preprocessing steps, for example transformation to a graph of outdegree 2 \cite{Downey1980},that are necessary for other algorithms to achieve the optimal running time.
 
 Our method is does not employ the idea of abstract congruence closure.
@@ -58,6 +58,7 @@ By choosing to work with curried terms, but without extra constants, our algorit
 
 We call the underlying data structure of our congruence closure algorithm a \emph{congruence structure}.
 A congruence structure for set of terms $\mathcal{T}$ is a collection of the following data structures.
+The set $\mathcal{E} = \mathcal{T} \times \mathcal{T} \cup \{null\}$ is the set of \emph{extended equality}.
 
 \begin{itemize}
 	\item Representative $r: \mathcal{T} \rightarrow \mathcal{T}$
@@ -79,18 +80,20 @@ The lookup table is used to keep track of all compound terms in the congruence s
 The congruence graph stores the derived equalities in a structured way, that allows to create explanations for a given pair of terms.
 Edges are added to the graph in a lazy way, meaning that they are buffered and only actually entered into the graph when demanded.
 The queue $\mathcal{Q}$ keeps track of the order in which edges should be added to the graph.
-The function $\mathcal{M}$ stores the explanation for a buffered edge.
-The main idea about buffering is to overwrite explanations, when an edge was added due to the congruence axiom, while it is entered as an input equation later on.
+The function $\mathcal{M}$ stores the existence of an explanation for a buffered edge.
+The idea will be explained in detail in Section \ref{sec:congruencegraph}.
 We call the unique congruence structure for $\mathcal{T} = \emptyset$ the \emph{empty congruence structure}.
+
 It is not by coincidence that many of the used data structures are described as functions.
 In fact our congruence closure algorithm can and is implemented in a functional way and the data structures can be implemented immutable.
 
 \FloatBarrier
 
 \subsection*{Congruence closure algorithm}
-
-In this section we present the pseudocode of our congruence closure algorithm, state and prove its properties.
-Most importantly we show that it the method is sound and complete and has optimal running time $O(n \log(n))$.
+\label{sec:congruenceclosurealgorithm}
+In this section we present our congruence closure algorithm.
+We state and prove its properties.
+Most importantly we show that the algorithm is sound and complete and has the best known asymptotic running time $O(n \log(n))$.
 Computing the congruence closure of some set of equations $E$ is done by adding all of them to an ever growing congruence structure, which initially is empty.
 Since this has to be done in some order, we will often assume that $E$ is given as a sequence of equations rather than a set.
 The pseudocode of most methods do not include a return statement.
@@ -104,16 +107,20 @@ The method \texttt{merge} initializes and guides the merging of congruence class
 The actual merging is done by the method \texttt{union} by modifying the data structures.
 The method does not only merge classes, but also searches for and returns equalities of compound terms that were caused by the merge and the compatible axiom.
 The classes of the terms of these extra equalities are merged, if they are not equal yet.
+The congruence classes are kept track of in a graph, maintaining important information for producing explanation and proofs.
+We call such a graph Congruence Graph and explain them in a more detailed fashion in Section \ref{sec:congruencegraph}.
+Edges, that reflect detected equalities, are not inserted into the graph right away, but stored in queue until the insertion is requested.
+The reason for adding edges in a lazy way is to produce shorter explanations and proofs and will be explained and exemplified in Section \ref{sec:proofproduction}.
 
 \input{chapters/congruence/algorithms/addequation}
 
 \input{chapters/congruence/algorithms/addnode}
 
-\input{chapters/congruence/algorithms/merge}
-
 \input{chapters/congruence/algorithms/lazyinsert}
 
 \input{chapters/congruence/algorithms/lazyupdate}
+
+\input{chapters/congruence/algorithms/merge}
 
 \input{chapters/congruence/algorithms/union}
 
@@ -298,26 +305,20 @@ Therefore the representative of a single term is changed maximally $\log(n)$ tim
 
 \end{proof}
 
-The idea of lazy edge insertion is have as much information as possible when explanations for edges, corresponding to equalities that are due to the compatible axiom, are searched.
-Not only could the explanations be shorter when more information is available, such deduced equalities might even be part of the input and would not have to be deduced at all.
-It is important to keep track of the order of edge input, because explanations might depend on other edges to be available in the graph.
-Example \ref{example:lazy} shows how this technique can help finding short explanations.
-
-{\color{blue} example not done yet; I am not sure whether it's better to put it here or in the congruence graph section}
 
 \FloatBarrier
 
 \subsection*{Congruence Graph}
-
+\label{sec:congruencegraph}
 The main goal of this work is to replace redundant explanations with shorter ones.
 For this purpose the input equations and deduced equalities have to be stored in a data structure that supports the production of explanations.
 We support two different such data structures.
-Both structures store equations in labeled graphs, which we call congruence graphs.
+Both structures store equalities in labeled graphs, which we call congruence graphs.
 A node in such a graph represents a term and an edge between two nodes denotes that the represented terms are congruent w.r.t. the set of input equations.
 A path in a congruence graph is a sequence of undirected, unweighted, labeled edges in the underlying graph.
-The set of labels for both types of graphs is the set of extended equations $\mathcal{E}$.
-Depending on the type of congruence graph used, it is not guaranteed that when \texttt{lazy\_insert} is called with arguments $s$ and $t$, there is an edge between $s$ and $t$.
-However it is guaranteed that they are connected in the graph afterwards, i.e. there is a path between the nodes representing the terms.
+The set of labels for both types of graphs is the set of extended equalities $\mathcal{E}$.
+Depending on the type of congruence graph used, it is not guaranteed that after \texttt{lazy\_insert} is called with arguments $s$ and $t$, there is an edge between $s$ and $t$.
+However it is guaranteed that the arguments are connected in the graph afterwards, i.e. there is a path between the nodes representing the terms.
 
 \begin{invariant}[Paths]
 
@@ -505,5 +506,6 @@ In example \ref{ex:short_expl} we have shown that this is not necessary.
 %See how BarceLogic ppl prove stuff,
 %-) tree is still tree after inserting
 %-) path to NCA forms explanation
+
 
 \FloatBarrier

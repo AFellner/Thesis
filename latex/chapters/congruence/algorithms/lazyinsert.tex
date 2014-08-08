@@ -6,9 +6,9 @@
 	%\KwGlobal{Queue of tuples of terms $\mathcal{Q}$}
 	%\KwGlobal{Map of tuples of terms to equation $\mathcal{M}$}
 	
-	\eIf{$\mathcal{M}$ is set for $(s,t)$ or $(t,s)$}{
-		\If{eq is not null}{
-			$\mathcal{M}(s,t) \leftarrow s = t$ 
+	\eIf{$\mathcal{M}$ is set for $(s,t)$}{
+		\If{$eq$ is not null}{
+			$\mathcal{M}(s,t) \leftarrow (s,t)$
 		}
 	}{
 		$\mathcal{Q} \leftarrow \mathcal{Q}.enqueue(s,t)$ \\

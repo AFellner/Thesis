@@ -5,8 +5,8 @@
 	\KwIn{extended equation $eq$}
 	
 	\If{$r(s) \neq r(t)$}{
-		$c \leftarrow \{s=t\}$ \\
-		$eq \leftarrow s=t$ \\
+		$c \leftarrow \{(s,t)\}$ \\
+		$eq \leftarrow (s,t)$ \\
 		\While{$c \neq \emptyset$}{
 			Let $(u,v)$ be some element in $c$ \\
 			$c \leftarrow c \setminus \{(u,v)\} \cup union(u,v)$ \\
