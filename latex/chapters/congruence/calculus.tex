@@ -1,28 +1,100 @@
 \section*{Resolution extended with equality}
 
-The congruence part of this work extends resolution proofs as defined in \ref{sec:resolution} by axioms of equality.
-We
+The main theme of this work is resolution proof compression.
+Therefore we need to express equality reasoning in terms of resolution proofs.
+We extend the resolution calculus, presented in Section \ref{sec:resolution}, with the axioms of equality.
+First we extend the notions of atoms, literals and clauses
 
-Let $\mathcal{T}$ be a set of terms.
-A relation $R \subset \mathcal{T} \times \mathcal{T}$ is a congruence relation, if has the following four properties:
+\begin{definition}[Equality atom, literal and clause]
+
+Let $\mathcal{T}$ be a set of terms and let $V$ be a finite set of propositional variables.
+The set of \emph{equality atoms} is defined as $V \cup \mathcal{T} \times \mathcal{T}$.
+An \emph{equality literal} is an equality atom $e$ or a negated equality atom $\neg e$.
+An \emph{equality clause} is a set of equality literals.
+For an equality clause $C$, we call the sets of equations $pos(C) := \{(u,v) \mid u = v \in C\}$ the \emph{positive part} and $neg(C) := \{(u,v) \mid u \neg v \in C\}$ the \emph{negative part} of $C$.
+
+\end{definition}
+
+A set of equations can be interpreted as a set of clauses, if every equation is interpreted as the singleton clause containing just the equation itself.
+In the context of equality atoms, we write equations $(s,t) \in \mathcal{T} \times \mathcal{T}$ as $s = t$ and $s \neq t$ for its negated version.
+As usual, a clause is interpreted as the disjunction of its literals and a set of clauses is interpreted as the conjunction its clauses.\\
+
+From hereon, we restrict our attention to sets of terms that, on top of constants, have at most one function symbol $f$, which is binary.
+We justify this restriction in Section \ref{subsec:algorithms_preliminaries}.
+The axioms defining congruence relations have to be reflected in our extended resolution proofs.
+We achieve this by defining axiom schemas, that can be instantiated with concrete terms.
+
+\begin{definition}[Axioms of Equality]
+
+In the following axioms schemas, the variables $x_1,\ldots,x_n$ are placeholders for terms.
+By simultaneously replacing all variables by terms of some set $\mathcal{T}$, one obtains an equality clause, which we call an \emph{instance w.r.t. $\mathcal{T}$} of the respective axiom of equality.
+
 \begin{itemize}
-	\item reflexive: for all $t \in \mathcal{T}: (t,t) \in R$
-	\item symmetric: $(s,t) \in R$ implies $(t,s) \in R$
-	\item transitive: $(r,s) \in R$ and $(s,t) \in R$ implies $(r,t) \in R$
-	\item congruence: $f$ is a n-ary function symbol and for all $i = 1,\ldots,n (t_i,s_i) \in R$ implies $f(t_1,\ldots,t_n),f(s_1,\ldots,s_n) \in R$
+	\item reflexive: $\{x = x\}$
+	\item symmetric: $\{x_1 \neq x_2, x_2 = x_1\}$
+	\item transitive: $\{x_1 \neq x_2, x_2 \neq x_3, \ldots, x_{n-1} \neq x_n, x_1 = x_n\}$
+	\item compatible: $\{x_1 \neq x_3, x_2 \neq x_4, f(x_1,x_2) = f(x_3,x_4)\}$
 \end{itemize}
 
-Every congruence relation partitions its underlying termset $\mathcal{T}$ into congruence classes, s.t. two terms $(s,t)$ belong to the same class if and only if $(s,t) \in R$.
-The relations $\mathcal{T} \times \mathcal{T}$ and $\emptyset$ are trivial congruence relations.
+\end{definition}
 
-Let $E$ be a set of equations with terms in some set of terms $\mathcal{T}$.
-The set $E* \supseteq E$ is called the congruence closure of $E$, 
-if $E*$ is a congruence relation on $\mathcal{T}$ and for every congruence relation $C$, such that $C \supset E$ follows $C \supseteq E*$.
-It is easily seen that congruence relations are closed under intersection.
-Therefore $E*$ always exists.
+Next we will define the resolution calculus extended by congruence axioms.
 
-We write $E \models s \thickapprox t$ if $(s,t) \in E^*$.
+\begin{definition}[Resolution with Equality]
 
-We now extend the resolution calculus, presented in Section \ref{TODO}, with the axioms of equality.
+Let $\ell$ be an equality literal and $C_1$, $C_2$ be equality clauses such that $\ell \in C_1$ and $\neg \ell \in C_2$.
+The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\neg \ell\}$ is the \emph{resolvent} of $C_1$ and $C_2$ with \emph{pivot} $\ell$.
 
-{\color{blue} Todo: describe this calculus; prove relative correctness?}
+\noindent Let $F = \{C_1, \ldots, C_n\}$ be a set of clauses and let $E$ be the biggest subset of $F$, such that every clause in $E$ is an equation.
+The notion of a \emph{congruence derivation} for $F$ is defined inductively.
+\begin{itemize}
+	\item $\langle C_1, \ldots, C_n\rangle$ is a congruence derivation for $F$.
+	\item If $\langle C_1, \ldots, C_m\rangle$ is a congruence derivation for $F$ then $\langle C_1, \ldots, C_{m+1} \rangle$ is a congruence derivation for $F$ if $C_{m+1}$ is an instance w.r.t. $\mathcal{T}_E$ of an axiom of equality or $C_{m+1}$ is a resolvent of $C_i$ and $C_j$ with $1 \leq i,j \leq m$.
+\end{itemize}
+A \emph{congruence refutation} is a congruence derivation containing the empty clause.
+
+\noindent Let $D = \langle C_1, \ldots, C_m\rangle$ be a congruence derivation.
+The longest subsequence $\langle C_{i_1}, \ldots, C_{i_k}\rangle$ of $D$, such that $C_{i_1}, \ldots, C_{i_k}$ all are instances of axioms of equality, is called the equality reasoning part of $D$.
+
+\end{definition}
+
+Just like resolution derivations, congruence derivations can be visualized as directed acyclic graphs.
+
+\begin{proposition}[Sound- \& Completeness]
+
+Let $E$ be a set of equations and $s,t \in \mathcal{T}_E$, then $E \models s \thickapprox t$ if and only if there is a congruence refutation for $E \cup \{\{ s \neq t\}\}$
+
+\end{proposition}
+
+\begin{proof}
+
+The existence of a congruence refutation in case $E \models s \thickapprox t$ is proven in terms of a proof producing algorithm, presented in Section \ref{sec:sec:proofproduction}.
+This algorithm produces a congruence derivation with last clause $\{u_1 \neq v_1,\ldots,u_n \neq v_n, s = t\}$ such that $\{(u_i,v_i) \mid i = 1,\ldots,n\} \subseteq E$.
+Clearly this proof can be extended to a congruence derivation for $E \cup \{ s \neq t\}$.
+
+Suppose there is a congruence refutation $\langle C_1, \ldots, C_n \rangle$ for $E \cup \{\{ s \neq t\}\}$.
+Clearly we can assume that the equality reasoning part of this derivation is the whole sequence.
+Since every clause in $E \cup \{\{ s \neq t\}\}$ is singleton, none of its literals is in the resolvent of such a clause with any other clause.
+Therefore we can assume that there is a $m < n$ such that $\{C_1, \ldots, C_m\}$ only contains of instances of equality axioms and recursive resolvents of such clauses.
+Furthermore, since the whole sequence is a refutation, we can assume that $C_m$ is such that $neg(C_m) \subseteq E$ and $pos(C_m) = \{(s,t)\}$.
+
+We show by induction on the clause structure, that for every clause $C \in \{C_1,\ldots,C_m\}$ that $pos(C) = \{(u,v)\}$ for some $(u,v) \in \mathcal{T}_E$ and that $neg(C) \models u \thickapprox v$.
+
+\begin{itemize}
+
+\item \textbf{Induction Base:} $C$ is an instance of an equality axiom. Clearly, the positive part contains of some equation $(u,v)$ and $neg(C) \models u \thickapprox v$ follows directly form the definition of congruence closure, and in case of the transitive axiom also from the transitivity of equality.
+
+\item \textbf{Induction Step}
+
+\end{itemize}
+
+The positive part of every instance of an axiom of equality is a singleton.
+Therefore also the positive part of every resolvent of such clauses .
+Let us denote that positive equality literal 
+We show by induction on congruence derivations, that for every clause $C$ it holds that $neg(C) \models $
+Let $C$ be an instance of an equality axiom.
+We show that $C$
+Suppose there is a resolution refutation in 
+Every clause in $E \cup \{\{ s \neq t\}\}$
+
+\end{proof}
