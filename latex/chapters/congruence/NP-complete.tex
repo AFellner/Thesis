@@ -1,30 +1,33 @@
 \section*{NP-completeness of shortest path decision problem}
 \label{sec:npcomplete}
-In this section we will assume that every propositional logic formula is given in conjunctive normal form and tuples of terms $(u,v)$ are understood as equations $u = v$.
+In Section \ref{sec:congruencedef} the notion of an explanation is defined and it was mentioned that we want to find short explanations in order to compress proofs.
+In this chapter we show that one might have to search a while to find the shortest one, by proving that the problem of deciding whether there is an explanation of a given size is NP-complete.
+We begin by formally defining the problem.
 
 \begin{definition}[Short explanation decision problem]
 
-Let $E$ be a set of input equations $s_1 = t_1,\ldots,s_n = t_n$ of terms $\mathcal{T}$.
-For $k \in \mathbb{N}$ and a target equation $s = t$, the short path decision problem is the question whether there exists an $E' \subseteq E$ such that $E' \models s = t$ and $|E'| \leq k$.
+Let $E = \{(s_1,t_1),\ldots,(s_n,t_n)\}$ be a set of equations, $k \in \mathbb{N}$ and $(s,t)$ be a target equation.
+The \emph{short path decision problem} is the question whether there exists a set $E'$ such that $E' \subseteq E$, $E' \models s \thickapprox t$ and $|E'| \leq k$.
 
 \end{definition}
 
-Note: $E \models s = t$ means $s$ and $t$ are in the same congruence class of the congruence closure of $E$.
+Our proof of NP-completeness reduces the problem of deciding the satisfiability of a propositional logic formula in conjunctive normal form to the shortest explanation decision problem.
+To this end we define how to translate propositional formulae into sets of equations.
 
-\begin{definition}[Congruence translation]
+\begin{definition}[Congruence Translation]
 
-Let $\Phi$ be a propositional logic formula with clauses $C_1,\ldots,C_n$ using variables $x_1,\ldots,x_m$.
+Let $\Phi$ be a propositional logic formula in conjunctive normal form with clauses $C_1,\ldots,C_n$ using variables $x_1,\ldots,x_m$.
 %The set of terms $\mathcal{T}$ is constructed using the following constants and function symbols.
 %For every $i= 1,\ldots,n + 1$, there is a constant $\hat{c}_i$ and function symbols $t_i$ and $f_i$.
 %For every $j= 1,\ldots,m$, there are constants $\hat{x}_j$, $\top_j$ and $\bot_j$.
-The congruence translation $E_{\Phi}$ of $\Phi$ is defined as $Assignment \cup Pos \cup Neg \cup Connect$, where
+The congruence translation $E_{\Phi}$ of $\Phi$ is defined as the set of equations $Assignment \cup Pos \cup Neg \cup Connect$, where
 \begin{align*}
 	Assignment &= \{ (\hat{x}_j,\top_j), (\hat{x}_j,\bot_j) \mid 1 \leq j \leq m\} \\
 	Pos &= \{ (\hat{c}_i, t_i(\hat{x}_j)) \mid x_j \text{ appears positively in } C_i\} \\
 	Neg &= \{ (\hat{c}_i, f_i(\hat{x}_j)) \mid x_j \text{ appears negatively in } C_i\} \\
 	Connect &= \{ (t_i(\top_j),\hat{c}_{i+1}),(f_i(\bot_j), \hat{c}_{i+1}) \mid 1 \leq i \leq n+m, 1 \leq j \leq m\} \\
 %\end{align*}
-&\hspace{-3cm}\text{Additionally, for every $i = 1,\ldots, n$ and $j = 1,\ldots, m$ we define the following sets }\\
+&\hspace{-2cm}\text{For presentation purposes we define the following sets for every $i = 1,\ldots, n$ and $j = 1,\ldots, m$}\\
 %\begin{align*}
 T_{ij} &= \{(\hat{c}_i, t_i(\hat{x}_j)), (\hat{x}_j,\top_j), (t_i(\top_j),\hat{c}_{i+1})\} \\
 F_{ij} &= \{(\hat{c}_i, f_i(\hat{x}_j)), (\hat{x}_j,\bot_j), (f_i(\bot_j),\hat{c}_{i+1})\}
@@ -32,6 +35,9 @@ F_{ij} &= \{(\hat{c}_i, f_i(\hat{x}_j)), (\hat{x}_j,\bot_j), (f_i(\bot_j),\hat{c
 
 \end{definition}
 
+The following examples shows the congruence translation of a propositional formula and a subset of the translation, corresponding to a satisfying assignment.
+We use the standard notion of satisfiability and present variable assignments as sets of those propositional variables being mapped to true.
+For basics about satisfiability of propositional logic formulae and assignments, we refer the reader to \cite{Biere2009}.
 
 \begin{example}
 
