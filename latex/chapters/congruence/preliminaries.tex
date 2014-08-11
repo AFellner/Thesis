@@ -65,4 +65,19 @@ We call a pair $(s,t)$ in a congruence closure an \emph{equality} and we call an
 
 \end{definition}
 
+\begin{proposition}[Properties of the $\models$-relation}
+\label{prop:models}
+The $\models$-relation is monotone: $E_1 \subset E_2$ and $E_1 \models s \thickapprox t$ implies $E_2 \models s \thickapprox t$ and transitive: $E \models s \thickapprox t$ and $E \cup \{(s,t)\} \models u \thickapprox v$ implies $E \models u \thickapprox v$. 
+
+\end{proposition}
+
+\begin{proof}
+
+Monotonicity follows from the fact that congruence closure of $E_1$ is contained in the congruence closure of $E_2$.
+Since the congruence closure of $E^*$ is $E^*$ itself, it follows that $E \models u \thickapprox v$ if and only if $E^* \models u \thickapprox v$.
+Since $(s,t) \in E^*$, clearly it is the case that $E^* = (E \cup \{(s,t)\})^*$.
+Therefore $E \cup \{(s,t)\} \models u \thickapprox v$ implies $(u,v) \in E^*$, i.e. $E \models u \thickapprox v$ or in other words, the $\models$-relation is transitive.
+
+\end{proof}
+
 The idea of using congruence closure in proof compression is to replace big explanations, w.r.t. cardinality, by smaller ones.
