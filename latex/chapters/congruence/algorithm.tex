@@ -60,14 +60,16 @@ We call the underlying data structure of our congruence closure algorithm a \emp
 A congruence structure for set of terms $\mathcal{T}$ is a collection of the following data structures.
 The set $\mathcal{E} = \mathcal{T} \times \mathcal{T} \cup \{null\}$ is the set of \emph{extended equality}.
 
+not use null
+
 \begin{itemize}
 	\item Representative $r: \mathcal{T} \rightarrow \mathcal{T}$
 	\item Congruence class $[.]: \mathcal{T} \rightarrow 2^\mathcal{T}$
-	\item Left neighbors $lN: \mathcal{T} \rightarrow 2^\mathcal{T}$
+	\item Left neighbors $lN: \mathcal{T} \rightarrow 2^\mathcal{T}$ <- use $N_l$
 	\item Right neighbors $rN: \mathcal{T} \rightarrow 2^\mathcal{T}$
 	\item Lookup table $l: \mathcal{T} \times \mathcal{T} \rightarrow \mathcal{T}$
-	\item Congruence graph $g$
-	\item Queue $\mathcal{Q}$ of type $\mathcal{T} \times \mathcal{T}$
+	\item Congruence graph $g$ <-- reference
+	\item Queue $\mathcal{Q}$ of pairs of terms %type $\mathcal{T} \times \mathcal{T}$
 	\item Current explanations $\mathcal{M}: \mathcal{T} \times \mathcal{T} \rightarrow \mathcal{E}$
 \end{itemize}
 
@@ -75,8 +77,14 @@ The representative is one particular term of a class of congruent terms.
 It is used to identify whether two terms are already in the same congruence class and the data structures used for detecting equalities derived from the congruence axiom are kept updated only for representatives.
 The congruence class structure represents a set of pairwise congruent terms.
 It is used to keep track which representatives have to be updated when merging the classes of two terms.
-The structures left neighbor and right neighbor for every term keep track of other terms that appear as the second argument in a compound term of the form $f(a,b)$.
+
+rework
+The structures left (resp. right) neighbor keeps track of the ot for every term keep track of terms that appear as the second argument in a compound term of the form $f(a,b)$.
 The lookup table is used to keep track of all compound terms in the congruence structure and to merge classes of compound terms, which arguments are congruent.
+
+explain what lookup table really is
+For a pair of terms ...
+
 The congruence graph stores the derived equalities in a structured way, that allows to create explanations for a given pair of terms.
 Edges are added to the graph in a lazy way, meaning that they are buffered and only actually entered into the graph when demanded.
 The queue $\mathcal{Q}$ keeps track of the order in which edges should be added to the graph.
@@ -297,6 +305,9 @@ There are three loops in the method \texttt{union}, which are nested within the 
 These loops are clearly the dominating factor for runtime.
 
 Lines \ref{reverse1} and \ref{reverse2} of \texttt{union} ensure that whenever the representative of a term is changed in line \ref{changerep}, the size of its resulting congruence class is doubled in line \ref{changeclass}.
+
+When saying changed, resulting; refer to line
+
 Only the representative of terms of the smaller congruence class are changed and the size of the resulting class is at the combined size of the original ones, i.e. size of the small one plus size of the big one, which is at least double the size of the small one.
 The maximum size of a congruence class is $n$.
 Therefore the representative of a single term is changed maximally $\log(n)$ times overall and line \ref{changerep} of \texttt{union} is not executed more than $n \log(n)$ times.

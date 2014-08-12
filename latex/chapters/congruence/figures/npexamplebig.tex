@@ -1,10 +1,10 @@
 
 \centering
-\begin{tikzpicture}[node distance=1.5cm]
+\begin{tikzpicture}[node distance=.3cm]
 
 \node(c1){$\hat{c}_1$};
 
-\node[right =.5cm of c1] (t1x2) {$t_1(\hat{x}_2)$};
+\node[right =.4cm of c1] (t1x2) {$t_1(\hat{x}_2)$};
 \node[above =1cm of t1x2] (t1x1) {$t_1(\hat{x}_1)$};
 \node[below =1cm of t1x2] (f1x3) {$f_1(\hat{x}_3)$};
 
@@ -13,14 +13,14 @@
 \draw [-] (c1) to (f1x3);
 
 
-\node[right =.5cm of t1x1, yshift = 0.25cm] (f11) {$f_1(\bot_1)$};
-\node[above =.5cm of f11] (t11) {$t_1(\top_1)$};
-\node[below =.5cm of f11] (t12) {$t_1(\top_2)$};
-\node[below =.5cm of t12] (f12) {$f_1(\bot_2)$};
-\node[below =.5cm of f12] (t13) {$t_1(\top_3)$};
-\node[below =.5cm of t13] (f13) {$f_1(\bot_3)$};
+\node[right =.4cm of t1x1, yshift = 0.25cm] (f11) {$f_1(\bot_1)$};
+\node[above =.4cm of f11] (t11) {$t_1(\top_1)$};
+\node[below =.4cm of f11] (t12) {$t_1(\top_2)$};
+\node[below =.4cm of t12] (f12) {$f_1(\bot_2)$};
+\node[below =.4cm of f12] (t13) {$t_1(\top_3)$};
+\node[below =.4cm of t13] (f13) {$f_1(\bot_3)$};
 
-\node[right = 4.5cm of c1](c2){$\hat{c}_2$};
+\node[right = 4cm of c1](c2){$\hat{c}_2$};
 
 \draw [-] (c2) to (t11);
 \draw [-] (c2) to (t12);
@@ -35,14 +35,14 @@
 \draw [-] (c2) to (f2x2);
 \draw [-] (c2) to (t2x3);
 
-\node[right =3.5cm of f11] (f21) {$f_2(\bot_1)$};
-\node[right =3.5cm of t11] (t21) {$t_2(\top_1)$};
-\node[right =3.5cm of t12] (t22) {$t_2(\top_2)$};
-\node[right =3.5cm of f12] (f22) {$f_2(\bot_2)$};
-\node[right =3.5cm of t13] (t23) {$t_2(\top_3)$};
-\node[right =3.5cm of f13] (f23) {$f_2(\bot_3)$};
+\node[right =3.4cm of f11] (f21) {$f_2(\bot_1)$};
+\node[right =3.4cm of t11] (t21) {$t_2(\top_1)$};
+\node[right =3.4cm of t12] (t22) {$t_2(\top_2)$};
+\node[right =3.4cm of f12] (f22) {$f_2(\bot_2)$};
+\node[right =3.4cm of t13] (t23) {$t_2(\top_3)$};
+\node[right =3.4cm of f13] (f23) {$f_2(\bot_3)$};
 
-\node[right = 4.5cm of c2](c3){$\hat{c}_3$};
+\node[right = 4cm of c2](c3){$\hat{c}_3$};
 
 \draw [-] (c3) to (t21);
 \draw [-] (c3) to (t22);
@@ -57,12 +57,12 @@
 \draw [-] (c3) to (f3x1);
 \draw [-] (c3) to (f3x2);
 
-\node[right =3.5cm of f21] (f31) {$f_3(\bot_1)$};
-\node[right =3.5cm of t21] (t31) {$t_3(\top_1)$};
-\node[right =3.5cm of t22] (t32) {$t_3(\top_2)$};
-\node[right =3.5cm of f22] (f32) {$f_3(\bot_2)$};
-\node[right =3.5cm of t23] (t33) {$t_3(\top_3)$};
-\node[right =3.5cm of f23] (f33) {$f_3(\bot_3)$};
+\node[right =3.4cm of f21] (f31) {$f_3(\bot_1)$};
+\node[right =3.4cm of t21] (t31) {$t_3(\top_1)$};
+\node[right =3.4cm of t22] (t32) {$t_3(\top_2)$};
+\node[right =3.4cm of f22] (f32) {$f_3(\bot_2)$};
+\node[right =3.4cm of t23] (t33) {$t_3(\top_3)$};
+\node[right =3.4cm of f23] (f33) {$f_3(\bot_3)$};
 
 \node[right = 4.5cm of c3](c4){$\hat{c}_4$};
 
