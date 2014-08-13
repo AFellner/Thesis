@@ -1,30 +1,26 @@
 \begin{algorithm}[h]
 \caption[.]{compress}
-	\KwGlobal{Set of input equations $E$}
+	\KwGlobal{set of input equations $E$}
 	\KwIn{resolution node $n$}
-  \KwIn{$pr:$ tuple of resolution nodes $(p_1,p_2)$ or null}
+  \KwIn{$pr:$ tuple of resolution nodes $(p_1,p_2)$}
 	\KwOut{resolution node}
-	
-	\eIf{$pr = null$}{
-		\Return $n$
-	}{
-		$m \leftarrow fixNode(n,(p_1,p_2))$ \\
-		\If{$m$ fulfills criteria \label{criteria}}{
-			$lE \leftarrow \{(a,b) \mid (a \neq b) \in m\}$ \\
-			$rE \leftarrow \{(a,b) \mid (a = b) \in m\}$ \\
-			$con \leftarrow $ empty congruence structure \\
-			\For{$(a,b)$ in $lE$}{
-				$con \leftarrow con.addEquality(a,b)$
-			}
-			\For{$(a,b)$ in $rE$}{
-				$con \leftarrow con.addNode(a).addNode(b)$ \\
-				$proof \leftarrow con.prodProof(s,t)$ \\
-				\If{$proof \neq null$ and $| proof.conclusion | < | m.conclusion |$}{
-					$m \leftarrow proof$
-				}
+
+	$m \leftarrow fixNode(n,(p_1,p_2))$ \\
+	\If{$m$ fulfills criteria \label{criteria}}{
+		$lE \leftarrow \{(a,b) \mid (a \neq b) \in m\}$ \\
+		$rE \leftarrow \{(a,b) \mid (a = b) \in m\}$ \\
+		$con \leftarrow $ empty congruence structure \\
+		\For{$(a,b)$ in $lE$}{
+			$con \leftarrow con.addEquality(a,b)$
+		}
+		\For{$(a,b)$ in $rE$}{
+			$con \leftarrow con.addNode(a).addNode(b)$ \\
+			$proof \leftarrow con.prodProof(s,t)$ \\
+			\If{$proof \neq \emptyset$ and $| proof.conclusion | < | m.conclusion |$}{
+				$m \leftarrow proof$
 			}
 		}
-		\Return $m$
 	}
+	\Return $m$
   \label{algo:compressor}
 \end{algorithm}

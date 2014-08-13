@@ -12,7 +12,7 @@
 	}
 	$d \leftarrow \emptyset$ \\
 	\For{every $x \in lN(r(v))$ \label{startlN}}{
-		$l_v \leftarrow l(r(x),r(v))$ \\
+		$l_v \leftarrow l(r(x),r(v))$ \label{accessl1} \\
 		\eIf{$r(x) = r(v)$}{
 			$new\_left \leftarrow r(u)$
 		}{
@@ -32,7 +32,7 @@
 		}
 	\label{stoplN}}
 	\For{every $x \in rN(r(v))$ \label{startrN}}{
-		$l_v \leftarrow l(r(v),r(x))$ \\
+		$l_v \leftarrow l(r(v),r(x))$ \label{accessl2} \\
 		\eIf{$r(x) = r(v)$}{
 			$new\_right \leftarrow r(u)$
 		}{

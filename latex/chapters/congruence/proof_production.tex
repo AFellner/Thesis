@@ -33,7 +33,7 @@ The proof is shown in Figure \ref{fig:proofprod}.
 \end{example}
 
 As mentioned in Section \ref{sec:congruenceclosurealgorithm}, edges are inserted into a congruence graph in a lazy way by the congruence closure algorithm.
-The reason is that \texttt{produceProof} searches for explanations for edges with label $null$.
+The reason is that \texttt{produceProof} searches for explanations for edges with label $\smiley$.
 Should the equality of question be an input equation that is added later to the congruence structure than it was deduced, then we would like to overwrite this label with the input equation.
 The impact of lazy insertion gets bigger, if an implementation searches for explanations already when an edge is added to the graph.
 Example \ref{example:lazy} shows how this technique can help producing shorter proofs.
@@ -42,10 +42,10 @@ Example \ref{example:lazy} shows how this technique can help producing shorter p
 
 Suppose we want to add the following sequence of equations into an empty congruence structure: $\langle (a,b),(f(a,a),d),(f(b,b),e),(f(a,a),f(b,b)) \rangle$.
 After adding the first three equations, the congruence closure algorithm detects the deduced equality $f(a,a) \thickapprox f(b,b)$.
-The explanation for this equality is $\{(a,b)\}$, if we were to insert the edge $(f(a,a),f(b,b))$ into the graph immediately, it would have weight 1 and label $null$.
+The explanation for this equality is $\{(a,b)\}$, if we were to insert the edge $(f(a,a),f(b,b))$ into the graph immediately, it would have weight 1 and label $\smiley$.
 Depending on the congruence graph used, when adding the fourth equation $(f(a,a),f(b,b))$ to the congruence structure, either the edge $(f(a,a),f(b,b))$ is not added at all to the graph or is added with weight 1.
 In the latter case, both edges have weight 1 and equal chance to be selected by the shortest path algorithm.
-However, choosing the edge with label $null$ is undesirable, since it two extra resolution nodes (corresponding to the compatible axiom and an intermediate node).
+However, choosing the edge with label $\smiley$ is undesirable, since it two extra resolution nodes (corresponding to the compatible axiom and an intermediate node).
 
 \end{example}
 
@@ -99,7 +99,8 @@ The proof with the longer explanation $E$ is only one proof node, whereas the pr
 \end{example}
 
 The Congruence Compressor compresses processes a proof replacing subproofs as described above. 
-It is defined upon the processing function specified in pseudocode in Algorithm \ref{algo:compressor}.
+It is defined upon the processing function $f: V \times V \times V \rightarrow V$ specified in pseudocode in Algorithm \ref{algo:compressor}.
+The function $g_f: V \rightarrow V$ for axioms is simply the identity (i.e. axioms are not modified).
 The idea of the processing function is simple.
 Axioms are not changed by the function.
 For all other nodes the \texttt{fixNode} is called method, to maintain a correct proof.

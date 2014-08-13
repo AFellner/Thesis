@@ -3,7 +3,7 @@
   \KwIn{term $s$}
 	\KwIn{term $t$}
 	%\KwIn{congruence graph $g$}
-	\KwOut{Resolution proof for $E \models s \thickapprox t$ or $null$}
+	\KwOut{Resolution proof for $E \models s \thickapprox t$ or $\emptyset$}
 	
 	$p \leftarrow explain(s,t,g)$ \\
 	$d \leftarrow \emptyset$ \\
@@ -13,13 +13,13 @@
 		$(u,l,v) \leftarrow $ first edge of $p$ \\
 		$p \leftarrow p \setminus (u,l,v)$ \\
 		$e \leftarrow e \cup \{u \neq v\}$ \\
-		\If{$l = null$}{
+		\If{$l = \smiley$}{
 			$f(a,b) \leftarrow u$ \\
 			$f(c,d) \leftarrow v$ \\
 			$p_1 \leftarrow produceProof(a,c,g)$ \\
 			$p_2 \leftarrow produceProof(b,d,g)$ \\
 			$con \leftarrow \{ a \neq c, b\neq d, f(a,b) = f(c,d) \}$ \\
-			$res \leftarrow$ resolve $con$ with non null roots of $p_1$ and $p_2$ \\
+			$res \leftarrow$ resolve $con$ with non $\emptyset$ roots of $p_1$ and $p_2$ \\
 			%$int_1 \leftarrow$ resolve $con$ with $root(p_1)$ \\
 			%$int_2 \leftarrow$ resolve $int_1$ with $root(p_2)$ \\
 			$d \leftarrow d \cup res$
@@ -43,7 +43,7 @@
 			\Return $\{u = u\}$
 		}
 		\Else {
-			\Return $null$
+			\Return $\emptyset$
 		}
 	}
 	
