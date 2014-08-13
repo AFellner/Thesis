@@ -1,46 +1,91 @@
-%\chapter*{Resolution}
+\section{Propositional Resolution Calculus}
+\label{sec:resolution}
 
-\section*{Congruence Resolution}
+In this chapter, we will define the propositional resolution calculus.
+Resolution is one of the most well known automated inference techniques and goes back to Robinson \cite{TODO}.
+While it a pretty simple calculus with just one inference rule, proofs in that calculus tend to become big.
+This property and its popularity make it a good target for applying proof compression to it.
 
-The congruence part of this work extends resolution proofs as defined in \ref{sec:resolution} by axioms of equality.
+Propositional resolution can be seen as a simplification of first-order logic resolution to propositional logic.
+For basics about propositional logic, we refer the reader to \cite{TODO}.
+For an extensive discussion of first-order logic resolution, we refer the reader to \cite{TODO}.
 
-Let $\mathcal{C}$ be a finite set of constant symbols and let $f$ be a binary function symbol.
-The set of terms $\mathcal{T}$ is defined recursively.
-\begin{align*}
-	\mathcal{T}_0 &:= \mathcal{C} \\
-	\mathcal{T}_i &:= \mathcal{T}_{i-1} \cup \{f(t_1,t_2) \mid t_1, t_2 \in \mathcal{T}_{i-1}\} \\
-	\mathcal{T} &:= \bigcup_{n \in \mathbb{N}} \mathcal{T}_n
-\end{align*}
-Let $\mathcal{Q}_{\mathcal{T}} = \{t_1 = t_2 \mid t_1, t_2 \in \mathcal{T}$ be the set of equations for a set of terms $\mathcal{T}$
-Let $V$ be a finite set of propositional variables.
-The set of equality atoms $\mathcal{E}$ is defined as $V \cup Q_{\mathcal{T}}$
-An equality literal $\ell_\mathcal{T}$ is an equality atom $e$ or a negated equality atom $\neg e$.
-We will abbreviate write $\neg (t_1 = t_2)$ by $t_1 \neq t_2$.
-An equality clause is a set of equality literals.
-As usual a clause is interpreted as the disjunction of its literals and a set of clauses is interpreted as the conjunction its clauses.
+\begin{definition}[Literal and Clause]
 
-The axioms of congruence $EqAxioms$ for some set of terms $\mathcal{T}$ is defined as $R \cup S \cup T \cup C$ where
+A \emph{literal} is a propositional variable or the negation of a propositional variable. 
+The \emph{complement} of a literal $\ell$ is denoted $\dual{\ell}$ (i.e. for any propositional variable $p$,
+$\dual{p} = \neg p$ and $\dual{\neg p} = p$). 
+The set of all literals is denoted by $\mathcal{L}$. 
+A \emph{clause} is a set of literals. 
+$\bot$ denotes the \emph{empty clause}.
 
-\begin{align*}
-	R &= \{ t = t \mid t \in \mathcal{T}\} \\
-	S &= \{ t_1 \neq t_2, t_2 = t_1 \mid t_1, t_2 \in \mathcal{T} \} \\
-	T &= \{ t_1 \neq t_2, t_2 \neq t_3, t_1 = t_3 \mid t_1, t_2, t_3 \in \mathcal{T} \} \\
-	C &= \{ t_1 \neq t_3, t_2 \neq t_4, f(t_1,t_2) = f(t_3,t_4) \mid t_1, t_2, t_3, t_4 \in \mathcal{T} \} 
-\end{align*}
+\end{definition}
 
-Note that every congruence axiom has one positive equality literal.
-From now on we will omit the set of terms $\mathcal{T}$ if it is clear from context.
+Clauses represent formulas by interpreting it as the conjunction of its literals.
+Sets of clauses represent formulas by interpreting them as the disjunction of the interpreted clauses.
+The propositional resolution calculus operates on propositional formulas in conjunctive normal form, which are formulas that are represented by a set of clauses.
 
-Next we will define the resolution calculus extended by congruence axioms.
-Let $\ell$ be an equality literal and $C_1$, $C_2$ be equality clauses such that $\ell \in C_1$ and $\neg \ell \in C_2$.
-The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\neg \ell\}$ is the resolvent of $C_1$ and $C_2$ with pivot $\ell$.
+\begin{definition}[Resolvent]
+
+Let $C_1$ and $C_2$ be two clauses and $\ell$ be a literal, such that $\ell \in C_1$ and $\dual{\ell} \in C_2$.
+The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\dual{\ell}\}$ is called the \emph{resolvent} of $C_1$ and $C_2$ w.r.t. $\ell$.
+
+\end{definition}
+
+In terms of proof calculi, axioms of the propositional resolution calculus are clauses and the single rule of the calculus is to derive a resolvent from previously derived clauses or axioms.
+This work studies the syntactic and semantic structure of derivations in this calculus, which are formally defined in the following.
+
+\begin{definition}[Resolution Derivation and Refutation]
 
 Let $F = \{C_1, \ldots, C_n\}$ be a set of clauses.
-The notion of a congruence derivation for $F$ is defined inductively.
-The sequence $\langle C_1, \ldots, C_n\rangle$ is a congruence derivation for $F$.
-If $\langle C_1, \ldots, C_m\rangle$ is a congruence derivation for $F$ then $\langle C_1, \ldots, C_{m+1} \rangle$ is a congruence derivation for $F$ if $C_{m+1} \in EqAxioms$ or $C_{m+1}$ is a resolvent of $C_i$ and $C_j$ with $1 \leq i,j \leq m$.
-A congruence derivation containing the empty clause is a congruence refutation.
+The notion of a \emph{resolution derivation} for $F$ is defined inductively.
+\begin{itemize}
+	\item $\langle C_1, \ldots, C_n\rangle$ is a resolution derivation for $F$.
+	\item If $\langle C_1, \ldots, C_m\rangle$ is a resolution derivation for $F$ then $\langle C_1, \ldots, C_{m+1} \rangle$ is a resolution derivation for $F$ if $C_{m+1}$ is a resolvent of $C_i$ and $C_j$ with $1 \leq i,j \leq m$.
+\end{itemize}
+A \emph{resolution refutation} is a resolution derivation containing the empty clause.
 
-Let $D = \langle C_1, \ldots, C_m\rangle$ be a congruence derivation.
-The longest subsequence $\langle C_{i_1}, \ldots, C_{i_k}\rangle$ of $D$, such that $\{C_{i_1}, \ldots, C_{i_k}\} \subseteq EqAxioms$ is called the equality reasoning part of $D$.
-%The corresponding sequence of positive equality literals $\langle e_{i_1}, \ldots, e_{i_k}\rangle$ 
+\end{definition}
+
+The correctness of the resolution calculus can be formulated as the statement, that a propositional logic formula, represented as a set of clauses, is equivalent to all resolution derivations of it. 
+Since the empty clause is unsatisfiable, a resolution derivation is unsatisfiable.
+Therefore a resolution derivation of $F$ is a proof of the validity of $\neg F$.
+We want to define resolution derivations in terms of graphs and call these objects proofs.
+
+\begin{definition}[Proof] 
+\label{def:proof}
+A \emph{proof} $\varphi$ is a rooted labeled directed acyclic graph $\langle V,E,\n,\mathcal{L} \rangle$, such that
+$\mathcal{L}$ maps nodes to clauses, $\n \in V$ is the root of the graph, 
+such that $\langle V,E \rangle$ is a labeled directed acyclic graph whose edges are labeled with literals $\ell \in \mathcal{L}$, i.e. $E \subseteq V \times \mathcal{L} \times V$, $\n \in V$, $\clause$ is a clause 
+and one of the following holds:
+
+\begin{enumerate}
+	\item $V = \{\n\}, E = \emptyset$
+	\item \label{enum:resCase} There are proofs $\varphi_L = \langle V_L, E_L, \n_L,\clause_L \rangle$ and $\varphi_R = \langle V_R, E_R, \n_R, \clause_R \rangle$ such that there exists a literal
+				$\ell$ such that $\dual{\ell} \in \Gamma_L$, $\ell \in \Gamma_R$, and let $\n \notin (V_L \cup V_R)$ then
+		\begin{align*}
+      V &= (V_L \cup V_R) \cup \{\n \} \\
+      E &= E_L \cup E_R \cup
+                    \left\{\n_L \xrightarrow{\dual{\ell}} \n , \n_R \xrightarrow{\ell} \n \right\} \\
+     \Gamma &= \left( \clause_L \setminus \left\{ \dual{\ell} \right\} \right) \cup \left( \clause_R
+                    \setminus \left\{ \ell \right\} \right)
+    \end{align*}
+		
+\qed
+\end{enumerate}
+$\n$ is called the \emph{root} of $\varphi$ and $\clause$ its \emph{conclusion}.
+$\varphi_L$ and $\varphi_R$ are \emph{premises} of $\varphi$ and $\varphi$ is a \emph{child} of $\varphi_L$ and $\varphi_R$.
+$\Gamma$ is called the \emph{resolvent} of $\Gamma_L$ and $\Gamma_R$ with \emph{pivot} $\ell$.
+A proof $\psi$ is a subproof of a proof $\varphi$, if there is a path from $\varphi$ to $\psi$ in the transitive closure of the premise relation.
+A subproof $\psi$ of $\varphi$ which has no premises is an \emph{axiom} of $\varphi$.
+$\Vertices{\varphi}$ and $\Axioms{\varphi}$ denote, respectively, the set of nodes and axioms of $\varphi$. $\Premises{\n}{\varphi}$ denotes the premises and $\Children{\n}{\varphi}$ the children of the subproof with root $\n$ in a proof $\varphi$. When a proof is represented graphically, the root is drawn at the bottom and the axioms at the top. The \emph{length} of a proof $\varphi$ is the number of nodes in $\Vertices{\varphi}$ and is denoted by $\plength{\varphi}$.
+\end{definition}
+
+\noindent
+Note that in case \ref{enum:resCase} of Definition \ref{def:proof} $V_L$ and $V_R$ are not required to be disjunct. 
+Therefore the underlying structure of a proof is a directed acyclic graph and not simply a tree. 
+Modern SAT- and SMT-solvers, using techniques of conflict driven clause learning, produce proofs with a general DAG structure \cite{Bouton2009,Biere2009}.
+The reuse of proof nodes plays a central role in proof compression \cite{Fontaine2011}.
+Also note that a DAG corresponding to a proof has exactly one sink, which is called its root node, by definition.\\
+For example a node of a proof $\langle V,E,\n,\clause \rangle$ will be meant to be some $s \in V$.
+From hereon, if free from ambiguity, proofs and their underlying DAGs will not be distinguished. 

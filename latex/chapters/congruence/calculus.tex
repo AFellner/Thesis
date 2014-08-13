@@ -33,10 +33,10 @@ In the following axioms schemas, the variables $x_1,\ldots,x_n$ are placeholders
 By simultaneously replacing all variables by terms of some set $\mathcal{T}$, one obtains an equality clause, which we call an \emph{instance w.r.t. $\mathcal{T}$} of the respective axiom of equality.
 
 \begin{itemize}
-	\item reflexive: $\{x = x\}$
-	\item symmetric: $\{x_1 \neq x_2, x_2 = x_1\}$
-	\item transitive: $\{x_1 \neq x_2, x_2 \neq x_3, \ldots, x_{n-1} \neq x_n, x_1 = x_n\}$
-	\item compatible: $\{x_1 \neq x_3, x_2 \neq x_4, f(x_1,x_2) = f(x_3,x_4)\}$
+	\item reflexivity: $\{x = x\}$
+	\item symmetry: $\{x_1 \neq x_2, x_2 = x_1\}$
+	\item transitivity: $\{x_1 \neq x_2, x_2 \neq x_3, \ldots, x_{n-1} \neq x_n, x_1 = x_n\}$
+	\item compatability: $\{x_1 \neq x_3, x_2 \neq x_4, f(x_1,x_2) = f(x_3,x_4)\}$
 \end{itemize}
 
 \end{definition}
@@ -48,7 +48,7 @@ Next we will define the resolution calculus extended by congruence axioms.
 Let $\ell$ be an equality literal and $C_1$, $C_2$ be equality clauses such that $\ell \in C_1$ and $\neg \ell \in C_2$.
 The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\neg \ell\}$ is the \emph{resolvent} of $C_1$ and $C_2$ with \emph{pivot} $\ell$.
 
-\noindent Let $F = \{C_1, \ldots, C_n\}$ be a set of clauses and let $E$ be the biggest subset of $F$, such that every clause in $E$ is an equation.
+\noindent Let $F = \{C_1, \ldots, C_n\}$ be a set of equality clauses and let $E$ be the biggest subset of $F$, such that every clause in $E$ is an equation.
 The notion of a \emph{congruence derivation} for $F$ is defined inductively.
 \begin{itemize}
 	\item $\langle C_1, \ldots, C_n\rangle$ is a congruence derivation for $F$.
