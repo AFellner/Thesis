@@ -1,4 +1,4 @@
-\section*{Proof Production}
+\section{Proof Production}
 \label{sec:proofproduction}
 
 In this section we describe how to produce resolution proofs from paths in a congruence graph.
@@ -10,7 +10,7 @@ Afterwards the subproof is resolved with the original transitivity chain.
 Since terms can never be equal to their subterms, the procedure will eventually terminate.
 The result of this procedure is a resolution proof with a root, such that the equations of the negative literals are an explanation of the target equality.
 In other words, let $s \thickapprox t$ be the equality to be explained and suppose \texttt{produceProof} returns a proof with root $\rho$.
-Then for $\rho$ it is the case that $F := \{(u,v) \mid u \neq v \text{ is a literal in } \rho\} \models s \thickapprox t$ and $F$ is a subset of the input equations.
+Let $F := \{(u,v) \mid u \neq v \text{ is a literal in } \rho\}$, then it is the case that $F \models s \thickapprox t$ and $F$ is a subset of the input equations.
 
 \input{chapters/congruence/algorithms/prodproof}
 
@@ -39,7 +39,7 @@ The impact of lazy insertion gets bigger, if an implementation searches for expl
 Example \ref{example:lazy} shows how this technique can help producing shorter proofs.
 
 \begin{example}
-
+\label{example:lazy}
 Suppose we want to add the following sequence of equations into an empty congruence structure: $\langle (a,b),(f(a,a),d),(f(b,b),e),(f(a,a),f(b,b)) \rangle$.
 After adding the first three equations, the congruence closure algorithm detects the deduced equality $f(a,a) \thickapprox f(b,b)$.
 The explanation for this equality is $\{(a,b)\}$, if we were to insert the edge $(f(a,a),f(b,b))$ into the graph immediately, it would have weight 1 and label $\smiley$.
@@ -53,7 +53,7 @@ However, choosing the edge with label $\smiley$ is undesirable, since it two ext
 
 \subsection*{Congruence Compressor}
 
-In Section \ref{TODO} processing of a proof was defined.
+In Section \ref{sec:proofprocessing} processing of a proof was defined.
 The most important application of proof processing for this work is proof compression.
 We want to make use of the short explanations found by the congruence closure algorithm described above.
 To this end we replace subproofs with conclusions that contain unnecessary long explanations with new proofs that have shorter conclusions.

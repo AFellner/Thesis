@@ -1,4 +1,4 @@
-\section*{Explanation Producing Congruence Closure}
+\section{Explanation Producing Congruence Closure}
 \label{sec:algorithm}
 
 In this section, we present a congruence closure algorithm that is able to produce explanations.
@@ -7,7 +7,7 @@ The basic structure of the algorithm is inherited from \cite{Fontaine2004}, whic
 The technique to store and deduce equalities of non constant terms is inspired from \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 Additionally the proof forest structure described below was proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 
-\subsection*{Preliminaries}
+\subsection*{Currification and Abstract Congruence Closure}
 \label{subsec:algorithms_preliminaries}
 
 Our congruence closure algorithm operates on curried terms.
@@ -50,9 +50,36 @@ In the context of proof compression, our congruence closure algorithm will be ap
 We could introduce the extra constants for the whole proof before processing, but would still have to remove them from explanations every time we produce a new subproof.
 It would be interesting to investigate, whether our intuition in that regard is right, or if it pays off to deal with extra constants.
 
-Coming back to the explanation producing congruence closure algorithms that inspired our version, \cite{Nieuwenhuis2005,Nieuwenhuis2007} describes an version one using currying.
+The explanation producing congruence closure algorithms that inspired our version, \cite{Nieuwenhuis2005,Nieuwenhuis2007} describes an version one using currying.
 \cite{Fontaine2004} proposes a traditional algorithm without currying and extra constants.
 By choosing to work with curried terms, but without extra constants, our algorithm is a middle ground between them.
+
+\subsection*{Immutable Data Structures}
+
+Most of the data structures presented the following section are defined in terms of mathematical functions.
+This is not by coincidence and our congruence closure algorithm can easily be translated to an implementation in a functional programming language.
+Furthermore, all data structures can be implemented immutable.
+An immutable data structure is one that never changes is internal state.
+When alternating the information stored in the data structure, a new object with the new information is constructed.
+The old object remains intact.
+A side effect of a method is a modification of an object that is not the returned value of the method.
+Such side effects often lead to bugs, since the method can not be used as a black box anymore.
+An example for a side effect is the modification of the representative of a term in the congruence closure algorithm presented in \cite{Fontaine2004} and its effect on what is called signature table in this work.
+Using immutable data structures prohibits side effects by design.
+Furthermore immutable data structures allow to maintain internal correctness much easier.
+For example, in the Skeptik tool resolution nodes are stored in an immutable fashion.
+Modifying the premise of a node does not have an effect on the node itself, since its premise remains to be the old version.
+Therefore the correctness of a resolution proof, once established when creating a proof is maintained without any further actions.
+Functional programming languages almost exclusively use immutable data structures and often it is not easy or impossible to translate an imperative description of an algorithm into functional programming.
+Sometimes it is possible, but not with the same runtime.
+
+Immutable data structures also have some downsides.
+The impossibility of changing internal structures often makes it hard to maintain certain structures without a lot of extra effort.
+One simple example is that of a linked list.
+Suppose such a linked list is implemented in such a way that every element of the list internally has a pointer to the next element in the list.
+When changing the first element of the list in some fashion, the pointer of the second element has to be set to the new version of the first one.
+Since this requires to produce a new version of the second element aswell, also the pointer of the third element has to be updated and so on.
+Some algorithms and their optimal runtime depend on such data structures, that are very hard or impossible to implement immutable.
 
 \subsection*{Congruence structure}
 
@@ -66,7 +93,7 @@ The set $\mathcal{E} = \mathcal{T} \times \mathcal{T} \cup \{\smiley\}$ is the s
 	\item Left neighbors $N_l: \mathcal{T} \rightarrow 2^\mathcal{T}$ <- use $N_l$
 	\item Right neighbors $N_r: \mathcal{T} \rightarrow 2^\mathcal{T}$
 	\item Lookup table $l: \mathcal{T} \times \mathcal{T} \rightarrow \mathcal{T}$
-	\item Congruence graph $g$ <-- reference
+	\item Congruence graph $g$
 	\item Queue $\mathcal{Q}$ of pairs of terms %type $\mathcal{T} \times \mathcal{T}$
 	\item Current explanations $\mathcal{M}: \mathcal{T} \times \mathcal{T} \rightarrow \mathcal{E}$
 \end{itemize}
@@ -89,21 +116,18 @@ The function $\mathcal{M}$ stores the existence of an explanation for a buffered
 The idea will be explained in detail in Section \ref{sec:proofproduction}.
 We call the unique congruence structure for $\mathcal{T} = \emptyset$ the \emph{empty congruence structure}.
 
-It is not by coincidence that many of the used data structures are described as functions.
-In fact our congruence closure algorithm can and is implemented in a functional way and the data structures can be implemented immutable.
-
 \FloatBarrier
 
 \subsection*{Congruence closure algorithm}
 \label{sec:congruenceclosurealgorithm}
 In this section we present our congruence closure algorithm.
 We state and prove its properties.
-Most importantly we show that the algorithm is sound and complete and has the best known asymptotic running time $O(n \log(n))$.
+Most importantly we show that the algorithm is sound and complete and has the best known asymptotic running time $O(n \log(n))$, where $n$ is the number of terms in the input.
 Computing the congruence closure of some set of equations $E$ is done by adding all of them to an ever growing congruence structure, which initially is empty.
 Since this has to be done in some order, we will often assume that $E$ is given as a sequence of equations rather than a set.
 The pseudocode of most methods do not include a return statement.
 In fact every method implicitly returns a (modified) congruence structure or simply modifies a global variable, which is the current congruence structure.
-Adding an equation to a congruence structure is done with the \texttt{addEquation} method.
+Adding an equation to a congruence structure is done with the \texttt{addEquation} method, which is the only method that has to be visible to the user.
 The method adds boths sides of the equation to the current set of terms using the \texttt{addNode} method and afterwards merges the classes of the two terms.
 The \texttt{addNode} method enlarges the set of terms and searches for compatible deduced equalities.
 The updates of the set of terms are not outlined explicitly, but are understood to happen implicitly.
@@ -320,7 +344,7 @@ The same holds for line \ref{accessl1} and all other lines in the respective loo
 
 \subsection*{Congruence Graph}
 \label{sec:congruencegraph}
-The main goal of this work is to replace redundant explanations with shorter ones.
+The main idea of the proof compression algorithm presented in this chapter is to replace long explanations by shorter ones.
 For this purpose the input equations and deduced equalities have to be stored in a data structure that supports the production of explanations.
 We support two different such data structures.
 Both structures store equalities in labeled graphs, which we call congruence graphs.
@@ -332,7 +356,7 @@ However it is guaranteed that the arguments are connected in the graph afterward
 
 \begin{invariant}[Paths]
 
-For terms $s, t$ such that $s \neq t$ and a congruence structure with representative function $r$ holds $r(s) = r(t)$ if and only if there is a path in the congruence graph of the structure between $s$ and $t$
+For terms $s, t$ such that $s \neq t$ holds $r(s) = r(t)$ if and only if there is a path in the congruence graph of the structure between $s$ and $t$
 
 \end{invariant}
 
@@ -365,7 +389,7 @@ Also there was no path between the two terms before and since the only addition 
 
 For every edge in a congruence structure between vertices $u,v$ with label $\smiley$, 
 there are $a,b,c,d \in \mathcal{T}$ such that $u = f(a,b)$, $v = f(c,d)$ and
-there are paths in the underlying graphs between $a$ and $c$ aswell as $b$ and $d$.
+there are paths in the underlying graphs between $a$ and $c$ as well as between $b$ and $d$.
 
 \end{invariant}
 
@@ -408,7 +432,7 @@ Classical algorithms for SSSP are those of Dijkstra \cite{Dijkstra1959} and Bell
 The algorithms work on different kinds of graphs.
 Our setting is an undirected graph with positive integer weights.
 We chose to use Dijkstra's algorithm, even though the algorithm does not have optimal asymptotic runtime.
-It's worst-case runtime is $O(n \log(n))$ \cite{Cormen1989}, if the priority queue is implemented as a Fibonacci Heap, which is the case in our implementation.
+Its worst-case runtime is $O(n \log(n))$ \cite{Cormen1989}, if the priority queue is implemented as a Fibonacci Heap, which is the case in our implementation.
 \cite{Thorup1999} reports of an linear time algorithm for the undirected single source shortest path with positive integer weights problem.
 However, the algorithm has a big overhead and needs several precomputations.
 \cite{Cherkassky1996} is an extensive study of several shortest path algorithms which shows that Dijkstra's algorithm performs well in practice.
@@ -420,13 +444,13 @@ The algorithm discovers new nodes by selecting the lowest weight outgoing edge o
 It is a greedy algorithm in the sense that it always locally chooses lowest weight edges and never discards previously made decisions.
 
 The algorithm has been slightly modified to take into account decisions that are edges for deduced equalities.
-These edges represent explanations, which are a sets of input equations.
-Previously included input equations do not increase the size of the global explanation when including them again.
-Therefore the modified Dijkstra algorithm adds an edge with weight 0 for every input equation in the explanation of a deduced equality edge.
-This is done to reduce the size of explanations.
+These edges represent explanations, which are sets of input equations.
+In the same call to the search algorithm, using such equations again to explain another equality does not increase the size of the overall explanation.
+The modified Dijkstra algorithm temporarily adds an edge with weight 0 for every input equation in the explanation of a deduced equality edge.
+This is done to possibly reduce the size of explanations.
 Since previous decisions are not discarded, it is not guaranteed that the modified algorithm returns the shortest path in the final graph, including the extra edges.
 Example \ref{ex:short_expl} demonstrates that the modified shortest path algorithm does not always produce the shortest explanation, but can produce shorter explanations than the unmodified version in some situations.
-The shortest path algorithm's inability to return shortest explanations is not surprising, since it runs in $O(n \log(n))$ and in Section \ref{sec:sec:npcomplete} it was shown that finding the shortest explanation is NP-complete.
+The shortest path algorithm's inability to return shortest explanations is not surprising, since it runs in $O(n \log(n))$ and in Section \ref{sec:npcomplete} it is shown that finding the shortest explanation is NP-complete.
 
 \begin{example}
 Consider the congruence graph shown in Figure \ref{fig:short_expl}, where solid edges are input equation and the dashed edge marks an application of the congruence axiom.

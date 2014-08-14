@@ -1,7 +1,4 @@
-\section{Introduction}
-
-\section{Problem definition}
-
+%\section{Introduction}
 Proofs are the backbone of mathematics. 
 They allow scientists to build theorems on top of another and thus discover new knowledge.
 Proofs not only serve as stepping stones, they can also provide insight on the nature of the underlying problem.
@@ -19,40 +16,37 @@ Since this work is concerned only with formal proofs, from hereon we mean formal
 Typically problems that are tackled by automated systems are large. 
 As a consequence proofs produced during the process are large.
 So large that even for proof processing algorithms with low complexity, it is highly desirable to reduce the hardness of the input, while maintaining the quality of its conclusion.
-Proof processing algorithms could be correctness checking, information extraction or proof manipulating techniques.
-That is the problem that our work tackles.
+Proof processing algorithms could be correctness checking, information extraction or proof manipulating techniques, like for example proof compression.
 We present methods to compress proofs, produced by SMT- or SAT- Solvers, w.r.t. two different measures.
 Due to the enormous size of proofs our methods were constructed with the goal of low complexity in runtime.
 
-The first measure is \emph{length}.
+The first measure we want to reduce is \emph{length}.
 The length of a proof is the number of inferences.
-For example the length of the resolution proof is the number of resolution applications.
+For example the length of the resolution proof is the number of applications of the resolution rule.
+The compression method we present is applicable to proofs in the SMT theory of equality.
 The congruence reasoning part of SMT-proofs has often been found to be redundant.
 Congruence reasoning derives equations of terms that are implied by a given set of input equations, 
 using the four axioms \emph{reflexive}, \emph{symmetric}, \emph{transitive} and \emph{compatible}. 
 It can be redundant in the sense that subsets of the input may suffice to derive certain equalities.
-In chapter \ref{cha:congruence} we present resolution proofs extended by equality and a method to compress them using congruence closure.
+In chapter \ref{ch:congruence} we present resolution proofs extended by equality and a method to compress them using congruence closure.
 Furthermore we show that finding the shortest set of input equations explaining a given equality is NP-complete.
 This indicates that there is no efficient algorithm to compute the shortest explanation efficiently.
 Therefore we propose ideas and methods to obtain short explanations, while not blowing up in complexity.
-We present a new congruence closure algorithm, which uses curried terms and runs in the best known asymptotic runtime.
+We present a new congruence closure algorithm, which runs in the best known asymptotic runtime.
 One benefit of our algorithm is the possibility to implement it using immutable data structures.
-Such data structures are a central concept of functional programming languages.
-Implementing proposed algorithms in a functional language, while maintaining the optimal runtime is far from being trivial.
-Many algorithms, not only those for computing the congruence closure, rely on destructive calls, which implicitly modify many data structures with a single modification of one structure. 
+Such data structures are a central concept in functional programming languages and it is often hard or impossible to translate an imperative description of an algorithm into a functional implementation.
 
-The second measure is \emph{space}.
+The second measure we compress is \emph{space}.
 Typically proofs can be represented as directed acyclic graphs.
-The space of a proof $p$ and a traversal order $\prec$ is the maximal number of nodes of that graph that have to be kept in memory at once, while processing $p$ following $\prec$.
-The goal is to construct traversal orders for proofs with small space measures.
-In chapter \ref{cha:pebbling} we present a method to compress resolution proofs in their space measure.
-The problem of finding the shortest space measure of a proof can be reduced to finding the optional strategy in a pebbling game.
+The space of a proof is the maximal number of nodes of that graph that have to be kept in memory at once while processing it.
+In chapter \ref{ch:pebbling} we present a method to compress resolution proofs in their space measure.
+The problem of finding the lowest space measure of a proof can be reduced to finding the optional strategy in a pebbling game.
 For this game it was proven that constructing the best strategy is NP-complete.
 Just like for our length compression algorithm, we want an algorithm with a lower complexity.
 Therefore we propose a heuristic method and arguments why our heuristics are reasonable.
 
 Both methods have been implemented into the proof compression software Skeptik and were evaluated on a big number of proofs, produced by the SMT-Solver VeriT.
-These proofs are mostly from the benchmarks of SMT-lib.
+Most of the evaluation proofs are from the benchmarks of SMT-lib (http://smt-lib.org/).
 Additionally we evaluated on proofs that were used in \cite{Hofferek2013} to synthesize boolean functions by extracting an interpolant from a single proof.
 The method in \cite{Hofferek2013} has high complexity and is therefore heavily dependent on the size of the proof.
 Therefore compressing such proofs in reasonable time is a definite plus for their work and possible those of many others.

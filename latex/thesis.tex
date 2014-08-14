@@ -4,6 +4,8 @@
 \usepackage{TUINFDA}
 \usepackage{enumitem,amsmath,amssymb}
 
+\usepackage{wasysym}
+
 \usepackage{url}
 \usepackage{hyperref}					% links in pdf
 \usepackage{graphicx}            			% Figures
@@ -172,15 +174,15 @@
 
 \cleardoublepage
 \pagestyle{numberCorner}
-%\tableofcontents*
+\tableofcontents*
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%   MAINMATTER    %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\mainmatter
-%\pagenumbering{arabic}
-%\pagestyle{numberCorner}
+\mainmatter
+\pagenumbering{arabic}
+\pagestyle{numberCorner}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
@@ -190,32 +192,25 @@
 \input{chapters/introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Resolution}
-\label{ch:resolution}
+\chapter{Proof Compression}
+\label{ch:proofcompression}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{chapters/resolution}
+\input{chapters/proofcompression}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Proof Compression}
-%\label{ch:proofcomp}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\input{chapters/resolution}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Pebbling}
-\label{ch:pebbling}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\input{chapters/pebbling}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Congruence}
+\chapter{Congruence compression}
 \label{ch:congruence}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \input{chapters/congruence}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Space compression}
+\label{ch:pebbling}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{chapters/pebbling}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Conclusion}

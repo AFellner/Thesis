@@ -123,7 +123,7 @@
 %%%   FRONTMATTER    %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frontmatter
-\pagenumbering{roman}
+%\pagenumbering{roman}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%   TITLEPAGES    %%%%%%%%%%%%%%%%%%%%%
@@ -155,10 +155,10 @@
 %%%   ABSTARCT    %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/abstract_en}
+\input{chapters/abstract_en}
 %\cleardoublepage
 %\selectlanguage{ngerman}
-%\input{chapters/abstract_de}
+\input{chapters/abstract_de}
 %\selectlanguage{english}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -167,61 +167,55 @@
 % uncomment to set document language to german (results in "Inhaltsverzeichnis", "Kapitel", "Abbildung", etc. instead of "Contents", "Chapter", and "Figure"), otherwise the document's language is english
 %\selectlanguage{ngerman}
 
-%\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{1}
 %
 %\cleardoublepage
-%\pagestyle{numberCorner}
-%\tableofcontents*
+\pagestyle{numberCorner}
+\tableofcontents*
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%   MAINMATTER    %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\mainmatter
-%\pagenumbering{arabic}
-%\pagestyle{numberCorner}
+\mainmatter
+\pagenumbering{arabic}
+\pagestyle{numberCorner}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Introduction}
-%\label{ch:intro}
+\chapter{Introduction}
+\label{ch:intro}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/introduction}
+\input{chapters/introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Resolution}
-%\label{ch:resolution}
+\chapter{Proof Compression}
+\label{ch:proofcomp}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/resolution}
+\input{chapters/proofcompression}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Proof Compression}
-%\label{ch:proofcomp}
+\chapter{Congruence}
+\label{ch:congruence}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/resolution}
+\input{chapters/congruence}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Pebbling}
-%\label{ch:pebbling}
+\chapter{Pebbling}
+\label{ch:pebbling}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \input{chapters/pebbling}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Congruence}
-%\label{ch:congruence}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\input{chapters/congruence}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\chapter{Conclusion}
-%\label{ch:conclusion}
+\chapter{Conclusion}
+\label{ch:conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\input{chapters/conclusion}
+\input{chapters/conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\chapter{Typographic Design}

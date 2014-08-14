@@ -1,4 +1,4 @@
-\section{Pebbling Game}
+\section{Pebbling Game and Space}
 \label{sec:pebbling-game}
 
 %Todo: Discuss relation to resolution space complexity further
@@ -33,7 +33,7 @@ Also note that as a consequence of rule \ref{rule:premises}, pebbles can be put 
 Playing the game on a proof $\varphi$ means to play the game on the underlying DAG with the distinguished node being the root of $\varphi$.
 
 In this work we investigate space requirements when time requirements are fixed.
-Fixing time is a design choice, see Section \ref{sec:pebblingchecking}, and it corresponds to rule \ref{rule:onlyonce}.
+Fixing time is a design choice and it corresponds to rule \ref{rule:onlyonce}.
 Including this rules sets a bound $O(|V|)$ for the number of rounds.
 
 \begin{definition}[Strategy]
@@ -51,7 +51,7 @@ The \emph{pebbling number of a DAG $G$ and node $s$} is the minimum pebbling num
 \end{definition}
 
 Note that Definitions \ref{def:pebbling-game} and \ref{def:strategy} leave the player freedom when to do unpebbling moves.
-With the aim of finding strategies with low pebbling numbers, for every unpebbling move there is a canonical round make them, as will be shown in Section \ref{sec:pebblingchecking}.
+With the aim of finding strategies with low pebbling numbers, for every unpebbling move there is a canonical round make them, as shown below.
 
 The Bounded Pebbling Game from definition \ref{def:pebbling-game} differs from the Black Pebbling Game discussed in \cite{Hertel2007,Pippenger1982} in two aspects. 
 Firstly, the Black Pebbling Game does not include rule \ref{rule:onlyonce}. 
@@ -59,4 +59,100 @@ Excluding this rule allows for pebbling strategies with lower pebbling numbers (
 Secondly, when pebbling a node in the Black Pebbling Game, one of its predecessors' pebbles can be used instead of a fresh pebble (i.e. a pebble can be moved). 
 The trade-off between moving pebbles and using fresh ones is discussed in \cite{EmdeBoas1979}. 
 Deciding whether the pebbling number of a graph $G$ and node $s$ is smaller than $k$ is PSPACE-complete in the absence of rule \ref{rule:onlyonce} \cite{Gilbert1980} and NP-complete when rule \ref{rule:onlyonce} is included \cite{Sethi1975}.
+
+Every round of the game corresponds to an I/O operation and, if the action of the player is to pebble a node, the processing of the node.
+The goal of proof compression is to make proof processing less expensive, therefore requiring exponentially many I/O operations and processing steps is not a viable option.
+That is the reason why we chose the Bounded Pebbling Game for our purpose.
+In the Bounded Pebbling Game the number of rounds is linear in the number of nodes.
+
+In order to process a node, the results of processing its premises are used and therefore have to be stored in memory.
+The requirement of having premises in memory corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game. 
+Processing a node and I/O operations are typically more expensive than extra memory consumption, therefore in our setting every node can be processed only once, which corresponds to rule \ref{rule:onlyonce}.
+A node that has been processed can be removed from memory, which corresponds to rule \ref{rule:unpebbling}.
+Note that removing a node and its results too early in combination with \ref{rule:onlyonce} makes it impossible to process the whole proof.
+The optimal moment to remove a node from memory is uniquely determined by the order nodes are processed, see Theorem \ref{theorem:canonical}.
+
+Definition \ref{def:proof-processing} does not specify in what order to process nodes.
+The order in which nodes are processed is essential for the memory consumption, just like the order of pebbling nodes in the pebbling game is essential for the pebbling number.
+The following definition allows us to relate pebbling strategies with orderings of nodes.
+
+\begin{definition}[Topological Order]
+\label{def:topological-order}
+A topological order of a proof $\varphi$ is a total order relation $\prec$ on $\Vertices{\varphi}$, such that 
+$\text{for all } \n \in \Vertices{\varphi} \text{, for all } p \in \Premises{\n}{\varphi}:
+p \prec v$.
+A sequence of moves $(\sigma_1,\ldots,\sigma_n)$ in the pebbling game \emph{respects} a topological order $\prec$ if $j < i$ \emph{iff} $\sigma_j \prec \sigma_i$.
+\qed
+\end{definition}
+
+A topological order $\prec$ of a proof $\varphi$ can be represented as a sequence $(v_1,\dots,v_n)$ of proof nodes, by defining $\prec \defeq \{(v_i,v_j) \mid 1 \leq i < j \leq n\}$. 
+The requirement that topological orders to order premises lower than their children corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game.
+The antisymmetry together with the fact that $V = \{v_1,\dots,v_n\}$ correspond to rule \ref{rule:onlyonce}.
+Theorem \ref{theorem:canonical} shows that the moments for unpebbling moves are predefined by the pebbling moves, when the goal is to find strategies with small pebbling numbers.
+Therefore there is a bijection between topological orders and pebbling strategies.
+
+\begin{definition}[Canonical Topological Pebbling Strategy]
+\label{def:canonstrat}
+The \emph{canonical topological pebbling strategy} $\sigma$ for a proof $\varphi$, its root node $s$ and a topological order $\prec$ represented as a sequence $(v_1,\dots,v_n)$ is defined recursively:
+$$
+\begin{array}{l}
+\sigma_1 = p(v_1) \\
+\sigma_i = 
+	\left\{
+	\begin{array}{ll}
+		%u(v) & \text{ if for all } c \in \Children{v}{\varphi}: \\
+		       %& \quad \text{ there exists }k < i, \sigma_k = p(u) \text{ and }\\
+					 %& \quad \text{ for all } l: k < l < i, \sigma_l \neq u(v) \\
+		%u(v) & \text{ for all } c \in \Children{v}{\varphi} \text{ exists } k < i, \sigma_k = p(u) \text{ and for all }l: k < l < i, \sigma_l \neq u(v) \\
+		u(v) & \text{for all } c \in \Children{v}{\varphi} \text{ exists } k < i \text { such that } \sigma_k = p(u)\\
+		p(v) & \text{otherwise, where } v = min_{\prec}(w \mid \text{ for all } l < i: \sigma_l \neq p(w))
+	\end{array}
+	\right.
+	%finished(v,i) := \text{ for all} c \in \Children{v}{\varphi} \text{ exists } k < i, \sigma_k = p(u) \text{ and for all } k < l < i, \sigma_l \neq u(v) 
+\end{array}
+$$
+\qed
+\end{definition}
+
+The following theorem shows that unpebbling moves can be omitted from strategies for the Bounded Pebbling Game, when the goal is to produce strategies with low pebbling numbers.
+
+\begin{theorem}
+\label{theorem:canonical}
+The canonical pebbling strategy has the minimum pebbling number among all pebbling strategies that respect the topological order $\prec$.
+\end{theorem}
+\begin{proof}
+%Let $\sigma = (\sigma_1,\ldots,\sigma_n)$ be the canonical pebbling strategy for $\prec$ and let $\sigma' = (\sigma'_1,\ldots,\sigma'_n)$ be a pebbling strategy respecting $\prec$ such that $\sigma \neq \sigma'$.
+%All the pebbling strategies respecting $\prec$ differ only in the order of unpebbling moves.
+Definition \ref{def:canonstrat} prioritizes unpebbling over pebbling moves.
+Therefore the canonical topological pebbling strategy makes unpebbling moves as soon as possible.
+Consider the moment for unpebbling an arbitrary node $v$ in the canonical pebbling strategy. 
+Unpebbling it later could only possibly increase the pebble number. 
+To reduce the pebble number, $v$ would have to be unpebbled earlier than some preceding pebbling move. 
+But, by definition of canonical pebbling strategy, the immediately preceding pebbling move pebbles the last child of $v$ w.r.t. $\prec$. 
+Therefore, unpebbling $v$ earlier would make it impossible for its last child to be pebbled later without violating the rules of the game.
+\qed
+\end{proof}
+
+As a consequence of Theorem \ref{theorem:canonical} finding pebbling strategies with low pebbling numbers can be reduced to constructing topological orders.
+The memory required to process a proof using some topological order can be measured by the pebbling number of the canonical pebbling strategy corresponding to the order.
+
+\begin{definition}[Space]
+\label{def:space measure}
+The \emph{space} $\pspace{\varphi}{\prec}$ 
+of a proof $\varphi$ and a topological order $\prec$ is the pebbling number of the canonical topological pebbling strategy of $\varphi$, its root and $\prec$.
+\qed
+\end{definition}
+
+The problem of compressing the space of a proof $\varphi$ and a topological order $\prec$ is the problem of finding another topological order $\prec'$ such that $\pspace{\varphi}{\prec'} < \pspace{\varphi}{\prec}$. The following theorem shows that the number of possible topological orders is very large; hence, enumeration is not a feasible option when trying to find a good topological order.
+
+\begin{theorem}
+\label{theorem:enumeration}
+There is a sequence of proofs $(\varphi_1,\ldots,\varphi_m,\ldots)$ such that $\plength{\varphi_m} \in O(m)$ and $|T(\varphi_m)| \in \Omega(m!)$, where $T(\varphi_m)$ is the set of possible topological orders for $\varphi_m$.
+\end{theorem}
+\begin{proof}
+Let $\varphi_m$ be a perfect binary tree with $m$ axioms. Clearly, $\plength{\varphi_m} = 2m-1$.
+Let $(\n_1,\ldots,\n_n)$ be a topological order for $\varphi_m$. 
+Let $\Axioms{\varphi} = \{\n_{k_1},\ldots,\n_{k_m}\}$, then $(\n_{k_1},\ldots,\n_{k_m},\n_{l_1},\ldots,\n_{l_{n-m}})$, where $(l_1,\ldots,l_{n-m}) = (1,\ldots,n) \setminus (k_1,\ldots,k_m)$, is a topological order as well. 
+Likewise, $(\n_{\pi({k_1})},\ldots,\n_{\pi({k_m})},\n_{l_1},\ldots,\n_{l_{n-m}})$ is a topological order, for every permutation $\pi$ of $\{k_1,\ldots,k_m\}$. There are $m!$ such permutations, so the overall number of topological orders is at least factorial in $m$ (and also in $n$).
+\end{proof}
 

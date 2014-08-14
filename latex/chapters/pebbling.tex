@@ -1,5 +1,16 @@
-\chapter*{Pebbling}
-\ref{cha:pebbling}
+%\chapter*{Pebbling}
+%\ref{cha:pebbling}
+
+In this chapter, we present our space compression method.
+We translate the problem of compressing proofs in space to a pebbling game, which explains the name of the chapter.
+In Section \ref{sec:pebbling-game} we introduce this game, a brief overview over the literature in pebbling games and its relation to proofs.
+It turns out that for the variation of the game we use, obtaining an optimal strategy is NP-complete.
+We use this result and present a polynomial translation of that problem to a propositional satisfiability problem in section \ref{sec:pebblingSAT}.
+In Section \ref{sec:algorithms} we present two algorithms to compress proofs in space.
+These algorithms are parametrized by heuristics.
+We present a collection of heuristics in Section \ref{sec:heuristics}.
+We conclude this chapter by presenting the experimental evaluation of the space compression algorithms in Section \ref{sec:experiments}.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Introduction %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -7,7 +18,7 @@
 %\label{ch:introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{chapters/pebbling/pebbling_introduction}
+%\input{chapters/pebbling/pebbling_introduction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Resolution %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,7 +27,7 @@
 %\label{ch:resolution}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{chapters/pebbling/resolution}
+%\input{chapters/pebbling/resolution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Pebbling Game %%%%%%%%%%%%%%%%%%%%%%%
@@ -34,7 +45,7 @@
 %\label{ch:pebblingprocessing}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{chapters/pebbling/pebbling_proof-processing}
+%\input{chapters/pebbling/pebbling_proof-processing}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Pebbling as a Satisfiability Problem 
@@ -79,4 +90,4 @@
 %\label{ch:conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{chapters/pebbling/pebbling_conclusion}
+%\input{chapters/pebbling/pebbling_conclusion}

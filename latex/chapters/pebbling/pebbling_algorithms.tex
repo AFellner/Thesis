@@ -166,7 +166,7 @@ After visiting the premises, $n$ is added to the current sequence of nodes.
 Since axioms do not have any premises, there is no recursive call for axioms and these nodes are simply added to the sequence. 
 The recursion is started with the call $BUpebble(\varphi,r,\emptyset,())$.
 Since all proof nodes are ancestors of the root, the recursive calls will eventually visit all nodes once and a topological total order will be found.
-Bottom-Up Pebbling corresponds to the apply function $\ap(.)$ defined in Section \ref{sec:pebblingchecking} with the addition of a visit order of the premises.
+Bottom-Up Pebbling corresponds to the apply function $\ap(.)$ defined in Section \ref{sec:proofprocessing} with the addition of a visit order of the premises.
 Also previously visited nodes are not visited again.
 
 \SetKwFunction{KwVisit}{BUpebble}

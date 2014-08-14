@@ -27,7 +27,7 @@ Example \ref{example:hardfirst} shows the idea behind pebbling spacious subproof
 \subsection{Last Child Heuristic (``$Lc$'')}
 \label{sec:lastchild}
 
-As discussed in Section \ref{sec:pebblingchecking} in the proof of Theorem \ref{theorem:canonical}, the best moment to unpebble a node $\n$ is as soon as its last child w.r.t. a topological order $\prec$ is pebbled. 
+As discussed in Section \ref{sec:pebbling-game} in the proof of Theorem \ref{theorem:canonical}, the best moment to unpebble a node $\n$ is as soon as its last child w.r.t. a topological order $\prec$ is pebbled. 
 This insight is used for the \algo{Last Child} heuristic that chooses nodes that are last children of other nodes. 
 Pebbling a node that allows another one to be unpebbled is always a good move. 
 The current number of used pebbles (after pebbling the node and unpebbling one of its premises) does not increase.

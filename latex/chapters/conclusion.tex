@@ -1,3 +1,18 @@
-\chapter*{Conclusions}
 
-Conclusions
+In this work we presented two methods for proof compression and their theoretical foundations.
+We implemented the methods and evaluated them extensively to show their usefulness.
+Furthermore, we investigated the complexity of the underlying problems and in the case of explanation production proved the complexity, which is a new result for complexity theory.
+For both methods we highlighted possible future work, which could improve the presented methods further.
+
+The method for compressing proofs in length shows good results both in compression rate and speed.
+It can compete with previously proposed compression algorithms in that regard.
+The compression rate grows with the proof size and since compressing proofs is especially interesting for huge proofs, this puts an even better light on the results measured.
+Furthermore, the novel congruence closure algorithm can be used in other applications.
+It is especially interesting when immutable data structures are desired, which is almost always the case in functional programming languages.
+
+Two algorithms together with a variety of heuristics for compressing proofs with respect to space have been conceived. 
+The experimental evaluation clearly shows that the so-called Bottom-Up algorithm is faster and compresses more than the more natural, straightforward and simple Top-Down algorithm. 
+The best performances are achieved with the simplest heuristics (i.e. Last Child and Number of Children). 
+More sophisticated heuristics provided little extra compression but cost a high price in execution time. 
+
+The key contributions of this work are two novel proof compression methods and the proof of NP-completeness of the shortest explanation decision problem.

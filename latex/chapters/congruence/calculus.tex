@@ -1,4 +1,5 @@
-\section*{Resolution extended with equality}
+\section{Resolution extended with equality}
+\label{sec:calculus}
 
 Equality is a well researched topic in computational logic.
 Among the most prominent approaches to deal with this special predicate are first-order resolution with paramodulation \cite{Robinson1969}, its extension the superposition calculus \cite{Nieuwenhuis2001} and term rewrite systems \cite{Baader1998}.
@@ -71,7 +72,7 @@ Let $E$ be a set of equations and $s,t \in \mathcal{T}_E$, then $E \models s \th
 
 \begin{proof}
 
-The existence of a congruence refutation in case $E \models s \thickapprox t$ is proven in terms of a proof producing algorithm, presented in Section \ref{sec:sec:proofproduction}.
+The existence of a congruence refutation in case $E \models s \thickapprox t$ is proven in terms of a proof producing algorithm, presented in Section \ref{sec:proofproduction}.
 This algorithm produces a congruence derivation with last clause $\{u_1 \neq v_1,\ldots,u_n \neq v_n, s = t\}$ such that $\{(u_i,v_i) \mid i = 1,\ldots,n\} \subseteq E$.
 Clearly this proof can be extended to a congruence derivation for $E \cup \{ s \neq t\}$.
 
