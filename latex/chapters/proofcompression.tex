@@ -1,9 +1,18 @@
-\chapter*{Proof Compression}
+\chapter*{Proofs}
 
-This work presents two methods for proof compression.
-In this chapter we will explain what we understand as proof compression.
-To this end, we will define the notion of a proof, specify measures of such objects that can be compressed and define how to process them.
+Proofs are the central object of this work.
+In this chapter we define the resolution calculus, which is extended to reason about equality in Section \ref{sec:calculus}.
+We define what a proof in this calculus is, define measures of proofs and what it means to process a proof.
+Our methods are stated so they compress resolution proofs.
+However, both methods are in their cores not dependent on the underlying proof system.
+The length compression method (Chapter \ref{ch:congruence}) just requires some way to express congruence closure in a systematic way and the space compression method (Chapter \ref{ch:pebbling}) could be applied to any proof system that produces proofs that can be represented as rooted directed acyclic graphs.
+Therefore, with only little extra effort the compression methods can be generalized to compress other kinds of proofs, like for example proofs in the sequent calculus.
 
 \input{chapters/proofcompression/resolution}
 
+%\input{chapters/proofcompression/proofmeasures}
+
+%\input{chapters/congruence/calculus}
+
 \input{chapters/proofcompression/proofprocessing}
+

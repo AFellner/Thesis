@@ -15,14 +15,13 @@ For an extensive discussion of first-order logic resolution, we refer the reader
 A \emph{literal} is a propositional variable or the negation of a propositional variable. 
 The \emph{complement} of a literal $\ell$ is denoted $\dual{\ell}$ (i.e. for any propositional variable $p$,
 $\dual{p} = \neg p$ and $\dual{\neg p} = p$). 
-The set of all literals is denoted by $\mathcal{L}$. 
 A \emph{clause} is a set of literals. 
 $\bot$ denotes the \emph{empty clause}.
 
 \end{definition}
 
-Clauses represent formulas by interpreting it as the disjunction of its literals.
-Sets of clauses represent formulas by interpreting them as the conjunction of the interpreted clauses.
+A clause represents a formula by interpreting it as the disjunction of its literals.
+A set of clauses represents a formula by interpreting it as the conjunction of the interpreted clauses.
 The propositional resolution calculus operates on propositional formulas in conjunctive normal form, which are formulas that are represented by a set of clauses.
 
 \begin{definition}[Resolvent]
@@ -33,10 +32,10 @@ The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\dual{\ell}\}$ is called
 \end{definition}
 
 The condition of $C_1$ and $C_2$ being different technically is not necessary.
-However if it is possible to resolve a clause with itself, this means that the clause contains both the positive and negative version of a variable and is therefore tautological (i.e. trivially satisfiable).
+However if it is possible to resolve a clause with itself, then the clause contains both the positive and negative version of a variable and is therefore tautological (i.e. trivially satisfiable).
 Since the resolution calculus is refutational, i.e. it seeks to show unsatisfiability, such clauses are of no use and therefore we forbid them.
 In case it is possible to produce a resolvent of two clauses w.r.t. two different literals, no matter which literal is chosen, the resulting resolvent will tautological.
-Therefore the choice of literal to resolve on is not of interest to us.
+Therefore the choice of literal to resolve on is not an interesting question to investigate and we will drop the reference to the literal when speaking about resolvents.
 In terms of proof calculi, axioms of the propositional resolution calculus are clauses and the single rule of the calculus is to derive a resolvent from previously derived clauses or axioms.
 This work studies the syntactic and semantic structure of derivations in this calculus, which are formally defined in the following.
 
@@ -58,13 +57,14 @@ Therefore a resolution refutation of $F$ is a witness to the validity of $\neg F
 For an unsatisfiable formula, there are many different resolution refutations.
 They differ w.r.t. the order in which new resolvents are produced.
 The aim of proof compression is to find short refutations among all possible ones.
+
 We prefer a different view on proofs, which is more suited for the purpose of proof manipulation.
 In the following definition, we present proofs as labeled graphs.
 
 \begin{definition}[Proof] 
 \label{def:proof}
 A \emph{proof} $\varphi$ is a rooted labeled directed acyclic graph $\langle V,E,\n,\mathcal{L} \rangle$.
-The labeling function $\mathcal{L}$ maps nodes to clauses and edges to literals.
+The labeling function $\mathcal{L}$ maps nodes to clauses.
 The designated node $\n \in V$ is the root of the graph, i.e. it is a node without children and every node of the graph is a recursive ancestor of the node.
 Furthermore, a proof as to fulfill one of the following properties:
 
@@ -80,7 +80,7 @@ Furthermore, a proof as to fulfill one of the following properties:
 
 The node $\n$ is called the \emph{root} of $\varphi$ and $\mathcal{L}(\n)$ its \emph{conclusion}.
 In case \ref{enum:resCase}, $\varphi_L$ and $\varphi_R$ are \emph{premises} of $\varphi$ and $\varphi$ is a \emph{child} of $\varphi_L$ and $\varphi_R$.
-A proof $\psi$ is a subproof of a proof $\varphi$, if there is a path from $\varphi$ to $\psi$ in the transitive closure of the premise relation.
+A proof $\psi$ is a subproof of a proof $\varphi$, if they are related in the transitive closure of the premise relation.
 A subproof $\psi$ of $\varphi$ which has no premises is an \emph{axiom} of $\varphi$.
 $\Vertices{\varphi}$ and $\Axioms{\varphi}$ denote, respectively, the set of nodes and axioms of $\varphi$. 
 $\Premises{\n}{\varphi}$ denotes the premises and $\Children{\n}{\varphi}$ the children of the subproof with root $\n$ in a proof $\varphi$. 
@@ -88,10 +88,14 @@ When a proof is represented graphically, the root is drawn at the bottom and the
 The \emph{length} of a proof $\varphi$ is the number of nodes in $\Vertices{\varphi}$ and is denoted by $\plength{\varphi}$.
 \end{definition}
 
+An important measure of proofs for this work is space.
+We define the space of a proof in Section \ref{sec:pebbling-game}.
+Other measures of proofs that are not discussed in this work are height, width and size of the unsat core.
+
 \noindent
 Note that since the labeling of premises have to agree on common nodes and edges, the definition of the labeling $\mathcal{L}$ is unambiguous.
 Also note that in case \ref{enum:resCase} of Definition \ref{def:proof} $V_L$ and $V_R$ are not required to be disjunct. 
-Therefore the underlying structure of a proof is really a directed acyclic graph (DAG) and not simply a tree. 
+Therefore the underlying structure of a proof is really a directed acyclic graph and not simply a tree. 
 Modern SAT- and SMT-solvers, using techniques of conflict driven clause learning, produce proofs with a general DAG structure \cite{Bouton2009,Biere2009}.
 The reuse of proof nodes plays a central role in proof compression \cite{Fontaine2011}.
 

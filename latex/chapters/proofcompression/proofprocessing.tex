@@ -23,12 +23,12 @@ $$
 
 \emph{Processing a node} $\n$ with some processing function $f$ means computing the value $\ap(\n,f)$.
 \emph{Processing a proof} means to process its root node.
-\qed
+
 \end{definition}
 
 \begin{example}
 
-Checking the correctness of a proof (i.e. checking for the absence of faulty resolution steps) can be checked in terms of the following processing function with $T = \{\top,\bot\}$ and $\wedge$ being the usual boolean and-operation.
+Checking the correctness of a proof (i.e. checking for the absence of faulty resolution steps) can be done in terms of the following processing function with $T = \{\top,\bot\}$ and $\wedge$ being the usual boolean and-operation.
 $$
 f(\n,w_1,w_2) = \left\{
 \begin{array}{ll}
@@ -39,6 +39,6 @@ f(\n,w_1,w_2) = \left\{
 \end{array}
 \right.
 $$
-Processing a proof with this processing function yields $\top$ \emph{iff} the proof is a correct resolution proof.
+Processing a proof with this processing function yields $\top$ if and only if the proof is a correct resolution proof.
 \qed
 \end{example}
