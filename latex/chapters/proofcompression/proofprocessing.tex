@@ -34,11 +34,11 @@ f(\n,w_1,w_2) = \left\{
 \begin{array}{ll}
 	\top & \text{ if $\n$ has no premises} \\
 	w_1 \wedge w_2 &\text{ if the conclusion of $\n$ is a resolvent}\\
-								 &\quad \text{ of the conclusions of its premises} \\
+								 &\hspace{0.85em} \text{ of the conclusions of its premises} \\
 	\bot & \text{ otherwise}
 \end{array}
 \right.
 $$
-Processing a proof with this processing function yields $\top$ if and only if the proof is a correct resolution proof.
+Processing a proof with processing function $f$ yields $\top$ if and only if the proof is a correct resolution proof.
 \qed
 \end{example}

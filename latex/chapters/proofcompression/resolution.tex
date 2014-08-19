@@ -101,7 +101,8 @@ The reuse of proof nodes plays a central role in proof compression \cite{Fontain
 
 \begin{example}
 
-Consider the propositional logic formula $\Phi := (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wedge (\neg x_1)$.
+Consider the propositional logic formula $\Phi$ in conjunctive normal form.
+$$\Phi := (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wedge (\neg x_1)$$
 In clause notation, this formula is written as $\langle \{x_1, x_2, \neg x_3\}, \{x_1, x_2\}, \{x_1, x_3\}, \{\neg x_1\} \rangle$.
 By resolving the clauses $\{x_1, x_2, \neg x_3\}$ and $\{x_1, x_2\}$, we obtain the clause $\{x_1,\neg x_3\}$, which we can resolve with $\{x_1, x_3\}$ to obtain $\{x_1\}$.
 Finally, we obtain the empty clause $\bot$ by resolving $\{x_1\}$ with $\{\neg x_1\}$.

@@ -1,8 +1,9 @@
-\section{Definitions}
+\section{Congruence Closure}
 \label{sec:congruencedef}
 
-In this section we summarize notions that are used throughout the chapter.
-Most importantly, we define the notion of congruence closure, which is an essential part of our proof compression method.
+In this section we define the concepts of congruence- relation and closure, which is the foundation of our proof compression method.
+To this end we define terms and equations, which are notions that will be used throughout this chapter.
+We close this section by proving some elementary properties of congruence relations.
 
 \begin{definition}[Terms and Subterms]
 
@@ -14,7 +15,7 @@ For a given signature $\Sigma$, the set of \emph{terms} $\mathcal{T}^{\Sigma}$ i
 \begin{align*}
 	\mathcal{T}^{\Sigma}_0 &= \{a \in \mathcal{F} \mid arity(a) = 0\}\\
 	\mathcal{T}^{\Sigma}_{i+1} &= \{g(t_1,\ldots,t_n) \mid arity(g) = n \text{ and } t_1, \ldots, t_n \in \mathcal{T}_{i}\} \\
-	\mathcal{T}^{\Sigma} &= \bigcup_{i\in \mathbb{N}} \mathcal{T}_{i}
+	\mathcal{T}^{\Sigma} &= \bigcup_{i\in \mathbb{N}} \mathcal{T}^{\Sigma}_{i}
 \end{align*}
 
 \noindent Let $f(t_1,\ldots,t_n) \in \mathcal{T}^{\Sigma}$, then $t_1,\ldots,t_n$ are \emph{direct subterms} of $f(t_1,\ldots,t_n)$.
@@ -22,26 +23,27 @@ The \emph{subterm} relation is the reflexive, transitive closure of the direct s
 
 \end{definition}
 
-We will omit the index $\Sigma$, if it is clear from context.
+\noindent Should $\Sigma$ be clear from context or of no relevance, we will omit it and write $\mathcal{T}$ instead of $\mathcal{T}^{\Sigma}$.
 
 \begin{definition}[Equation]
 
-Let $\mathcal{T}^{\Sigma}$ be a set of terms.
-An \emph{equation} of $\mathcal{T}^{\Sigma}$ is a tuple of terms, i.e. an element of $\mathcal{T}^{\Sigma} \times \mathcal{T}^{\Sigma}$.
+Let $\mathcal{T}$ be a set of terms.
+An \emph{equation} of $\mathcal{T}$ is a tuple of terms, i.e. an element of $\mathcal{T} \times \mathcal{T}$.
 
 \end{definition}
 
-For a set of equations $E$ we denote by $\mathcal{T}_E$ the set of terms used in $E$, i.e. the set $\{t \mid t \text{ is subterm of some } u \text{ such that for some } v: (u,v) \in E \text{ or } (v,u) \in E\}$.
+\noindent For a set of equations $E$ we denote by $\mathcal{T}_E$ the set of terms used in $E$.
+$$\mathcal{T}_E := \{t \mid t \text{ is subterm of some } u \text{, such that for some } v: (u,v) \in E \text{ or } (v,u) \in E\}$$
 
 \begin{definition}[Congruence Relation]
 
 Let $\mathcal{T}$ be a set of terms.
 A relation $R \subseteq \mathcal{T} \times \mathcal{T}$ is a congruence relation, if has the following four properties:
 \begin{itemize}
-	\item reflexive: for all $t \in \mathcal{T}: (t,t) \in R$
-	\item symmetric: $(s,t) \in R$ implies $(t,s) \in R$
-	\item transitive: $(r,s) \in R$ and $(s,t) \in R$ implies $(r,t) \in R$
-	\item compatible: $f$ is a n-ary function symbol and for all $i = 1,\ldots,n (t_i,s_i) \in R$ implies $f(t_1,\ldots,t_n),f(s_1,\ldots,s_n) \in R$
+	\item reflexivity: for all $t \in \mathcal{T}: (t,t) \in R$
+	\item symmetry: $(s,t) \in R$ then $(t,s) \in R$
+	\item transitivity: $(r,s) \in R$ and $(s,t) \in R$ then $(r,t) \in R$
+	\item compatibility: $f$ is a n-ary function symbol and for all $i = 1,\ldots,n$ $(t_i,s_i) \in R$ then $(f(t_1,\ldots,t_n),f(s_1,\ldots,s_n)) \in R$
 \end{itemize}
 
 \end{definition}
@@ -57,18 +59,19 @@ To this end we define the notion of congruence closure of a set of equations.
 
 Let $E$ be a set of equations.
 The set $E^* \supseteq E$ is called the \emph{congruence closure} of $E$, 
-if $E^*$ is a congruence relation on $\mathcal{T}_E$ and for every congruence relation $C$, such that $C \supset E$ follows $C \supseteq E^*$.
-It is easily seen that congruence relations are closed under intersection.
-Therefore $E^*$ always exists.
-
-\noindent We write $E \models s \thickapprox t$ if $(s,t) \in E^*$ and say that $E$ is an \emph{explanation} for $s \thickapprox t$.
+if $E^*$ is a congruence relation on $\mathcal{T}_E$ and for every congruence relation $C$, such that $C \supseteq E$ follows $C \supseteq E^*$.
+We write $E \models s \thickapprox t$ if $(s,t) \in E^*$ and say that $E$ is an \emph{explanation} for $s \thickapprox t$.
 We call a pair $(s,t)$ in a congruence closure an \emph{equality} and we call an equality of compound terms $f(a,b),f(c,d)$ such that $E \models a \thickapprox c$ and $E \models b \thickapprox d$ a \emph{deduced equality}.
+For a term $t \in \mathcal{T}_E$ the set of congruent terms $\{s \in \mathcal{T}_E \mid E \models s \thickapprox t\}$ is the \emph{congruence class} of $t$.
 
 \end{definition}
 
-\begin{proposition}[Properties of the $\models$-relation]
+It is easily seen that congruence relations are closed under intersection.
+Therefore $E^*$ always exists.
+
+\begin{proposition}[Properties of the $\models$ relation]
 \label{prop:models}
-The $\models$-relation is monotone: $E_1 \subset E_2$ and $E_1 \models s \thickapprox t$ implies $E_2 \models s \thickapprox t$ and transitive: $E \models s \thickapprox t$ and $E \cup \{(s,t)\} \models u \thickapprox v$ implies $E \models u \thickapprox v$. 
+The $\models$ relation is monotone: $E_1 \subset E_2$ and $E_1 \models s \thickapprox t$ implies $E_2 \models s \thickapprox t$ and consistent: $E \models s \thickapprox t$ and $E \cup \{(s,t)\} \models u \thickapprox v$ implies $E \models u \thickapprox v$. 
 
 \end{proposition}
 
@@ -77,8 +80,6 @@ The $\models$-relation is monotone: $E_1 \subset E_2$ and $E_1 \models s \thicka
 Monotonicity follows from the fact that congruence closure of $E_1$ is contained in the congruence closure of $E_2$.
 Since the congruence closure of $E^*$ is $E^*$ itself, it follows that $E \models u \thickapprox v$ if and only if $E^* \models u \thickapprox v$.
 Since $(s,t) \in E^*$, clearly it is the case that $E^* = (E \cup \{(s,t)\})^*$.
-Therefore $E \cup \{(s,t)\} \models u \thickapprox v$ implies $(u,v) \in E^*$, i.e. $E \models u \thickapprox v$ or in other words, the $\models$-relation is transitive.
+Therefore $E \cup \{(s,t)\} \models u \thickapprox v$ implies $(u,v) \in E^*$, i.e. $E \models u \thickapprox v$ or in other words, the $\models$ relation is consistent.
 
 \end{proof}
-
-The idea of using congruence closure in proof compression is to replace big explanations, w.r.t. cardinality, by smaller ones.
