@@ -7,6 +7,8 @@ The basic structure of the algorithm is inherited from \cite{Fontaine2004}, whic
 The technique to store and deduce equalities of non constant terms is inspired from \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 Additionally the proof forest structure described below was proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 
+Before we describe the algorithm, we discuss two technical concepts that are important aspects of our congruence closure algorithm.
+
 \subsection*{Currification and Abstract Congruence Closure}
 \label{subsec:algorithms_preliminaries}
 
@@ -16,7 +18,7 @@ More formally let $\mathcal{F}$ be a finite set of functions with a designated b
 A term w.r.t. a signature of this form is called a \emph{curried term}.
 
 It is possible to uniquely translate a general set of terms $\mathcal{T}^{\Sigma}$ with signature $\Sigma = \langle \mathcal{F},arity \rangle$ into a set of curried terms $\mathcal{T'}^{\Sigma'}$.
-$\Sigma'$ is obtained from $\Sigma$ by setting $arity$ to zero for every function symbol in $\mathcal{F}$ and introducing the designated binary function symbol $f$ to $\mathcal{F}$.
+The new signature $\Sigma'$ is obtained from $\Sigma$ by setting $arity$ to zero for every function symbol in $\mathcal{F}$ and introducing the designated binary function symbol $f$ to $\mathcal{F}$.
 The translation of a term $t \in \mathcal{T}^{\Sigma}$ is given in terms of the function $curry$.
 
 $$
@@ -50,16 +52,16 @@ In the context of proof compression, our congruence closure algorithm will be ap
 We could introduce the extra constants for the whole proof before processing, but would still have to remove them from explanations every time we produce a new subproof.
 It would be interesting to investigate, whether our intuition in that regard is right, or if it pays off to deal with extra constants.
 
-The explanation producing congruence closure algorithms that inspired our version, \cite{Nieuwenhuis2005,Nieuwenhuis2007} describes an version one using currying.
-\cite{Fontaine2004} proposes a traditional algorithm without currying and extra constants.
-By choosing to work with curried terms, but without extra constants, our algorithm is a middle ground between them.
+\cite{Nieuwenhuis2005,Nieuwenhuis2007} describes an explanation producing abstract congruenc closure algorithm, 
+whereas \cite{Fontaine2004} proposes a traditional algorithm without currying and extra constants.
+By choosing to work with curried terms, but without extra constants, our algorithm is a middle ground between the two algorithms.
 
 \subsection*{Immutable Data Structures}
 
 Most of the data structures presented the following section are defined in terms of mathematical functions.
 This is not by coincidence and our congruence closure algorithm can easily be translated to an implementation in a functional programming language.
 Furthermore, all data structures can be implemented immutable.
-An immutable data structure is one that never changes is internal state.
+An immutable data structure is one that never changes is internal state after its creation.
 When alternating the information stored in the data structure, a new object with the new information is constructed.
 The old object remains intact.
 A side effect of a method is a modification of an object that is not the returned value of the method.
@@ -77,9 +79,10 @@ Immutable data structures also have some downsides.
 The impossibility of changing internal structures often makes it hard to maintain certain structures without a lot of extra effort.
 One simple example is that of a linked list.
 Suppose such a linked list is implemented in such a way that every element of the list internally has a pointer to the next element in the list.
-When changing the first element of the list in some fashion, the pointer of the second element has to be set to the new version of the first one.
-Since this requires to produce a new version of the second element aswell, also the pointer of the third element has to be updated and so on.
+When modifying the first element of the list in some fashion, the pointer of the second element has to be set to the new version of the first one.
+Since this requires to produce a new version of the second element as well, also the pointer of the third element has to be updated and so on.
 Some algorithms and their optimal runtime depend on such data structures, that are very hard or impossible to implement immutable.
+However, sometimes tricky data structures like the zipper were invented which help to overcome these problems.
 
 \subsection*{Congruence structure}
 
@@ -90,29 +93,29 @@ The set $\mathcal{E} = \mathcal{T} \times \mathcal{T} \cup \{\smiley\}$ is the s
 \begin{itemize}
 	\item Representative $r: \mathcal{T} \rightarrow \mathcal{T}$
 	\item Congruence class $[.]: \mathcal{T} \rightarrow 2^\mathcal{T}$
-	\item Left neighbors $N_l: \mathcal{T} \rightarrow 2^\mathcal{T}$ <- use $N_l$
+	\item Left neighbors $N_l: \mathcal{T} \rightarrow 2^\mathcal{T}$
 	\item Right neighbors $N_r: \mathcal{T} \rightarrow 2^\mathcal{T}$
 	\item Lookup table $l: \mathcal{T} \times \mathcal{T} \rightarrow \mathcal{T}$
 	\item Congruence graph $g$
-	\item Queue $\mathcal{Q}$ of pairs of terms %type $\mathcal{T} \times \mathcal{T}$
+	\item Queue $\mathcal{Q}$ of pairs of terms
 	\item Current explanations $\mathcal{M}: \mathcal{T} \times \mathcal{T} \rightarrow \mathcal{E}$
 \end{itemize}
 
 The representative is one particular term of a class of congruent terms.
-It is used to identify whether two terms are in the same congruence class and the data structures used for detecting equalities derived from the compatability axiom ($l, N_l$ and $N_r$) are kept updated only for representatives.
+It is used to identify whether two terms are in the same congruence class and the data structures ($l, N_l$ and $N_r$) used for detecting deduced equalities are kept updated only for representatives.
 The congruence class structure represents a set of pairwise congruent terms.
 It is used to keep track which representatives have to be updated when merging the classes of two terms.
-The structures left (resp. right) neighbor keeps track of the respective other terms in compound terms.
+The structures left $N_l$ (resp. right $N_r$) neighbor  keeps track of the respective other terms in compound terms.
 The information is only used for representatives (i.e. terms in the target of $r(.)$).
 Furthermore right and left neighbors always only contain one term per congruence class (which is not necessarily the representative of that class).
 The lookup table is used to keep track of all compound terms in the congruence structure and to merge classes of compound terms, which arguments are congruent.
-For example if there terms $f(a,b),f(c,d)$ were inserted and the representatives are such that $r(a) = r(c), r(b) = r(d)$, then $N_r(r(a)) = \{d\}$, $N_l(r(d)) = \{a\}$ and $l(r(a),r(b)) = f(a,b)$.
+For example if the terms $f(a,b),f(c,d)$ were inserted and the representatives are such that $r(a) = r(c), r(b) = r(d)$, then $N_r(r(a)) = \{d\}$, $N_l(r(d)) = \{a\}$ and $l(r(a),r(b)) = f(a,b)$.
 The elements in the respective sets serve as pointers to their representatives, therefore it does not matter whether for example $N_r(r(a)) = \{d\}$ or $N_r(r(a)) = \{b\}$.
 In Section \ref{sec:congruenceclosurealgorithm} we explain how these structures are modified and used in detail.
 The congruence graph (explained in detail in Section \ref{sec:congruencegraph}) stores the derived equalities in a structured way, that allows to create explanations for a given pair of terms.
 Edges are added to the graph in a lazy way, meaning that they are buffered and only actually entered into the graph when demanded.
 The queue $\mathcal{Q}$ keeps track of the order in which edges should be added to the graph.
-The function $\mathcal{M}$ stores the existence of an explanation for a buffered edge.
+The function $\mathcal{M}$ stores explanations if they exist for buffered edges.
 The idea will be explained in detail in Section \ref{sec:proofproduction}.
 We call the unique congruence structure for $\mathcal{T} = \emptyset$ the \emph{empty congruence structure}.
 
@@ -120,21 +123,20 @@ We call the unique congruence structure for $\mathcal{T} = \emptyset$ the \emph{
 
 \subsection*{Congruence closure algorithm}
 \label{sec:congruenceclosurealgorithm}
-In this section we present our congruence closure algorithm.
-We state and prove its properties.
+In this section we present our explanation producing congruence closure algorithm and state and prove its properties.
 Most importantly we show that the algorithm is sound and complete and has the best known asymptotic running time $O(n \log(n))$, where $n$ is the number of terms in the input.
-Computing the congruence closure of some set of equations $E$ is done by adding all of them to an ever growing congruence structure, which initially is empty.
+Computing the congruence closure of some set of equations $E$ is done by adding all equations to an ever growing congruence structure, which initially is empty.
 Since this has to be done in some order, we will often assume that $E$ is given as a sequence of equations rather than a set.
-The pseudocode of most methods do not include a return statement.
+The pseudocode of most methods do not include return statements.
 In fact every method implicitly returns a (modified) congruence structure or simply modifies a global variable, which is the current congruence structure.
 Adding an equation to a congruence structure is done with the \texttt{addEquation} method, which is the only method that has to be visible to the user.
 The method adds boths sides of the equation to the current set of terms using the \texttt{addNode} method and afterwards merges the classes of the two terms.
-The \texttt{addNode} method enlarges the set of terms and searches for compatible deduced equalities.
+The \texttt{addNode} method enlarges the set of terms and detects deduced equalities.
 The updates of the set of terms are not outlined explicitly, but are understood to happen implicitly.
 Throughout this chapter we denote this implicit set of terms by $\mathcal{T}$.
 The method \texttt{merge} initializes and guides the merging of congruence classes.
 The actual merging is done by the method \texttt{union} by modifying the data structures.
-The method does not only merge classes, but also searches for and returns equalities of compound terms that were caused by the merge and the compatible axiom.
+The method does not only merge classes, but also searches for and returns deduced equalities.
 The classes of the terms of these extra equalities are merged, if they are not equal yet.
 The congruence classes are kept track of in a graph, maintaining important information for producing explanation and proofs.
 We call such a graph Congruence Graph and explain them in a more detailed fashion in Section \ref{sec:congruencegraph}.
@@ -145,13 +147,13 @@ The reason for adding edges in a lazy way is to produce shorter explanations and
 
 \input{chapters/congruence/algorithms/addnode}
 
-\input{chapters/congruence/algorithms/lazyinsert}
-
-\input{chapters/congruence/algorithms/lazyupdate}
-
 \input{chapters/congruence/algorithms/merge}
 
 \input{chapters/congruence/algorithms/union}
+
+\input{chapters/congruence/algorithms/lazyinsert}
+
+\input{chapters/congruence/algorithms/lazyupdate}
 
 In the following pages, we will provide some invariants that are essential for proving the properties of the algorithm.
 The invariants hold when initializing the respective data structures and before and after every insertion of an equation via the \texttt{addEquation} method.
@@ -183,16 +185,16 @@ The lookup structure $l$ is defined for a pair of terms $(s,t)$ if and only if t
 \begin{proof}
 
 Suppose $l$ is defined for some pair of terms $(s,t)$.
-The value of $l(s,t)$ is set either in lines \ref{changel1} or \ref{changel2} of \texttt{union} or in line \ref{initl} of \texttt{addNode}.
+The value of $l(s,t)$ is set either in lines \ref{changel1} or \ref{changel2} of \texttt{union} or in line \ref{line:initl} of \texttt{addNode}.
 In the latter case, $l$ is set to $f(a,b)$ for the tuple $(r(a),r(b))$ and therefore the invariant holds at this point.
-For changes to $r(a)$ or $r(b)$ in union the one implication of the invariant remains valid in case $l$ is defined for the new representatives, or $l$ is set for an additional pair of terms in lines \ref{changel2} or \ref{changel1}.
+For changes to $r(a)$ or $r(b)$ in union the one implication of the invariant remains valid in case $l$ is defined for the new representatives, or $l$ is set for an additional pair of terms in lines \ref{changel1} or \ref{changel2}.
 In case $l$ is set to $(new\_left,r(u))$ or $(r(u),new\_right)$ in union, there is an $l$-entry $l_v$ for which the invariant held before the union.
 The changes in representatives of $x$ are reflected by $new\_left$ and $new\_right$, while the representative of $v$ is changed to $r(u)$.
 The new entry for $l$ therefore respects the implication of the invariant.
 
 To show the other implication, let $f(a,b) \in \mathcal{T}$.
-The term $f(a,b)$ is entered via the \texttt{addEquation} method and subsequently via the \texttt{addNode} method.
-For compound terms lines \nllabel{ldefined} and \nllabel{initl} assert that $l$ is defined for $(r(a),r(b))$.
+The term $f(a,b)$ is entered with the \texttt{addEquation} method and subsequently via the \texttt{addNode} method.
+For compound terms lines \ref{line:ldefined} and \ref{line:initl} assert that $l$ is defined for $(r(a),r(b))$.
 All changes to $r(a)$ or $r(b)$ must happen in \texttt{union} and they are reflected by matching updates to the $l$ structure.
 
 \end{proof}
@@ -200,24 +202,21 @@ All changes to $r(a)$ or $r(b)$ must happen in \texttt{union} and they are refle
 
 \begin{invariant}[Neighbours]
 
-For every $s \in \mathcal{T}$, every $t_r \in rN(r(s))$ and $t_l \in lN(r(s))$, $l$ is defined for $(r(s),r(t_r))$ and $(r(t_l),r(s))$.
+For every $s \in \mathcal{T}$, every $t_r \in N_r(r(s))$ and $t_l \in N_l(r(s))$, $l$ is defined for $(r(s),r(t_r))$ and $(r(t_l),r(s))$.
 
 \end{invariant}
 
 \begin{proof}
 
-We show the result for the structure $rN$.
-The result about $lN$ can be obtained analogously.
-Since $rN$ is initialized with the empty set in line \ref{initrN} of \texttt{addNode}, the invariant clearly holds initially.
-To show that the invariant always holds, it has to be shown that all modifications of $r$ and $rN$ do not change the invariant.
+We show the result for the structure $N_r$.
+The result about $N_l$ can be obtained analogously.
+Since $N_r$ is initialized with the empty set in line \ref{initrN} of \texttt{addNode}, the invariant clearly holds initially.
+To show that the invariant always holds, it has to be shown that all modifications of $r$ and $N_r$ preserve the invariant.
 The structure $l$ is not modified after initialization.
-The structure $r$ is modified in line \ref{changerep} of union.
-The structure $rN$ is modified in line \ref{modifyrN} of addNode and line \ref{modifyrN2} of union.
-
-Line \ref{modifyrN} of \texttt{addNode} adds $b$ to $rN(r(a))$ and the four lines before that addition show that $l$ is defined for $(r(a),r(b))$.
-
-Union modifies $rN$ in such a way that it adds all right neighbors of some representative $r(v)$ to $rN(r(u))$.
+Line \ref{modifyrN} of \texttt{addNode} adds $b$ to $N_r(r(a))$ and the four lines before that addition show that $l$ is defined for $(r(a),r(b))$.
+Union modifies $N_r$ in such a way that it adds all right neighbors of some representative $r(v)$ to $N_r(r(u))$.
 Lines \ref{startrN} to \ref{stoprN} make sure that $l$ is defined for all these right neighbors.
+Updates of $r$ in \ref{changerep} are always followed by corresponding updates to $N_r$.
 
 \end{proof}
 
@@ -226,15 +225,15 @@ A consequence of this invariant is the fact that, that for every term $t \in \ma
 \begin{proposition}[Sound- \& Completeness]
 
 Let $r(.)$ be the representative mapping obtained by adding equations $E = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle $ to the empty congruence structure.
-For every $s,t \in \mathcal{T}$: $E \models s \thickapprox t$ if and only if $r(s) = r(t)$.
+For every $s,t \in \mathcal{T}_E$: $E \models s \thickapprox t$ if and only if $r(s) = r(t)$.
 
 \end{proposition}
 
 \begin{proof}
-
+\\
 \textbf{Completeness}
 
-We show that from $E \models s \thickapprox t$ follows $r(s) = r(t)$ by induction on $n$.
+\noindent We show that from $E \models s \thickapprox t$ follows $r(s) = r(t)$ by induction on $n$.
 
 \begin{itemize}
 \item \textbf{Induction Base} $n=1$: $E \models s \thickapprox t$ implies either $s = t$ or $\{u_1,v_1\} = \{s,t\}$.
@@ -249,22 +248,22 @@ There are two cases: $E_n \models s\thickapprox t$ and $E_n \nvDash s\thickappro
 In the former case, the claim follows from the induction hypothesis, the invariant class and the fact that union always changes representatives for all elements of a class.
 We still have to show the claim in the latter case.
 We write $E \models_n u \thickapprox v$ as an abbreviation for $E_n \nvDash u \thickapprox v$ and $E \models u \thickapprox v$.
-We show the claim by induction on the structure of the terms $s$ and $t$.
+We show the claim ($E \models s \thickapprox t$) by induction on the structure of the terms $s$ and $t$.
 
 \begin{itemize}
-\item \textbf{Induction Base} $s$ or $t$ is a constant and therefore the transitivity reasoning was used to derive $E \models_n s \thickapprox t$.
+\item \textbf{Induction Base} $s$ or $t$ is a constant and therefore transitivity reasoning was used to derive $E \models_n s \thickapprox t$.
 In other words, there are $l$ terms $t_1,\ldots,t_l$ such that $s = t_1$, $t = t_l$ and for all $i = 1,\ldots,l-1: E \models_n t_i \thickapprox t_{i+1}$.
 We prove by yet another induction on $l$ that $r(t_1) = r(t_l)$.
 \begin{itemize}
 \item \textbf{Induction Base} $l = 2$. It has to be the case (up to swapping $u_{n+1}$ with $v_{n+1}$), that $E_n \models s \thickapprox u_{n+1}$ and $E_n \models t \thickapprox v_{n+1}$, and the outmost induction hypothesis implies $r(s) = r(u_{n+1})$ and $r(t) = r(v_{n+1})$.
 Therefore it follows from Invariant Class, that after the call to union for $(u_{n+1},v_{n+1})$ it is the case that $r(t_1) = r(t_2)$.
-Suppose that the claim holds for some $l \in \mathbb{N}$.
-\item \textbf{Induction Step}: going from $l$ to $l+1$, the claim follows from a simple application of the transitivity axiom, since $t_1,\ldots,t_l$ and $t_2,\ldots,t_{l+1}$ are both sequences of length $l$.
+
+\item \textbf{Induction Step}: suppose that the claim holds for all sequences of length $l \in \mathbb{N}$, for $l+1$ the claim follows from a simple application of the transitivity axiom, since $t_1,\ldots,t_l$ and $t_2,\ldots,t_{l+1}$ are both sequences of length $l$.
 \end{itemize}
 \item \textbf{Induction Step}: suppose that $s = f(a,b)$ and $t = f(c,d)$.
 There are two cases such that $E \models_n s \thickapprox t$ can be derived.
 Using a transitivity chain, the claim can be shown just like in the base case.
-Using the compatible axiom, it has to be the case that $E \models_n a \thickapprox c$ and $E \models_n b \thickapprox d$ (in fact one of those can also be the case without the $n$ index).
+Using the compatability axiom, it has to be the case that $E \models_n a \thickapprox c$ and $E \models_n b \thickapprox d$ (in fact one of those can also be the case without the $n$ index).
 The terms $a,b,c,d$ are of lower structure than $s$ and $t$.
 Therefore it follows from the induction hypothesis that $r(a) = r(c)$ and $r(b) = r(d)$.
 The Invariants Neighbour and Lookup imply that either $r(s) = r(t)$ or $(s,t)$ is added to $d$ in line \ref{deduceEq1} or line line \ref{deduceEq2} of union.
@@ -272,29 +271,29 @@ Subsequently union is called for $s$ and $t$, after which $r(s) = r(t)$ holds.
 \end{itemize}
 \end{itemize}
 
-\textbf{Soundness}
+\noindent\textbf{Soundness}
 
-For $s = t$ the claim follows trivially.
+\noindent For $s = t$ the claim follows trivially.
 Therefore we show soundness in case $s \neq t$.
-We show that from $r(s) = r(t)$ follows $E \models s \thickapprox t$ by induction on the number $k$ of calls to union induced by adding all equations of $E$ to the empty congruence structure for all $s$ and $t$ that are arguments of some call to union.
+We show that from $r(s) = r(t)$ follows $E \models s \thickapprox t$ by induction on the number $m$ of calls to union induced by adding all equations of $E$ to the empty congruence structure, for all $s$ and $t$ that are arguments of some call to union.
 The original claim then follows from invariant Class, since only union modifies the $r$ structure and the fact that two terms are in the same class if and only if union was called for some elements in the respective classes.
 %Notice that only union modifies $r$ after initialization.
 %Therefore the proof investigates the changes made by union and the parameters it is called when adding equations to a congruence structure.
 \begin{itemize}
-\item \textbf{Induction Base} $k = 1$: $r(s) = r(t)$ implies $\{u_1,v_1\} = \{s,t\}$ and $E \models s \thickapprox t$ is trivial.
+\item \textbf{Induction Base} $m = 1$: $r(s) = r(t)$ implies $\{u_1,v_1\} = \{s,t\}$ and $E \models s \thickapprox t$ is trivial.
 %Lines \ref{deduceEq1} and \ref{deduceEq2} do not induce any further unions, because no compound terms, that $s$ or $t$ could be a subterm of, are yet inserted in the congruence structure.
 
 %Induction hypothesis: For every sequence of equations $E_n$ with $n$ elements and every $s,t \in \mathcal{T}_{E_n}$: $r(s) = r(t)$ after adding all $n$ equations to the empty congruence structure then $E_n \models s \thickapprox t$.
 
-\item \textbf{Induction Hypothesis}: For every $l < k$, if a set of equations $F$ induces $l$ calls to union, then from $r(s) = r(t)$ follows $F \models s \thickapprox t$ for all terms $s,t$ that are arguments of some call to union.
+\item \textbf{Induction Hypothesis}: For every $l < m$, if a set of equations $F$ induces $l$ calls to union, then from $r(s) = r(t)$ follows $F \models s \thickapprox t$ for all terms $s,t$ that are arguments of some call to union.
 
-\item \textbf{Induction Step}: Suppose $E = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle$ induces $k$ calls to union with arguments $(h_1,g_1),\ldots,(h_k,g_k)$.
-The subsequence $E_n = \langle (u_1,v_1), \ldots, (u_{n-1},v_{n-1}) \rangle$ induced the first $l$ calls to union for some $n-1 \leq l < k$.
-In other words, adding $(u_n,v_n)$ to the congruence structure induces the calls to union with arguments $(h_{k-l},g_{k-l}),\ldots,(h_k,g_k)$.
-The first call to union with arguments $(h_{k-l},g_{k-l})$ is either an original input equation, or a deduced equality from line \ref{addnodemerge} of \texttt{addNode}.
-In both cases $E \models h_{k-l} \thickapprox g_{k-l}$, which is trivial in the former case and an application of the induction hypothesis in the latter case.
+\item \textbf{Induction Step}: Suppose $E = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle$ induces $m$ calls to union with arguments $(h_1,g_1),\ldots,(h_m,g_m)$.
+The subsequence $E_n = \langle (u_1,v_1), \ldots, (u_{n-1},v_{n-1}) \rangle$ induced the first $l$ calls to union for some $n-1 \leq l < m$.
+In other words, adding $(u_n,v_n)$ to the congruence structure induces $m-l-1$ calls to union with arguments $(h_{l+1},g_{l+1}),\ldots,(h_m,g_m)$.
+The first call to union with arguments $(h_{l+1},g_{l+1})$ is either an original input equation, or a deduced equality from line \ref{addnodemerge} of \texttt{addNode}.
+In both cases $E \models h_{l+1} \thickapprox g_{l+1}$, which is trivial in the former case and an application of the induction hypothesis in the latter case.
 Union induces additional union calls in such a way that the arguments of the additional call are on parent terms of the respective original arguments.
-Therefore, using induction on the structure of terms, the original induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN} to \ref{stoprN} of \texttt{union}, it can be shown that for all pairs $(h_m,g_m)$ and all $m = k-l+1,\ldots,k$ it is the case that $E \models h_m \thickapprox g_m$.
+Therefore, using induction on the structure of terms, the original induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN} to \ref{stoprN} of \texttt{union}, it can be shown that for all pairs $(h_k,g_k)$ and all $k = l+1,\ldots,m$ it is the case that $E \models h_k \thickapprox g_k$.
 
 %
 %We show the induction step by another induction on $k-l$, i.e. the number of unions induced by adding $(u_n,v_n)$ to the congruence structure.
@@ -326,13 +325,13 @@ There are three loops in the method \texttt{union}, which are nested within the 
 These loops are clearly the dominating factor for runtime.
 Lines \ref{reverse1} and \ref{reverse2} of \texttt{union} swap the arguments $s$ and $t$ in such a way, that always the congruence class of $v$ is smaller than the one of $u$.
 Let $k$ be the size of the congruence class of $v$ before the union.
-For every term in the congruence classes of $v$ and $u$ before the union, the size of their new congruence class after the union (set in line \ref{changeclass} is at least $2*k$.
+For every term in the congruence classes of $v$ and $u$ before the union, the size of their new congruence class after the union (set in line \ref{changeclass}) is at least $2*k$.
 Furthermore, only representatives for terms in the old congruence class of $v$ are changed in line \ref{changerep}.
 This implies that for every term, whenever its representative is changed in line \ref{changerep}, its congruence class doubles in the same execution of \texttt{union}.
 The maximum size of a congruence class is $n$.
 Therefore the representative of a single term is changed in line \ref{changerep} maximally $\log(n)$ times.
 There are $n$ terms that can be changed, so line \ref{changerep} of \texttt{union} is executed at most $n \log(n)$ times.
-Let $f(a,b)$ be the result of accessing $l$ in line \ref{accessl1}
+Let $f(a,b)$ be the result of accessing $l$ in line \ref{accessl1}.
 In the same call of \texttt{union} line \ref{changerep} changes the representative of $b$.
 Since this this happens only $\log(n)$ times and there are at most $m < n$ compound terms, line \ref{accessl1} is executed at most $n \log(n)$ times.
 The same holds for line \ref{accessl1} and all other lines in the respective loops.

@@ -2,7 +2,7 @@
 \caption[.]{union}
   \KwIn{term $s$}
 	\KwIn{term $t$}
-	\KwOut{a set of deduced equations}
+	\KwOut{a set of deduced equalities}
 	
 	\eIf{$[r(s)] \geq [r(t)]$}{
 		$(u,v) \leftarrow (s,t)$ \label{reverse1} 
@@ -28,7 +28,7 @@
 			}
 		}
 		{
-			$l(new\_left,r(u)) \leftarrow l_v$ \label{changel2} 
+			$l(new\_left,r(u)) \leftarrow l_v$ \label{changel1} 
 		}
 	\label{stoplN}}
 	\For{every $x \in N_r(r(v))$ \label{startrN}}{
@@ -48,7 +48,7 @@
 			}
 		}
 		{
-			$l(r(u),new\_right) \leftarrow l_v$ \label{changel1}
+			$l(r(u),new\_right) \leftarrow l_v$ \label{changel2}
 		}
 	\label{stoprN}}
 	$[r(u)] \leftarrow [r(u)] \cup [r(v)]$ \label{changeclass} \\
