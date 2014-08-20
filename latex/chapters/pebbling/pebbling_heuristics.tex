@@ -2,7 +2,7 @@
 \label{sec:heuristics}
 
 Heuristics are used in both pebbling algorithms to choose one node out of a set $N$. 
-For \algo{Top-Down} Pebbling, $N$ is the set of pebbleable nodes, and for \algo{Bottom-Up} Pebbling, $N$ is the set of unprocessed premises of a node. 
+For Top-Down Pebbling, $N$ is the set of pebbleable nodes, and for Bottom-Up Pebbling, $N$ is the set of unprocessed premises of a node. 
 
 \begin{definition}[Heuristic and Full Heuristics]
 
@@ -20,7 +20,7 @@ We will not elaborate on effects of reordering the heuristics within full heuris
 
 \subsection{Number of Children Heuristic (``$Ch$'')}
 \label{sec:children}
-The \algo{Number of Children} heuristic uses the number of children of a node $\n$ as evaluation function, i.e. $e_h(\n) = |\Children{\n}{\varphi}|$ and $S_h = \mathbb{N}$.
+The \emph{Number of Children} heuristic uses the number of children of a node $\n$ as evaluation function, i.e. $e_h(\n) = |\Children{\n}{\varphi}|$ and $S_h = \mathbb{N}$.
 The intuitive motivation for this heuristic is that nodes with many children will require many pebbles, and subproofs containing nodes with many children will tend to be more spacious.
 Example \ref{example:hardfirst} shows the idea behind pebbling spacious subproofs early.
 
@@ -28,7 +28,7 @@ Example \ref{example:hardfirst} shows the idea behind pebbling spacious subproof
 \label{sec:lastchild}
 
 As discussed in Section \ref{sec:pebbling-game} in the proof of Theorem \ref{theorem:canonical}, the best moment to unpebble a node $\n$ is as soon as its last child w.r.t. a topological order $\prec$ is pebbled. 
-This insight is used for the \algo{Last Child} heuristic that chooses nodes that are last children of other nodes. 
+This insight is used for the \emph{Last Child} heuristic that chooses nodes that are last children of other nodes. 
 Pebbling a node that allows another one to be unpebbled is always a good move. 
 The current number of used pebbles (after pebbling the node and unpebbling one of its premises) does not increase.
 It might even decrease, if more than one premise can be unpebbled.
@@ -66,8 +66,8 @@ Nevertheless, sometimes the proof structure ensures that some nodes are the last
 \subsection{Node Distance Heuristic (``$Dist(r)$'')}
 \label{sec:distance}
 
-In Example \ref{example:topdown} and Section \ref{sec:TDvsBU} it has been noted that \algo{Top-Down} Pebbling may perform badly if nodes that are far apart are selected by the heuristic.
-The Node \algo{Distance} heuristic prefers to pebble nodes that are close to pebbled nodes. It does this by calculating spheres with a radius up to the parameter $r$ around nodes.
+In Example \ref{example:topdown} and Section \ref{sec:TDvsBU} it has been noted that Top-Down Pebbling may perform badly if nodes that are far apart are selected by the heuristic.
+The \emph{Node Distance} heuristic prefers to pebble nodes that are close to pebbled nodes. It does this by calculating spheres with a radius up to the parameter $r$ around nodes.
 A sphere $K_r^{G}(\n)$ with radius $r$ around the node $\n$ in the graph $G = (V,E)$ is the set $\{p \in V \mid v \text{ can be reached from } p \text{ visiting at most } r \text{ edges}\}$, where edges are considered undirected. 
 The heuristic uses the following functions based on the spheres:
 \begin{align*}
@@ -85,7 +85,7 @@ So $S_h = \mathbb{Z} \times \mathbb{N} \times P$ together with the lexicographic
 
 \subsection{Decay Heuristics (``$Dc(h_u,\gamma,d,com)$'') }
 \label{sec:decay}
-\algo{Decay} heuristics denote a family of meta heuristics. 
+Decay heuristics denote a family of meta heuristics. 
 The idea is to not only use the evaluation of a single node, but also to include the evaluations of its premises.
 Such a heuristic has four parameters: an underlying heuristic $h_u$ defined by an evaluation function $e_u$ together with a well ordered set $S_u$, a decay factor $\gamma \in \mathbb{R}^+ \cup \{0\}$, a recursion depth $d \in \mathbb{N}$ and a combining function $com: S_u^n \rightarrow S_u$ for $n \in \mathbb{N}$.
 The resulting heuristic node evaluation function $e_h$ is defined with the help of the recursive function $rec$:

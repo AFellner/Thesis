@@ -120,7 +120,7 @@ The $x$ and $y$ coordinates are the smallest space measure among all heuristics 
 The results for Top-Down range far beyond 15000, but to display the discrepancy between the two algorithms the plot scales from 0 to 15000 on both axis.
 The biggest best space measure for Top-Down is 131 451, whereas this number is 11 520 for the Bottom-Up algorithm.
 The LastChild heuristic produces the best results and the Children heuristic also performs well.
-The Distance heuristic produces the worst results, which could be due to the fact that the radius is too small for big proofs with thousands of proof nodes.
+The Distance heuristic produces the worst results, which could be due to the fact that the radius is too small for big proofs with thousands of  nodes.
 
 Table \ref{tab:decay} summarizes results of the Decay Heuristic with the best results highlighted in boldface.
 Decay Heuristics were tested with the Bottom-Up algorithm, using LastChild as underlying heuristic.
@@ -147,7 +147,7 @@ Unfortunately, none of the additional heuristics showed promising results.
 
 The Bottom-Up algorithm does not only produce better results, it is also much faster, as can be seen in the last column of Table \ref{tab:results}. 
 The reason probably is the number of comparisons that the algorithms make. 
-For Bottom-Up the set $N$ of possible choices consists of the premises of a single node only, and usually $|N| \in O(1)$ (e.g. for a binary resolution proof, $N \leq 2$ always). 
+For Bottom-Up the set $N$ of possible choices consists of the premises of a single node only, i.e. $|N| \in \{0,2\}$.
 For Top-Down the set $N$ is the set of currently pebbleable nodes, which can be large (e.g. for a perfect binary tree with $2n -1$ nodes, initially $|N| = n$). 
 Possibly for some heuristics, Top-Down algorithms could be made more efficient by using, instead of a set, an ordered sequence of pebbleable nodes together with their memorized heuristic evaluations.
 

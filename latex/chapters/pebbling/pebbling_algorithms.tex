@@ -1,7 +1,7 @@
 \section{Greedy Pebbling Algorithms}
 \label{sec:algorithms}
 
-Theorem \ref{theorem:enumeration} and the remarks in the end of section \ref{sec:pebblingSAT} indicate that obtaining an optimal topological order either by enumerating topological orders or by encoding the problem as a satisfiability problem is impractical. 
+Theorem \ref{theorem:enumeration} and the remarks in the end of Section \ref{sec:pebblingSAT} indicate that obtaining an optimal topological order either by enumerating topological orders or by encoding the problem as a satisfiability problem is impractical. 
 This section presents two greedy algorithms that aim at finding good though not necessarily optimal topological orders. 
 They are both parameterized by some heuristic described in Section \ref{sec:heuristics}, but differ in the traversal direction in which the algorithms operate on proofs.
 
@@ -152,7 +152,7 @@ Subsequently, pebbling $5$ opens up the possibility to remove a pebble after the
 After that only the middle subgraph has to be pebbled. 
 No matter in which order this is done, the strategy will use six pebbles at some point. 
 One example sequence and the point where six pebbles are used are shown in the rightmost picture in Figure \ref{fig:TDP}.
-However the pebbling number of this proof is 5.
+However the pebbling number of this proof is five.
 
 \label{example:TDPIssue}
 \end{example}
@@ -164,7 +164,7 @@ The algorithm constructs the order by visiting nodes and their premises recursiv
 For every node $\n$ the order in which the premises of $\n$ are visited is decided heuristically. 
 After visiting the premises, $n$ is added to the current sequence of nodes.
 Since axioms do not have any premises, there is no recursive call for axioms and these nodes are simply added to the sequence. 
-The recursion is started with the call $BUpebble(\varphi,r,\emptyset,())$.
+The recursion is started with the call \texttt{BUpebble($\varphi,r,\emptyset,()$)}.
 Since all proof nodes are ancestors of the root, the recursive calls will eventually visit all nodes once and a topological total order will be found.
 Bottom-Up Pebbling corresponds to the apply function $\ap(.)$ defined in Section \ref{sec:proofprocessing} with the addition of a visit order of the premises.
 Also previously visited nodes are not visited again.
@@ -373,14 +373,14 @@ Example \ref{example:TDPIssue} shows two principles that result in pebbling stra
 Firstly, pebbling strategies should make local choices.
 By local choices we mean that it should pebble nodes that are close w.r.t. undirected edges in the graph to other pebbled nodes.
 Such local choices allow to unpebble other nodes earlier and therefore keep the pebbling number low.
-Bottom-Up Pebbling makes local choices by construction, because premises are queued up and the second premise is visited as soon as possible.
+Bottom-Up Pebbling makes local choices by design, because premises are queued up and the second premise is visited as soon as possible.
 Top-Down Pebbling does not have knowledge about the recursive structure of children nodes, therefore it is hard to make local choices.
 The algorithm simply does not know which pebbleable nodes are close to other pebbled ones.
 
 Secondly, pebbling strategies should pebble subproofs with a high pebbling number early.
 Pebbling such subproofs late will result in other pebbles staying on nodes for a high number of rounds.
 This likely results in increasing the overall pebbling number, as this adds extra pebbles to the already high pebbling number of the subproof.
-The principle is more subtle than the first one, because pebbling one subproof can influence the number of pebbles used for another subproof in situations where nodes are share between subproofs.
+The principle is more subtle than the first one, because pebbling one subproof can influence the number of pebbles used for another subproof in situations where nodes are shared between subproofs.
 The principle is demonstrated in the following example.
 
 \begin{example}

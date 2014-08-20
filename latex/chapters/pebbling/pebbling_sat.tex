@@ -2,11 +2,16 @@
 \label{sec:pebblingSAT}
 
 To find the pebble number of a proof, the question whether the proof can be pebbled using no more than $k$ pebbles can be encoded as a propositional satisfiability problem.
-In this section let $\varphi$ be a proof with nodes $\n_1,\ldots,\n_n$ and let $\n_n$ be its root node. 
+In this section let $\varphi$ be a proof with nodes $\n_1,\ldots,\n_n$ and let $\n_n$ be its root. 
 Due to rule \ref{rule:onlyonce} of the Bounded Pebbling Game, the number of moves that pebble nodes is exactly $n$ and due to theorem \ref{theorem:canonical} determining the order of these moves is enough to define a strategy. 
-For every $x \in \{1,\ldots,k\}$, every $j \in \{1,\ldots,n\}$ and every $t \in \{0,\ldots,n\}$ there is a propositional variable $p_{x,j,t}$. 
+
+In our SAT encoding, for every $x \in \{1,\ldots,k\}$, every $j \in \{1,\ldots,n\}$ and every $t \in \{0,\ldots,n\}$ there is a propositional variable $p_{x,j,t}$. 
 The variable $p_{x,j,t}$ being mapped to $\top$ by a valuation is interpreted as the fact that in the $t$'th round of the game node $v_j$ is marked with pebble $x$.
 Round $0$ is interpreted as the initial setting of the game before any move has been done.
+
+For pebbling strategies, it is not relevant which of the $k$ pebbles is on a node.
+Therefore one could also think of an encoding where true variables simply mean that a node is pebbled.
+However, such an encoding would require exponentially many clauses (in $k$) when limiting the number of pebbles used in a round.
 
 \begin{definition}[Pebbling SAT encoding]
 %The following constraints, combined conjunctively, are satisfiable \textit{iff} there is a pebbling strategy $\sigma$ for $\varphi$ with pebbling number smaller or equal $k$. 
@@ -44,7 +49,7 @@ The following theorem proves the correctness of the encoding.
 
 \begin{theorem}[Correctness of pebbling SAT encoding]
 
-$\Psi = \Psi_1 \wedge \Psi_2 \wedge \Psi_3 \wedge \Psi_4$ is satisfiable \emph{iff} there exists a pebbling strategy using no more than $k$ pebbles
+$\Psi = \Psi_1 \wedge \Psi_2 \wedge \Psi_3 \wedge \Psi_4$ is satisfiable if and only if there exists a pebbling strategy using no more than $k$ pebbles
 
 \end{theorem}
 
@@ -88,7 +93,6 @@ Since $\sigma$ uses no more than $k$ pebbles, $\free(.)$ is well defined.
 
 Let $\mathcal{I}$ be a set of variables of $\Psi$ defined as follows.
 $p_{x,j,t} \in \mathcal{I}$ \emph{iff} $t > 0$ and there exists $s \in \{1,\ldots,t\}$ such that $\peb(s) = x$, $\sigma_s = v_j$ and for all $r \in \{s+1,\ldots,t\}: x \notin \free(r)$.
-
 $\mathcal{I}$ is a satisfying assignment for $\Psi$.
 $\Psi_1$ is satisfied, because $\sigma_n = v_n$, therefore trivially $p_{\peb(n),n,n} \in \mathcal{I}$.
 Clearly $\Psi_2$ is satisfied by $\mathcal{I}$ as no variables with $t = 0$ are included in $\mathcal{I}$.
@@ -100,5 +104,5 @@ Let $P(x,j,t)$ be defined as above. Then from $P(x,j,t)$ follows $\peb(t) = x$ a
 Rule \ref{rule:premises} of the Bounded Pebbling Game ensures that there if $P(x,j,t)$ is true, then there exists a $y \{1,\ldots,k\} \setminus \{x\}$ such that $p_{y,i,t-1} \in \mathcal{I}$.
 Suppose $P(x,j,t)$ and $P(y,i,t)$ both hold for some $t$, $x \neq y$ and $i \neq j$, then $y = \peb(t) = x$ and $v_j = \sigma_t = v_i$ are both contradictions. 
 Therefore also $\Psi_4$ is satisfied by $\mathcal{I}$.
-\qed
+
 \end{proof}

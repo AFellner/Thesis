@@ -7,10 +7,11 @@ The basic idea is to traverse the path, creating a transitivity chain of equalit
 From invariant Deduced Edges follows that for the deduced equalities there have to be paths between the respective arguments of the compound terms.
 These paths are transformed into proof recursively and resolved with a suiting instance of the congruence axiom.
 Afterwards the subproof is resolved with the original transitivity chain.
-Since terms can never be equal to their subterms, the procedure will eventually terminate.
-The result of this procedure is a resolution proof with a root, such that the equations of the negative literals are an explanation of the target equality.
-In other words, let $s \thickapprox t$ be the equality to be explained and suppose \texttt{produceProof} returns a proof with root $\rho$.
-Let $F := \{(u,v) \mid u \neq v \text{ is a literal in } \rho\}$, then it is the case that $F \models s \thickapprox t$ and $F$ is a subset of the input equations.
+Since terms can never be equal to their (non trivial) subterms, the procedure will eventually terminate.
+The result of this procedure is a resolution proof with a root, such that the equations of the negative literals are an explanation of the target equality or $\emptyset$ to denote that the equality can not be proven.
+Suppose some equality $s \thickapprox t$ can be explained and \texttt{produceProof} returns a proof with root $\rho$ and
+let $F := \{(u,v) \mid u \neq v \text{ is a literal in } \rho\}$.
+It is the case that $F \models s \thickapprox t$ and $F$ is a subset of the input equations.
 
 \input{chapters/congruence/algorithms/prodproof}
 
@@ -45,7 +46,7 @@ After adding the first three equations, the congruence closure algorithm detects
 The explanation for this equality is $\{(a,b)\}$, if we were to insert the edge $(f(a,a),f(b,b))$ into the graph immediately, it would have weight 1 and label $\smiley$.
 Depending on the congruence graph used, when adding the fourth equation $(f(a,a),f(b,b))$ to the congruence structure, either the edge $(f(a,a),f(b,b))$ is not added at all to the graph or is added with weight 1.
 In the latter case, both edges have weight 1 and equal chance to be selected by the shortest path algorithm.
-However, choosing the edge with label $\smiley$ is undesirable, since it two extra resolution nodes (corresponding to the compatible axiom and an intermediate node).
+However, choosing the edge with label $\smiley$ is undesirable, since it two extra resolution nodes (corresponding to the compatability axiom and an intermediate node).
 
 \end{example}
 
@@ -53,9 +54,7 @@ However, choosing the edge with label $\smiley$ is undesirable, since it two ext
 
 \subsection*{Congruence Compressor}
 
-In Section \ref{sec:proofprocessing} processing of a proof was defined.
-The most important application of proof processing for this work is proof compression.
-We want to make use of the short explanations found by the congruence closure algorithm described above.
+In this Section we put our explanation producing congruence closure algorithm and the proof production method into the context of proof compression.
 To this end we replace subproofs with conclusions that contain unnecessary long explanations with new proofs that have shorter conclusions.
 Shorter conclusions lead to less resolution steps further down the proof and possibly big chunks of the proof can simply be discarded.
 There is however a tradeoff in overall proof length when introducing new subproofs.
@@ -64,13 +63,16 @@ Example \ref{example:shortexpl} displays this issue.
 Additionally it can be the case that by introducing a new subproof, we only partially remove the old subproof.
 Some nodes of the old subproof might still be used in other parts of the proof.
 Therefore the replacement of a subproof by another, smaller one does not necessarily lead to a smaller proof.
-Nevertheless, the meta heuristic favoring smaller conclusions should still dominate such effects, especially on large proofs.
+Nevertheless, the intuition is that the meta heuristic favoring smaller conclusions should dominate such effects, especially on large proofs.
 The results in Section \ref{TODO} confirm this intuition.
+
+%In Section \ref{sec:proofprocessing} processing of a proof was defined.
+%The most important application of proof processing for this work is proof compression.
 
 \begin{example}
 \label{example:shortexpl}
-Consider the set of equations $E = \{(f(f(a,b),f(a,a)),a),(a,b),(b,f(f(b,a),f(b,b)))\}$ and the target equality $f(f(a,b),f(a,a)) \thickapprox f(f(b,a),f(b,b))$.
 For presentation purposes, throughout this example we will abbreviate the term $f(f(a,b),f(a,a))$ with $t_a$ and $f(f(b,a),f(b,b))$ with $t_b$.
+Consider the set of equations $E = \{(t_a,a),(a,b),(b,t_b)\}$ and the target equality $t_a \thickapprox t_b$.
 Using equations in $E$, one can prove the the target equality in two ways.
 Either one uses the instance of the transitivity axiom $\{t_a \neq a, a \neq b, b \neq t_b, t_a = t_b\}$ or a repeated applications of instances of the congruence axiom, e.g. $\{a \neq b, f(a,a) = f(b,b)\}$.
 The corresponding explanations are $E$ and $\{(a,b)\}$.
@@ -103,9 +105,12 @@ It is defined upon the processing function $f: V \times V \times V \rightarrow V
 The function $g_f: V \rightarrow V$ for axioms is simply the identity (i.e. axioms are not modified).
 The idea of the processing function is simple.
 Axioms are not changed by the function.
-For all other nodes the \texttt{fixNode} is called method, to maintain a correct proof.
-Then in line \ref{criteria} it is decided whether the explanation finding congruence closure algorithm should be used to find a replacement for the current node.
-One trivial criteria could be true for every node.
+For all other nodes the \texttt{fixNode} method is called, to maintain a correct proof.
+For a clause $C$, the method adds $neg(C)$ (as defined in \ref{sec:calculus}) to the empty congruence structure and checks whether these equations induce a proof for one of the equations in the $pos(C)$ that has a shorter conclusion than the original subproof.
+If there is such a proof, we replace the old subproof by the new one.
+
+In line \ref{criteria} it is decided whether the explanation finding congruence closure algorithm should be used to find a replacement for the current node.
+A trivial criteria is true for every node.
 Testing every node will result in a slow algorithm, but the best possible compression.
 Some nodes do not need to be checked, since they contain optimal explanations by definition or there is no hope of finding an explanation at all.
 The following definition classifies nodes to define a more sophisticated decision criteria.
@@ -113,7 +118,7 @@ The following definition classifies nodes to define a more sophisticated decisio
 \begin{definition}[Types of nodes]
 
 An axiom is a \emph{theory lemma} if it is an instance of one of the congruence axioms.
-Otherwise it is called \emph{input derived}.
+Otherwise it is \emph{input derived}.
 The classification of internal nodes is defined recursively.
 An internal node is input derived, if one of its premises is input derived.
 Otherwise it is a theory lemma.
@@ -126,10 +131,7 @@ Therefore an alternative criteria is to only find replacements for low theory le
 The question whether a node is a low theory lemma is not trivial to answer while traversing the proof in a top to bottom fashion.
 Therefore a preliminary traversal is necessary to determine the classification of nodes.
 Experiments have shown that using this criteria speeds up the algorithm a lot, while losing only very little compression.
-
-Add all equations of the antecedent to an empty congruence structure and check whether these equations induce a proof for one of the equations in the succedent that has a shorter conclusion than the original subproof.
-If there is such a proof, we replace the old subproof by the new one.
-Futher criteria for deciding whether to replace or not could be size of the subproof or a global metric that tries to predict the global compression achieved by replacement.
+Futher criteria for deciding whether or not to replace could be size of the subproof or a global metric that tries to predict the global compression achieved by replacement.
 
 \input{chapters/congruence/algorithms/compressor}
 
@@ -138,7 +140,6 @@ The method modifies nodes with premises that have earlier been replaced by the c
 Nodes with unchanged premises are not changed.
 Let $n$ be a proof node that was derived using pivot $\ell$ in the original proof and which updated premises are $pr_1$ and $pr_2$ .
 Depending on the presence of $\ell$ in $pr_1$ and $pr_2$, $n$ is either replaced by the resolvent of $pr_1$ and $pr_2$ or by one of the updated premises.
-It assumed that the values $pr_1$, $pr_2$ and $\ell$ are stored together with the node and can be accessed in constant time.
 In case both updated premises do not contain the original pivot element, replacing the node by either one of them maintains a correct proof.
 Since we are interested in short proofs, we return the one with the shorter clause.
 This method of maintaining a correct proof was proposed in \cite{Bar-Ilan2008} in the context of similar proof compression algorithms.
