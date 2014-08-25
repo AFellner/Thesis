@@ -1,5 +1,15 @@
 \begin{thebibliography}{10}
 
+\bibitem{Arora2009}
+Sanjeev Arora and Boaz Barak.
+\newblock {\em Computational Complexity - A Modern Approach}.
+\newblock Cambridge University Press, 2009.
+
+\bibitem{Baader1998}
+Franz Baader and Tobias Nipkow.
+\newblock {\em Term rewriting and all that}.
+\newblock Cambridge University Press, 1998.
+
 \bibitem{Bachmair2000}
 Leo Bachmair and Ashish Tiwari.
 \newblock Abstract congruence closure and specializations.
@@ -14,6 +24,11 @@ Omer Bar-Ilan, Oded Fuhrmann, Shlomo Hoory, Ohad Shacham, and Ofer Strichman.
 Henk Barendregt.
 \newblock The impact of the lambda calculus in logic and computer science.
 \newblock {\em Bulletin of Symbolic Logic}, 3(02):181--215, 1997.
+
+\bibitem{Beame1998a}
+Paul Beame and Toniann Pitassi.
+\newblock Propositional proof complexity: Past, present and future.
+\newblock {\em Bulletin of the EATCS}, 65:66--89, 1998.
 
 \bibitem{Bellman1956}
 Richard Bellman.
@@ -32,10 +47,6 @@ Eli Ben-Sasson and Jakob Nordstr{\"o}m.
 \newblock {\em Electronic Colloquium on Computational Complexity (ECCC)}, 16:2,
   2009.
 
-\bibitem{tracecheck}
-Armin Biere.
-\newblock Tracecheck resolution proof format, 2006.
-
 \bibitem{Biere2008}
 Armin Biere.
 \newblock Picosat essentials.
@@ -46,11 +57,25 @@ Armin Biere, Marijn Heule, Hans van Maaren, and Toby Walsh, editors.
 \newblock {\em Handbook of Satisfiability}, volume 185 of {\em Frontiers in
   Artificial Intelligence and Applications}. IOS Press, 2009.
 
+\bibitem{Bloem}
+Roderick Bloem, Sharad Malik, Matthias Schlaipfer, and Georg Weissenbacher.
+\newblock Reduction of resolution refutations and interpolants via subsumption.
+
+\bibitem{Boudou2013}
+Joseph Boudou and Bruno~Woltzenlogel Paleo.
+\newblock Compression of propositional resolution proofs by lowering subproofs.
+\newblock In {\em TABLEAUX}, pages 59--73, 2013.
+
 \bibitem{Bouton2009}
 Thomas Bouton, Diego Caminha~B. de~Oliveira, David D{\'e}harbe, and Pascal
   Fontaine.
 \newblock verit: An open, trustable and efficient smt-solver.
 \newblock In {\em CADE}, pages 151--156, 2009.
+
+\bibitem{Bruscoli2009}
+Paola Bruscoli and Alessio Guglielmi.
+\newblock On the proof complexity of deep inference.
+\newblock {\em ACM Trans. Comput. Log.}, 10(2), 2009.
 
 \bibitem{Chan2013}
 Siu~Man Chan.
@@ -67,10 +92,20 @@ Alonzo Church.
 \newblock An unsolvable problem of elementary number theory.
 \newblock {\em American journal of mathematics}, pages 345--363, 1936.
 
+\bibitem{Cook1979}
+Stephen~A. Cook and Robert~A. Reckhow.
+\newblock The relative efficiency of propositional proof systems.
+\newblock {\em J. Symb. Log.}, 44(1):36--50, 1979.
+
 \bibitem{Cormen1989}
 Thomas~H. Cormen, Charles~E. Leiserson, and Ronald~L. Rivest.
 \newblock {\em Introduction to Algorithms}.
 \newblock The MIT Press and McGraw-Hill Book Company, 1989.
+
+\bibitem{Cotton2010}
+Scott Cotton.
+\newblock Two techniques for minimizing resolution proofs.
+\newblock In {\em SAT}, pages 306--312, 2010.
 
 \bibitem{Curry1958}
 Haskell~B. Curry.
@@ -121,13 +156,10 @@ Philipp Hertel and Toniann Pitassi.
 \newblock {\em Electronic Colloquium on Computational Complexity (ECCC)},
   14(044), 2007.
 
-\bibitem{drup}
-Marijn Heule.
-\newblock Drup proof format, 2007.
-
-\bibitem{bdrup}
-Marijn Heule.
-\newblock Bdrup proof format, 2013.
+\bibitem{Hetzl2012}
+Stefan Hetzl, Alexander Leitsch, and Daniel Weller.
+\newblock Towards algorithmic cut-introduction.
+\newblock In {\em LPAR}, pages 228--242, 2012.
 
 \bibitem{Hofferek2013}
 Georg Hofferek, Ashutosh Gupta, Bettina K{\"o}nighofer, Jie-Hong~Roland Jiang,
@@ -136,15 +168,20 @@ Georg Hofferek, Ashutosh Gupta, Bettina K{\"o}nighofer, Jie-Hong~Roland Jiang,
   single proof.
 \newblock {\em CoRR}, abs/1308.4767, 2013.
 
-\bibitem{Kasai1979}
-Takumi Kasai, Akeo Adachi, and Shigeki Iwata.
-\newblock Classes of pebble games and complete problems.
-\newblock {\em SIAM J. Comput.}, 8(4):574--586, 1979.
+\bibitem{Hopcroft1977}
+John~E. Hopcroft, Wolfgang~J. Paul, and Leslie~G. Valiant.
+\newblock On time versus space.
+\newblock {\em J. ACM}, 24(2):332--337, 1977.
 
 \bibitem{Konev2014}
 Boris Konev and Alexei Lisitsa.
 \newblock A sat attack on the erdos discrepancy conjecture.
 \newblock {\em CoRR}, abs/1402.2184, 2014.
+
+\bibitem{Leitsch1997}
+Alexander Leitsch.
+\newblock {\em The resolution calculus}.
+\newblock Texts in theoretical computer science. Springer, 1997.
 
 \bibitem{McMill2005}
 Kenneth~L. McMillan.
@@ -166,11 +203,21 @@ Robert Nieuwenhuis and Albert Oliveras.
 \newblock Fast congruence closure and extensions.
 \newblock {\em Inf. Comput.}, 205(4):557--580, 2007.
 
+\bibitem{Nieuwenhuis2001}
+Robert Nieuwenhuis and Albert Rubio.
+\newblock Paramodulation-based theorem proving.
+\newblock {\em Handbook of automated reasoning}, 1:371--443, 2001.
+
 \bibitem{Nordstroem2009}
 Jakob Nordstr{\"o}m.
 \newblock Narrow proofs may be spacious: Separating space and width in
   resolution.
 \newblock {\em SIAM J. Comput.}, 39(1):59--121, 2009.
+
+\bibitem{Nordstroem2013}
+Jakob Nordstr{\"o}m.
+\newblock Pebble games, proof complexity, and time-space trade-offs.
+\newblock {\em Logical Methods in Computer Science}, 9(3), 2013.
 
 \bibitem{Boudou}
 Bruno~Woltzenlogel Paleo, Joseph Boudou, and Andreas Fellner.
@@ -186,6 +233,17 @@ Nicholas Pippenger.
 Nicholas Pippenger.
 \newblock {\em Advances in pebbling}.
 \newblock Springer, 1982.
+
+\bibitem{Robinson1969}
+George Robinson and Larry Wos.
+\newblock Paramodulation and theorem-proving in first-order theories with
+  equality.
+\newblock {\em Machine intelligence}, 4:135--150, 1969.
+
+\bibitem{Robinson1965}
+John~Alan Robinson.
+\newblock A machine-oriented logic based on the resolution principle.
+\newblock {\em J. ACM}, 12(1):23--41, 1965.
 
 \bibitem{Schoenfinkel1924}
 Moses Sch{\"o}nfinkel.
@@ -217,5 +275,11 @@ Peter van Emde~Boas and Jan van Leeuwen.
 S.~A. Walker and H.~Raymond Strong.
 \newblock Characterizations of flowchartable recursions.
 \newblock {\em J. Comput. Syst. Sci.}, 7(4):404--447, 1973.
+
+\bibitem{Wetzler2014}
+Nathan Wetzler, Marijn Heule, and Warren A.~Hunt Jr.
+\newblock Drat-trim: Efficient checking and trimming using expressive clausal
+  proofs.
+\newblock In {\em SAT}, pages 422--429, 2014.
 
 \end{thebibliography}
