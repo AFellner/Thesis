@@ -4,7 +4,7 @@
 In this section we present a congruence closure algorithm that is able to produce explanations.
 The algorithm is a mix of the approaches of the algorithms presented in \cite{Fontaine2004} and \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 The basic structure of the algorithm is inherited from \cite{Fontaine2004}, which itself inherits its structure from the algorithm of Nelson and Oppen \cite{Nelson1980}.
-The technique to store and deduce equalities of non constant terms is inspired from \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
+The technique to store and deduce equalities of non constant terms is inspired by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 Additionally the proof forest structure described below was proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 
 Before we describe the algorithm, we discuss two technical concepts that are important aspects of our congruence closure algorithm.
@@ -14,7 +14,7 @@ Before we describe the algorithm, we discuss two technical concepts that are imp
 
 Our congruence closure algorithm operates on curried terms.
 Curried terms use a single binary function symbol to represent general terms.
-More formally let $\mathcal{F}$ be a finite set of functions with a designated binary function symbol $f \in \mathcal{F}$ and let every other function symbol in $\mathcal{F}$ be a constant.
+More formally, let $\mathcal{F}$ be a finite set of functions with a designated binary function symbol $f \in \mathcal{F}$ and let every other function symbol in $\mathcal{F}$ be a constant.
 A term w.r.t. a signature of this form is called a \emph{curried term}.
 
 It is possible to uniquely translate a general set of terms $\mathcal{T}^{\Sigma}$ with signature $\Sigma = \langle \mathcal{F},arity \rangle$ into a set of curried terms $\mathcal{T'}^{\Sigma'}$.
@@ -38,7 +38,10 @@ Its arguments can either be elements of some set or again lambda terms.
 For an introduction to lambda calculus, including currying in terms of lambda calculus and its relation to functional programming, see \cite{Barendregt1997}.
 
 The benefit of working with curried terms is an easier and cleaner congruence closure algorithm, while maintaining best known runtime for congruence closure algorithms of $O(n \log(n))$.
-Cleaner algorithms are not only easier to implement, but should also improve the practical runtime.
+Curried terms simplify the algorithm, because case distinctions on terms are much simpler.
+A curried term is either a constant or a compound term of the form $f(a,b)$, where $a$ and $b$ are curried terms.
+To deal with all kinds of general terms, different leading function symbols and their arities have to be taken into account.
+Cleaner algorithms are not only easier to implement, but should also improve the practical runtime for similar reasons.
 
 Recently so called abstract congruence closure algorithms have been proposed and shown to be more efficient than traditional approaches \cite{Bachmair2000}.
 The idea of abstract congruence closure is to introduce new constants for non constant terms.
@@ -89,6 +92,7 @@ However, sometimes tricky data structures like the zipper were invented which he
 We call the underlying data structure of our congruence closure algorithm a \emph{congruence structure}.
 A congruence structure for set of terms $\mathcal{T}$ is a collection of the following data structures.
 The set $\mathcal{E} = \mathcal{T} \times \mathcal{T} \cup \{\smiley\}$ is the set of \emph{extended equations}.
+The symbol $\smiley$ serves as a placeholder for deduced equalities that have to be explained in terms of input equations.
 
 \begin{itemize}
 	\item Representative $r: \mathcal{T} \rightarrow \mathcal{T}$
@@ -285,14 +289,15 @@ The original claim then follows from invariant Class, since only union modifies 
 
 %Induction hypothesis: For every sequence of equations $E_n$ with $n$ elements and every $s,t \in \mathcal{T}_{E_n}$: $r(s) = r(t)$ after adding all $n$ equations to the empty congruence structure then $E_n \models s \thickapprox t$.
 
-\item \textbf{Induction Hypothesis}: For every $l < m$, if a set of equations $F$ induces $l$ calls to union, then from $r(s) = r(t)$ follows $F \models s \thickapprox t$ for all terms $s,t$ that are arguments of some call to union.
+\item \textbf{Induction Hypothesis}: For every $k < m$, if a set of equations $F$ induces $k$ calls to union, then from $r(s) = r(t)$ follows $F \models s \thickapprox t$ for all terms $s,t$ that are arguments of some call to union.
 
 \item \textbf{Induction Step}: Suppose $E = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle$ induces $m$ calls to union with arguments $(h_1,g_1),\ldots,(h_m,g_m)$.
-The subsequence $E_n = \langle (u_1,v_1), \ldots, (u_{n-1},v_{n-1}) \rangle$ induced the first $l$ calls to union for some $n-1 \leq l < m$.
-In other words, adding $(u_n,v_n)$ to the congruence structure induces $m-l-1$ calls to union with arguments $(h_{l+1},g_{l+1}),\ldots,(h_m,g_m)$.
-The first call to union with arguments $(h_{l+1},g_{l+1})$ is either an original input equation, or a deduced equality from line \ref{addnodemerge} of \texttt{addNode}.
-In both cases $E \models h_{l+1} \thickapprox g_{l+1}$, which is trivial in the former case and an application of the induction hypothesis in the latter case.
-Union induces additional union calls in such a way that the arguments of the additional call are on parent terms of the respective original arguments.
+The subsequence $E_n = \langle (u_1,v_1), \ldots, (u_{n-1},v_{n-1}) \rangle$ induced the first $l$ calls to union for some $n-1 \leq k < m$.
+In other words, adding $(u_n,v_n)$ to the congruence structure induces $m-k-1$ calls to union with arguments $(h_{k+1},g_{k+1}),\ldots,(h_m,g_m)$.
+The pair $(h_{k+1},g_{k+1})$ is either an original input equation, or a deduced equality from line \ref{addnodemerge} of \texttt{addNode}.
+In both cases $E \models h_{k+1} \thickapprox g_{k+1}$, which is trivial in the former case and an application of the induction hypothesis in the latter case.
+Let $j \in \{k+2,\ldots,m\}$.
+The pair $(h_j,g_j)$ was inserted to $d$ in line \ref{deduceEq1} or \ref{deduceEq2} of \texttt{union} that was called with arguments $(h_i,g_i)$ with $i \in \{k+1,\ldots,j-1\}$, such that subterm ...
 Therefore, using induction on the structure of terms, the original induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN} to \ref{stoprN} of \texttt{union}, it can be shown that for all pairs $(h_k,g_k)$ and all $k = l+1,\ldots,m$ it is the case that $E \models h_k \thickapprox g_k$.
 
 %

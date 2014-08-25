@@ -11,17 +11,17 @@ We start by extending the notions of atoms, literals and clauses
 
 \begin{definition}[Equality- Atom, Literal and Clause]
 
-Let $\mathcal{T}$ be a set of terms and let $V$ be a finite set of propositional variables.
-The set of \emph{equality atoms} is defined as $V \cup \mathcal{T} \times \mathcal{T}$.
+Let $\mathcal{T}$ be a set of terms and let $P$ be a finite set of propositional variables.
+The set of \emph{equality atoms} is defined as $P \cup \mathcal{T} \times \mathcal{T}$.
 An \emph{equality literal} is an equality atom $e$ or a negated equality atom $\neg e$.
 An \emph{equality clause} is a set of equality literals.
-For an equality clause $C$, we call the sets of equations $pos(C) := \{(u,v) \mid u = v \in C\}$ the \emph{positive part} and $neg(C) := \{(u,v) \mid u \neg v \in C\}$ the \emph{negative part} of $C$.
+For an equality clause $C$, we call the sets of equations $pos(C) := \{(u,v) \mid u = v \in C\}$ the \emph{positive part} and $neg(C) := \{(u,v) \mid u \neq v \in C\}$ the \emph{negative part} of $C$.
 
 \end{definition}
 
 A set of equations can be interpreted as a set of clauses, if every equation is interpreted as the singleton clause containing just the equation itself.
 In the context of equality atoms, we write equations $(s,t) \in \mathcal{T} \times \mathcal{T}$ as $s = t$ and $s \neq t$ for its negated version.
-As usual, a clause is interpreted as the disjunction of its literals and a set of clauses is interpreted as the of conjunction its clauses.\\
+As usual, a clause is interpreted as the disjunction of its literals and a set of clauses is interpreted as the of conjunction its interpreted elements.\\
 
 From hereon, we restrict our attention to sets of terms that, on top of constants, have at most one function symbol $f$, which is binary.
 We justify this restriction in Section \ref{subsec:algorithms_preliminaries}.

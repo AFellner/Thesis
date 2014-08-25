@@ -1,7 +1,7 @@
 %\section{Introduction}
 Proofs are the backbone of mathematics. 
-They allow scientists to build theorems on top of another and thus discover new knowledge.
-Proofs not only serve as stepping stones, they can also provide insight on the nature of the underlying problem.
+They allow scientists to build theorems on top of others and thus discover new knowledge.
+Proofs not only serve as stepping stones, but they can also provide insight on the nature of the underlying problem.
 
 Both statements are true for formal proofs, i.e. proofs in a formal calculus, as well.
 Formal proofs allow systems to trust the output of other systems and therefore they can safely be built on top of another. 
@@ -13,19 +13,18 @@ Formal proofs not only help in combining systems, they can also be used to obtai
 For example interpolants, which have important applications in Verification and Synthesis of programs \cite{McMill2005}, can be extracted from formal proofs \cite{Hofferek2013}.
 Since this work is concerned only with formal proofs, from hereon we mean formal proofs when speaking of proofs.
 
-Typically problems that are tackled by automated systems are large. 
-As a consequence proofs produced during the process are large.
-For example \cite{Konev2014} reports of a 13GB proof of the Erd\H{o}s Discrepancy Conjecture, written in the DRUP proof format, which prints as little information as possible.
+Typically, problems that are tackled by automated systems are huge and so are the proofs produced during the process.
+For example \cite{Konev2014} reports a 13GB proof of the Erd\H{o}s Discrepancy Conjecture, written in the DRUP proof format, which prints as little information as possible.
 Therefore even for proof processing algorithms with low complexity, it is highly desirable to reduce the hardness of the input, while maintaining the quality of its conclusion.
 
 We present efficient methods to compress proofs, produced by SMT- or SAT- Solvers, in two different measures.
 
 The first measure we compress is \emph{length}.
-The length of a proof is the number of inferences.
-For example the length of the resolution proof is the number of applications of the resolution rule.
+The length of a proof is its number of inferences.
+For example the length of a resolution proof is the number of applications of the resolution rule.
 The compression method we present is applicable to proofs in the SMT theory of equality, for which the congruence reasoning has often been found to be redundant.
 Congruence reasoning derives equations of terms that are implied by a given set of input equations, 
-using the four axioms \emph{reflexivity}, \emph{symmetry}, \emph{transitivity} and \emph{compatability}. 
+using the four axioms \emph{reflexivity}, \emph{symmetry}, \emph{transitivity} and \emph{compatibility}. 
 It can be redundant in the sense that subsets of the input may suffice to derive certain equalities.
 In Chapter \ref{ch:congruence} we present resolution proofs extended by equality and a method to compress them using congruence closure.
 Furthermore we show that finding the shortest set of input equations explaining a given equality is NP-complete.
@@ -77,11 +76,11 @@ Explanation producing Congruence Closure algorithms have been proposed by Pascal
 The short explanation decision problem is the question whether, given a set of input equations and a target equality, there is a subset of the input equations a desired cardinality to explain the target equality.
 This decision problem is NP-complete, as claimed in \cite{Nieuwenhuis2005,Nieuwenhuis2007} and proven in this work (Section \ref{sec:npcomplete}).
 
-Modern SAT- and SMT Solvers, on top of solving problem instances, enable the production of proofs.
+Modern SAT- and SMT Solvers, in addition to solving problem instances, are able to produce proofs.
 This is reflected by the increasing number of formats to represent proofs and the Certified UNSAT track of the yearly SAT Competition.
 On top of many solver internal proof formats, there are a couple standardized ones.
 One format is the TraceCheck proof format \cite{TODO}, which resembles the DIMACS format for SAT problems.
-The TraceCheck proof format stores a clause as a sequences of integers together with pointers to the clauses that were used to derive it.
+The TraceCheck proof format stores a clause as a sequence of integers together with pointers to the clauses that were used to derive it.
 Recently the RUP (reverse unit propagation) proof format and its extensions got a lot of attention.
 The RUP format only states which and not how clauses were derived.
 Using this information, the full proof can then be produced automatically, which can be a very expensive computation.

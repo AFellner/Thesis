@@ -3,20 +3,19 @@
 This work is about compression of formal proofs.
 Formal proofs are of great importance to modern computer scienece.
 They can be used to combine deductive systems.
-For example SAT- Solvers \cite{Biere2009} are heavily used for all kinds of computations, because of their efficiency.
+For example, SAT- Solvers \cite{Biere2009} are heavily used for all kinds of computations, because of their efficiency.
 A formal proof is a certificate of the correctness of the output of a SAT- Solver.
-Furthermore, from formal proofs information can be extracted about some underlying problem.
+Furthermore, formal proofs can provide information about the underlying problem.
 For example, Interpolants \cite{McMill2005} can be extracted from proofs, as done in \cite{Hofferek2013}.
 
-Typically problems tackled by automated systems are huge. 
-Therefore the produced proofs are huge.
-For example, \cite{Konev2014} reports about a 13 GB proof of one case of the Erd\H{o}s Discrepancy Conjecture.
+Typically problems tackled by automated systems are huge and so are the produced proofs.
+For example, \cite{Konev2014} reports a 13 GB proof of one case of the Erd\H{o}s Discrepancy Conjecture.
 With such proof sizes, computer system reach their boundaries and that is why it is necessary to compress proofs.
 Our work presents two methods for proof compression.
 
 The first method removes redundancies in the congruence part of SMT- proofs.
 Congruence reasoning deduces equations from a set of given equations, using the four axioms \emph{reflexivity}, \emph{symmetry}, \emph{transitivity}, and \emph{congruence}.
-We found that SMT- Solver often use an unnecessarily big set of input equations to deduce one particular equality.
+We found that SMT- Solvers often use an unnecessarily big set of input equations to deduce one particular equality.
 We want to find smaller sets of equations, that suffice to proof the same result and therefore replace subproofs with shorter ones.
 Furthermore, we will proof the NP - Completeness of the problem of finding the shortest explanation of one equation within a set of input equations.
 
