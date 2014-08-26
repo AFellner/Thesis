@@ -15,9 +15,9 @@ Before we describe the algorithm, we discuss two technical concepts that are imp
 Our congruence closure algorithm operates on curried terms.
 Curried terms use a single binary function symbol to represent general terms.
 More formally, let $\mathcal{F}$ be a finite set of functions with a designated binary function symbol $f \in \mathcal{F}$ and let every other function symbol in $\mathcal{F}$ be a constant.
-A term w.r.t. a signature of this form is called a \emph{curried term}.
+A term w.r.t. a signature of this form is called in \emph{curryfied form}.
 
-It is possible to uniquely translate a general set of terms $\mathcal{T}^{\Sigma}$ with signature $\Sigma = \langle \mathcal{F},arity \rangle$ into a set of curried terms $\mathcal{T'}^{\Sigma'}$.
+It is possible to uniquely translate a general set of terms $\mathcal{T}^{\Sigma}$ with signature $\Sigma = \langle \mathcal{F},arity \rangle$ into a set of terms in curryfied form $\mathcal{T'}^{\Sigma'}$.
 The new signature $\Sigma'$ is obtained from $\Sigma$ by setting $arity$ to zero for every function symbol in $\mathcal{F}$ and introducing the designated binary function symbol $f$ to $\mathcal{F}$.
 The translation of a term $t \in \mathcal{T}^{\Sigma}$ is given in terms of the function $curry$.
 
@@ -37,9 +37,9 @@ Lambda calculus uses a single binary function $\lambda$.
 Its arguments can either be elements of some set or again lambda terms.
 For an introduction to lambda calculus, including currying in terms of lambda calculus and its relation to functional programming, see \cite{Barendregt1997}.
 
-The benefit of working with curried terms is an easier and cleaner congruence closure algorithm, while maintaining best known runtime for congruence closure algorithms of $O(n \log(n))$.
-Curried terms simplify the algorithm, because case distinctions on terms are much simpler.
-A curried term is either a constant or a compound term of the form $f(a,b)$, where $a$ and $b$ are curried terms.
+The benefit of working with terms in curryfied form is an easier and cleaner congruence closure algorithm, while maintaining best known runtime for congruence closure algorithms of $O(n \log(n))$.
+Terms in curryfied form simplify the algorithm, because case distinctions on terms are much simpler.
+Such a term is either a constant or a compound term of the form $f(a,b)$, where $a$ and $b$ are terms in curryfied form.
 In general, terms can have different leading function symbols and their arities (for which possibly there is no known bound) have to be taken into account.
 Cleaner algorithms are not only easier to implement, but should also improve the practical runtime for similar reasons.
 
@@ -57,7 +57,7 @@ It would be interesting to investigate, whether our intuition in that regard is 
 
 \cite{Nieuwenhuis2005,Nieuwenhuis2007} describes an explanation producing abstract congruenc closure algorithm, 
 whereas \cite{Fontaine2004} proposes a traditional algorithm without currying and extra constants.
-By choosing to work with curried terms, but without extra constants, our algorithm is a middle ground between the two algorithms.
+By choosing to work with terms in curryfied form, but without extra constants, our algorithm is a middle ground between the two algorithms.
 
 \subsection*{Immutable Data Structures}
 
