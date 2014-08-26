@@ -61,6 +61,11 @@ Armin Biere, Marijn Heule, Hans van Maaren, and Toby Walsh, editors.
 Roderick Bloem, Sharad Malik, Matthias Schlaipfer, and Georg Weissenbacher.
 \newblock Reduction of resolution refutations and interpolants via subsumption.
 
+\bibitem{Boudou2014}
+Joseph Boudou, Andreas Fellner, and Bruno~Woltzenlogel Paleo.
+\newblock Skeptik: A proof compression system.
+\newblock In {\em IJCAR}, pages 374--380, 2014.
+
 \bibitem{Boudou2013}
 Joseph Boudou and Bruno~Woltzenlogel Paleo.
 \newblock Compression of propositional resolution proofs by lowering subproofs.
@@ -218,10 +223,6 @@ Jakob Nordstr{\"o}m.
 Jakob Nordstr{\"o}m.
 \newblock Pebble games, proof complexity, and time-space trade-offs.
 \newblock {\em Logical Methods in Computer Science}, 9(3), 2013.
-
-\bibitem{Boudou}
-Bruno~Woltzenlogel Paleo, Joseph Boudou, and Andreas Fellner.
-\newblock Skeptik system description.
 
 \bibitem{Pippenger1980}
 Nicholas Pippenger.

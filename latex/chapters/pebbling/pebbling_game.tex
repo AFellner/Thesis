@@ -2,7 +2,7 @@
 \label{sec:pebbling-game}
 
 %Todo: Discuss relation to resolution space complexity further
-Pebbling games denote a family on games played on graphs where nodes are marked and unmarked throughout the rounds of the games.
+Pebbling games denote a family of games played on graphs where nodes are marked and unmarked throughout the rounds of the games.
 The goal of these games is to mark some designated node.
 On top of how many rounds have to be played to achieve the goal, an interesting characteristic of a particular instance of a pebbling game is the maximal amount of nodes that are marked simultaneously in all rounds.
 The latter characteristic is the one we are interested in, because it models space requirements, if marking a node is interpreted as having it in memory.
@@ -10,7 +10,7 @@ In the context of pebbling games it is common to use the phrase to (un)pebble a 
 Pebbling games were introduced in the 1970's to model programming language expressiveness \cite{Pippenger1980,Walker1973} and compiler construction \cite{Sethi1975}. 
 More recently, pebbling games have been used to investigate various questions in parallel complexity \cite{Chan2013} and proof complexity \cite{Ben-Sasson2009,Esteban2001,Nordstroem2009}. 
 They are used to obtain bounds for space and time requirements and trade-offs between the two measures \cite{EmdeBoas1979,Ben-Sasson2002}.
-Space requirements are modeled with the number of pebbles used. 
+Space requirements are modeled by the number of pebbles used. 
 Time requirements are reflected by the number of rounds played.
 
 \begin{definition}[Bounded Pebbling Game]
@@ -62,7 +62,7 @@ The trade-off between moving pebbles and using fresh ones is discussed in \cite{
 Deciding whether the pebbling number of a graph $G$ and node $s$ is smaller than $k$ is PSPACE-complete in the absence of rule \ref{rule:onlyonce} \cite{Gilbert1980} and NP-complete when rule \ref{rule:onlyonce} is included \cite{Sethi1975}.
 
 Every round of the game corresponds to an I/O operation and, if the action of the player is to pebble a node, the processing of the node.
-The goal of proof compression is to make proof processing less expensive, therefore requiring exponentially many I/O operations and processing steps is not a viable option.
+The goal of proof compression is to make proof processing less expensive, therefore admitting exponentially many I/O operations and processing steps in the worst case is not a viable option.
 That is the reason why we chose the Bounded Pebbling Game for our purpose.
 In the Bounded Pebbling Game the number of rounds is linear in the number of nodes.
 
@@ -71,7 +71,7 @@ The requirement of having premises in memory corresponds to rule \ref{rule:premi
 Processing a node and I/O operations are typically more expensive than extra memory consumption, therefore in our setting every node can be processed only once, which corresponds to rule \ref{rule:onlyonce}.
 A node that has been processed can be removed from memory, which corresponds to rule \ref{rule:unpebbling}.
 Note that removing a node and its results too early in combination with \ref{rule:onlyonce} makes it impossible to process the whole proof.
-The optimal moment to remove a node from memory is uniquely determined by the order nodes are processed, see Theorem \ref{theorem:canonical}.
+The optimal moment to remove a node from memory is uniquely determined by the order nodes are processed (see Theorem \ref{theorem:canonical}).
 
 Definition \ref{def:proof-processing} does not specify in what order to process nodes.
 The order in which nodes are processed is essential for the memory consumption, just like the order of pebbling nodes in the pebbling game is essential for the pebbling number.
@@ -82,14 +82,14 @@ The following definition allows us to relate pebbling strategies with orderings 
 A topological order of a proof $\varphi$ is a total order relation $\prec$ on $\Vertices{\varphi}$, such that 
 $\text{for all } \n \in \Vertices{\varphi} \text{, for all } p \in \Premises{\n}{\varphi}:
 p \prec v$.
-A sequence of moves $(\sigma_1,\ldots,\sigma_n)$ in the pebbling game \emph{respects} a topological order $\prec$ if $j < i$ \emph{iff} $\sigma_j \prec \sigma_i$.
+A sequence of moves $(\sigma_1,\ldots,\sigma_n)$ in the pebbling game \emph{respects} a topological order $\prec$ if for all $j,i \in \{1,\ldots,n\}$ such that $\sigma_j = p(v_j)$ and $\sigma_i = p(v_i)$ it is true that $j < i$ if and only if $\n_j \prec \n_i$.
 \end{definition}
 
 A topological order $\prec$ of a proof $\varphi$ can be represented as a sequence $(v_1,\dots,v_n)$ of proof nodes, by defining $\prec \defeq \{(v_i,v_j) \mid 1 \leq i < j \leq n\}$. 
-The requirement that topological orders to order premises lower than their children corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game.
+The requirement that topological orders premises lower than their children corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game.
 The antisymmetry together with the fact that $V = \{v_1,\dots,v_n\}$ correspond to rule \ref{rule:onlyonce}.
 Theorem \ref{theorem:canonical} shows that the moments for unpebbling moves are predefined by the pebbling moves, when the goal is to find strategies with small pebbling numbers.
-Therefore there is a bijection between topological orders and pebbling strategies.
+Therefore there is a bijection between topological orders and canonical pebbling strategies.
 
 \begin{definition}[Canonical Topological Pebbling Strategy]
 \label{def:canonstrat}
@@ -104,7 +104,7 @@ $$
 		       %& \quad \text{ there exists }k < i, \sigma_k = p(u) \text{ and }\\
 					 %& \quad \text{ for all } l: k < l < i, \sigma_l \neq u(v) \\
 		%u(v) & \text{ for all } c \in \Children{v}{\varphi} \text{ exists } k < i, \sigma_k = p(u) \text{ and for all }l: k < l < i, \sigma_l \neq u(v) \\
-		u(v) & \text{for all } c \in \Children{v}{\varphi} \text{ exists } k < i \text { such that } \sigma_k = p(u)\\
+		u(v) & \text{if for all } c \in \Children{v}{\varphi} \text{ exists } k < i \text { such that } \sigma_k = p(u)\\
 		p(v) & \text{otherwise, where } v = min_{\prec}(w \mid \text{ for all } l < i: \sigma_l \neq p(w))
 	\end{array}
 	\right.

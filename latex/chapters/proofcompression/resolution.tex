@@ -2,9 +2,9 @@
 \label{sec:resolution}
 
 In this chapter, we will define the propositional resolution calculus.
-Resolution is one of the most well known automated inference techniques and goes back to Robinson \cite{Robinson1965}.
-While it a pretty simple calculus with just one inference rule, proofs in that calculus tend to become big.
-This property and its popularity make it a good target for applying proof compression to it.
+Resolution is one of the most well known automated deduction techniques and goes back to Robinson \cite{Robinson1965}.
+While it is a pretty simple calculus with just one inference rule, proofs in that calculus tend to become big.
+This property and its popularity make it a good target for proof compression.
 
 Propositional resolution can be seen as a simplification of first-order logic resolution to propositional logic.
 For basics about propositional logic, we refer the reader to \cite{Biere2009}.
@@ -20,8 +20,8 @@ $\bot$ denotes the \emph{empty clause}.
 
 \end{definition}
 
-A clause represents a formula by interpreting it as the disjunction of its literals.
-A set of clauses represents a formula by interpreting it as the conjunction of the interpreted clauses.
+A clause represents the propositional logic formula that is the disjunction of its literals.
+A set of clauses represents a formula that is the conjunction of its clauses.
 The propositional resolution calculus operates on propositional formulas in conjunctive normal form, which are formulas that are represented by a set of clauses.
 
 \begin{definition}[Resolvent]
@@ -90,13 +90,13 @@ The \emph{length} of a proof $\varphi$ is the number of nodes in $\Vertices{\var
 
 An important measure of proofs for this work is space.
 We define the space of a proof in Section \ref{sec:pebbling-game}.
-Other measures of proofs that are not discussed in this work are height, width and size of the unsat core.
+Other common measures of proofs that are not discussed in this work are height, width and size of the unsat core.
 
 \noindent
-Note that since the labeling of premises have to agree on common nodes and edges, the definition of the labeling $\mathcal{L}$ is unambiguous.
-Also note that in case \ref{enum:resCase} of Definition \ref{def:proof} $V_L$ and $V_R$ are not required to be disjunct. 
+Note that since the labeling of premises must agree on common nodes and edges, the definition of the labeling $\mathcal{L}$ is unambiguous.
+Also note that in case \ref{enum:resCase} of Definition \ref{def:proof} $V_L$ and $V_R$ are not required to be disjoint. 
 Therefore the underlying structure of a proof is really a directed acyclic graph and not simply a tree. 
-Modern SAT- and SMT-solvers, using techniques of conflict driven clause learning, produce proofs with a general DAG structure \cite{Bouton2009,Biere2009}.
+Modern SAT- and SMT-solvers, using techniques of conflict driven clause learning, produce proofs with a  DAG structure \cite{Bouton2009,Biere2009}.
 The reuse of proof nodes plays a central role in proof compression \cite{Fontaine2011}.
 
 \begin{example}

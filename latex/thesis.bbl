@@ -32,10 +32,6 @@ Eli Ben-Sasson and Jakob Nordstr{\"o}m.
 \newblock {\em Electronic Colloquium on Computational Complexity (ECCC)}, 16:2,
   2009.
 
-\bibitem{tracecheck}
-Armin Biere.
-\newblock Tracecheck resolution proof format, 2006.
-
 \bibitem{Biere2008}
 Armin Biere.
 \newblock Picosat essentials.
@@ -121,25 +117,12 @@ Philipp Hertel and Toniann Pitassi.
 \newblock {\em Electronic Colloquium on Computational Complexity (ECCC)},
   14(044), 2007.
 
-\bibitem{drup}
-Marijn Heule.
-\newblock Drup proof format, 2007.
-
-\bibitem{bdrup}
-Marijn Heule.
-\newblock Bdrup proof format, 2013.
-
 \bibitem{Hofferek2013}
 Georg Hofferek, Ashutosh Gupta, Bettina K{\"o}nighofer, Jie-Hong~Roland Jiang,
   and Roderick Bloem.
 \newblock Synthesizing multiple boolean functions using interpolation on a
   single proof.
 \newblock {\em CoRR}, abs/1308.4767, 2013.
-
-\bibitem{Kasai1979}
-Takumi Kasai, Akeo Adachi, and Shigeki Iwata.
-\newblock Classes of pebble games and complete problems.
-\newblock {\em SIAM J. Comput.}, 8(4):574--586, 1979.
 
 \bibitem{Konev2014}
 Boris Konev and Alexei Lisitsa.

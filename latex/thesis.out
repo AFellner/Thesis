@@ -1,18 +1,13 @@
-\BOOKMARK [0][-]{chapter*.3}{Introduction}{}% 1
-\BOOKMARK [1][-]{section*.4}{General Information}{chapter*.3}% 2
-\BOOKMARK [1][-]{section*.5}{Organizational Issues}{chapter*.3}% 3
-\BOOKMARK [1][-]{section*.6}{Structure of the Master's Thesis}{chapter*.3}% 4
-\BOOKMARK [0][-]{chapter*.7}{Resolution}{}% 5
-\BOOKMARK [0][-]{chapter*.9}{Pebbling}{}% 6
-\BOOKMARK [1][-]{section*.11}{Introduction}{chapter*.9}% 7
-\BOOKMARK [1][-]{section*.12}{Propositional Resolution Calculus}{chapter*.9}% 8
-\BOOKMARK [1][-]{section*.13}{Pebbling Game}{chapter*.9}% 9
-\BOOKMARK [1][-]{section*.14}{Pebbling and Proof Processing}{chapter*.9}% 10
-\BOOKMARK [1][-]{section*.15}{Pebbling as a Satisfiability Problem}{chapter*.9}% 11
-\BOOKMARK [1][-]{section*.16}{Greedy Pebbling Algorithms}{chapter*.9}% 12
-\BOOKMARK [1][-]{section*.20}{Heuristics}{chapter*.9}% 13
-\BOOKMARK [1][-]{section*.25}{Experiments}{chapter*.9}% 14
-\BOOKMARK [1][-]{section*.26}{Conclusion}{chapter*.9}% 15
-\BOOKMARK [0][-]{chapter*.28}{Congruence}{}% 16
-\BOOKMARK [0][-]{chapter*.46}{Conclusion}{}% 17
-\BOOKMARK [0][-]{section*.49}{Bibliography}{}% 18
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Proof Compression}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Propositional Resolution Calculus}{chapter.2}% 3
+\BOOKMARK [0][-]{chapter.3}{Congruence compression}{}% 4
+\BOOKMARK [0][-]{chapter.4}{Space compression}{}% 5
+\BOOKMARK [1][-]{section.4.1}{Pebbling Game}{chapter.4}% 6
+\BOOKMARK [1][-]{section.4.2}{Pebbling as a Satisfiability Problem}{chapter.4}% 7
+\BOOKMARK [1][-]{section.4.3}{Greedy Pebbling Algorithms}{chapter.4}% 8
+\BOOKMARK [1][-]{section.4.4}{Heuristics}{chapter.4}% 9
+\BOOKMARK [1][-]{section.4.5}{Experiments}{chapter.4}% 10
+\BOOKMARK [1][-]{section.4.6}{Conclusion}{chapter.4}% 11
+\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 12
+\BOOKMARK [0][-]{section*.29}{Bibliography}{}% 13

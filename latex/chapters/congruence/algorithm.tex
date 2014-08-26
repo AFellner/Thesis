@@ -40,7 +40,7 @@ For an introduction to lambda calculus, including currying in terms of lambda ca
 The benefit of working with curried terms is an easier and cleaner congruence closure algorithm, while maintaining best known runtime for congruence closure algorithms of $O(n \log(n))$.
 Curried terms simplify the algorithm, because case distinctions on terms are much simpler.
 A curried term is either a constant or a compound term of the form $f(a,b)$, where $a$ and $b$ are curried terms.
-To deal with all kinds of general terms, different leading function symbols and their arities have to be taken into account.
+In general, terms can have different leading function symbols and their arities (for which possibly there is no known bound) have to be taken into account.
 Cleaner algorithms are not only easier to implement, but should also improve the practical runtime for similar reasons.
 
 Recently so called abstract congruence closure algorithms have been proposed and shown to be more efficient than traditional approaches \cite{Bachmair2000}.
@@ -255,18 +255,18 @@ We show the claim ($E \models s \thickapprox t$) by induction on the structure o
 
 \begin{itemize}
 \item \textbf{Induction Base} $s$ or $t$ is a constant and therefore transitivity reasoning was used to derive $E \models_n s \thickapprox t$.
-In other words, there are $l$ terms $t_1,\ldots,t_l$ such that $s = t_1$, $t = t_l$ and for all $i = 1,\ldots,l-1: E \models_n t_i \thickapprox t_{i+1}$.
-We prove by yet another induction on $l$ that $r(t_1) = r(t_l)$.
+In other words, there are $m$ terms $t_1,\ldots,t_m$ such that $s = t_1$, $t = t_m$ and for all $i = 1,\ldots,m-1: E \models_n t_i \thickapprox t_{i+1}$.
+We prove by yet another induction on $m$ that $r(t_1) = r(t_m)$.
 \begin{itemize}
-\item \textbf{Induction Base} $l = 2$. It has to be the case (up to swapping $u_{n+1}$ with $v_{n+1}$), that $E_n \models s \thickapprox u_{n+1}$ and $E_n \models t \thickapprox v_{n+1}$, and the outmost induction hypothesis implies $r(s) = r(u_{n+1})$ and $r(t) = r(v_{n+1})$.
+\item \textbf{Induction Base} $m = 2$. It has to be the case (up to swapping $u_{n+1}$ with $v_{n+1}$), that $E_n \models s \thickapprox u_{n+1}$ and $E_n \models t \thickapprox v_{n+1}$, and the outmost induction hypothesis implies $r(s) = r(u_{n+1})$ and $r(t) = r(v_{n+1})$.
 Therefore it follows from Invariant Class, that after the call to union for $(u_{n+1},v_{n+1})$ it is the case that $r(t_1) = r(t_2)$.
 
-\item \textbf{Induction Step}: suppose that the claim holds for all sequences of length $l \in \mathbb{N}$, for $l+1$ the claim follows from a simple application of the transitivity axiom, since $t_1,\ldots,t_l$ and $t_2,\ldots,t_{l+1}$ are both sequences of length $l$.
+\item \textbf{Induction Step}: Suppose that the claim holds for all sequences of length $m \in \mathbb{N}$, for $m+1$ the claim follows from a simple application of the transitivity axiom, since $t_1,\ldots,t_m$ and $t_2,\ldots,t_{m+1}$ are both sequences of length $m$.
 \end{itemize}
-\item \textbf{Induction Step}: suppose that $s = f(a,b)$ and $t = f(c,d)$.
+\item \textbf{Induction Step}: Suppose that $s = f(a,b)$ and $t = f(c,d)$.
 There are two cases such that $E \models_n s \thickapprox t$ can be derived.
 Using a transitivity chain, the claim can be shown just like in the base case.
-Using the compatability axiom, it has to be the case that $E \models_n a \thickapprox c$ and $E \models_n b \thickapprox d$ (in fact one of those can also be the case without the $n$ index).
+Using the compatibility axiom, it has to be the case that $E \models_n a \thickapprox c$ and $E \models_n b \thickapprox d$ (in fact one of those can also be the case without the $n$ index).
 The terms $a,b,c,d$ are of lower structure than $s$ and $t$.
 Therefore it follows from the induction hypothesis that $r(a) = r(c)$ and $r(b) = r(d)$.
 The Invariants Neighbour and Lookup imply that either $r(s) = r(t)$ or $(s,t)$ is added to $d$ in line \ref{deduceEq1} or line line \ref{deduceEq2} of union.
@@ -296,8 +296,9 @@ In other words, adding $(u_n,v_n)$ to the congruence structure induces $m-k-1$ c
 The pair $(h_{k+1},g_{k+1})$ is either an original input equation, or a deduced equality from line \ref{addnodemerge} of \texttt{addNode}.
 In both cases $E \models h_{k+1} \thickapprox g_{k+1}$, which is trivial in the former case and an application of the induction hypothesis in the latter case.
 Let $j \in \{k+2,\ldots,m\}$.
-The pair $(h_j,g_j)$ was inserted to $d$ in line \ref{deduceEq1} or \ref{deduceEq2} of \texttt{union} that was called with arguments $(h_i,g_i)$ with $i \in \{k+1,\ldots,j-1\}$, such that subterm ...
-Therefore, using induction on the structure of terms, the original induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN} to \ref{stoprN} of \texttt{union}, it can be shown that for all pairs $(h_k,g_k)$ and all $k = l+1,\ldots,m$ it is the case that $E \models h_k \thickapprox g_k$.
+The pair $(h_j,g_j)$ was inserted to $d$ in line \ref{deduceEq1} or \ref{deduceEq2} of \texttt{union} that was called with arguments $(h_i,g_i)$ with $i \in \{k+1,\ldots,j-1\}$.
+From the Invariant Lookup follows that the terms are such that $h_i$ and $g_i$ are both subterms of $h_j$ or $g_j$.
+Therefore, using induction on the structure of terms, the original induction hypothesis, Invariants Lookup and Neighbour and lines \ref{startlN} to \ref{stoprN} of \texttt{union}, it can be seen that for all pairs $(h_k,g_k)$ and all $k = l+1,\ldots,m$ it is the case that $E \models h_k \thickapprox g_k$.
 
 %
 %We show the induction step by another induction on $k-l$, i.e. the number of unions induced by adding $(u_n,v_n)$ to the congruence structure.
@@ -363,13 +364,14 @@ For example adding an edge to the data structure means adding it to the used con
 
 \begin{invariant}[Paths]
 
-For terms $s, t$ such that $s \neq t$ holds $r(s) = r(t)$ if and only if there is a path in the congruence graph of the structure between $s$ and $t$
+For terms $s, t$ holds $r(s) = r(t)$ if and only if there is a path in the congruence graph of the structure between $s$ and $t$.
 
 \end{invariant}
 
 \begin{proof}
 
-We show the claim by an induction on $|[r(s)]|$.
+In case $s = t$, the claim is trivial.
+Therefore, we show the invariant in the case where $s \neq t$ by an induction on $|[r(s)]|$.
 %We show that there is a path between $s$ and $t$ in the congruence graph induction on $|[r(s)]|$. 
 The proof relies on the invariant Class, which shows the consistency between classes and representatives.
 
@@ -380,7 +382,7 @@ Edges are only added to the congruence graph via the \texttt{lazy\_insert} metho
 Clearly \texttt{merge} does not call \texttt{union} for $s$ and some term $t \neq s$, since otherwise $t \in [r(s)]$.
 Therefore \texttt{merge} also does not add an edge for $s$ and some term $t \neq s$ to the congruence graph.
 
-\item \textbf{Induction Hypethesis:} For every term $s$ such that $|[r(s)]| \leq n$ and for every term $t \neq s$ it is the case that $r(s) = r(t)$ if and only if there is a path between $s$ and $t$ in the congruence graph.
+\item \textbf{Induction Hypothesis:} For every term $s$ such that $|[r(s)]| \leq n$ and for every term $t \neq s$ it is the case that $r(s) = r(t)$ if and only if there is a path between $s$ and $t$ in the congruence graph.
 
 \item \textbf{Induction Step:} Suppose $[r(s)]$ is an arbitrary class with cardinality $n+1$.
 Then there are two terms $u,v \in [r(s)]$ such that \texttt{union} was called for $u$ and $v$.
@@ -428,22 +430,22 @@ An equation graph stores equalities in an edge labeled weighted undirected graph
 $V \subseteq \mathcal{T}$, $E \subseteq V \times \mathcal{E} \times V \times \mathbb{N}$.
 The weight for an edge is the number of input equations used to derive the equality between its two nodes.
 This number is one for input equalities and the size of the explanation for deduced equalities.
-Edges are added to the graph, regardless whether the nodes are already connected in the graph.
-Therefore there is a choice which path the explain method returns.
+Edges inserted via the \texttt{insert} method are added to the graph, even if the nodes are already connected in the graph.
+Therefore there is a choice which path the \texttt{explain} method returns.
 We look for short explanations and the weights reflect sizes of sub explanation.
 Therefore we want to return the shortest path.
 
 Finding the shortest path between two nodes in a weighted graph is not trivial.
 The single source shortest path problem (SSSP) is a classical graph problem in computer science.
 The task is to find the shortest path in a graph between one designated node, the source, and all other nodes in the graph.
-To the best knowledge of the authors, there is no algorithm to find the shortest path between two nodes which has better asymptotic runtime than one to solve SSSP.
+To our best knowledge, there is no algorithm to find the shortest path between two nodes which has better asymptotic runtime than one to solve SSSP.
 There is a whole variety of algorithms that solve SSSP.
 Classical algorithms for SSSP are those of Dijkstra \cite{Dijkstra1959} and Bellman-Ford \cite{Ford1956,Bellman1956}.
 The algorithms work on different kinds of graphs.
 Our setting is an undirected graph with positive integer weights.
 We chose to use Dijkstra's algorithm, even though the algorithm does not have optimal asymptotic runtime.
 Its worst-case runtime is $O(n \log(n))$ \cite{Cormen1989}, if the priority queue is implemented as a Fibonacci Heap, which is the case in our implementation.
-\cite{Thorup1999} reports of an linear time algorithm for the undirected single source shortest path with positive integer weights problem.
+\cite{Thorup1999} describes a linear time algorithm for the undirected single source shortest path with positive integer weights problem.
 However, the algorithm has a big overhead and needs several precomputations.
 \cite{Cherkassky1996} presents a comparative study of several shortest path algorithms which shows that Dijkstra's algorithm performs well in practice.
 
@@ -501,12 +503,12 @@ A proof tree is a labeled tree with nodes in $\mathcal{T}$ and edge labels in $\
 For every congruence class in the current status of a congruence structure, there is one proof tree.
 Inserting an edge between nodes $s$ and $t$ of different proof trees is done by making one the child of the other.
 To maintain a tree structure, all edges between the new child and the root of its tree are reversed.
-To limit the number of edge revering steps, the smaller tree is always attached to the bigger one.
+To limit the number of edge reversing steps, the smaller tree is always attached to the bigger one.
 This results in $O(n \log(n))$ edge reversing steps, where $n$ is the number terms in the input equation set.
 This bound can be shown using the same argument as in the proof of Proposition \ref{prop:runtime}.
 As stated above, we understand a path as a sequence of undirected edges.
 In case of a proof tree, a path between $s$ and $t$ of the same tree is the combined sequence of edges between the nodes and their nearest common ancestors.
-The structure, up to small changes, was proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
+The structure, up to small changes, was proposed in \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 Its benefit is the quick access of explanations and good overall runtime.
 Its downside is its inflexibility when it comes to producing alternative explanations.
 In fact the explanation returned is always the first one to occur during edge insertion.

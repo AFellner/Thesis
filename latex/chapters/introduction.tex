@@ -1,7 +1,7 @@
 %\section{Introduction}
 Proofs are the backbone of mathematics. 
-They allow scientists to build theorems on top of another and thus discover new knowledge.
-Proofs not only serve as stepping stones, they can also provide insight on the nature of the underlying problem.
+They allow scientists to build theorems on top of others and thus discover new knowledge.
+Proofs not only serve as stepping stones, but they can also provide insight on the nature of the underlying problem.
 
 Both statements are true for formal proofs, i.e. proofs in a formal calculus, as well.
 Formal proofs allow systems to trust the output of other systems and therefore they can safely be built on top of another. 
@@ -43,11 +43,14 @@ For this game it was proven that constructing the best strategy is NP-complete.
 Just like for our length compression algorithm, we want an algorithm with a lower complexity.
 Therefore we propose a heuristic method and arguments why our heuristics are reasonable.
 
-Both methods have been implemented into the proof compression software Skeptik and were evaluated on a big number of proofs, produced by the SMT-Solver VeriT.
-Most of the evaluation proofs are from the benchmarks of SMT-lib (http://smt-lib.org/).
-Additionally we evaluated on proofs that were used in \cite{Hofferek2013} to synthesize boolean functions by extracting an interpolant from a single proof.
-The method in \cite{Hofferek2013} has high complexity and is therefore heavily dependent on the size of the proof.
-Therefore compressing such proofs in reasonable time is a definite plus for their work and possible those of many others.
+All described algorithms have been implemented in the hybrid functional and object-oriented programming
+language Scala as part of the Skeptik library for proof compression \cite{Boudou2014}.
+The algorithms were evaluated on a big number of proofs, produced by the SMT-Solver VeriT.
+The evaluation proofs are from the benchmarks of SMT-lib and the SATLIB proof libraries.
+
+%Additionally we evaluated on proofs that were used in \cite{Hofferek2013} to synthesize boolean functions by extracting an interpolant from a single proof.
+%The method in \cite{Hofferek2013} has high complexity and is therefore heavily dependent on the size of the proof.
+%Therefore compressing such proofs in reasonable time is a definite plus for their work and possible those of many others.
 
 \subsection{Related Research}
 
@@ -76,19 +79,21 @@ Explanation producing Congruence Closure algorithms have been proposed by Pascal
 The short explanation decision problem is the question whether, given a set of input equations and a target equality, there is a subset of the input equations a desired cardinality to explain the target equality.
 This decision problem is NP-complete, as claimed in \cite{Nieuwenhuis2005,Nieuwenhuis2007} and proven in this work (Section \ref{sec:npcomplete}).
 
-Modern SAT- and SMT Solvers, on top of solving problem instances, enable the production of proofs.
-This is reflected by the increasing number of formats to represent proofs and the Certified UNSAT track of the yearly SAT Competition.
+Modern SAT- and SMT Solvers, in addition to solving problem instances, are able to produce proofs.
+This is reflected by the increasing number of formats to represent proofs and the Certified UNSAT track of the SAT Competition.
 On top of many solver internal proof formats, there are a couple standardized ones.
 One format is the TraceCheck proof format, which resembles the DIMACS format for SAT problems.
 The TraceCheck proof format stores a clause as a sequences of integers together with pointers to the clauses that were used to derive it.
 Recently the RUP (reverse unit propagation) proof format and its extensions got a lot of attention.
 The RUP format only states which and not how clauses were derived.
-Using this information, the full proof can then be produced automatically, which can be a very expensive computation.
+Using this information, the full proof can then be produced automatically.
+However, this computation can be a very expensive.
 The RUP format was invented and promoted by the SAT Solver community.
-This community is mostly interested in producing their output as fast as possible.
-Therefore they promote proofs which are easy to produce, but hard to use.
-The DRAT (Deletion Resolution Asymmetric Tautology) proof format \cite{Wetzler2014} is an extension of the RUP format.
-On top of allowing to represent more advanced SAT solver techniques, it includes deletion information.
+In this community computation speed has priority and keeping information for proper proof production could slow down the solver.
+Therefore, the RUP format is designed in such a way that proofs are very cheap to produce, but expensive to verify.
+The DRAT (Deletion Resolution Asymmetric Tautology) proof format \cite{Wetzler2014} is an extension of the (D)RUP format.
+The authors of \cite{Wetzler2014} provide a tool called DRAT-trim that is able to check proofs and transform them into the TraceCheck format.
+It is able to represent more advanced SAT solver techniques and includes deletion information.
 Deletion information indicates when nodes can be dropped from memory and is a central concept in our space compression method.
 This extra information was introduced to the format to cope with the expensive task of reconstructing the proof from the RUP output.
 

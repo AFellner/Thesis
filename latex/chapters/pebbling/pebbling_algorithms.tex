@@ -38,7 +38,7 @@ When $N$ becomes empty, all nodes have been pebbled once and a topological order
   \label{algo:TDpebbling}
 \end{algorithm}
 
-Unfortunately Top-Down Pebbling often ends up finding a sub-optimal pebbling strategy regardless of the heuristic used.
+Unfortunately Top-Down Pebbling often constructs pebbling strategies with high pebbling numbers regardless of the heuristic used.
 The following example shows such a situation.
 
 \begin{example}
@@ -370,11 +370,11 @@ Therefore both algorithms are theoretically equally good in constructing topolog
 The experiments presented in Section \ref{sec:experiments} show that in practice, Bottom-Up Pebbling performs much better.
 Example \ref{example:TDPIssue} shows two principles that result in pebbling strategies with small pebbling numbers and are likely to be violated by the Top-Down Pebbling algorithm.
 
-Firstly, pebbling strategies should make local choices.
+Firstly, a pebbling strategy should make local choices.
 By local choices we mean that it should pebble nodes that are close w.r.t. undirected edges in the graph to other pebbled nodes.
 Such local choices allow to unpebble other nodes earlier and therefore keep the pebbling number low.
 Bottom-Up Pebbling makes local choices by design, because premises are queued up and the second premise is visited as soon as possible.
-Top-Down Pebbling does not have knowledge about the recursive structure of children nodes, therefore it is hard to make local choices.
+Top-Down Pebbling does not have knowledge about the recursive structure of child nodes, therefore it is hard to make local choices.
 The algorithm simply does not know which pebbleable nodes are close to other pebbled ones.
 
 Secondly, pebbling strategies should pebble subproofs with a high pebbling number early.

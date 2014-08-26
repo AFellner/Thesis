@@ -2,7 +2,7 @@
 \label{sec:calculus}
 
 Equality is a well researched topic in computational logic.
-Among the most prominent approaches to deal with this special predicate are first-order resolution with paramodulation \cite{Robinson1969}, its extension the superposition calculus \cite{Nieuwenhuis2001} and term rewrite systems \cite{Baader1998}.
+Among the most prominent approaches to deal with this special predicate are first-order resolution with paramodulation \cite{Robinson1969}, the superposition calculus \cite{Nieuwenhuis2001} and term rewrite systems \cite{Baader1998}.
 We present equality in a framework that is closer to the propositional resolution calculus.
 In fact we extend the calculus defined in Section \ref{sec:resolution} to take into account the axioms of equality.
 By doing this we create a calculus with proofs that can be compressed both with traditional propositional logic as well as our novel congruence closure compression algorithm.
@@ -21,7 +21,7 @@ For an equality clause $C$, we call the sets of equations $pos(C) := \{(u,v) \mi
 
 A set of equations can be interpreted as a set of clauses, if every equation is interpreted as the singleton clause containing just the equation itself.
 In the context of equality atoms, we write equations $(s,t) \in \mathcal{T} \times \mathcal{T}$ as $s = t$ and $s \neq t$ for its negated version.
-As usual, a clause is interpreted as the disjunction of its literals and a set of clauses is interpreted as the of conjunction its interpreted elements.\\
+As usual, a clause represents the disjunction of its literals and a set of clauses represents the conjunction of its elements.\\
 
 From hereon, we restrict our attention to sets of terms that, on top of constants, have at most one function symbol $f$, which is binary.
 We justify this restriction in Section \ref{subsec:algorithms_preliminaries}.
