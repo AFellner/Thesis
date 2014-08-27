@@ -19,3 +19,7 @@ It would be interesting to see, whether the method presented in this work can ma
 \cite{Nieuwenhuis2007} extends the congruence closure algorithm to the theory of integer offsets.
 Such an extension to our algorithm would be interesting.
 Not only could more proofs be compressed, but also the compression ratio on the current benchmarks would increase.
+
+The use of immutable data structures in the congruence closure algorithm allows to easily keep track of a collection of congruence structures for different sets of input equations.
+When the congruence structure of some set of equations is required, it does not necessarily have to be constructed from scratch, but a previously constructed congruence structure, that has a subset of the input equations inserted, could be extended.
+Using this technique would speed up the whole method.

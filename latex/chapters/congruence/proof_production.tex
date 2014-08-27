@@ -4,14 +4,12 @@
 In this section we describe how to produce resolution proofs from paths in a congruence graph.
 The method to carry out this operation is \texttt{produceProof}.
 The basic idea is to traverse the path, creating a transitivity chain of equalities between adjacent nodes, while keeping track of the deduced equalities in the chain.
-From invariant Deduced Edges follows that for the deduced equalities there have to be paths between the respective arguments of the compound terms.
+From Invariant Deduced Edges follows that for the deduced equalities there have to be paths between the respective arguments of the compound terms.
 These paths are transformed into proofs recursively and resolved with a suiting instance of the compatibility axiom.
 After this operation the subproof is resolved with the original transitivity chain.
 Since terms can never be equal to their (proper) subterms, the procedure will eventually terminate.
 The result of this procedure is a resolution proof with a root, such that the equations of the negative literals are an explanation of the target equality or $\emptyset$ to denote that the equality can not be proven.
-Suppose some equality $s \thickapprox t$ can be explained and \texttt{produceProof} returns a proof with root $\rho$ and
-let $F := \{(u,v) \mid u \neq v \text{ is a literal in } \rho\}$.
-It is the case that $F \models s \thickapprox t$ and $F$ is a subset of the input equations.
+Suppose some equality $s \thickapprox t$ can be explained and \texttt{produceProof} returns a proof with root $\rho$, then it is the case that $neg(\rho) \models s \thickapprox t$ and $neg(\rho)$ is a subset of the input equations.
 
 \input{chapters/congruence/algorithms/prodproof}
 
@@ -54,7 +52,7 @@ However, choosing the edge with label $\smiley$ is undesirable, since it two ext
 
 \subsection*{Congruence Compressor}
 
-In this Section we put our explanation producing congruence closure algorithm and the proof production method into the context of proof compression.
+In this section we put our explanation producing congruence closure algorithm and the proof production method into the context of proof compression.
 To this end we replace subproofs with conclusions that contain unnecessary long explanations with new proofs that have shorter conclusions.
 Shorter conclusions lead to less resolution steps further down the proof and possibly big chunks of the proof can simply be discarded.
 There is however a tradeoff in overall proof length when introducing new subproofs.
@@ -64,7 +62,6 @@ Additionally it can be the case that by introducing a new subproof, we only part
 Some nodes of the old subproof might still be used in other parts of the proof.
 Therefore the replacement of a subproof by another, smaller one does not necessarily lead to a smaller proof.
 Nevertheless, the intuition is that the meta heuristic favoring smaller conclusions should dominate such effects, especially on large proofs.
-The results in Section \ref{TODO} confirm this intuition.
 
 %In Section \ref{sec:proofprocessing} processing of a proof was defined.
 %The most important application of proof processing for this work is proof compression.
@@ -130,8 +127,8 @@ We suspect that most redundancies in proofs are to be found in low theory lemmas
 Therefore an alternative criteria is to only find replacements for low theory lemmas.
 The question whether a node is a low theory lemma is not trivial to answer while traversing the proof in a top to bottom fashion.
 Therefore a preliminary traversal is necessary to determine the classification of nodes.
-Experiments have shown that using this criteria speeds up the algorithm a lot, while losing only very little compression.
-Futher criteria for deciding whether or not to replace could be size of the subproof or a global metric that tries to predict the global compression achieved by replacement.
+%Experiments have shown that using this criteria speeds up the algorithm a lot, while losing only very little compression.
+Further criteria for deciding whether or not to replace could be size of the subproof or a global metric that tries to predict the global compression achieved by replacement.
 
 \input{chapters/congruence/algorithms/compressor}
 

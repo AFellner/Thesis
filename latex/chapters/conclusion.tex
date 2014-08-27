@@ -2,7 +2,7 @@
 In this work we presented two methods for proof compression and their theoretical foundations.
 We implemented the methods into the Skeptik tool and evaluated them extensively on the Vienna Scientific Cluster.
 We investigated the complexity of the underlying problems.
-In the case of explanation production, we proved the NP-completeness of the short explanation decision problem, which is a novel result for complexity theory.
+In the case of explanation production, we proved the NP-completeness of the short explanation decision problem, which is a novel result in complexity theory.
 For both methods we highlighted possible future work, which could improve the presented methods further.
 
 The method for compressing proofs in length shows good results both in compression rate and speed.
@@ -10,10 +10,14 @@ It can compete with previously proposed compression algorithms in that regard.
 The compression rate grows with the proof size and since compressing proofs is especially interesting for huge proofs, this puts an even better light on the results measured.
 Furthermore, the novel congruence closure algorithm can be used in other applications.
 It is especially interesting when immutable data structures are desired, which is inherently the case in functional programming languages.
+There is still room for improvement and we proposed possible future projects on and around this method.
 
 Two algorithms together with a variety of heuristics for compressing proofs with respect to space have been conceived. 
-The experimental evaluation clearly shows that the so-called Bottom-Up algorithm is faster and compresses more than the more natural, straightforward and simple Top-Down algorithm. 
+The experimental evaluation shows that the so-called Bottom-Up algorithm is faster and compresses more than the more natural, straightforward and simple Top-Down algorithm. 
 The best performances are achieved with the simplest heuristics (i.e. Last Child and Number of Children). 
 More sophisticated heuristics provided little extra compression but cost a high price in execution time. 
+Compressing proofs in space is a young discipline of proof compression.
+Our method can serve as an entry point for further investigations in this field.
+Furthermore, our method can be used to construct strategies for pebbling games that are relevant in many scientific fields besides proof compression.
 
 The key contributions of this work are two novel proof compression methods, together with a novel explanation producing congruence closure algorithm and the proof of NP-completeness of the short explanation decision problem.

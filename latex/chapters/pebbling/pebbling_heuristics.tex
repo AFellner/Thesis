@@ -8,14 +8,14 @@ For Top-Down Pebbling, $N$ is the set of pebbleable nodes, and for Bottom-Up Peb
 
 Let $\varphi$ be a proof with nodes $V$.
 A \emph{heuristic} $h$ for $\varphi$ is a totally ordered set $S_h$ together with a \emph{node evaluation} function $e_h: V \rightarrow S_h$.
-A \emph{full heuristic} for $\varphi$ is finite a sequence $(e_{h_1}, \ldots, e_{h_n})$ of heuristics such that the node evaluation $e_{h_n}$ is injective.
+A \emph{full heuristic} for $\varphi$ is a finite sequence $(e_{h_1}, \ldots, e_{h_n})$ of heuristics such that the node evaluation $e_{h_n}$ is injective.
 The \emph{choice} of the full heuristic for a set $N \subseteq V$ is some $\n \in N$ such that $\n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)$ if $\n$ is unique and the choice of the full heuristic $(e_{h_2},\ldots,e_{h_n})$ for $\{\n \in N \mid \n = \mathit{argmax}_{\n \in N} e_{h_1}(\n)\}$. 
 This process will eventually terminate, because of the limitation to $e_{h_n}$.
 
 \end{definition}
 
-Note that to satisfy the requirement for $e_{h_n}$, some trivial node evaluation like mapping nodes to their address in memory can be used.
-In the next chapters we present heuristics, which are cheap to compute and are justified by relating them to the semantics of the Bounded Pebbling Game.
+Note that to satisfy the requirement for $e_{h_n}$, some trivial node evaluation function can be used, e.g. mapping nodes to their address in memory.
+We present heuristics, which are cheap to compute and are justified by relating them to the semantics of the Bounded Pebbling Game.
 We will not elaborate on effects of reordering the heuristics within full heuristics.
 
 \subsection{Number of Children Heuristic (``$Ch$'')}
@@ -32,7 +32,7 @@ This insight is used for the \emph{Last Child} heuristic that chooses nodes that
 Pebbling a node that allows another one to be unpebbled is always a good move. 
 The current number of used pebbles (after pebbling the node and unpebbling one of its premises) does not increase.
 It might even decrease, if more than one premise can be unpebbled.
-For determining the number of premises of which a node is the last child, the proof has to be traversed once, using some topological order $\prec$.
+For determining the number of premises of which a node is the last child, the proof has to be traversed once, before constructing the new order, using some topological order $\prec$.
 Before the traversal, $e_h(\n) = 0$ for every node $\n$. 
 During the traversal $e_h(\n)$ is incremented by 1, if $\n$ is the last child of the currently processed node w.r.t. $\prec$. 
 For this heuristic $S_h = \mathbb{N}$.

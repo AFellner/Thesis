@@ -1,12 +1,11 @@
 \section{Experiments} 
 \label{sec:experiments}
 
-To evaluate the algorithms and heuristics, experiments were executed\footnote{The Vienna Scientific Cluster VSC\nobreakdash-2 
-(\url{http://vsc.ac.at/}) was used.} on four disjoint sets of proof benchmarks (Table \ref{tab:benchmarks}). 
-TraceCheck$_1$ and TraceCheck$_2$ contain proofs produced by the SAT-solver \texttt{PicoSAT} \cite{Biere2008} on unsatisfiable benchmarks from the SATLIB (\url{www.satlib.org/benchm.html}) library. 
+The experiments on the space compression algorithm were performed on four disjoint sets of proof benchmarks (Table \ref{tab:benchmarks}). 
+TraceCheck$_1$ and TraceCheck$_2$ contain proofs produced by the SAT-solver PicoSAT \cite{Biere2008} on unsatisfiable benchmarks from the SATLIB. 
 The proofs\footnote{SAT proofs: \url{www.logic.at/people/bruno/Experiments/2014/Pebbling/tc-proofs.zip}} are in the TraceCheck proof format, which is one of the three formats accepted at the \emph{Certified Unsat} track of the SAT-Competition.
-veriT$_1$ and veriT$_2$ contain proofs produced by the SMT-solver VeriT (\url{www.verit-solver.org}) on unsatisfiable problems from the SMT-Lib (\url{www.smtlib.org}). 
-These proofs\footnote{SMT proofs: \url{www.logic.at/people/bruno/Experiments/2014/Pebbling/smt-proofs.zip}} are in a proof format that resembles SMT-Lib's problem format and they were translated into pure resolution proofs by considering every non-resolution inference as an axiom.
+veriT$_1$ and veriT$_2$ contain proofs produced by the SMT-solver VeriT \cite{Bouton2009} on unsatisfiable problems from the SMT-LIB. 
+These proofs\footnote{SMT proofs: \scriptsize{\url{www.logic.at/people/bruno/Experiments/2014/Pebbling/smt-proofs.zip}}} are in a proof format that resembles SMT-LIB's problem format and they were translated into pure resolution proofs by considering every non-resolution inference as an axiom.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% Benchmarks table &&&&&&&&&&&&&&&&&&&&&&&&&&&&&
@@ -92,7 +91,7 @@ $\gamma$ &$d$ &  $com$ & \textbf{Improvement} (\%) & (nodes/ms)\\
 \label{tab:decay}
 \end{table}
 
-Table \ref{tab:results} summarizes the results of the experiments.
+Table \ref{tab:results} summarizes the main results of the experiments.
 The two presented algorithms are tested in combination with the four presented heuristics.
 The Children and LastChild heuristics were tested on all four benchmark sets.
 The Distance and Decay heuristics were tested on the sets TraceCheck$_2$ and veriT$_2$.
@@ -105,7 +104,7 @@ Both columns show the best and worst result in boldface.
     \frac{
       s(\varphi,f(\varphi))
     }{
-        \mathit{avg}_{g\in G}{s(\varphi,g(\varphi))}
+        \mathit{mean}_{g\in G}{s(\varphi,g(\varphi))}
     } \right)
   }
   \label{eq:space}
@@ -153,4 +152,4 @@ With radius 5, only a few small proofs were processed in a reasonable amount of 
 
 On average the smallest space measure of a proof is 44.1 times smaller than its length. 
 This shows the impact that the usage of deletion information together with well constructed topological orders can have. 
-When these techniques are used, on average 44.1 times less memory is required for storing nodes in memory while proof processing.
+When these techniques are used, on average 44.1 times less memory is required for storing nodes in memory during proof processing.

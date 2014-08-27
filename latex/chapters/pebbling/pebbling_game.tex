@@ -36,7 +36,7 @@ When playing the Bounded Pebbling Game on a proof $\varphi$, the designated targ
 
 In this work we investigate space requirements when time requirements are fixed.
 Fixing time is a design choice and it corresponds to rule \ref{rule:onlyonce}.
-Including this rules sets a bound $O(|V|)$ for the number of rounds.
+Including this rules sets a bound $O(|V|)$ for the number of rounds played and the number of pebbling moves is exactly $|V|$, since every node has to be pebbled exactly once.
 
 \begin{definition}[Strategy]
 \label{def:strategy}
@@ -61,19 +61,18 @@ Secondly, when pebbling a node in the Black Pebbling Game, one of its predecesso
 The trade-off between moving pebbles and using fresh ones is discussed in \cite{EmdeBoas1979}. 
 Deciding whether the pebbling number of a graph $G$ and node $s$ is smaller than $k$ is PSPACE-complete in the absence of rule \ref{rule:onlyonce} \cite{Gilbert1980} and NP-complete when rule \ref{rule:onlyonce} is included \cite{Sethi1975}.
 
-Every round of the game corresponds to an I/O operation and, if the action of the player is to pebble a node, the processing of the node.
+Our view of the game is such that every round of the game corresponds to an I/O operation and, if the action of the player is to pebble a node, the processing of the node.
 The goal of proof compression is to make proof processing less expensive, therefore admitting exponentially many I/O operations and processing steps in the worst case is not a viable option.
 That is the reason why we chose the Bounded Pebbling Game for our purpose.
 In the Bounded Pebbling Game the number of rounds is linear in the number of nodes.
 
-In order to process a node, the results of processing its premises are used and therefore have to be stored in memory.
+In order to process a node according to Definition \ref{def:proof-processing}, the results of processing its premises are used and therefore have to be stored in memory.
 The requirement of having premises in memory corresponds to rule \ref{rule:premises} of the Bounded Pebbling Game. 
-Processing a node and I/O operations are typically more expensive than extra memory consumption, therefore in our setting every node can be processed only once, which corresponds to rule \ref{rule:onlyonce}.
 A node that has been processed can be removed from memory, which corresponds to rule \ref{rule:unpebbling}.
 Note that removing a node and its results too early in combination with \ref{rule:onlyonce} makes it impossible to process the whole proof.
 The optimal moment to remove a node from memory is uniquely determined by the order nodes are processed (see Theorem \ref{theorem:canonical}).
 
-Definition \ref{def:proof-processing} does not specify in what order to process nodes.
+Definition \ref{def:proof-processing} does not specify in which order to process nodes.
 The order in which nodes are processed is essential for the memory consumption, just like the order of pebbling nodes in the pebbling game is essential for the pebbling number.
 The following definition allows us to relate pebbling strategies with orderings of nodes.
 
@@ -129,7 +128,6 @@ Unpebbling it later could only possibly increase the pebble number.
 To reduce the pebble number, $v$ would have to be unpebbled earlier than some preceding pebbling move. 
 But, by definition of canonical pebbling strategy, the immediately preceding pebbling move pebbles the last child of $v$ w.r.t. $\prec$. 
 Therefore, unpebbling $v$ earlier would make it impossible for its last child to be pebbled later without violating the rules of the game.
-\qed
 \end{proof}
 
 As a consequence of Theorem \ref{theorem:canonical} finding pebbling strategies with low pebbling numbers can be reduced to constructing topological orders.

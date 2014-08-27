@@ -48,7 +48,7 @@ The idea of abstract congruence closure is to introduce new constants for non co
 Doing so, all equations the algorithm has to take into account are of the form $(c,d)$ and $(c, f(a,b))$, where $a,b,c,d$ are constants.
 This replaces tedious preprocessing steps, for example transformation to a graph of outdegree 2 \cite{Downey1980},that are necessary for other algorithms to achieve the optimal running time.
 
-Our method is does not employ the idea of abstract congruence closure.
+Our method does not employ the idea of abstract congruence closure.
 We found that using currying is enough to obtain an algorithm with optimal running time and no tedious preprocessing steps.
 The reason why we did not go for abstract congruence closure is, that we do not want to have the overhead of introducing and eliminating fresh constants.
 In the context of proof compression, our congruence closure algorithm will be applied to relatively small instances very often.
@@ -61,10 +61,10 @@ By choosing to work with terms in curryfied form, but without extra constants, o
 
 \subsection*{Immutable Data Structures}
 
-Most of the data structures presented the following section are defined in terms of mathematical functions.
+Most of the data structures presented in the following section are defined in terms of mathematical functions.
 This is not by coincidence and our congruence closure algorithm can easily be translated to an implementation in a functional programming language.
 Furthermore, all data structures can be implemented immutable.
-An immutable data structure is one that never changes is internal state after its creation.
+An immutable data structure is one that never changes its internal state after its creation.
 When alternating the information stored in the data structure, a new object with the new information is constructed.
 The old object remains intact.
 A side effect of a method is a modification of an object that is not the returned value of the method.
@@ -248,7 +248,7 @@ After this operation $r(s) = r(t)$.
 
 \item \textbf{Induction Step}: Let $E = \langle (u_1,v_1), \ldots, (u_{n+1},v_{n+1}) \rangle$ and $E_n = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle$.
 There are two cases: $E_n \models s\thickapprox t$ and $E_n \nvDash s\thickapprox t$.
-In the former case, the claim follows from the induction hypothesis, the invariant class and the fact that union always changes representatives for all elements of a class.
+In the former case, the claim follows from the induction hypothesis, the Invariant class and the fact that union always changes representatives for all elements of a class.
 We still have to show the claim in the latter case.
 We write $E \models_n u \thickapprox v$ as an abbreviation for $E_n \nvDash u \thickapprox v$ and $E \models u \thickapprox v$.
 We show the claim ($E \models s \thickapprox t$) by induction on the structure of the terms $s$ and $t$.
@@ -279,7 +279,7 @@ Subsequently union is called for $s$ and $t$, after which $r(s) = r(t)$ holds.
 \noindent For $s = t$ the claim follows trivially.
 Therefore we show soundness in case $s \neq t$.
 We show that from $r(s) = r(t)$ follows $E \models s \thickapprox t$ by induction on the number $m$ of calls to union induced by adding all equations of $E$ to the empty congruence structure, for all $s$ and $t$ that are arguments of some call to union.
-The original claim then follows from invariant Class, since only union modifies the $r$ structure and the fact that two terms are in the same class if and only if union was called for some elements in the respective classes.
+The original claim then follows from Invariant Class, since only union modifies the $r$ structure and the fact that two terms are in the same class if and only if union was called for some elements in the respective classes.
 %Notice that only union modifies $r$ after initialization.
 %Therefore the proof investigates the changes made by union and the parameters it is called when adding equations to a congruence structure.
 \begin{itemize}
@@ -408,7 +408,7 @@ there are paths in the underlying graphs between $a$ and $c$ as well as between 
 
 Edges with label $\smiley$ are added, when \texttt{merge} is called from \texttt{addNode}, or \texttt{union} induces an additional merge.
 In both cases there are subterms with respective congruent representatives.
-The claim follows by using the invariant Paths.
+The claim follows by using the Invariant Paths.
 
 \end{proof}
 
@@ -450,7 +450,7 @@ However, the algorithm has a big overhead and needs several precomputations.
 \cite{Cherkassky1996} presents a comparative study of several shortest path algorithms which shows that Dijkstra's algorithm performs well in practice.
 
 Dijkstra's algorithm finds shortest paths to an increasing set of nodes, until every node has been discovered.
-It does so by keeping track of the the shortest paths and the distances, being the combined weights of edges on the path, of nodes to the source.
+It does so by keeping track of the shortest paths and the distances, being the combined weights of edges on the path, of nodes to the source.
 Initially, the only discovered node is the source itself and the distance to every other node is infinite.
 The algorithm discovers new nodes by selecting the lowest weight outgoing edge of all nodes that have been discovered so far and updates shortest paths and distances while doing so.
 It is a greedy algorithm in the sense that it always locally chooses lowest weight edges and never discards previously made decisions.
@@ -473,7 +473,7 @@ Clearly the input equalities $(a,f(c_1,e))$, $(f(c_4,e),c_1)$ and the explanatio
 Additionally $c_1 \thickapprox b$ has to be explained.
 For this equality the set $(c_1,d_1),(d_1,d_2),(d_2,b)$ is the shortest explanation in the original graph.
 This sub explanation adds three new equations to the explanation for $a \thickapprox b$.
-When the modified Dijkstra algorithm iterates over the edge $(f(c_1,e),f(c_4,e))$, it can add add zero weight edges $(c_1,c_2),(c_2,c_3),(c_3,c_4)$ to the graph.
+When the modified Dijkstra algorithm iterates over the edge $(f(c_1,e),f(c_4,e))$, it can add zero weight edges $(c_1,c_2),(c_2,c_3),(c_3,c_4)$ to the graph.
 By doing so the shortest explanation for $c_1 \thickapprox b$ becomes $(c_1,c_2),(c_2,c_3),(c_3,c_4),(c_4,b)$, which only adds one extra equation $(c_4,b)$ to the global explanation.
 The resulting explanation contains six input equations.
 

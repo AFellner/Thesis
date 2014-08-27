@@ -145,7 +145,7 @@ The following example shows such a situation.
 	\label{fig:TDP}
 \end{figure}
 
-Consider the graph shown in Figure \ref{fig:TDP} and suppose that top-down pebbling has already pebbled the initial sequence of nodes $(1,2,3)$. 
+Consider the graph shown in Figure \ref{fig:TDP} and suppose that Top-Down Pebbling has already pebbled the initial sequence of nodes $(1,2,3)$. 
 For a greedy heuristic that only has information about pebbled nodes, their premises and children, all nodes marked with $4?$ are considered equally worthy to pebble next.
 Suppose the node marked with $4$ in the middle graph is chosen to be pebbled next.
 Subsequently, pebbling $5$ opens up the possibility to remove a pebble after the next move, which is to pebble $6$.
@@ -216,8 +216,9 @@ Suppose that similarly to the Top-Down Pebbling scenario, nodes have been chosen
 However, the choice of where to go next is predefined by the dashed nodes. 
 Consider the dashed child of node $3$. 
 Since $3$ has been completely processed, the other premise of its dashed child is visited next. 
-The result is that the middle subgraph is pebbled while only one external node is pebbled, while it were two in the Top-Down scenario. 
-At no point more than five pebbles will be used for pebbling the root node, which is shown in the bottom right picture of the figure. This is independently of the heuristic choices.
+The result is that the middle subgraph is pebbled with only one pebble placed on a node that does not belong to the subgraph.
+In the Top-Down scenario there were two such external pebbles. 
+At no point more than five pebbles will be used for pebbling the root node, which is shown in the bottom right picture of the figure. This is independent of the heuristic choices.
 
 \begin{figure}[tb]
 	\makebox[\textwidth][c]{
@@ -388,7 +389,7 @@ Figure \ref{fig:SpaciousFirst} shows a simple proof $\varphi$ with two subproofs
 As shown in the leftmost diagram, assume $\pspace{\varphi_0}{\prec_0} = 4$ and $\pspace{\varphi_1}{\prec_1} = 5$, where $\prec_0$ and $\prec_1$ represent some topological order of the respective subproofs with the corresponding pebbling numbers.
 After pebbling one of the subproofs, the pebble on its root node has to be kept there until the root of the other subproof is also pebbled. 
 Only then the root node can be pebbled. 
-Therefore, $\pspace{\varphi}{\prec} = \pspace{\varphi_j}{\prec_j} + 1$ where $\prec$ is obtained by first pebbling according to $\prec_j$, then by $\prec_{1-j}$ followed by pebbling the root.
+Therefore, $\pspace{\varphi}{\prec} = \pspace{\varphi_j}{\prec_j} + 1$ where $\prec$ is obtained by first pebbling according to $\prec_{1-j}$, then by $\prec_{j}$ followed by pebbling the root.
 Choosing to pebble the less spacious subproof $\varphi_0$ first results in $\pspace{\varphi}{\prec} = 6$, while pebbling the more spacious one first gives $\pspace{\varphi}{\prec} = 5$.
 
 Note that this example shows a simplified situation. 

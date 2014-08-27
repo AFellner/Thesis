@@ -34,7 +34,7 @@ The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\dual{\ell}\}$ is called
 The condition of $C_1$ and $C_2$ being different technically is not necessary.
 However if it is possible to resolve a clause with itself, then the clause contains both the positive and negative version of a variable and is therefore tautological (i.e. trivially satisfiable).
 Since the resolution calculus is refutational, i.e. it seeks to show unsatisfiability, such clauses are of no use and therefore we forbid them.
-In case it is possible to produce a resolvent of two clauses w.r.t. two different literals, no matter which literal is chosen, the resulting resolvent will tautological.
+In case it is possible to produce a resolvent of two clauses w.r.t. two different literals, no matter which literal is chosen, the resulting resolvent will be tautological.
 Therefore the choice of literal to resolve on is not an interesting question to investigate and we will drop the reference to the literal when speaking about resolvents.
 In terms of proof calculi, axioms of the propositional resolution calculus are clauses and the single rule of the calculus is to derive a resolvent from previously derived clauses or axioms.
 This work studies the syntactic and semantic structure of derivations in this calculus, which are formally defined in the following.
@@ -66,7 +66,7 @@ In the following definition, we present proofs as labeled graphs.
 A \emph{proof} $\varphi$ is a rooted labeled directed acyclic graph $\langle V,E,\n,\mathcal{L} \rangle$.
 The labeling function $\mathcal{L}$ maps nodes to clauses.
 The designated node $\n \in V$ is the root of the graph, i.e. it is a node without children and every node of the graph is a recursive ancestor of the node.
-Furthermore, a proof as to fulfill one of the following properties:
+Furthermore, a proof has to fulfill one of the following properties:
 
 \begin{enumerate}
 	\item $V = \{\n\}, E = \emptyset$
