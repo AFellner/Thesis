@@ -16,8 +16,8 @@
 		\If{$l = \smiley$}{
 			$f(a,b) \leftarrow u$ \\
 			$f(c,d) \leftarrow v$ \\
-			$p_1 \leftarrow produceProof(a,c,g)$ \\
-			$p_2 \leftarrow produceProof(b,d,g)$ \\
+			$p_1 \leftarrow produceProof(a,c)$ \\
+			$p_2 \leftarrow produceProof(b,d)$ \\
 			$con \leftarrow \{ a \neq c, b\neq d, f(a,b) = f(c,d) \}$ \\
 			$res \leftarrow$ resolve $con$ with non $\emptyset$ roots of $p_1$ and $p_2$ \\
 			%$int_1 \leftarrow$ resolve $con$ with $root(p_1)$ \\

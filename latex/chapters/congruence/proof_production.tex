@@ -61,7 +61,7 @@ Example \ref{example:shortexpl} displays this issue.
 Additionally it can be the case that by introducing a new subproof, we only partially remove the old subproof.
 Some nodes of the old subproof might still be used in other parts of the proof.
 Therefore the replacement of a subproof by another, smaller one does not necessarily lead to a smaller proof.
-Nevertheless, the intuition is that the meta heuristic favoring smaller conclusions should dominate such effects, especially on large proofs.
+Nevertheless, our intuition is that favoring smaller conclusions should dominate such effects, especially on large proofs.
 
 %In Section \ref{sec:proofprocessing} processing of a proof was defined.
 %The most important application of proof processing for this work is proof compression.
@@ -105,6 +105,7 @@ Axioms are not changed by the function.
 For all other nodes the \texttt{fixNode} method is called, to maintain a correct proof.
 For a clause $C$, the method adds $neg(C)$ (as defined in \ref{sec:calculus}) to the empty congruence structure and checks whether these equations induce a proof for one of the equations in the $pos(C)$ that has a shorter conclusion than the original subproof.
 If there is such a proof, we replace the old subproof by the new one.
+Example \ref{example:compressor} displays this procedure.
 
 In line \ref{criteria} it is decided whether the explanation finding congruence closure algorithm should be used to find a replacement for the current node.
 A trivial criteria is true for every node.
@@ -142,5 +143,35 @@ Since we are interested in short proofs, we return the one with the shorter clau
 This method of maintaining a correct proof was proposed in \cite{Bar-Ilan2008} in the context of similar proof compression algorithms.
 
 \input{chapters/congruence/algorithms/fixNode}
+
+\begin{example}
+
+Consider the proof presented graphically in Figure \ref{fig:compressproof}.
+It uses the same abbreviations for $t_a$ and $t_b$ as in Example \ref{example:shortexpl}.
+Furthermore, the proof uses the long explanation for $t_a \thickapprox t_b$.
+The length of the proof is 12.
+The proof contains one propositional variable $A$.
+The compression algorithm traverses the proofs and detects the redundant explanation in node $O_1$.
+The subproof corresponding to the explanation $\{(a,b)\}$, that is displayed in Figure \ref{fig:short_expl_proof}, is created and $O_1$ is replaced by this subproof $N_1$.
+When iterating over node $O_2$, the algorithm detects that the pivot literal $t_a = a$ is not present $N_1$ and \texttt{fixNode} replaces $O_2$ by $N_1$.
+At node $O_3$, both premises contain the pivot $a = b$, therefore $O_3$ is replaced by resolvent of $N_1$ and its other original premise.
+The resultion proof is displayed in Figure \ref{fig:compressproof_2}.
+The resulting proof has proof length 11 which is shorter than the original one, even though the replaced subproof is bigger.
+Note that the clause $\{\neg A\}$ is part of the replaced subproof.
+It is also part of the subproof with conclusion $\{a = b\}$, which remains in the new proof.
+
+\begin{figure}[!h]
+\input{chapters/congruence/figures/compressproof_original}
+\caption{Original Proof}
+\label{fig:compressproof}
+\end{figure}
+
+\begin{figure}[!h]
+\input{chapters/congruence/figures/compressproof_new}
+\caption{Compressed Proof}
+\label{fig:compressproof_2}
+\end{figure}
+
+\end{example}
 
 \FloatBarrier

@@ -4,7 +4,7 @@
 In this section we present a congruence closure algorithm that is able to produce explanations.
 The algorithm is a mix of the approaches of the algorithms presented in \cite{Fontaine2004} and \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 The basic structure of the algorithm is inherited from \cite{Fontaine2004}, which itself inherits its structure from the algorithm of Nelson and Oppen \cite{Nelson1980}.
-The technique to store and deduce equalities of non constant terms is inspired by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
+The technique to store and deduce equalities of compound terms is inspired by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 Additionally the proof forest structure described below was proposed by \cite{Nieuwenhuis2005,Nieuwenhuis2007}.
 
 Before we describe the algorithm, we discuss two technical concepts that are important aspects of our congruence closure algorithm.
@@ -12,10 +12,10 @@ Before we describe the algorithm, we discuss two technical concepts that are imp
 \subsection*{Currification and Abstract Congruence Closure}
 \label{subsec:algorithms_preliminaries}
 
-Our congruence closure algorithm operates on curried terms.
-Curried terms use a single binary function symbol to represent general terms.
+Our congruence closure algorithm operates on terms in curryfied form.
+Such terms use a single binary function symbol to represent general terms.
 More formally, let $\mathcal{F}$ be a finite set of functions with a designated binary function symbol $f \in \mathcal{F}$ and let every other function symbol in $\mathcal{F}$ be a constant.
-A term w.r.t. a signature of this form is called in \emph{curryfied form}.
+A term w.r.t. a signature of this form is in \emph{curryfied form}.
 
 It is possible to uniquely translate a general set of terms $\mathcal{T}^{\Sigma}$ with signature $\Sigma = \langle \mathcal{F},arity \rangle$ into a set of terms in curryfied form $\mathcal{T'}^{\Sigma'}$.
 The new signature $\Sigma'$ is obtained from $\Sigma$ by setting $arity$ to zero for every function symbol in $\mathcal{F}$ and introducing the designated binary function symbol $f$ to $\mathcal{F}$.
@@ -29,33 +29,32 @@ curry(t) = \Big\{
 \end{array}
 $$
 
-The idea of currying was introduced by M. Sch\"onfinkel \cite{Schoenfinkel1924} in 1924 and independently by Haskell B. Curry \cite{Curry1958} in 1958, who also lends his name to the concept.
+The idea of currying was introduced by M. Sch\"onfinkel \cite{Schoenfinkel1924} in 1924 and independently by Haskell B. Curry \cite{Curry1958} in 1958, who lends his name to the concept.
 Currying is not restricted to terms.
 The general idea is to translate functions of type $A \times B \rightarrow C$ into functions of type $A \rightarrow B \rightarrow C$.
 There is a close relation between currying and lambda calculus \cite{Church1936}.
-Lambda calculus uses a single binary function $\lambda$.
-Its arguments can either be elements of some set or again lambda terms.
-For an introduction to lambda calculus, including currying in terms of lambda calculus and its relation to functional programming, see \cite{Barendregt1997}.
+In the simplest form of lambda calculus, every function is in curried form.
+For an introduction to lambda calculus, including currying in terms of lambda calculus and its relation to functional programming we refer the reader to \cite{Barendregt1997}.
 
 The benefit of working with terms in curryfied form is an easier and cleaner congruence closure algorithm, while maintaining best known runtime for congruence closure algorithms of $O(n \log(n))$.
 Terms in curryfied form simplify the algorithm, because case distinctions on terms are much simpler.
 Such a term is either a constant or a compound term of the form $f(a,b)$, where $a$ and $b$ are terms in curryfied form.
 In general, terms can have different leading function symbols and their arities (for which possibly there is no known bound) have to be taken into account.
 Cleaner algorithms are not only easier to implement, but should also improve the practical runtime for similar reasons.
+Additionally, working with terms in curryfied form replaces tedious preprocessing steps, for example transformation to a graph of outdegree 2 \cite{Downey1980},that are necessary for other algorithms to achieve the optimal running time.
 
 Recently so called abstract congruence closure algorithms have been proposed and shown to be more efficient than traditional approaches \cite{Bachmair2000}.
 The idea of abstract congruence closure is to introduce new constants for non constant terms.
 Doing so, all equations the algorithm has to take into account are of the form $(c,d)$ and $(c, f(a,b))$, where $a,b,c,d$ are constants.
-This replaces tedious preprocessing steps, for example transformation to a graph of outdegree 2 \cite{Downey1980},that are necessary for other algorithms to achieve the optimal running time.
 
-Our method does not employ the idea of abstract congruence closure.
+Our method does not use the idea of abstract congruence closure.
 We found that using currying is enough to obtain an algorithm with optimal running time and no tedious preprocessing steps.
 The reason why we did not go for abstract congruence closure is, that we do not want to have the overhead of introducing and eliminating fresh constants.
 In the context of proof compression, our congruence closure algorithm will be applied to relatively small instances very often.
 We could introduce the extra constants for the whole proof before processing, but would still have to remove them from explanations every time we produce a new subproof.
 It would be interesting to investigate, whether our intuition in that regard is right, or if it pays off to deal with extra constants.
 
-\cite{Nieuwenhuis2005,Nieuwenhuis2007} describes an explanation producing abstract congruenc closure algorithm, 
+\cite{Nieuwenhuis2005,Nieuwenhuis2007} describes an explanation producing abstract congruence closure algorithm, 
 whereas \cite{Fontaine2004} proposes a traditional algorithm without currying and extra constants.
 By choosing to work with terms in curryfied form, but without extra constants, our algorithm is a middle ground between the two algorithms.
 
@@ -67,6 +66,7 @@ Furthermore, all data structures can be implemented immutable.
 An immutable data structure is one that never changes its internal state after its creation.
 When alternating the information stored in the data structure, a new object with the new information is constructed.
 The old object remains intact.
+
 A side effect of a method is a modification of an object that is not the returned value of the method.
 Such side effects often lead to bugs, since the method can not be used as a black box anymore.
 An example for a side effect is the modification of the representative of a term in the congruence closure algorithm presented in \cite{Fontaine2004} and its effect on what is called signature table in this work.
@@ -83,8 +83,10 @@ The impossibility of changing internal structures often makes it hard to maintai
 One simple example is that of a linked list.
 Suppose such a linked list is implemented in such a way that every element of the list internally has a pointer to the next element in the list.
 When modifying the first element of the list in some fashion, the pointer of the second element has to be set to the new version of the first one.
-Since this requires to produce a new version of the second element as well, also the pointer of the third element has to be updated and so on.
-Some algorithms and their optimal runtime depend on such data structures, that are very hard or impossible to implement immutable.
+Since this requires to produce a new version of the second element as well, also the pointer of the third element has to be updated and so on. 
+Eventually, every element of the list will have to be updated.
+A mutable linked list would simply alter the internal state of the first element and leave everything else as it is.
+Some algorithms and their optimal runtime depend the runtime of such simple data structures, that are very hard or impossible to achieve in an immutable fashion.
 However, sometimes tricky data structures like the zipper were invented which help to overcome these problems.
 
 \subsection*{Congruence structure}
@@ -251,7 +253,7 @@ There are two cases: $E_n \models s\thickapprox t$ and $E_n \nvDash s\thickappro
 In the former case, the claim follows from the induction hypothesis, the Invariant class and the fact that union always changes representatives for all elements of a class.
 We still have to show the claim in the latter case.
 We write $E \models_n u \thickapprox v$ as an abbreviation for $E_n \nvDash u \thickapprox v$ and $E \models u \thickapprox v$.
-We show the claim ($E \models s \thickapprox t$) by induction on the structure of the terms $s$ and $t$.
+We show the claim ($r(s) = r(t)$) by induction on the structure of the terms $s$ and $t$.
 
 \begin{itemize}
 \item \textbf{Induction Base} $s$ or $t$ is a constant and therefore transitivity reasoning was used to derive $E \models_n s \thickapprox t$.
@@ -291,10 +293,11 @@ The original claim then follows from Invariant Class, since only union modifies 
 \item \textbf{Induction Hypothesis}: For every $k < m$, if a set of equations $F$ induces $k$ calls to union, then from $r(s) = r(t)$ follows $F \models s \thickapprox t$ for all terms $s,t$ that are arguments of some call to union.
 
 \item \textbf{Induction Step}: Suppose $E = \langle (u_1,v_1), \ldots, (u_n,v_n) \rangle$ induces $m$ calls to union with arguments $(h_1,g_1),\ldots,(h_m,g_m)$.
-The subsequence $E_n = \langle (u_1,v_1), \ldots, (u_{n-1},v_{n-1}) \rangle$ induced the first $l$ calls to union for some $n-1 \leq k < m$.
+The subsequence $E_n = \langle (u_1,v_1), \ldots, (u_{n-1},v_{n-1}) \rangle$ induced the first $k$ calls to union for some $n-1 \leq k < m$.
 In other words, adding $(u_n,v_n)$ to the congruence structure induces $m-k-1$ calls to union with arguments $(h_{k+1},g_{k+1}),\ldots,(h_m,g_m)$.
 The pair $(h_{k+1},g_{k+1})$ is either an original input equation, or a deduced equality from line \ref{addnodemerge} of \texttt{addNode}.
-In both cases $E \models h_{k+1} \thickapprox g_{k+1}$, which is trivial in the former case and an application of the induction hypothesis in the latter case.
+In both cases $E \models h_{k+1} \thickapprox g_{k+1}$, which is trivial in the former case.
+In the latter case the claim follows by the Invariant Lookup, the induction hypothesis and the compatibility axiom.
 Let $j \in \{k+2,\ldots,m\}$.
 The pair $(h_j,g_j)$ was inserted to $d$ in line \ref{deduceEq1} or \ref{deduceEq2} of \texttt{union} that was called with arguments $(h_i,g_i)$ with $i \in \{k+1,\ldots,j-1\}$.
 From the Invariant Lookup follows that the terms are such that $h_i$ and $g_i$ are both subterms of $h_j$ or $g_j$.
