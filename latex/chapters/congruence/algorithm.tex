@@ -297,7 +297,10 @@ The subsequence $E_n = \langle (u_1,v_1), \ldots, (u_{n-1},v_{n-1}) \rangle$ ind
 In other words, adding $(u_n,v_n)$ to the congruence structure induces $m-k-1$ calls to union with arguments $(h_{k+1},g_{k+1}),\ldots,(h_m,g_m)$.
 The pair $(h_{k+1},g_{k+1})$ is either an original input equation, or a deduced equality from line \ref{addnodemerge} of \texttt{addNode}.
 In both cases $E \models h_{k+1} \thickapprox g_{k+1}$, which is trivial in the former case.
-In the latter case the claim follows by the Invariant Lookup, the induction hypothesis and the compatibility axiom.
+In the latter case $h_{k+1} = f(a,b)$ and $g_{k+1} = f(c,d)$ for some terms $a,b,c,d$ and suppose $l(r(a),r(b)) = g_{k+1}$ (the other case that triggers line \ref{addnodemerge} $l(r(c),r(d)) = h_{k+1}$ is symmetric).
+From the invariant Lookup follows $r(a) = r(c)$ and $r(b) = r(d)$.
+Using the induction hypothesis we can see that $E \models h_{k+1} \thickapprox g_{k+1}$.
+
 Let $j \in \{k+2,\ldots,m\}$.
 The pair $(h_j,g_j)$ was inserted to $d$ in line \ref{deduceEq1} or \ref{deduceEq2} of \texttt{union} that was called with arguments $(h_i,g_i)$ with $i \in \{k+1,\ldots,j-1\}$.
 From the Invariant Lookup follows that the terms are such that $h_i$ and $g_i$ are both subterms of $h_j$ or $g_j$.
@@ -342,7 +345,7 @@ There are $n$ terms that can be changed, so line \ref{changerep} of \texttt{unio
 Let $f(a,b)$ be the result of accessing $l$ in line \ref{accessl1}.
 In the same call of \texttt{union} line \ref{changerep} changes the representative of $b$.
 Since this this happens only $\log(n)$ times and there are at most $m < n$ compound terms, line \ref{accessl1} is executed at most $n \log(n)$ times.
-The same holds for line \ref{accessl1} and all other lines in the respective loops.
+The same holds for line \ref{accessl2} and all other lines in the respective loops.
 
 \end{proof}
 
@@ -353,12 +356,13 @@ The same holds for line \ref{accessl1} and all other lines in the respective loo
 \label{sec:congruencegraph}
 The most important feature of our congruence closure algorithm towards proof compression is explanation production.
 For this purpose the input equations and deduced equalities have to be stored in a data structure that supports this feature.
-We support two different such data structures.
-Both structures store equalities in labeled graphs, which we call congruence graphs and have methods.
+We present two different such data structures.
+Both structures store equalities in labeled graphs, which we call congruence graphs.
 A node in such a graph represents a term and an edge between two nodes denotes that the represented terms are congruent w.r.t. the set of input equations.
 A path in a congruence graph is a sequence of undirected, unweighted, labeled edges in the underlying graph.
 The set of labels for both types of graphs is the set of extended equations $\mathcal{E}$ (i.e. equations and the placeholder \smiley).
-The method \texttt{merge} adds edges to the graph via the \texttt{lazy\_insert} method, which eventually calls the \texttt{insert} method, which is different for the two structures.
+The method \texttt{merge} adds edges to the graph via the \texttt{lazy\_insert} method, which eventually calls the \texttt{insert} method.
+The \texttt{insert} method is different for the two presented structures.
 After calling \texttt{insert} with arguments $s$ and $t$ it is guaranteed that there is a path in the congruence graph between $s$ and $t$.
 In case they were not connected before the call, then there is an edge between $s$ and $t$ after the call.
 The same can be assumed for \texttt{lazy\_insert} since edges that are added to the queue are never discarded and $s$ and $t$ are connected virtually.
@@ -374,7 +378,7 @@ For terms $s, t$ holds $r(s) = r(t)$ if and only if there is a path in the congr
 \begin{proof}
 
 In case $s = t$, the claim is trivial.
-Therefore, we show the invariant in the case where $s \neq t$ by an induction on $|[r(s)]|$.
+Therefore, we show the invariant for $s \neq t$ by an induction on $|[r(s)]|$.
 %We show that there is a path between $s$ and $t$ in the congruence graph induction on $|[r(s)]|$. 
 The proof relies on the invariant Class, which shows the consistency between classes and representatives.
 
@@ -401,9 +405,9 @@ Also there was no path between the two terms before and since the only addition 
 
 \begin{invariant}[Deduced Edges]
 
-For every edge in a congruence structure between vertices $u,v$ with label $\smiley$, 
+For every edge in a congruence graph between vertices $u,v$ with label $\smiley$, 
 there are $a,b,c,d \in \mathcal{T}$ such that $u = f(a,b)$, $v = f(c,d)$ and
-there are paths in the underlying graphs between $a$ and $c$ as well as between $b$ and $d$.
+there are paths in the graph between $a$ and $c$ as well as between $b$ and $d$.
 
 \end{invariant}
 
@@ -416,11 +420,13 @@ The claim follows by using the Invariant Paths.
 \end{proof}
 
 The method \texttt{explain} returns a path between its two arguments, if one exists.
-There can be more than one such path depending on the actual type of graph used.
+For presentation purposes, the case where \texttt{explain} is called for terms that are not congruent is not outlined explicitly.
+One can assume that the method returns some value representing this situation and that all other methods handle this situation.
+Depending on the actual type of graph used, there can be more than one explanation path between congruent terms.
 The method \texttt{inputEqs} for a path in the congruence graph returns the input equations that were used to derive the equality between the first and the last node of the path.
 For an input equation, this is simply the equation itself.
 For a deduced equality, this is the set of input equations that were used for deduction.
-Combining these two methods, the statement \texttt{inputEqs(explain(s,t,g),g)} for input equations $E$ returns an explanation $E' \subseteq E$ such that $E' \models s \thickapprox t$ if there is one.
+Combining these two methods, the statement \texttt{inputEqs(explain(s,t))} for input equations $E$ returns an explanation $E' \subseteq E$ such that $E' \models s \thickapprox t$, if there is one.
 
 \input{chapters/congruence/algorithms/inputeqs}
 
@@ -433,7 +439,7 @@ An equation graph stores equalities in an edge labeled weighted undirected graph
 $V \subseteq \mathcal{T}$, $E \subseteq V \times \mathcal{E} \times V \times \mathbb{N}$.
 The weight for an edge is the number of input equations used to derive the equality between its two nodes.
 This number is one for input equalities and the size of the explanation for deduced equalities.
-Edges inserted via the \texttt{insert} method are added to the graph, even if the nodes are already connected in the graph.
+Edges inserted via the \texttt{insert} method are added to the graph, even if the nodes are already connected.
 Therefore there is a choice which path the \texttt{explain} method returns.
 We look for short explanations and the weights reflect sizes of sub explanation.
 Therefore we want to return the shortest path.
@@ -468,7 +474,7 @@ Example \ref{ex:short_expl} demonstrates that the modified shortest path algorit
 The shortest path algorithm's inability to return shortest explanations is not surprising, since it runs in $O(n \log(n))$ and in Section \ref{sec:npcomplete} it is shown that finding the shortest explanation is NP-complete.
 
 \begin{example}
-Consider the congruence graph shown in Figure \ref{fig:short_expl}, where solid edges are input equation and the dashed edge marks an application of the congruence axiom.
+Consider the congruence graph shown in Figure \ref{fig:short_expl}, where solid edges are input equation and the dashed edge represents a deduced equality.
 The equality of $f(c_1,e)$ and $f(c_4,e)$ was deduced using the equations $(c_1,c_2),(c_2,c_3),(c_3,c_4)$, which is the shortest path in the graph between $c_1$ and $c_4$, obtained from a previous call to the shortest path algorithm.
 
 Suppose we want to compute an explanation for $a \thickapprox b$.
@@ -503,11 +509,11 @@ Therefore the undesired long explanation, including eight input equations, is re
 
 A proof forest is a collection of proof trees.
 A proof tree is a labeled tree with nodes in $\mathcal{T}$ and edge labels in $\mathcal{E}$.
-For every congruence class in the current status of a congruence structure, there is one proof tree.
+For every congruence class in a congruence structure, there is one proof tree.
 Inserting an edge between nodes $s$ and $t$ of different proof trees is done by making one the child of the other.
-To maintain a tree structure, all edges between the new child and the root of its tree are reversed.
-To limit the number of edge reversing steps, the smaller tree is always attached to the bigger one.
-This results in $O(n \log(n))$ edge reversing steps, where $n$ is the number terms in the input equation set.
+To maintain a tree structure, all edges between the new child and the root of its old tree are reversed.
+To limit the number of edge reversion steps, the smaller tree is always attached to the bigger one.
+This results in $O(n \log(n))$ edge reversion steps, where $n$ is the number terms in the input equation set.
 This bound can be shown using the same argument as in the proof of Proposition \ref{prop:runtime}.
 As stated above, we understand a path as a sequence of undirected edges.
 In case of a proof tree, a path between $s$ and $t$ of the same tree is the combined sequence of edges between the nodes and their nearest common ancestors.
@@ -525,7 +531,7 @@ The authors of \cite{Nieuwenhuis2005,Nieuwenhuis2007} improve the structure for 
 
 Consider again the set of equations presented in Figure \ref{fig:short_expl} and Example \ref{ex:short_expl} and suppose that the equations $(c_1,d_1),(d_1,d_2),(d_2,b)$ are inserted into the congruence structure before any other equation.
 After adding these three equations, the proof forest contains of a single proof tree and is displayed in Figure \ref{fig:proof_forest_1}, where the labels are omitted.
-Suppose that next following equations are inserted: $(a,f(c_1,e)),(f(c_4,e),c_1),(c_1,c_2),(c_2,c_3)$.
+Suppose that now the following equations are inserted: $(a,f(c_1,e)),(f(c_4,e),c_1),(c_1,c_2),(c_2,c_3)$.
 The resulting proof forest contains two proof trees and is shown in Figure \ref{fig:proof_forest_2}.
 Finally the equation $(c_3,c_4)$ is added and the equality $f(c_1,e) \thickapprox f(c_4,e)$ is deduced.
 At this point, the explanation for $c_1 \thickapprox c_4$ in the proof forest is the path $\langle c_1,c_2,c_3,c_4 \rangle$, which is the combined path from $c_1$ and $c_4$ to their nearest common ancestor, which is $c_2$.

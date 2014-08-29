@@ -51,7 +51,7 @@ Figure \ref{fig:npexplanation} shows a graphical representation of $\mathcal{I}$
 This set of equations is an explanation for $(\hat{c}_1,\hat{c}_4)$.
 Note that $\mathcal{I}' := \{x_1\}$ is another satisfying assignment and for the satisfiability of $\Phi$, the truth value of variable $x_3$ is not essential.
 Therefore replacing $\{(\hat{x}_3,\top_3)\}$ by $\{(\hat{x}_2,\top_2)\}$ in the explanation corresponding to $\mathcal{I}$ leads to another explanation of $(\hat{c}_1,\hat{c}_4)$ of equal size.
-However, this set does not represent an assignment, since it is not clear which truth value $x_2$ has.
+However, this set does not uniquely represent an assignment, since it is not clear which truth value $x_2$ has.
 In the proof of Lemma \ref{lemma:nphardness} we exclude such ambiguous sets by introducing additional topological clauses.
 \begin{figure}[!h]
 
@@ -90,17 +90,17 @@ For every subset $E$ of $E_{\Phi}$, $E \models \hat{c}_1 \thickapprox \hat{c}_{n
 
 Suppose that for every $i = 1,\ldots,n$ there is a $j = 1,\ldots,m$ such that $T_{ij} \subseteq E$ or $F_{ij} \subseteq E$.
 Clearly $T_{ij} \models \hat{c}_i \thickapprox t_i(\hat{x}_j)$ and $T_{ij} \models t_i(\top_j) \thickapprox \hat{c}_{i+1}$. 
-Since $(\hat{x}_j,\top_j) \in E$, the fact $E \models t_i(\hat{x}_j) \thickapprox t_i(\top_j)$ follows by an application of the monotonicity axiom.
+Since $(\hat{x}_j,\top_j) \in E$, the fact $E \models t_i(\hat{x}_j) \thickapprox t_i(\top_j)$ follows by an application of the compatibility axiom.
 Using the transitivity of congruence relations, it follows that $T_{ij} \models \hat{c}_i \thickapprox \hat{c}_{i+1}$.
 Similarly it can be shown that $F_{ij} \models \hat{c}_i \thickapprox \hat{c}_{i+1}$.
 Therefore it follows from the assumption that $E \models \hat{c}_i \thickapprox \hat{c}_{i+1}$ for every $i = 1,\ldots,n$.
-Using the transitivity again, it follows that $E \models \hat{c}_1 \thickapprox \hat{c}_{n+1}$.
+Using transitivity again, it follows that $E \models \hat{c}_1 \thickapprox \hat{c}_{n+1}$.
 
 \noindent We show the other implication of the equivalence by induction on $n$.
 \begin{paragraph}{Induction Base $n = 1$:}
 
 Suppose that $E \models \hat{c}_1 \thickapprox \hat{c}_{2}$. %, which implies $\hat{c}_2 \in [\hat{c}_1]_E$.
-Since $\hat{c}_1$ is a constant, the compatibility of congruence relations can not be applied to extend the congruence class of $\hat{c}_1$ beyond the singleton $\{\hat{c}_1\}$.
+Since $\hat{c}_1$ is a constant, the compatibility axiom can not be applied to extend the congruence class of $\hat{c}_1$ beyond the singleton $\{\hat{c}_1\}$.
 Therefore in order to satisfy $E \models \hat{c}_1 \thickapprox u$ with $u \neq \hat{c}_1$ there has to be an equation $(\hat{c}_1, u) \in E$ for some term $u$.
 Since $E \subseteq E_{\Phi}$, the only possible such equations are $(\hat{c}_1, t_1(\hat{x}_j))$ and $(\hat{c}_1, f_1(\hat{x}_j))$ for some $j$.
 The only equations in $E$ involving terms with the function symbols $t_1$ and $f_1$ are $(\hat{c}_1, t_1(\hat{x}_j)), (t_1(\top_j),\hat{c}_2)$ and $(\hat{c}_1, f_1(\hat{x}_j)), (f_1(\bot_j),\hat{c}_2)$ for some $j$.
@@ -143,7 +143,7 @@ We will show that $\Phi'$ is satisfiable if and only if there exists $E \subsete
 For every clause $C_i$ there is a literal $\ell_i \in C_i$, such that $\mathcal{I} \models \ell_i$.
 For every $i = 1,\ldots,n+m$ we set $E_i:= T_{ij}$ if $\ell_i = x_j$ and $E_i:= F_{ij}$ if $\ell_i = \neg x_j$.
 From $\ell_i \in C_i$ follows $E_i \subseteq E_{\Phi'}$.
-Let $E = \bigcup_i^n E_i$ then from Lemma \ref{lemma:charexpl} and the transitivity of the congruence relations follows $E \models c_1 \thickapprox c_{n+m+1}$.
+Let $E = \bigcup_i^n E_i$ then from Lemma \ref{lemma:charexpl} and the transitivity of the congruence relations follows $E \models \hat{c_1} \thickapprox \hat{c_{n+m+1}}$.
 What remains to show is that $|E| \leq 2n + 3m$.
 Since the sets $Pos, Neg$ and $Connect$ in the definition of $E_{\Phi'}$ are pairwise disjoint, for $i \neq j$ $E_i \cap E_j \subseteq \{(\hat{x}_j,\top_j),(\hat{x}_j,\bot_j) \mid j = 1,\ldots,m\}$.
 Therefore $E$ involves exactly $2(n+m)$ equations of $Pos, Neg$ and $Connect$.
