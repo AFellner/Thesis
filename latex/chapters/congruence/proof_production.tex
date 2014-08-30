@@ -152,11 +152,12 @@ Furthermore, the proof uses the long explanation for $t_a \thickapprox t_b$.
 The length of the proof is 12.
 The proof contains one propositional variable $A$.
 The compression algorithm traverses the proofs and detects the redundant explanation in node $O_1$.
-The subproof corresponding to the explanation $\{(a,b)\}$, that is displayed in Figure \ref{fig:short_expl_proof}, is created and $O_1$ is replaced by this subproof $N_1$.
-When iterating over node $O_2$, the algorithm detects that the pivot literal $t_a = a$ is not present $N_1$ and \texttt{fixNode} replaces $O_2$ by $N_1$.
+The subproof $N_1$ corresponding to the explanation $\{(a,b)\}$ is created and $O_1$ is replaced by it.
+The construction of this subproof is discussed in Example \ref{example:shortexpl}.
+When iterating over node $O_2$, the algorithm detects that the pivot literal $t_a = a$ is not present in $N_1$ and \texttt{fixNode} replaces $O_2$ by $N_1$.
 At node $O_3$, both premises contain the pivot $a = b$, therefore $O_3$ is replaced by resolvent of $N_1$ and its other original premise.
-The resultion proof is displayed in Figure \ref{fig:compressproof_2}.
-The resulting proof has proof length 11 which is shorter than the original one, even though the replaced subproof is bigger.
+No other subproof is altered by the algorithm.
+The resulting proof is displayed in Figure \ref{fig:compressproof_2} and has length 11 which is shorter than the original one, even though the replaced subproof is bigger.
 Note that the clause $\{\neg A\}$ is part of the replaced subproof.
 It is also part of the subproof with conclusion $\{a = b\}$, which remains in the new proof.
 

@@ -87,11 +87,11 @@ Therefore we can assume that there is a $m < n$ such that $\{C_1, \ldots, C_m\}$
 Furthermore, since the whole sequence is a refutation, we can assume that $C_m$ is such that $neg(C_m) \subseteq E$ and $pos(C_m) = \{(s,t)\}$.
 
 We show by induction on the clause structure, that for every clause $C \in \{C_1,\ldots,C_m\}$ that $pos(C) = \{(u,v)\}$ for some $(u,v) \in \mathcal{T}_E$ and that $neg(C) \models u \thickapprox v$.
-Suppose that $C$ is an instance of an equality axiom. Clearly, the positive part contains of some equation $(u,v)$ and $neg(C) \models u \thickapprox v$ follows directly form the definition of congruence closure, and in case of the transitive axiom also from the transitivity of equality.
+Suppose that $C$ is an instance of an equality axiom. Clearly, the positive part contains of some equation $(u,v)$ and $neg(C) \models u \thickapprox v$ follows directly form the definition of congruence closure, and in case of the transitivity axiom also from the transitivity of equality.
 Let $C$ be obtained by resolving the clauses $D_1$ and $D_2$, such that $pos(D_i) = \{(u_i,v_i)\}$ and $neg(D_i) \models u_i \thickapprox v_i$ for $i \in \{1,2\}$.
 Suppose $D_1$ and $D_2$ were resolved using the equality literal $u_1 = v_1$ (the only other possibility is $u_2 = v_2$ and the cases are symmetric).
 Then $pos(C) = \{(u_2,v_2)\}$ and $neg(C) = neg(D_1) \cup (neg(D_2) \setminus (u_1,v_1))$.
-Using the monotonicity of the $\models$ relation (Proposition \ref{prop:models}) and the fact that $neg(D_1) \subseteq neg(C)$ and $neg(D_2) \subseteq neg(C) \cup \{(u_1,v_1)\}$ , it follows that $neg(C) \models u_1 \thickapprox v_1$ and $neg(C) \cup \{u_1,v_1\} \models (u_2,v_2)$.
+Using the monotonicity of the $\models$ relation (Proposition \ref{prop:models}) and the fact that $neg(D_1) \subseteq neg(C)$ and $neg(D_2) \subseteq neg(C) \cup \{(u_1,v_1)\}$, it follows that $neg(C) \models u_1 \thickapprox v_1$ and $neg(C) \cup \{u_1,v_1\} \models (u_2,v_2)$.
 Using the consitency of the $\models$ relation (Proposition \ref{prop:models}), it follows that $neg(C) \models u_2 \thickapprox v_2$, which is the desired result.
 
 \end{proof}
