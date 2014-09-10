@@ -1,0 +1,149 @@
+% $Id: INF_Poster.tex 7714 2011-08-31 17:34:46Z tkren $
+%
+% TU Wien - Faculty of Informatics
+% poster template
+%
+% This template is using the beamer document class and beamerposter package, see
+% <http://www.ctan.org/tex-archive/macros/latex/contrib/beamer/>
+% <http://www.ctan.org/tex-archive/macros/latex/contrib/beamerposter/>
+% <http://www-i6.informatik.rwth-aachen.de/~dreuw/latexbeamerposter.php>
+%
+% For questions and comments send an email to
+% Thomas Krennwallner <tkren@kr.tuwien.ac.at>
+%
+
+\documentclass[final,hyperref={pdfpagelabels=true}]{beamer}
+
+\usepackage{TUINFPST}
+
+%\usepackage{tikzposter}
+
+\title[European Master in Computational Logic]
+	{	Space- \& Congruence \\[0.2\baselineskip]%
+		Compression of Proofs
+	}
+% if you have a long title looking squeezed on the poster, just force
+% some distance:
+% \title[Computational Intelligence]{%
+%   Integration of Conjunctive Queries over \\[0.2\baselineskip]%
+%   Description Logics into HEX-Programs %\\[0.2\baselineskip]%
+% }
+\author[fellner.a@gmail.com]{Andreas Fellner}
+\institute[]{%
+  Technische Universit{\"a}t Wien\\[0.25\baselineskip]
+  Institut f{\"u}r Computersprachen\\[0.25\baselineskip]
+  Betreuung: Univ. Prof. Dr.phil. Alexander Leitsch \\[0.25\baselineskip]
+	Mitwirkung: Bruno Woltzenlogel Paleo, Dr.
+}
+\titlegraphic{\includegraphics[height=52mm]{185-1}}
+\date[\today]{\today}
+%\subject{epilog}
+\keywords{proof compression,congruence closure, pebbling game}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Display a grid to help align images 
+%\beamertemplategridbackground[1cm]
+
+% for crop marks, uncomment the following line
+%\usepackage[cross,width=88truecm,height=123truecm,center]{crop}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamercolor{block body}{fg=black,bg=white}
+\setbeamercolor{block title}{fg=black,bg=white}
+
+\newcommand{\myblock}[2]{
+    \begin{tikzpicture}%
+      \node[draw,rectangle,line width=20pt,rounded corners=10pt,inner sep=1cm, inner ysep=1cm, text width=0.95\textwidth]{%
+			%\node[draw,rectangle,text width=0.99\textwidth]{
+        %\begin{minipage}{.5\textwidth}
+					%\vspace*{1cm}
+          \centering\textbf{\Large{#1}} \par
+					\vspace*{1cm}
+					%\begin{center}
+						%\textbf{\Large{#1}}\\[1cm]
+					%\end{center}
+					#2
+					%\noindent test123
+					%\hfill
+					%\vspace*{1cm}
+        %\end{minipage}
+      };
+    \end{tikzpicture}%
+}
+
+\setbeamertemplate{block begin}{
+  \begin{beamercolorbox}{block title}%
+    \begin{tikzpicture}%
+      \node[draw,rectangle,line width=20pt,rounded corners=10pt,inner sep=0pt]{%
+        \begin{minipage}[c][2cm]{\linewidth}
+          \centering\textbf{\insertblocktitle}
+        \end{minipage}
+      };
+    \end{tikzpicture}%
+  \end{beamercolorbox}
+  \vspace*{1cm}
+  \begin{beamercolorbox}{block body}%
+}
+
+\setbeamertemplate{block end}{
+  \end{beamercolorbox}
+  \vspace{2cm}
+}
+
+
+\begin{document}
+
+% We have a single poster frame.
+\begin{frame}
+
+	\myblock{Proof Compression}{
+		\begin{column}{.45\textwidth}
+			Some Text \\
+			And some More \\
+		\end{column}
+		\begin{column}{.45\textwidth}
+		%teasdas
+		\begin{figure}[!h]
+		\input{figures/resolutionexample}
+		\caption{Short explanation example}
+		\label{fig:short_expl}
+		\end{figure}
+		
+		\end{column}
+	}
+  \begin{columns}[t]
+    % ---------------------------------------------------------%
+    % Set up a column
+    \begin{column}{.45\textwidth}
+      \myblock{Test2}{
+			95329589 \par
+			30593094
+			}
+    \end{column}
+    % ---------------------------------------------------------%
+    % end the column
+
+    % ---------------------------------------------------------%
+    % Set up a column 
+    \begin{column}{.45\textwidth}
+      \myblock{Test3}{
+			53sadfsd56sd \par
+			asdfasdf
+			}
+    \end{column}
+    % ---------------------------------------------------------%
+    % end the column
+  \end{columns}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables:
+%%% TeX-PDF-mode: t
+%%% TeX-debug-bad-boxes: t
+%%% TeX-master: t
+%%% TeX-parse-self: t
+%%% TeX-auto-save: t
+%%% reftex-plug-into-AUCTeX: t
+%%% End:

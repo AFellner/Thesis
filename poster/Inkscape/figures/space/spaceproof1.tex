@@ -1,0 +1,29 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{tikz}
+\pagenumbering{gobble}
+\begin{document}
+\centering
+\begin{tikzpicture}[node distance=2.5cm]
+	
+	\node[draw,very thick,circle](root){$7$};
+	\node[draw,very thick,circle,above right of=root,shade=black](n6){$6$};
+	\node[draw,very thick,circle,above left of=root,shade=black](n3){$3$};
+	
+	\node[draw,very thick,circle,above left of=n3,xshift=.5cm](n1){$1$};
+	\node[draw,very thick,circle,above right of=n3,xshift=-.5cm](n2){$2$};
+	
+	\node[draw,very thick,circle,above left of=n6,xshift=.5cm,shade=black](n4){$4$};
+	\node[draw,very thick,circle,above right of=n6,xshift=-.5cm,shade=black](n5){$5$};
+	
+	\draw[very thick, ->,cap=round] (root) to (n3);
+	\draw[very thick, ->,cap=round] (root) to (n6);
+	
+	\draw[very thick, ->,cap=round] (n3) to (n1);
+	\draw[very thick, ->,cap=round] (n3) to (n2);
+	
+	\draw[very thick, ->,cap=round] (n6) to (n4);
+	\draw[very thick, ->,cap=round] (n6) to (n5);
+	
+	
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,157 @@
+% $Id: INF_Poster.tex 7714 2011-08-31 17:34:46Z tkren $
+%
+% TU Wien - Faculty of Informatics
+% poster template
+%
+% This template is using the beamer document class and beamerposter package, see
+% <http://www.ctan.org/tex-archive/macros/latex/contrib/beamer/>
+% <http://www.ctan.org/tex-archive/macros/latex/contrib/beamerposter/>
+% <http://www-i6.informatik.rwth-aachen.de/~dreuw/latexbeamerposter.php>
+%
+% For questions and comments send an email to
+% Thomas Krennwallner <tkren@kr.tuwien.ac.at>
+%
+
+\documentclass[final,hyperref={pdfpagelabels=true}]{beamer}
+
+\usepackage{TUINFPST}
+
+ %\usepackage{beamerposter}
+
+%\usepackage{fancytikzposter}
+
+\title[European Master in Computational Logic]
+	{	Space- \& Congruence \\[0.2\baselineskip]%
+		Compression of Proofs
+	}
+% if you have a long title looking squeezed on the poster, just force
+% some distance:
+% \title[Computational Intelligence]{%
+%   Integration of Conjunctive Queries over \\[0.2\baselineskip]%
+%   Description Logics into HEX-Programs %\\[0.2\baselineskip]%
+% }
+\author[fellner.a@gmail.com]{Andreas Fellner}
+\institute[]{%
+  Technische Universit{\"a}t Wien\\[0.25\baselineskip]
+  Institut f{\"u}r Computersprachen\\[0.25\baselineskip]
+  Betreuung: Univ. Prof. Dr.phil. Alexander Leitsch \\[0.25\baselineskip]
+	Mitwirkung: Bruno Woltzenlogel Paleo, Dr.
+}
+\titlegraphic{\includegraphics[height=52mm]{185-1}}
+\date[\today]{\today}
+\subject{epilog}
+\keywords{my kwd1, my kwd2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Display a grid to help align images 
+%\beamertemplategridbackground[1cm]
+
+% for crop marks, uncomment the following line
+%\usepackage[cross,width=88truecm,height=123truecm,center]{crop}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setbeamertemplate{block begin}{
+  %\begin{beamercolorbox}{block title}%
+    \begin{tikzpicture}%
+      \node[draw,rectangle,line width=7pt,rounded corners=10pt,inner sep=0pt]{%
+        \begin{minipage}[c][2cm]{\linewidth}
+          \centering\textbf{\insertblocktitle}
+					%\vspace*{1cm}
+					%\begin{beamercolorbox}{block body}%
+					%\insertblockbody
+					%\end{beamercolorbox}
+        
+}
+
+\setbeamertemplate{block end}{
+  %\end{beamercolorbox}
+  %\vspace{2cm}
+	\end{minipage}
+      };
+    \end{tikzpicture}%
+}
+
+%\setbeamertemplate{block end}{
+  %\end{beamercolorbox}
+  %\vspace{2cm}
+	%};
+	%\end{tikzpicture}%
+%}
+
+%\setbeamercolor{postit}{fg=black,bg=yellow} 
+%\newenvironment{postit}
+%{\begin{beamercolorbox}[sep=1em,wd=7cm]{postit}}
+%{\end{beamercolorbox}}
+
+\begin{document}
+\begin{frame}
+\begin{block}{Test}
+3125214
+\end{block}
+\end{frame}
+% We have a single poster frame.
+%\begin{frame}
+	%\begin{tikzpicture}%
+      %\node[draw,rectangle,line width=7pt,rounded corners=10pt,inner sep=0pt]{
+			%\begin{minipage}[c][2cm]{\linewidth}
+         %\centering\textbf{Proof Compression}
+				%12421
+			%
+        %\end{minipage}
+				%};
+		%\end{tikzpicture}%	
+%
+  %\begin{columns}[t]
+    %% ---------------------------------------------------------%
+    %% Set up a column
+    %\begin{column}{.45\textwidth}
+			%\begin{tikzpicture}%
+      %\node[draw,rectangle,line width=7pt,rounded corners=10pt,inner sep=0pt]{
+			%\begin{minipage}[c][2cm]{\linewidth}
+         %\centering\textbf{Congruence}
+				%12421
+			%
+        %\end{minipage}
+				%};
+		%\end{tikzpicture}%	
+    %\end{column}
+    %% ---------------------------------------------------------%
+    %% end the column
+%
+    %% ---------------------------------------------------------%
+    %% Set up a column 
+    %\begin{column}{.45\textwidth}
+			%\begin{tikzpicture}%
+      %\node[draw,rectangle,line width=7pt,rounded corners=10pt,inner sep=0pt]{
+			%\begin{minipage}[c][2cm]{\linewidth}
+         %\centering\textbf{Space}
+				%12421
+			%
+        %\end{minipage}
+				%};
+		%\end{tikzpicture}%	
+    %\end{column}
+    %% ---------------------------------------------------------%
+    %% end the column
+  %\end{columns}
+%\end{frame}
+
+%\begin{tikzpicture}
+%\initializesizeandshifts
+%\titleblock{50}{1}
+%\blocknode{Block Title}{Block Content}
+%\startsecondcolumn
+%\blocknode{Block Title 2}{Block Content 2}
+%\end{tikzpicture}
+
+\end{document}
+
+%%% Local Variables:
+%%% TeX-PDF-mode: t
+%%% TeX-debug-bad-boxes: t
+%%% TeX-master: t
+%%% TeX-parse-self: t
+%%% TeX-auto-save: t
+%%% reftex-plug-into-AUCTeX: t
+%%% End:

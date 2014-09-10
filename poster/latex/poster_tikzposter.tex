@@ -1,0 +1,108 @@
+\documentclass[25pt, a0paper, portrait, margin=10mm, innermargin=15mm,
+blockverticalspace=15mm, colspace=15mm, subcolspace=8mm]{tikzposter}
+
+%\usepackage{TUINFPST}
+\usetheme{Desert}
+\title{Space- \& Congruence Compression of Proofs}
+\author{Andreas Fellner}
+\date{\today}
+\institute{%
+  Technische Universit{\"a}t Wien\\[0.25\baselineskip]
+  Institut f{\"u}r Computersprachen\\[0.25\baselineskip]
+  Betreuung: Univ. Prof. Dr.phil. Alexander Leitsch \\[0.25\baselineskip]
+	Mitwirkung: Bruno Woltzenlogel Paleo, Dr.
+}
+\titlegraphic{\includegraphics[height=52mm]{figures/185-1}}
+
+%\makeatletter
+%\renewcommand\TP@maketitle{%
+   %\begin{minipage}{0.8\linewidth}
+        %\centering
+        %\color{titlefgcolor}
+        %{\bfseries \Huge \sc \@title \par}
+        %\vspace*{1em}
+        %{\huge \@author \par}
+        %\vspace*{1em}
+        %{\LARGE \@institute}
+    %\end{minipage}%
+    %\hfill
+    %\begin{minipage}{0.2\linewidth}
+       %\centering
+       %\@titlegraphic
+    %\end{minipage}
+%}
+%\makeatother
+
+%\newlength{\tuinf@headsep}
+%\setlength{\tuinf@headsep}{18.5mm}
+%
+%\newlength{\tuinf@headwidth}
+%\setlength{\tuinf@headwidth}{815mm}
+%
+%\newlength{\tuinf@headheight}
+%\setlength{\tuinf@headheight}{190mm}
+%
+%\newlength{\tuinf@leftheadwidth}
+%\setlength{\tuinf@leftheadwidth}{204mm}
+%
+%\newlength{\tuinf@centerheadwidth}
+%\setlength{\tuinf@centerheadwidth}{340mm}
+%
+%\newlength{\tuinf@rightheadwidth}
+%\setlength{\tuinf@rightheadwidth}{204mm}
+%
+%\newlength{\tuinf@bordersep}
+%\setlength{\tuinf@bordersep}{12.7mm}
+
+
+\begin{document}
+
+\vskip{12.7mm}
+\hskip{12.7mm}
+\begin{tikzpicture}
+	\node[draw,rectangle,line width=3pt,rounded corners=10pt,inner sep=0pt]{
+		\begin{minipage}[t][190mm]{815mm}
+			\begin{center}
+				\begin{minipage}[t][190mm]{204mm}\vspace{18.5mm}%
+					% some vspace is needed for the top-alignment
+					\begin{minipage}[t][100mm]{204mm}
+						\includegraphics[height=52mm,width=195.5mm]{INF_Logo_typo_grau}
+					\end{minipage}
+
+					\begin{minipage}[t][30mm]{204mm}
+						\fontsize{36pt}{43pt}\selectfont%
+						Masterstudium:\\[.5\baselineskip]
+						\insertshorttitle
+					\end{minipage}
+				\end{minipage}
+				\begin{minipage}[t][190mm]{340mm}\vspace{18.5mm}
+					% some vspace is needed for the top-alignment
+					\begin{minipage}[t][70mm]{340mm}
+						\centering{\fontsize{36pt}{43pt}\selectfont Diplomarbeitspr{\"a}sentation}
+					\end{minipage}
+				 
+					\begin{minipage}[t][40mm]{340mm}
+						\centering\textbf{\fontsize{54pt}{65pt}\selectfont\inserttitle}
+					\end{minipage}
+					
+					\begin{minipage}[b][30mm]{340mm}
+						\centering\fontsize{36pt}{43pt}\selectfont\insertauthor
+					\end{minipage}
+				\end{minipage}
+				\begin{minipage}[t][190mm]{204mm}\vspace{18.5mm}
+					% some vspace is needed for the top-alignment
+					\begin{minipage}[t][100mm]{204mm}
+						\raggedleft\inserttitlegraphic
+					\end{minipage}
+					
+					\begin{minipage}[t][30mm]{204mm}
+						\raggedleft\fontsize{24pt}{29pt}\selectfont\insertinstitute\\
+					\end{minipage}
+				\end{minipage}
+			\end{center}
+		\end{minipage}
+	};
+\end{tikzpicture}
+\hskip{12.7mm}
+
+\end{document}
