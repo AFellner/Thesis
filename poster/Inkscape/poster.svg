@@ -569,14 +569,14 @@
 <sodipodi:namedview
    units="mm"
    pagecolor="#ffffff"
-   inkscape:cx="878.63722"
+   inkscape:cx="986.56414"
    borderopacity="1.0"
    inkscape:pageopacity="0.0"
    id="base"
-   inkscape:zoom="0.16293954"
+   inkscape:zoom="0.4608626"
    bordercolor="#666666"
    inkscape:pageshadow="2"
-   inkscape:cy="1757.058"
+   inkscape:cy="943.28458"
    inkscape:document-units="mm"
    inkscape:current-layer="layer1"
    showgrid="false"
@@ -662,7 +662,7 @@
 	<sodipodi:guide
    id="guide6743"
    orientation="0,1"
-   position="2814.7502,3594.2475" />
+   position="1931.1613,2521.3589" />
 	<sodipodi:guide
    id="guide6991"
    orientation="0,1"
@@ -862,8 +862,8 @@
    d="m 78.90775,1936.4861 c 1538.74975,0 1533.05775,0 1533.05775,0"
    id="path4278-7"
    inkscape:connector-curvature="0" /><path
-   style="fill:none;stroke:#0070af;stroke-width:10.62992084;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-   d="m 1679.4044,1936.4662 c 1224.4181,0 1219.8888,0 1219.8888,0"
+   style="fill:none;stroke:#0070af;stroke-width:10.73543167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+   d="m 1679.5104,1936.4662 c 1248.8454,0 1244.2257,0 1244.2257,0"
    id="path4278-7-4"
    inkscape:connector-curvature="0" /><text
    xml:space="preserve"
@@ -2198,14 +2198,14 @@
        x="1632.5074"
        y="1356.1042" /></flowRegion><flowPara
      id="flowPara11568">Two proofs for the unsatisfiability of  </flowPara></flowRoot><rect
-   style="fill:none;stroke:#0070af;stroke-width:6.37299061;stroke-linecap:butt;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+   style="fill:none;stroke:#0070af;stroke-width:10.62992084;stroke-linecap:butt;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
    id="rect11783"
    width="404.69077"
    height="292.19247"
    x="2235.6636"
    y="1394.6877"
    ry="58.658535" /><rect
-   style="fill:none;stroke:#0070af;stroke-width:6.75730276;stroke-linecap:butt;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+   style="fill:none;stroke:#0070af;stroke-width:10.62992084;stroke-linecap:butt;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
    id="rect11785"
    width="705.59961"
    height="308.07602"
@@ -2237,7 +2237,7 @@
    xml:space="preserve"
    id="flowRoot11811"
    style="font-size:54px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
-   transform="translate(124,-69.057201)"><flowRegion
+   transform="translate(124,-59.057201)"><flowRegion
      id="flowRegion11813"><rect
        id="rect11815"
        width="349.34491"
@@ -2246,7 +2246,7 @@
        y="1522.3855" /></flowRegion><flowPara
      style="font-size:47.99999619px"
      id="flowPara11821">Resolution Rule</flowPara></flowRoot><g
-   transform="matrix(4.1829423,0,0,-4.1829423,761.24982,4486.3087)"
+   transform="matrix(4.1829423,0,0,-4.1829423,761.24982,4496.3087)"
    inkscape:label="resolutionrule"
    id="g11833"><text
    id="text11835"
@@ -2288,9 +2288,9 @@
    y="-695.25372"><tspan
      id="tspan11849"
      sodipodi:role="line"
-     y="-695.25372"
      x="287.45987 297.15479"
-     style="font-size:10.90909958px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMSY10;-inkscape-font-specification:CMSY10">∨¬</tspan></text>
+     style="font-size:10.90909958px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMSY10;-inkscape-font-specification:CMSY10"
+     y="-695.25372">∨¬</tspan></text>
 
 
 
@@ -2343,15 +2343,15 @@
 
 
 </g><rect
-   style="fill:none;stroke:#0070af;stroke-width:7.08661366;stroke-linecap:butt;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+   style="fill:none;stroke:#0070af;stroke-width:10.62992096;stroke-linecap:butt;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
    id="rect11890"
    width="374.43866"
    height="248.58772"
-   x="1726.2607"
-   y="1430.2822"
+   x="1724.2607"
+   y="1438.2822"
    ry="51.692104" /><g
    id="surface3178"
-   transform="matrix(1.4823145,0,0,1.6159797,-6.3890762,2631.3925)"><g
+   transform="matrix(1.4823145,0,0,1.6159797,-6.3890762,2657.3925)"><g
      id="g3630"
      style="fill:#000000;fill-opacity:1"><use
        id="use3632"
@@ -4943,7 +4943,7 @@
      style="fill:none;stroke:#000000;stroke-width:0.6376;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
      inkscape:connector-curvature="0" /></g><g
    id="surface7953"
-   transform="matrix(1.6263318,0,0,1.8805977,838.02903,2643.3045)"><g
+   transform="matrix(1.6263318,0,0,1.8805977,838.02903,2669.3045)"><g
      id="g5540-1"
      style="fill:#000000;fill-opacity:1"><use
        id="use5542"
@@ -7098,7 +7098,7 @@
      d="M -1.554349,2.072758 C -1.425653,1.296061 0.00118935,0.130699 0.39065,2.84267e-4 8.32523e-4,-0.12906 -1.423931,-1.295787 -1.554995,-2.072127"
      style="fill:none;stroke:#000000;stroke-width:0.6376;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
      inkscape:connector-curvature="0" /></g><rect
-   style="fill:none;stroke:#0070af;stroke-width:7.21733522;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+   style="fill:none;stroke:#0070af;stroke-width:10.62992084;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
    id="rect7101"
    width="755.36987"
    height="559.84332"
@@ -7106,23 +7106,23 @@
    y="2814.7231"
    ry="59.938675" /><path
    id="path4720-7"
-   d="M 405.18275,3053.7657 297.33733,2866.8908"
+   d="M 405.18275,3079.7657 297.33733,2892.8908"
    style="fill:none;stroke:#000000;stroke-width:1.17490339;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
    inkscape:connector-curvature="0"
    sodipodi:nodetypes="cc" /><path
    id="path4722-6"
-   d="m 295.41625,2869.6073 c 0.92569,-0.7239 1.31869,-3.2837 1.17246,-3.8441 0.49011,0.3763 3.1984,1.2355 4.34219,0.8276"
+   d="m 295.41625,2895.6073 c 0.92569,-0.7239 1.31869,-3.2837 1.17246,-3.8441 0.49011,0.3763 3.1984,1.2355 4.34219,0.8276"
    style="fill:none;stroke:#000000;stroke-width:0.94353276;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
    inkscape:connector-curvature="0" /><rect
-   style="fill:none;stroke:#0070af;stroke-width:5.92788076;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+   style="fill:none;stroke:#0070af;stroke-width:10.62992096;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
    id="rect7101-1"
    width="618.28876"
    height="461.4025"
    x="966.67413"
-   y="2864.1995"
+   y="2890.1995"
    ry="49.399269" /><path
    style="fill:#0070af;fill-opacity:1;stroke:#000000;stroke-width:7.08661366;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-   d="m 952.99403,3086.1767 -46.65376,-110.1256 -0.42582,77.6502 -19.82847,-0.4622 -0.33853,61.726 19.82841,0.4619 -0.43177,78.7097 z"
+   d="m 952.99403,3112.1767 -46.65376,-110.1256 -0.42582,77.6502 -19.82847,-0.4622 -0.33853,61.726 19.82841,0.4619 -0.43177,78.7097 z"
    id="rect9984-8"
    inkscape:connector-curvature="0"
    sodipodi:nodetypes="cccccccc" /><g
@@ -7426,14 +7426,16 @@
    transform="translate(1.0686229,-659.48787)"><flowRegion
      id="flowRegion5592"><rect
        id="rect5594"
-       width="1373.5111"
-       height="777.6756"
+       width="1380.0206"
+       height="834.09155"
        x="158.39862"
        y="2644.1948" /></flowRegion><flowPara
      id="flowPara5598"
      style="font-size:47.99999619px;font-weight:normal;text-align:justify;text-anchor:start;-inkscape-font-specification:Sans">Equality is a well studied and important topic in logic. Congruence reasoning derives new equalities on terms from a set of equations, using the axioms of equality reflexivity, symmetry, transitivity and compatibility.</flowPara><flowPara
      style="font-size:47.99999619px;font-weight:normal;text-align:justify;text-anchor:start;-inkscape-font-specification:Sans"
-     id="flowPara5628">A set of equations implying some target equality is an explanation. By replacing large by small explanations in proofs, we achieve compression in proof length. The following example illustrates our method. The proof on the left reasons with a long explanation using transivity, whereas the proof on the right reasons with a shorter explanation using compatability. Even though the replaced subproof is longer, the overall proof is shorter. In our work, we discuss the tradeoff between explanation and subproof size.</flowPara></flowRoot><flowRoot
+     id="flowPara5628">A set of equations implying some target equality is an explanation. By replacing large by small explanations in proofs, we achieve compression in proof length. </flowPara><flowPara
+     style="font-size:47.99999619px;font-weight:normal;text-align:justify;text-anchor:start;-inkscape-font-specification:Sans"
+     id="flowPara7806">The following example illustrates our method. The proof on the left reasons with a long explanation using transivity, whereas the proof on the right reasons with a shorter explanation using compatability. The two nodes containing the explanations are marked red. Even though the replaced subproof is longer, the overall proof is shorter. In our work, we discuss the tradeoff between explanation and subproof size.</flowPara></flowRoot><flowRoot
    xml:space="preserve"
    id="flowRoot5604"
    style="font-size:47.99999808px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -7449,7 +7451,7 @@
    xml:space="preserve"
    id="flowRoot5612"
    style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-   transform="translate(0,76.9428)"><flowRegion
+   transform="translate(0,102.9428)"><flowRegion
      id="flowRegion5614"><rect
        id="rect5616"
        width="1367.5154"
@@ -7524,7 +7526,7 @@
      id="flowPara6600">The proposed methods were implemented in the proof compression tool Skeptik and evaluated on 3965 respectively 7555 proofs, produced by the SMT solver VeriT and the SAT solver PicoSAT. The experiments were carried out on the Vienna Scientific Cluster. </flowPara><flowPara
      id="flowPara6602">The congruence method shows an 2% effective proof length- and a 28% explanation size compression.</flowPara><flowPara
      id="flowPara6604">The experiments showed that traversing proofs in a bottom-up fashion memorywise is much better  than top-down. On average only 44% memory is required when removing proof nodes from memory during proof processing.</flowPara></flowRoot><g
-   transform="matrix(1.25,0,0,-1.25,2335.0167,3650.8772)"
+   transform="matrix(1.25,0,0,-1.25,2339.0167,3650.8772)"
    inkscape:label="spaceproof2"
    id="g6618"><g
      transform="translate(297.156,604.743)"
@@ -7832,7 +7834,7 @@
                  style="fill:none;stroke:#000000;stroke-width:0.95639998;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1;stroke-dasharray:none"
                  d="M -1.91284,2.55046 C -1.75343,1.59402 0,0.15938 0.4782,0 0,-0.15938 -1.75343,-1.59402 -1.91284,-2.55046"
                  inkscape:connector-curvature="0" /></g></g></g></g></g></g></g><g
-   transform="matrix(1.25,0,0,-1.25,2333.563,3489.2379)"
+   transform="matrix(1.25,0,0,-1.25,2337.563,3489.2379)"
    inkscape:label="spaceproof1"
    id="g7208"><g
      transform="translate(297.156,604.743)"
@@ -8138,13 +8140,13 @@
        style="font-size:47.99999619px;text-align:justify;text-anchor:start" /></flowRegion><flowPara
      id="flowPara7780">The example shows two different orders of some proof. The shaded nodes are in memory at the time the maximum amount of nodes are loaded.</flowPara><flowPara
      id="flowPara7786" /></flowRoot><rect
-   style="fill:none;stroke:#0070af;stroke-width:7.02973175;stroke-linecap:butt;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+   style="fill:none;stroke:#0070af;stroke-width:10.62992084;stroke-linecap:butt;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
    id="rect11890-5"
-   width="276.29962"
-   height="331.49741"
-   x="2570.2383"
-   y="2582.7703"
-   ry="40.724628" /></g>
+   width="288.01389"
+   height="352.41754"
+   x="2564.3813"
+   y="2573.8447"
+   ry="43.294682" /></g>
 <g
    id="layer5"
    transform="translate(0,3.828125e-4)"
@@ -8154,7 +8156,7 @@
    font-size="30"
    id="text3157"
    x="2315.4363"
-   y="4155.1582"
+   y="4167.1582"
    style="font-size:30px;fill:#231f20;font-family:ArialMT">Kontakt: fellner.a@gmail.com</text>
 
 
@@ -8165,7 +8167,7 @@
 		<rect
    id="rect5370"
    x="2301.0139"
-   y="4123.5967"
+   y="4135.5967"
    width="632.38098"
    height="43.463001"
    style="fill:none;stroke:#231f20;stroke-width:3.75" />
