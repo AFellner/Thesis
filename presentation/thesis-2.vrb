@@ -1,0 +1,34 @@
+\frametitle{A Listing}
+  \begin{example}
+    {
+      % Font size for listings
+      \definecolor{specparam}{rgb}{.5,0,.5}
+      \definecolor{classcol}{rgb}{.1,.1,.4}
+      % The table gets distractingly colourful!?
+      \definecolor{methodcol}{rgb}{.1,.4,.1}
+      \definecolor{commentcol}{rgb}{0,.7,0}
+      \definecolor{gray}{rgb}{.2,.2,.2}
+
+      \lstset{language=C++,
+        basicstyle=\small\ttfamily,
+        keywordstyle=\color{classcol},
+        commentstyle=\color{commentcol},
+        commentstyle=\color{gray},
+        stringstyle=\ttfamily\color{classcol},
+        emph={[2]bubble_sort,[1]return},
+        emphstyle={[2]\color{methodcol}},
+        emphstyle={[1]\color{classcol}} % functions/methods to be colorized
+      }
+
+\begin{lstlisting}
+void bubble_sort(int* a, int n) {
+  int i,j;
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < i; j++) {
+      if (a[i] > a[j]) SWAP(a[i],a[j]);
+    }
+  }
+}
+\end{lstlisting}
+    }
+  \end{example}
