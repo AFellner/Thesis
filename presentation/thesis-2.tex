@@ -280,35 +280,35 @@ $$(x_1 \vee x_2 \vee \neg x_3) \wedge (\neg x_2 \vee x_3) \wedge (\neg x_1 \vee 
 
 \end{frame}
 
-\begin{frame}
-
-\frametitle{Space Compression}
-
-\begin{block}{Space measure of a proof}
-	Maximal amount of nodes that have to be kept in memory at once while processing the proof
-\end{block}
-
-%\vspace{-2mm}
-\begin{block}{Deletion information}
-	\begin{itemize}
-		\item Extra lines in proof output
-		\item Example: $y$ is the last child of $x$
-		\begin{itemize}
-			\item Read and check node $x$\\
-			$\ldots$
-			\item Read and check node $y$
-			\item Delete node $x$\\
-			$\ldots$
-		\end{itemize}
-	\end{itemize}
-\end{block}
-
-%\vspace{-4mm}
-%\begin{subpart}{Interesting scenario}
-	%\item Proof checker has much less memory than proof producer
-%\end{subpart}
-
-\end{frame}
+%\begin{frame}
+%
+%\frametitle{Space Compression}
+%
+%\begin{block}{Space measure of a proof}
+	%Maximal amount of nodes that have to be kept in memory at once while processing the proof
+%\end{block}
+%
+%%\vspace{-2mm}
+%\begin{block}{Deletion information}
+	%\begin{itemize}
+		%\item Extra lines in proof output
+		%\item Example: $y$ is the last child of $x$
+		%\begin{itemize}
+			%\item Read and check node $x$\\
+			%$\ldots$
+			%\item Read and check node $y$
+			%\item Delete node $x$\\
+			%$\ldots$
+		%\end{itemize}
+	%\end{itemize}
+%\end{block}
+%
+%%\vspace{-4mm}
+%%\begin{subpart}{Interesting scenario}
+	%%\item Proof checker has much less memory than proof producer
+%%\end{subpart}
+%
+%\end{frame}
 
 %\begin{frame}
 %
@@ -347,8 +347,27 @@ $$(x_1 \vee x_2 \vee \neg x_3) \wedge (\neg x_2 \vee x_3) \wedge (\neg x_1 \vee 
 %\end{frame}
 
 \begin{frame}
+
+Is it possible to remove parts of the proof from memory during proof processing?
+
+\vspace{1cm}
+
+\uncover<2->{Which parts?}
+
+\vspace{1cm}
+
+\uncover<3>{
+\begin{block}{Space measure of a proof}
+	Maximal amount of nodes that have to be kept in memory at once while processing the proof
+\end{block}
+}
+
+\end{frame}
+
+\begin{frame}
 	\frametitle{Space Measure Example}
 	\include{figures/spaceexample}
+	\uncover<22>{\alert{Good Traversal Orders are key!}}
 \end{frame}
 
 \begin{frame}
@@ -402,7 +421,7 @@ $$(x_1 \vee x_2 \vee \neg x_3) \wedge (\neg x_2 \vee x_3) \wedge (\neg x_1 \vee 
 \begin{frame}
 	\frametitle{Construct Order Top-Down}
 	\centering
-	Maximum pebbles used:
+	Maximum number of nodes in memory:
 		\alt<1>{0}{\alt<2>{1}{\alt<3>{2}{\alt<4-7>{3}{\alt<8-11>{4}{\alt<12-15>{5}{6}}}}}} \\[1cm]
 	\include{figures/topdownpebbling}
 \end{frame}
@@ -410,7 +429,7 @@ $$(x_1 \vee x_2 \vee \neg x_3) \wedge (\neg x_2 \vee x_3) \wedge (\neg x_1 \vee 
 \begin{frame}
 	\frametitle{Construct Order Bottom-Up}
 	\centering
-	Maximum pebbles used:
+	Maximum number of nodes in memory:
 		\alt<1-4>{0}{\alt<5>{1}{\alt<6>{2}{\alt<7-12>{3}{\alt<13-17>{4}{5}}}}} \\[1cm]
 	\include{figures/bottomuppebbling}
 \end{frame}

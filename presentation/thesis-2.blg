@@ -100,12 +100,12 @@ Already encountered file figures/spaceexample.aux
  : \@input{figures/spaceexample.aux
  :                                 }
 I'm skipping whatever remains of this command
-A level-1 auxiliary file: figures/topdownpebbling.aux
-Already encountered file figures/topdownpebbling.aux
----line 71 of file thesis-2.aux
- : \@input{figures/topdownpebbling.aux
- :                                    }
+Already encountered file figures/spaceexample.aux
+---line 66 of file thesis-2.aux
+ : \@input{figures/spaceexample.aux
+ :                                 }
 I'm skipping whatever remains of this command
+A level-1 auxiliary file: figures/topdownpebbling.aux
 Already encountered file figures/topdownpebbling.aux
 ---line 72 of file thesis-2.aux
  : \@input{figures/topdownpebbling.aux
@@ -216,12 +216,12 @@ Already encountered file figures/topdownpebbling.aux
  : \@input{figures/topdownpebbling.aux
  :                                    }
 I'm skipping whatever remains of this command
-A level-1 auxiliary file: figures/bottomuppebbling.aux
-Already encountered file figures/bottomuppebbling.aux
----line 97 of file thesis-2.aux
- : \@input{figures/bottomuppebbling.aux
- :                                     }
+Already encountered file figures/topdownpebbling.aux
+---line 94 of file thesis-2.aux
+ : \@input{figures/topdownpebbling.aux
+ :                                    }
 I'm skipping whatever remains of this command
+A level-1 auxiliary file: figures/bottomuppebbling.aux
 Already encountered file figures/bottomuppebbling.aux
 ---line 98 of file thesis-2.aux
  : \@input{figures/bottomuppebbling.aux
@@ -372,7 +372,12 @@ Already encountered file figures/bottomuppebbling.aux
  : \@input{figures/bottomuppebbling.aux
  :                                     }
 I'm skipping whatever remains of this command
+Already encountered file figures/bottomuppebbling.aux
+---line 128 of file thesis-2.aux
+ : \@input{figures/bottomuppebbling.aux
+ :                                     }
+I'm skipping whatever remains of this command
 I found no \citation commands---while reading file thesis-2.aux
 I found no \bibdata command---while reading file thesis-2.aux
 I found no \bibstyle command---while reading file thesis-2.aux
-(There were 77 error messages)
+(There were 78 error messages)
