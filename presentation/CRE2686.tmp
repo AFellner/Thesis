@@ -183,7 +183,7 @@ $$ (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wed
 
 \begin{block}{Method}
 	\begin{enumerate}
-		\item Obtain proof of unsatisfiability of a formula in the SMT theory of uninterpreted functions from SMT solver
+		\item Obtain proof of unsatisfiability of a formula in the SMT theory of uninterpreted functions
 		\item Modify proof
 		\item Extract one interpolant from the proof
 		\item Obtain multiple interpolants from the one that represent the desired boolean functions
@@ -197,7 +197,7 @@ $$ (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wed
 }
 
 \uncover<3->{
-\begin{block}{Proof Compression using Skeptik}
+\begin{block}{Proof Compression}
 	\begin{itemize}
 		\item Input proof: 1,870,407 nodes
 		\item Output proof: 868,760 nodes (53,6\% compression)
@@ -207,7 +207,7 @@ $$ (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wed
 
 \end{frame}
 
-%\section{Congruence}
+\section{Congruence}
 
 \begin{frame}
 
@@ -306,7 +306,7 @@ $$ (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wed
 
 \begin{frame}
 
-\frametitle{Example revisited}
+\frametitle{Example continued}
 
 \begin{block}{Knowledge}
 	\begin{enumerate}
@@ -473,7 +473,7 @@ Is it possible to remove parts of the proof from memory during proof processing?
 \begin{frame}
 	\frametitle{Space Measure Example}
 	\include{figures/spaceexample}
-	\uncover<22>{\alert{Good traversal orders are essential!}}
+	\uncover<22>{\alert{Good Traversal Orders are key!}}
 \end{frame}
 
 \begin{frame}
@@ -506,7 +506,7 @@ Is it possible to remove parts of the proof from memory during proof processing?
 \begin{itemize}
 	\item Top-Down
 	\item Bottom-Up
-	\item Heuristic choices
+	\item Heuristics
 \end{itemize}
 
 \end{block}
@@ -552,7 +552,7 @@ Is it possible to remove parts of the proof from memory during proof processing?
 
 \begin{frame}
 
-\centering \textbf{\huge{Experiments, Unsung Heroes \& Conclusion}}
+\centering \textbf{\huge{Experiments \& Conclusion}}
 
 \end{frame}
 
@@ -578,25 +578,6 @@ Is it possible to remove parts of the proof from memory during proof processing?
 
 \begin{frame}
 
-\frametitle{Unsung Heroes}
-
-\begin{itemize}
-	\item Explanation producing congruence closure algorithm
-	\begin{itemize}
-		\item Using immutable data structures
-		\item Modified version of Dijkstra's shortest path algorithm
-	\end{itemize}
-	\item Proof producing algorithm
-	\item Resolution calculus extended with equality
-	\item SAT translation of optimal traversal order
-	\item Correct- \&  soundness proofs
-	\item Implementation of all presented methods
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}
-
 \frametitle{Conclusion}
 
 \begin{itemize}
@@ -605,12 +586,6 @@ Is it possible to remove parts of the proof from memory during proof processing?
 	\item Proof production is tricky
 	\item Construct traversal orders Bottom-Up
 \end{itemize}
-
-\end{frame}
-
-\begin{frame}
-
-\centering \textbf{\LARGE{Thank you for your attention!}}
 
 \end{frame}
 

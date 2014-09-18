@@ -19,10 +19,9 @@
 	\only<1>{
 		\begin{tikzpicture}[node distance=1.2cm]
 			\rootnode;
-			\withchildren{root} {n5}{$a$}  {n6}{$\neg a$};
-			\addchildren{n5}   {n3}{$\neg b$} {n4}{$a,b$};
-			\drawchildren{n5} {n3} {n4};
-			\withchildren{n3} {n1}{$\neg a, \neg b$} {n2}{$a$};
+			\withchildren{root}{x1}{$x_1$} {nx1}{$\neg x_1$};
+			\withchildren{x1}{n3}{$x_1,\neg x_3$} {n4} {$x_1, x_3$};
+			\withchildren{n3}{n1}{$x_1,x_2,\neg x_3$} {n4} {$x_1, x_2$};
 		\end{tikzpicture}
 	}
 	\only<2->{
