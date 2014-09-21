@@ -135,7 +135,7 @@
 
 \frametitle{Example}
 
-$$ (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wedge (\neg x_1) $$
+$$ (x_1 \vee x_2 \vee x_3) \wedge (x_1 \vee \neg x_2) \wedge (x_1 \vee \neg x_3) \wedge (\neg x_1) $$
 
 \uncover<2->{
 	\include{figures/resolutionexample2}
@@ -146,7 +146,7 @@ $$ (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wed
 
 \frametitle{Example}
 
-$$ (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wedge (\neg x_1) $$
+$$ (x_1 \vee x_2 \vee x_3) \wedge (x_1 \vee \neg x_2) \wedge (x_1 \vee \neg x_3) \wedge (\neg x_1) $$
 
 	\include{figures/resolutionexample}
 \end{frame}
@@ -163,9 +163,9 @@ $$ (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wed
 
 \begin{itemize}
 
-	\item Smaller proofs
 	\item Smaller unsat cores, interpolants
 	\item Easier proof processing
+	\item Smaller proofs libraries
 	\item Easier trusted interaction of deductive systems
 	\item Proof generalization
 
@@ -181,16 +181,19 @@ $$ (x_1 \vee x_2 \vee \neg x_3) \wedge (x_1 \vee x_2) \wedge (x_1 \vee x_3) \wed
 	\item Georg Hofferek, et al, 2013, TU Graz
 \end{itemize}
 
+\uncover<2->{
 \begin{block}{Method}
 	\begin{enumerate}
-		\item Obtain proof of unsatisfiability of a formula in the SMT theory of uninterpreted functions from SMT solver
-		\item Modify proof
-		\item Extract one interpolant from the proof
-		\item Obtain multiple interpolants from the one that represent the desired boolean functions
+		\item Formulate problem in SMT theory of uninterpreted functions
+		\item Obtain proof of unsatisfiability from SMT solver
+		\item Transform proof (local first, colorable)
+		\item Extract a single $n$-interpolant from the proof
+		\item Extract multiple interpolants the single interpolant
 	\end{enumerate}
 \end{block}
+}
 
-\uncover<2->{
+\uncover<3->{
 \begin{itemize}
 	\item Worst case exponential runtime in proof size
 \end{itemize}
