@@ -28,7 +28,7 @@
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{hyperref}
-
+\usepackage{booktabs}
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata,positioning}
 \usetikzlibrary{fit}
@@ -168,6 +168,7 @@ $$ (x_1 \vee x_2 \vee x_3) \wedge (x_1 \vee \neg x_2) \wedge (x_1 \vee \neg x_3)
 	\item Smaller proofs libraries
 	\item Easier trusted interaction of deductive systems
 	\item Proof generalization
+	\item Proof carrying code
 
 \end{itemize}
 
@@ -199,7 +200,7 @@ $$ (x_1 \vee x_2 \vee x_3) \wedge (x_1 \vee \neg x_2) \wedge (x_1 \vee \neg x_3)
 \end{itemize}
 }
 
-\uncover<3->{
+\uncover<4->{
 \begin{block}{Proof Compression using Skeptik}
 	\begin{itemize}
 		\item Input proof: 1,870,407 nodes
@@ -276,7 +277,7 @@ $$ (x_1 \vee x_2 \vee x_3) \wedge (x_1 \vee \neg x_2) \wedge (x_1 \vee \neg x_3)
 
 \begin{frame}
 
-\frametitle{Definitions}
+\frametitle{Congruence Closure}
 
 \uncover<2->{
 \begin{block}{Ground Terms}
@@ -371,10 +372,11 @@ $$(x_1 \vee x_2 \vee \neg x_3) \wedge (\neg x_2 \vee x_3) \wedge (\neg x_1 \vee 
 \end{block}
 \only<1-8>{
 \begin{block}{Translation to equations}
+	\uncover<2->{
+		\input{figures/npassignment}
+	}
 	\input{figures/npexamplebig}
-\uncover<8>{
-\input{figures/npassignment}
-}
+
 \end{block}
 }
 
@@ -507,9 +509,10 @@ Is it possible to remove parts of the proof from memory during proof processing?
 \begin{block}{Construct Good Order}
 
 \begin{itemize}
+	\item Greedy Algorithms
+	\item Heuristic choices
 	\item Top-Down
 	\item Bottom-Up
-	\item Heuristic choices
 \end{itemize}
 
 \end{block}
@@ -537,25 +540,10 @@ Is it possible to remove parts of the proof from memory during proof processing?
 	%
 %\end{frame}
 
-\begin{frame}
-	\frametitle{Construct Order Top-Down}
-	\centering
-	Maximum number of nodes in memory:
-		\alt<1>{0}{\alt<2>{1}{\alt<3>{2}{\alt<4-7>{3}{\alt<8-11>{4}{\alt<12-15>{5}{6}}}}}} \\[1cm]
-	\include{figures/topdownpebbling}
-\end{frame}
-
-\begin{frame}
-	\frametitle{Construct Order Bottom-Up}
-	\centering
-	Maximum number of nodes in memory:
-		\alt<1-4>{0}{\alt<5>{1}{\alt<6>{2}{\alt<7-12>{3}{\alt<13-17>{4}{5}}}}} \\[1cm]
-	\include{figures/bottomuppebbling}
-\end{frame}
 
 \begin{frame}
 
-\centering \textbf{\huge{Experiments, Unsung Heroes \& Conclusion}}
+\centering \textbf{\huge{Experiments,\\ Unsung Heroes \& Conclusion}}
 
 \end{frame}
 
@@ -565,8 +553,8 @@ Is it possible to remove parts of the proof from memory during proof processing?
 
 \begin{block}{Congruence Compression}
 	\begin{itemize}
-		\item ~ 2\% average effective compression in proof length
-		\item ~ 28\% compression in explanation length
+		\item 2\% average effective compression in proof length
+		\item 28\% compression in explanation length
 	\end{itemize}
 \end{block}
 
@@ -615,6 +603,154 @@ Is it possible to remove parts of the proof from memory during proof processing?
 
 \centering \textbf{\LARGE{Thank you for your attention!}}
 
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Short explanation, long proof}
+
+\include{figures/shortexpl_no_input}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Congruence Experimental Results}
+
+\begin{itemize}
+		\item 3965 proofs of problems of the SMT-LIB benchmark in the QF\_UF logic
+\end{itemize}
+
+\begin{table}[h]
+\centering
+%\setlength{\tabcolsep}{8pt}
+\begin{tabular}{l c c c c}
+\toprule
+\textbf{Method} & \textbf{Compression} & \textbf{Min} & \textbf{Max} & \textbf{Speed}\\ 
+\midrule
+
+EqGraph & \textbf{5.350} \% & -18.302 \% & \textbf{81.347} \% & 0.343 \\ 
+Proof Forest &  5.196 \% & -43.985 \% & 77.202 \% & 0.611 \\ 
+DAGify & 3.368 \% & \textbf{0.0} \% & 14.433 \% & \textbf{1.655} \\ 
+
+\bottomrule
+%\hline
+\end{tabular}
+\caption{Compression Results}
+\label{tab:congruence_results}
+\end{table}
+
+\begin{table}[h]
+\centering
+%\setlength{\tabcolsep}{8pt}
+\begin{tabular}{l c c}
+\toprule
+\textbf{Congruence Graph} & \textbf{Compressed} & \textbf{Compression} \\ 
+\midrule
+
+Equation Graph & 12.42 \% & 28.34 \% \\ 
+Proof Forest & 11.459 \% & 28.69 \% \\ 
+
+\bottomrule
+%\hline
+\end{tabular}
+\caption{Explantion Size Results}
+\label{tab:explanation_results}
+\end{table}
+
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.8]{../latex/chapters/congruence/figures/compression_vs_length.pdf}
+	\caption{Compression vs Proof Length}
+	\label{fig:congruence_compression}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Space Compression Results}
+
+\begin{itemize}
+	\item VeriT: Problems from SMT-lib
+	\item TraceCheck: Problems from SATLIB, computed with PicoSAT
+\end{itemize}
+
+\begin{table}[tb]
+	\centering
+	\setlength{\tabcolsep}{8pt}
+	\begin{tabular}{lrrr}
+		\toprule
+		%\textbf{Name} & \textbf{Number of proofs} & \textbf{Maximum length} & \textbf{Average length} \\ 
+		\textbf{Name} & \textbf{Number of} & \textbf{Maximum} & \textbf{Average} \\ 
+		              & \textbf{proofs}    & \textbf{length}  & \textbf{length} \\
+		\midrule
+		TraceCheck$_1$ & 2239 & 90756   & 5423   \\
+		TraceCheck$_2$ & 215	& 1768249 & 268863 \\
+    veriT$_1$ & 4187 & 2241042 & 103162 \\
+    veriT$_2$ & 914  & 120075  & 5391  \\ 
+		\bottomrule   
+	\end{tabular}
+	\caption{Proof Benchmark Sets}
+	\label{tab:benchmarks}
+\end{table}
+
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Space Compression Results}
+
+\begin{table}[tb]
+\centering
+%\setlength{\tabcolsep}{8pt}
+\begin{tabular}{l c c}
+\toprule
+\textbf{Algorithm} & \textbf{Relative} & \textbf{Speed}\\ 
+Heuristic & \textbf{Performance} (\%) & (nodes/ms)\\ 
+\midrule
+
+\textbf{Bottom-Up} & & \\
+Children & 17.52 & \textbf{88.6} \\ 
+LastChild & \textbf{26.31} & 84.5 \\ 
+Distance(1) & 9.46 & 21.2 \\ 
+Distance(3) & -0.40 & 0.5\\ 
+
+\midrule
+
+\textbf{Top-Down} & & \\
+Children & -27.47 & 0.3 \\
+LastChild & -31.98 & 1.9 \\
+Distance(1) & -70.14 & 0.6 \\ 
+Distance(3) & \textbf{-74.33} & \textbf{0.1}\\ 
+
+\bottomrule
+%\hline
+\end{tabular}
+\caption{Experimental Results}
+\label{tab:results}
+\end{table}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Construct Order Top-Down}
+	\centering
+	Maximum number of nodes in memory:
+		\alt<1>{0}{\alt<2>{1}{\alt<3>{2}{\alt<4-7>{3}{\alt<8-11>{4}{\alt<12-15>{5}{6}}}}}} \\[1cm]
+	\include{figures/topdownpebbling}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Construct Order Bottom-Up}
+	\centering
+	Maximum number of nodes in memory:
+		\alt<1-4>{0}{\alt<5>{1}{\alt<6>{2}{\alt<7-12>{3}{\alt<13-17>{4}{5}}}}} \\[1cm]
+	\include{figures/bottomuppebbling}
 \end{frame}
 
 \end{document}

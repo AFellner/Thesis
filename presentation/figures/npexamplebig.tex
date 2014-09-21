@@ -2,7 +2,7 @@
 \centering
 \begin{tikzpicture}
 \tikzstyle{every node}=[font=\small]
-\uncover<2->{
+\uncover<3->{
 \node(c1){$\hat{c}_1$};
 
 \node[right =.15cm of c1] (t1x2) {$t_1(\hat{x}_2)$};
@@ -14,7 +14,7 @@
 \draw [-] (c1) to (f1x3.west);
 }
 
-\uncover<3->{
+\uncover<4->{
 
 \node[right =.15cm of t1x1, yshift = 0.15cm] (f11) {$f_1(\bot_1)$};
 \node[above =.15cm of f11] (t11) {$t_1(\top_1)$};
@@ -33,14 +33,14 @@
 \draw [-] (c2) to (f13.east);
 
 }
-\uncover<4->{
+\uncover<5->{
 \node[right =.15cm of c2, yshift=1cm]  (f2x2) {$f_2(\hat{x}_2)$};
 \node[below =1.5cm of f2x2] (t2x3) {$t_2(\hat{x}_3)$};
 
 \draw [-] (c2) to (f2x2.west);
 \draw [-] (c2) to (t2x3.west);
 }
-\uncover<5->{
+\uncover<6->{
 \node[right =2.15cm of f11] (f21) {$f_2(\bot_1)$};
 \node[right =2.15cm of t11] (t21) {$t_2(\top_1)$};
 \node[right =2.15cm of t12] (t22) {$t_2(\top_2)$};
@@ -57,14 +57,14 @@
 \draw [-] (c3) to (f22.east);
 \draw [-] (c3) to (f23.east);
 }
-\uncover<6->{
+\uncover<7->{
 \node[right =.15cm of c3, yshift=1cm] (f3x1) {$f_3(\hat{x}_1)$};
 \node[below =1.5cm of f3x1] (f3x2) {$f_3(\hat{x}_2)$};
 
 \draw [-] (c3) to (f3x1.west);
 \draw [-] (c3) to (f3x2.west);
 }
-\uncover<7->{
+\uncover<8->{
 \node[right =2.15cm of f21] (f31) {$f_3(\bot_1)$};
 \node[right =2.15cm of t21] (t31) {$t_3(\top_1)$};
 \node[right =2.15cm of t22] (t32) {$t_3(\top_2)$};
