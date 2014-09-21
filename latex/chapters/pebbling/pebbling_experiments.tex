@@ -26,7 +26,7 @@ These proofs\footnote{SMT proofs: \scriptsize{\url{www.logic.at/people/bruno/Exp
     veriT$_2$ & 914  & 120075  & 5391  \\ 
 		\bottomrule   
 	\end{tabular}
-	\caption{Proof benchmark sets}
+	\caption{Proof Benchmark Sets}
 	\label{tab:benchmarks}
 \end{table}
 
@@ -59,7 +59,7 @@ Distance(3) & \textbf{-74.33} & \textbf{0.1}\\
 \bottomrule
 %\hline
 \end{tabular}
-\caption{Experimental results}
+\caption{Experimental Results}
 \label{tab:results}
 \end{table}
 
@@ -114,16 +114,16 @@ Table \ref{tab:results} shows that the Bottom-Up algorithm constructs topologica
 This fact is visualized in Figure \ref{fig:BUvsTD}, where each point represents a proof $\varphi$.
 The $x$ and $y$ coordinates are the smallest space measure among all heuristics obtained for $\varphi$ using, respectively, the Top-Down and Bottom-Up algorithm.
 The results for Top-Down range far beyond 15000, but to display the discrepancy between the two algorithms the plot scales from 0 to 15000 on both axis.
-The biggest best space measure for Top-Down is 131 451, whereas this number is 11 520 for the Bottom-Up algorithm.
+The largest best space measure for Top-Down is 131 451, whereas this number is 11 520 for the Bottom-Up algorithm.
 The LastChild heuristic produces the best results and the Children heuristic also performs well.
-The Distance heuristic produces the worst results, which could be due to the fact that the radius is too small for big proofs with thousands of  nodes.
+The Distance heuristic produces the worst results, which could be due to the fact that the radius is too small for large proofs with thousands of  nodes.
 
 Table \ref{tab:decay} summarizes results of the Decay Heuristic with the best results highlighted in boldface.
 Decay Heuristics were tested with the Bottom-Up algorithm, using LastChild as underlying heuristic.
 For the parameters decay factor, recursion depth and combining function two values and all their combinations have been tested.
 The performance improvement is calculated using Formula \ref{eq:space} with $G$ being the singleton set of the Bottom-Up algorithm with the LastChild heuristic.
 The results show, that Decay Heuristics can improve the result, but not by a landslide.
-The improvement comes at the cost of slower speed, especially when the recursion depth is big.
+The improvement comes at the cost of slower speed, especially when the recursion depth is high.
 
 Some additional heuristics, not described in this work, designed specifically for Top-Down Pebbling were tested on small benchmark sets.
 These heuristics aimed at doing local pebbling without having to calculate full spheres.

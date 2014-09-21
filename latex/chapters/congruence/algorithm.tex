@@ -9,7 +9,7 @@ Additionally the proof forest structure described below was proposed by \cite{Ni
 
 Before we describe the algorithm, we discuss two technical concepts that are important aspects of our congruence closure algorithm.
 
-\subsection*{Currification and Abstract Congruence Closure}
+\subsection*{Curryfication and Abstract Congruence Closure}
 \label{subsec:algorithms_preliminaries}
 
 Our congruence closure algorithm operates on terms in curryfied form.
@@ -455,7 +455,7 @@ Our setting is an undirected graph with positive integer weights.
 We chose to use Dijkstra's algorithm, even though the algorithm does not have optimal asymptotic runtime.
 Its worst-case runtime is $O(n \log(n))$ \cite{Cormen1989}, if the priority queue is implemented as a Fibonacci Heap, which is the case in our implementation.
 \cite{Thorup1999} describes a linear time algorithm for the undirected single source shortest path with positive integer weights problem.
-However, the algorithm has a big overhead and needs several precomputations.
+However, the algorithm has a large overhead and needs several precomputations.
 \cite{Cherkassky1996} presents a comparative study of several shortest path algorithms which shows that Dijkstra's algorithm performs well in practice.
 
 Dijkstra's algorithm finds shortest paths to an increasing set of nodes, until every node has been discovered.
@@ -512,7 +512,7 @@ A proof tree is a labeled tree with nodes in $\mathcal{T}$ and edge labels in $\
 For every congruence class in a congruence structure, there is one proof tree.
 Inserting an edge between nodes $s$ and $t$ of different proof trees is done by making one the child of the other.
 To maintain a tree structure, all edges between the new child and the root of its old tree are reversed.
-To limit the number of edge reversion steps, the smaller tree is always attached to the bigger one.
+To limit the number of edge reversion steps, the smaller tree is always attached to the larger one.
 This results in $O(n \log(n))$ edge reversion steps, where $n$ is the number terms in the input equation set.
 This bound can be shown using the same argument as in the proof of Proposition \ref{prop:runtime}.
 As stated above, we understand a path as a sequence of undirected edges.

@@ -50,7 +50,7 @@ Next we will define the resolution calculus extended by congruence axioms.
 Let $\ell$ be an equality literal and $C_1$, $C_2$ be equality clauses such that $\ell \in C_1$ and $\neg \ell \in C_2$.
 The clause $C_1 \setminus \{\ell\} \cup C_2 \setminus \{\neg \ell\}$ is the \emph{resolvent} of $C_1$ and $C_2$ with \emph{pivot} $\ell$.
 
-\noindent Let $F = \{C_1, \ldots, C_n\}$ be a set of equality clauses and let $E$ be the biggest subset of $F$, such that every clause in $E$ is an equation.
+\noindent Let $F = \{C_1, \ldots, C_n\}$ be a set of equality clauses and let $E$ be the largest subset of $F$, such that every clause in $E$ is an equation.
 The notion of a \emph{congruence derivation} for $F$ is defined inductively.
 \begin{itemize}
 	\item $\langle C_1, \ldots, C_n\rangle$ is a congruence derivation for $F$.
@@ -69,7 +69,7 @@ Its Sound- and Completeness w.r.t. propositional logic is not violated by adding
 As stated before, if the semantics of equality are ignored, the extended calculus is simply the propositional resolution calculus.
 
 \begin{proposition}[Sound- \& Completeness]
-
+\label{prop:extended_resolution}
 Let $E$ be a set of equations and $s,t \in \mathcal{T}_E$, then $E \models s \thickapprox t$ if and only if there is a congruence refutation for $E \cup \{\{ s \neq t\}\}$
 
 \end{proposition}

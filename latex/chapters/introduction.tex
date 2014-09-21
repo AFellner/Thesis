@@ -5,7 +5,7 @@ Proofs not only serve as stepping stones, but they can also provide insight on t
 
 Both statements are true for formal proofs, i.e. proofs in a formal calculus, as well.
 Formal proofs allow systems to trust the output of other systems and therefore they can safely be built on top of another. 
-For example SAT-Solvers are used extensively in modern deductive systems \cite{Biere2009}. 
+For example SAT solvers are used extensively in modern deductive systems \cite{Biere2009}. 
 However, solvers may contain bugs. 
 Therefore their output can not be trusted blindly.
 A formal proof can assure the correctness of the output.
@@ -14,22 +14,22 @@ For example interpolants, which have important applications in Verification and 
 Since this work is concerned only with formal proofs, from hereon we mean formal proofs when speaking of proofs.
 
 Typically, problems that are tackled by automated systems are huge and so are the proofs produced during the process.
-For example \cite{Konev2014} reports a 13GB proof of the Erd\H{o}s Discrepancy Conjecture, written in the DRUP proof format, which prints as little information as possible.
+For example \cite{Konev2014} reports a 13 GB proof of the Erd\H{o}s Discrepancy Conjecture, written in the DRUP proof format.
 Therefore even for proof processing algorithms with low complexity, it is highly desirable to reduce the hardness of the input, while maintaining the quality of its conclusion.
 
-We present efficient methods to compress proofs, produced by SMT- or SAT- Solvers, in two different measures.
+We present two methods to compress proofs, produced by SMT or SAT solvers, in two different measures.
 
 The first measure we compress is \emph{length}.
 The length of a proof is its number of inferences.
 For example the length of a resolution proof is the number of applications of the resolution rule.
 The compression method we present is applicable to proofs in the SMT theory of equality, for which the congruence reasoning has often been found to be redundant.
 Congruence reasoning derives equations of terms that are implied by a given set of input equations, 
-using the four axioms \emph{reflexivity}, \emph{symmetry}, \emph{transitivity} and \emph{compatibility}. 
+using the four axioms of equality \emph{reflexivity}, \emph{symmetry}, \emph{transitivity} and \emph{compatibility}. 
 It can be redundant in the sense that subsets of the input may suffice to derive certain equalities.
 In Chapter \ref{ch:congruence} we present resolution proofs extended by equality and a method to compress them using congruence closure.
 Furthermore we show that finding the shortest set of input equations explaining a given equality is NP-complete.
 This indicates that there is no efficient algorithm to compute the shortest explanation efficiently.
-Therefore we propose ideas and methods to obtain short explanations, while not blowing up in complexity.
+Therefore we propose ideas and methods to obtain short explanations that run in polynomial time in the problem size.
 We present a novel explanation producing congruence closure algorithm, which runs in the best known asymptotic runtime.
 One benefit of our algorithm is the possibility to implement it using immutable data structures.
 Such data structures are a central concept in functional programming languages and it is often hard or impossible to translate an imperative description of an algorithm into a functional implementation.
@@ -37,19 +37,19 @@ Such data structures are a central concept in functional programming languages a
 The second measure we compress is \emph{space}.
 Typically proofs can be represented as directed acyclic graphs.
 The space of a proof is the maximal number of nodes of that graph that have to be kept in memory at once while processing it.
-In chapter \ref{ch:pebbling} we present a method to compress resolution proofs in their space measure.
+In Chapter \ref{ch:pebbling} we present a method to compress resolution proofs in their space measure.
 The problem of finding the lowest space measure of a proof can be reduced to finding the optional strategy in a pebbling game.
-For this game it was proven that constructing the best strategy is NP-complete.
+For this game it was proven that constructing the best strategy is NP-complete \cite{Sethi1975}.
 Just like for our length compression algorithm, we want an algorithm with a lower complexity.
-Therefore we propose a heuristic method and arguments why our heuristics are reasonable.
+Therefore we propose two algorithms that are parametrized by heuristics and arguments why our heuristics are reasonable.
 
 All described algorithms have been implemented in the hybrid functional and object-oriented programming
 language Scala as part of the Skeptik library for proof compression \cite{Boudou2014}.
-The algorithms were evaluated on a big number of proofs, produced by the SMT-Solver VeriT.
+The algorithms were evaluated on a large number of proofs, produced by the SMT solver VeriT and the SAT solver PicoSAT \cite{Biere2008}.
 The evaluation proofs were created from problems of the benchmarks of SMT-LIB\footnote{\url{www.smtlib.org}} and the SATLIB\footnote{\url{www.satlib.org/}}.
 We used the Vienna Scientific Cluster VSC-2\footnote{\url{http://vsc.ac.at/systems/vsc-2/}} to perform the experiments.
 The VSC-2 is the second of now three generations of scientific clusters designated to high performance computing, operated by the five Austrian universities TU Wien, Universit\"at Wien, Boku Wien, TU Graz and Universit\"at Innsbruck. 
-The VSC-2 cluster consists of 1.314 nodes, with 2 processors each (AMD Opteron 6132 HE, 2.2 GHz and 8 cores), 8 $\times$ 4 GB ECC DDR3 Ram.
+The VSC-2 cluster consists of 1.314 nodes, with 2 processors each (AMD Opteron 6132 HE, 2.2 GHz and 8 cores) and 8 $\times$ 4 GB ECC DDR3 Ram.
 This amounts to the impressive number of 21024 processor cores with a total main memory of 42 TB.
 
 %Additionally we evaluated on proofs that were used in \cite{Hofferek2013} to synthesize boolean functions by extracting an interpolant from a single proof.
@@ -80,10 +80,10 @@ Proof compression differs from this field of study, as it does not mean to prove
 Congruence reasoning has been long studied and classical congruence closure algorithms are those of Nelson and Oppen \cite{Nelson1980}, Downey, Sethi and Tarjan \cite{Downey1980} and Shostak \cite{Shostak1978}.
 More recently abstract congruence closure has been proposed \cite{Bachmair2000}, which replaces subterms with fresh constants to simplify the algorithms and increase performance.
 Explanation producing Congruence Closure algorithms have been proposed by Pascal Fontaine \cite{Fontaine2004} and Nieuwenhuis-Oliveras \cite{Nieuwenhuis2007,Nieuwenhuis2005}.
-The short explanation decision problem is the question whether, given a set of input equations and a target equality, there is a subset of the input equations a desired cardinality to explain the target equality.
+The short explanation decision problem is the question whether, given a set of input equations and a target equality, there is a subset of the input equations of desired cardinality to explain the target equality.
 This decision problem is NP-complete, as claimed in \cite{Nieuwenhuis2005,Nieuwenhuis2007} and proven in this work (Section \ref{sec:npcomplete}).
 
-Modern SAT- and SMT Solvers, in addition to solving problem instances, are able to produce proofs.
+Modern SAT and SMT solvers, in addition to solving problem instances, are able to produce proofs.
 This is reflected by the increasing number of formats to represent proofs and the Certified UNSAT track of the SAT Competition.
 On top of many solver internal proof formats, there are a couple of standardized ones.
 One format is the TraceCheck proof format, which resembles the DIMACS format for SAT problems.
@@ -92,7 +92,7 @@ Recently the RUP (reverse unit propagation) proof format and its extensions got 
 The RUP format only states which and not how clauses were derived.
 Using this information, the full proof can then be produced automatically.
 However, this computation can be very expensive.
-The RUP format was invented and promoted by the SAT Solver community.
+The RUP format was invented and promoted by the SAT solver community.
 In this community computation speed has priority and keeping information for proper proof production could slow down the solver.
 Therefore, the RUP format is designed in such a way that proofs are very cheap to produce, but expensive to verify.
 The DRAT (Deletion Resolution Asymmetric Tautology) proof format \cite{Wetzler2014} is an extension of the (D)RUP format.

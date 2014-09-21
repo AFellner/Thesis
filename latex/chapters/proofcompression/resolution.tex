@@ -3,7 +3,7 @@
 
 In this section, we will define the propositional resolution calculus.
 Resolution is one of the most well known automated deduction techniques and goes back to Robinson \cite{Robinson1965}.
-While it is a pretty simple calculus with just one inference rule, proofs in that calculus tend to become big.
+While it is a pretty simple calculus with just one inference rule, proofs in that calculus tend to become large.
 This property and its popularity make it a good target for proof compression.
 
 Propositional resolution can be seen as a simplification of first-order logic resolution to propositional logic.
@@ -51,8 +51,8 @@ A \emph{resolution refutation} is a resolution derivation containing the empty c
 
 \end{definition}
 
-The correctness of the resolution calculus can be formulated as the statement, that a propositional logic formula, represented as a set of clauses, is equivalent to all resolution derivations of it. 
-Since the empty clause is unsatisfiable and sets of clauses represent the conjunction of its elements, a resolution refutation is unsatisfiable.
+The correctness of the resolution calculus can be formulated as the statement, that a propositional logic formula, represented as a set of clauses, imply all clauses of all resolution derivations of it. 
+Since the empty clause is unsatisfiable and a formula with a resolution derivation that is a refutation is unsatisfiable.
 Therefore a resolution refutation of $F$ is a witness to the validity of $\neg F$.
 For an unsatisfiable formula, there can be many different resolution refutations.
 The aim of proof compression is to find short refutations among all possible ones.

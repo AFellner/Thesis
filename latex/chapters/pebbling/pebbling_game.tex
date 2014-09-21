@@ -103,7 +103,7 @@ $$
 		       %& \quad \text{ there exists }k < i, \sigma_k = p(u) \text{ and }\\
 					 %& \quad \text{ for all } l: k < l < i, \sigma_l \neq u(v) \\
 		%u(v) & \text{ for all } c \in \Children{v}{\varphi} \text{ exists } k < i, \sigma_k = p(u) \text{ and for all }l: k < l < i, \sigma_l \neq u(v) \\
-		u(v) & \text{if for all } c \in \Children{v}{\varphi} \text{ exists } k < i \text { such that } \sigma_k = p(u)\\
+		u(v) & \text{if for all } c \in \Children{v}{\varphi} \text{ exists } k < i \text { such that } \sigma_k = p(c)\\
 		p(v) & \text{otherwise, where } v = min_{\prec}(w \mid \text{ for all } l < i: \sigma_l \neq p(w))
 	\end{array}
 	\right.
@@ -139,6 +139,22 @@ We are now ready to define another measure on proofs, which we call space.
 The \emph{space} $\pspace{\varphi}{\prec}$ 
 of a proof $\varphi$ and a topological order $\prec$ is the pebbling number of the canonical topological pebbling strategy of $\varphi$, its root and $\prec$.
 \end{definition}
+
+\begin{example}
+
+Consider the proof displayed in Figure \ref{fig:spaceproof}.
+The indices below the proof nodes indicate a topological order that has pebbling number four.
+The implicit unpebbling moves are to unpebble node $1$ after pebbling node $3$, as well as unpebbling nodes $2$ and $4$ after pebbling node $5$.
+Before unpebbling nodes $2$ and $4$, nodes $2,3,4,5$ are pebbled which is the maximal amount of pebbles placed on the graph at any time.
+It is easy to see, that there is no topological order that has a canonical pebbling strategy with a lower pebbling number.
+
+\begin{figure}[!h]
+\input{chapters/pebbling/figures/spaceproof}
+\caption{A Simple Proof}
+\label{fig:spaceproof}
+\end{figure}
+
+\end{example}
 
 The problem of compressing the space of a proof $\varphi$ and a topological order $\prec$ is the problem of finding another topological order $\prec'$ such that $\pspace{\varphi}{\prec'} < \pspace{\varphi}{\prec}$. The following theorem shows that the number of possible topological orders is very large and hence, enumeration is not a feasible option when trying to find a good topological order.
 

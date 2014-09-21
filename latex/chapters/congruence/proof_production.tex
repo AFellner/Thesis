@@ -34,7 +34,7 @@ The proof is shown in Figure \ref{fig:proofprod}.
 As mentioned in Section \ref{sec:congruenceclosurealgorithm}, edges are inserted into a congruence graph in a lazy way by the congruence closure algorithm.
 The reason is that \texttt{produceProof} searches for explanations for edges with label $\smiley$.
 Should the equality of question be an input equation that is added later to the congruence structure than it was deduced, then we would like to overwrite this label with the input equation.
-The impact of lazy insertion gets bigger, if an implementation searches for explanations already when an edge is added to the graph.
+The impact of lazy insertion gets larger, if an implementation searches for explanations already when an edge is added to the graph.
 Example \ref{example:lazy} shows how this technique can help producing shorter proofs.
 
 \begin{example}
@@ -54,7 +54,7 @@ However, choosing the edge with label $\smiley$ is undesirable, since it two ext
 
 In this section we put our explanation producing congruence closure algorithm and the proof production method into the context of proof compression.
 To this end we replace subproofs with conclusions that contain unnecessary long explanations with new proofs that have shorter conclusions.
-Shorter conclusions lead to less resolution steps further down the proof and possibly big chunks of the proof can simply be discarded.
+Shorter conclusions lead to less resolution steps further down the proof and possibly large chunks of the proof can simply be discarded.
 There is however a tradeoff in overall proof length when introducing new subproofs.
 The subproof corresponding to a short explanation can be longer in proof length, i.e. involve more resolution nodes, than one with a longer explanation.
 Example \ref{example:shortexpl} displays this issue.
@@ -77,18 +77,6 @@ The corresponding explanations are $E$ and $\{(a,b)\}$.
 The two resulting proofs are shown in Figure \ref{fig:short_expl_proof}.
 The proof with the longer explanation $E$ is only one proof node, whereas the proof with the singleton explanation has proof length 5.
 
-%\begin{figure}[!h]
-%\input{chapters/congruence/figures/shortexpl_1}
-%\caption{Long explanation, short proof}
-%\label{fig:short_expl_proof_1}
-%\end{figure}
-%
-%\begin{figure}[!h]
-%\input{chapters/congruence/figures/shortexpl_2}
-%\caption{Short explanation, long proof}
-%\label{fig:short_expl_proof_2}
-%\end{figure}
-
 \begin{figure}[!h]
 \input{chapters/congruence/figures/shortexpl_no_input}
 \caption{Short explanation, long proof}
@@ -105,7 +93,7 @@ Axioms are not changed by the function.
 For all other nodes the \texttt{fixNode} method is called, to maintain a correct proof.
 For a clause $C$, the method adds $neg(C)$ (as defined in \ref{sec:calculus}) to the empty congruence structure and checks whether these equations induce a proof for one of the equations in the $pos(C)$ that has a shorter conclusion than the original subproof.
 If there is such a proof, we replace the old subproof by the new one.
-Example \ref{example:compressor} displays this procedure.
+Example \ref{example:compressproof} displays this procedure.
 
 In line \ref{criteria} it is decided whether the explanation finding congruence closure algorithm should be used to find a replacement for the current node.
 A trivial criteria is true for every node.
@@ -145,7 +133,7 @@ This method of maintaining a correct proof was proposed in \cite{Bar-Ilan2008} i
 \input{chapters/congruence/algorithms/fixNode}
 
 \begin{example}
-
+\label{example:compressproof}
 Consider the proof presented graphically in Figure \ref{fig:compressproof}.
 It uses the same abbreviations for $t_a$ and $t_b$ as in Example \ref{example:shortexpl}.
 Furthermore, the proof uses the long explanation for $t_a \thickapprox t_b$.
@@ -157,7 +145,7 @@ The construction of this subproof is discussed in Example \ref{example:shortexpl
 When iterating over node $O_2$, the algorithm detects that the pivot literal $t_a = a$ is not present in $N_1$ and \texttt{fixNode} replaces $O_2$ by $N_1$.
 At node $O_3$, both premises contain the pivot $a = b$, therefore $O_3$ is replaced by resolvent of $N_1$ and its other original premise.
 No other subproof is altered by the algorithm.
-The resulting proof is displayed in Figure \ref{fig:compressproof_2} and has length 11 which is shorter than the original one, even though the replaced subproof is bigger.
+The resulting proof is displayed in Figure \ref{fig:compressproof_2} and has length 11 which is shorter than the original one, even though the replaced subproof is larger.
 Note that the clause $\{\neg A\}$ is part of the replaced subproof.
 It is also part of the subproof with conclusion $\{a = b\}$, which remains in the new proof.
 

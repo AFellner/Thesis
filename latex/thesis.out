@@ -1,13 +1,21 @@
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
 \BOOKMARK [0][-]{chapter.2}{Proof Compression}{}% 2
 \BOOKMARK [1][-]{section.2.1}{Propositional Resolution Calculus}{chapter.2}% 3
-\BOOKMARK [0][-]{chapter.3}{Congruence compression}{}% 4
-\BOOKMARK [0][-]{chapter.4}{Space compression}{}% 5
-\BOOKMARK [1][-]{section.4.1}{Pebbling Game}{chapter.4}% 6
-\BOOKMARK [1][-]{section.4.2}{Pebbling as a Satisfiability Problem}{chapter.4}% 7
-\BOOKMARK [1][-]{section.4.3}{Greedy Pebbling Algorithms}{chapter.4}% 8
-\BOOKMARK [1][-]{section.4.4}{Heuristics}{chapter.4}% 9
-\BOOKMARK [1][-]{section.4.5}{Experiments}{chapter.4}% 10
-\BOOKMARK [1][-]{section.4.6}{Conclusion}{chapter.4}% 11
-\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 12
-\BOOKMARK [0][-]{section*.29}{Bibliography}{}% 13
+\BOOKMARK [1][-]{section.2.2}{Proof Processing}{chapter.2}% 4
+\BOOKMARK [0][-]{chapter.3}{Congruence Compression}{}% 5
+\BOOKMARK [1][-]{section.3.1}{Congruence Closure}{chapter.3}% 6
+\BOOKMARK [1][-]{section.3.2}{Resolution extended with equality}{chapter.3}% 7
+\BOOKMARK [1][-]{section.3.3}{NP-completeness of Short Explanation Decision Problem}{chapter.3}% 8
+\BOOKMARK [1][-]{section.3.4}{Explanation Producing Congruence Closure}{chapter.3}% 9
+\BOOKMARK [1][-]{section.3.5}{Proof Production}{chapter.3}% 10
+\BOOKMARK [1][-]{section.3.6}{Experiments}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.7}{Future Work}{chapter.3}% 12
+\BOOKMARK [0][-]{chapter.4}{Space Compression}{}% 13
+\BOOKMARK [1][-]{section.4.1}{Pebbling Game and Space}{chapter.4}% 14
+\BOOKMARK [1][-]{section.4.2}{Pebbling as a Satisfiability Problem}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.3}{Greedy Pebbling Algorithms}{chapter.4}% 16
+\BOOKMARK [1][-]{section.4.4}{Heuristics}{chapter.4}% 17
+\BOOKMARK [1][-]{section.4.5}{Experiments}{chapter.4}% 18
+\BOOKMARK [1][-]{section.4.6}{Future Work}{chapter.4}% 19
+\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 20
+\BOOKMARK [0][-]{section*.25}{Bibliography}{}% 21
