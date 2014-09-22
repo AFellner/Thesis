@@ -189,7 +189,7 @@ $$ (x_1 \vee x_2 \vee x_3) \wedge (x_1 \vee \neg x_2) \wedge (x_1 \vee \neg x_3)
 		\item Obtain proof of unsatisfiability from SMT solver
 		\item Transform proof (local first, colorable)
 		\item Extract a single $n$-interpolant from the proof
-		\item Extract multiple interpolants the single interpolant
+		\item Extract multiple interpolants from the single interpolant
 	\end{enumerate}
 \end{block}
 }
@@ -338,53 +338,8 @@ $$ (x_1 \vee x_2 \vee x_3) \wedge (x_1 \vee \neg x_2) \wedge (x_1 \vee \neg x_3)
 
 \uncover<2->{\vspace{1cm} \centering\alert{\textbf{NP-complete}}}
 
-\end{frame}
+\uncover<3->{Reduction of SAT to the short explanation decision problem}
 
-\begin{frame}
-
-\frametitle{NP-completeness proof sketch}
-
-\begin{block}{From a propositional logic formula $\Phi$ obtain $\ldots$}
-
-	\begin{itemize}
-		\item a set of equations $E_{\Phi}$
-		\item a target equation $s_{\Phi} = t_{\Phi}$
-		\item $k_{\Phi} \in \mathbb{N}$
-	\end{itemize}
-\end{block}
-
-\begin{block}{such that $\ldots$}
-	$\Phi$ is satisfiable if and only if there is an explanation $E' \subseteq E_{\Phi}$ of $s_{\Phi} = t_{\Phi}$ with $|E'| \leq k_{\Phi}$
-\end{block}
-
-%\begin{itemize}
-	%\item Translate propositional logic formula $\Phi$
-%\end{itemize}
-
-\end{frame}
-
-\begin{frame}
-
-\frametitle{NP-completeness proof sketch example}
-
-\begin{block}{Formula}
-$$(x_1 \vee x_2 \vee \neg x_3) \wedge (\neg x_2 \vee x_3) \wedge (\neg x_1 \vee \neg x_2)$$
-\end{block}
-\only<1-8>{
-\begin{block}{Translation to equations}
-	\uncover<2->{
-		\input{figures/npassignment}
-	}
-	\input{figures/npexamplebig}
-
-\end{block}
-}
-
-\only<9>{
-\begin{block}{Small subset corresponding to satisfying assignment}
-\input{figures/npexplanation}
-\end{block}
-}
 \end{frame}
 
 %\begin{frame}
@@ -563,7 +518,7 @@ Is it possible to remove parts of the proof from memory during proof processing?
 	\begin{itemize}
 		\item 7555 SAT and SMT proofs
 		\item Bottom-Up outperforms Top-Down
-		\item Average space measure is 44.1 times smaller than proof length
+		\item Average space measure is 44 times smaller than proof length
 	\end{itemize}
 \end{block}
 
@@ -582,7 +537,7 @@ Is it possible to remove parts of the proof from memory during proof processing?
 	\item Proof producing algorithm
 	\item Resolution calculus extended with equality
 	\item SAT translation of optimal traversal order
-	\item Correct- \&  soundness proofs
+	\item Correctness \&  soundness proofs
 	\item Implementation of all presented methods
 \end{itemize}
 
@@ -605,6 +560,53 @@ Is it possible to remove parts of the proof from memory during proof processing?
 
 \centering \textbf{\LARGE{Thank you for your attention!}}
 
+\end{frame}
+
+\begin{frame}
+
+\frametitle{NP-completeness proof sketch}
+
+\begin{block}{From a propositional logic formula $\Phi$ obtain $\ldots$}
+
+	\begin{itemize}
+		\item a set of equations $E_{\Phi}$
+		\item a target equation $s_{\Phi} = t_{\Phi}$
+		\item $k_{\Phi} \in \mathbb{N}$
+	\end{itemize}
+\end{block}
+
+\begin{block}{such that $\ldots$}
+	$\Phi$ is satisfiable if and only if there is an explanation $E' \subseteq E_{\Phi}$ of $s_{\Phi} = t_{\Phi}$ with $|E'| \leq k_{\Phi}$
+\end{block}
+
+%\begin{itemize}
+	%\item Translate propositional logic formula $\Phi$
+%\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\frametitle{NP-completeness proof sketch example}
+
+\begin{block}{Formula}
+$$(x_1 \vee x_2 \vee \neg x_3) \wedge (\neg x_2 \vee x_3) \wedge (\neg x_1 \vee \neg x_2)$$
+\end{block}
+\only<1-8>{
+\begin{block}{Translation to equations}
+	\uncover<2->{
+		\input{figures/npassignment}
+	}
+	\input{figures/npexamplebig}
+
+\end{block}
+}
+
+\only<9>{
+\begin{block}{Small subset corresponding to satisfying assignment}
+\input{figures/npexplanation}
+\end{block}
+}
 \end{frame}
 
 \begin{frame}
@@ -659,7 +661,7 @@ Proof Forest & 11.459 \% & 28.69 \% \\
 \bottomrule
 %\hline
 \end{tabular}
-\caption{Explantion Size Results}
+\caption{Explanation Size Results}
 \label{tab:explanation_results}
 \end{table}
 
