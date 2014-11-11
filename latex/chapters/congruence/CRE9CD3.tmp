@@ -1,0 +1,36 @@
+\begin{tikzpicture}[node distance=2cm]
+
+\node(c1){$\hat{c}_1$};
+
+\node[right =1cm of c1] (t1x2) {$t_1(\hat{x}_2)$};
+\node[above =1cm of t1x2] (t1x1) {$t_1(\hat{x}_1)$};
+\node[below =1cm of t1x2] (f1x3) {$f_1(\hat{x}_3)$};
+
+\draw [-] (c1) to (t1x2);
+\draw [-] (c1) to (t1x1);
+\draw [-] (c1) to (f1x3);
+
+
+\node[right =1cm of t1x1, yshift = 0.25cm] (f11) {$f_1(\bot_1)$};
+\node[above =.5cm of f11] (t11) {$t_1(\top_1)$};
+\node[below =.5cm of f11] (t12) {$t_1(\top_2)$};
+\node[below =.5cm of t12] (f12) {$f_1(\bot_2)$};
+\node[below =.5cm of f12] (t13) {$t_1(\top_3)$};
+\node[below =.5cm of t13] (f13) {$f_1(\bot_3)$};
+
+\node[right = 6cm of c1](c2){$\hat{c}_2$};
+
+\draw [-] (c2) to (t11);
+\draw [-] (c2) to (t12);
+\draw [-] (c2) to (t13);
+\draw [-] (c2) to (f11);
+\draw [-] (c2) to (f12);
+\draw [-] (c2) to (f13);
+
+\node[right =1cm of c2, yshift=.5cm] (f2x2) {$f_2(\hat{x}_2)$};
+\node[below =1cm of f2x2] (t2x3) {$t_2(\hat{x}_3)$};
+
+\draw [-] (c2) to (f2x2);
+\draw [-] (c2) to (t2x3);
+
+\end{tikzpicture}

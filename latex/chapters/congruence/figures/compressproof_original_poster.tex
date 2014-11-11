@@ -1,0 +1,30 @@
+
+\centering
+\begin{tikzpicture}[node distance=2.5cm]
+
+	\rootnode;
+	
+	\proofnode[above right of=root,yshift=.5cm,xshift=-1cm]{n11}{$f(f(a,b),f(a,a)) = f(f(b,a),f(b,b))$};
+	\proofnode[above left of=root,yshift=-.3cm,xshift=-2cm]{n10}{$f(f(a,b),f(a,a)) \neq f(f(b,a),f(b,b))$};
+	\drawchildren{root}{n10}{n11};
+	
+	\proofnode[above left of=n11,yshift=-.5cm]{n9}{$b \neq f(f(b,a),f(b,b))$};
+	\proofnode[above right of=n11,yshift=.5cm]{n8}{$b \neq f(f(b,a),f(b,b)), f(f(a,b),f(a,a)) = f(f(b,a),f(b,b))$};
+	\drawchildren{n11}{n9}{n8};
+	\proofnode[above left of=n8,xshift=-3cm]{n5}{$a \neq b, b\neq f(f(b,a),f(b,b)), f(f(a,b),f(a,a)) = f(f(b,a),f(b,b))$};
+	
+	\proofnode[above left of=n5,yshift=3cm,xshift=2cm]{n1}{$f(f(a,b),f(a,a)) \neq a, a\neq b, b \neq f(f(b,a),f(b,b)), f(f(a,b),f(a,a)) = f(f(b,a),f(b,b))$};
+	\proofnode[above right of=n5,xshift=1cm]{n4}{$f(f(a,b),f(a,a)) = a$};
+	%\drawchildren{n5}{n1}{n4};
+	\draw[->,thick,cap=round] (n5) to (n4);
+	%\draw[->,thick,cap=round] (n5) -- (n1 -1pt);
+	\proofnode[above left of=n4]{n2}{$A,f(f(a,b),f(a,a)) = a$};
+	
+	
+	
+	\proofnode[right of =n4,xshift=2cm]{n7}{$a = b$};
+	\drawchildren{n8}{n5}{n7};
+	\withchildren{n7}{n3}{$\neg A$} {n6}{$A, a = b$};
+	\drawchildren{n4}{n2}{n3};
+\end{tikzpicture}
+
